@@ -1,0 +1,15 @@
+##############################################################################
+## Filename:          J:\Hebin\system/drivers/ip_vga_v1_00_a/data/ip_vga_v2_1_0.mdd
+## Description:       Microprocessor Driver Definition
+## Date:              Mon May 27 21:40:58 2013 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+OPTION psf_version = 2.1.0;
+
+BEGIN DRIVER ip_vga
+
+  OPTION supported_peripherals = (ip_vga);
+  OPTION depends = (common_v1_00_a);
+  OPTION copyfiles = all;
+
+END DRIVER

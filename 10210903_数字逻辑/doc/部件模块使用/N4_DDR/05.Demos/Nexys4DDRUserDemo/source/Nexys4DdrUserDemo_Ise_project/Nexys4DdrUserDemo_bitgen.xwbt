@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\sam_work\Xilinx_projects\14_7\Nexys4DDRUserDemo\source\Nexys4DdrUserDemo_Ise_project\Nexys4DdrUserDemo.ncd
+OUTFILE=C:\sam_work\Xilinx_projects\14_7\Nexys4DDRUserDemo\source\Nexys4DdrUserDemo_Ise_project\Nexys4DdrUserDemo.bit
+FAMILY=Artix7
+PART=xc7a100t-1csg324
+WORKINGDIR=C:\sam_work\Xilinx_projects\14_7\Nexys4DDRUserDemo\source\Nexys4DdrUserDemo_Ise_project
+LICENSE=WebPack
+USER_INFO=210940894_1777503857_210591367_305
