@@ -1,0 +1,9 @@
+run
+-ifmt MIXED
+-top PxlClkGen_exdes
+-p xc7a100t-csg324-1
+-ifn xst.prj
+-ofn PxlClkGen_exdes
+-keep_hierarchy soft 
+-equivalent_register_removal no 
+-max_fanout 65535
