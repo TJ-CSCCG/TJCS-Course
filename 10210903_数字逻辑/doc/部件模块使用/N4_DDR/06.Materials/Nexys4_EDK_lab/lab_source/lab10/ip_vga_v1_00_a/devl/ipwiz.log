@@ -1,0 +1,176 @@
+
+----------------------------------------------------------------------------
+--                            Design Analysis                             --
+----------------------------------------------------------------------------
+Analyze pcore ip_vga ...
+
+
+----------------------------------------------------------------------------
+--                            Design Analysis                             --
+----------------------------------------------------------------------------
+Analyze pcore ip_vga ...
+
+
+----------------------------------------------------------------------------
+--                            File Generation                             --
+----------------------------------------------------------------------------
+Creating HDL source directory ...
+Generating top peripheral VHDL template ...
+Generating stub user logic Verilog template ...
+HDL templates successfully generated ...
+Creating data directory ...
+Generating XPS inteface files ...
+WARNING:HDLParsers:3497 - Ignoring Verilog File
+   "J:/Hebin/system/pcores/ip_vga_v1_00_a/data/../hdl/verilog/user_logic.v"
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/proc_common_pkg.vhd" in Library proc_common_v3_00_a.
+Package <proc_common_pkg> compiled.
+Package body <proc_common_pkg> compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/family_support.vhd" in Library proc_common_v3_00_a.
+Package <family_support> compiled.
+Package body <family_support> compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/or_muxcy.vhd" in Library proc_common_v3_00_a.
+Entity <or_muxcy> compiled.
+Entity <or_muxcy> (Architecture <implementation>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/or_gate128.vhd" in Library proc_common_v3_00_a.
+Entity <or_gate128> compiled.
+Entity <or_gate128> (Architecture <imp>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/counter_f.vhd" in Library proc_common_v3_00_a.
+Entity <counter_f> compiled.
+Entity <counter_f> (Architecture <imp>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/pselect_f.vhd" in Library proc_common_v3_00_a.
+Entity <pselect_f> compiled.
+Entity <pselect_f> (Architecture <imp>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
+l/vhdl/ipif_pkg.vhd" in Library proc_common_v3_00_a.
+Package <ipif_pkg> compiled.
+Package body <ipif_pkg> compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/
+hdl/vhdl/address_decoder.vhd" in Library axi_lite_ipif_v1_01_a.
+Entity <address_decoder> compiled.
+Entity <address_decoder> (Architecture <IMP>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/
+hdl/vhdl/slave_attachment.vhd" in Library axi_lite_ipif_v1_01_a.
+Entity <slave_attachment> compiled.
+Entity <slave_attachment> (Architecture <imp>) compiled.
+Compiling vhdl file
+"D:/Xilinx/14.3/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/
+hdl/vhdl/axi_lite_ipif.vhd" in Library axi_lite_ipif_v1_01_a.
+Entity <axi_lite_ipif> compiled.
+Entity <axi_lite_ipif> (Architecture <imp>) compiled.
+Compiling vhdl file
+"J:/Hebin/system/pcores/ip_vga_v1_00_a/data/../hdl/vhdl/ip_vga.vhd" in Library
+ip_vga_v1_00_a.
+Entity <ip_vga> compiled.
+Entity <ip_vga> (Architecture <IMP>) compiled.
+
+
+Analyzing HDL attributes ...
+Entity name = ip_vga
+INFO:EDK:1607 - IPTYPE set to value : PERIPHERAL
+INFO:EDK:1511 - IMP_NETLIST set to value : TRUE
+INFO:EDK:1486 - HDL set to value : VHDL
+WARNING:EDK:3588 - Unable to delete temporary XST project file
+   J:\Hebin\system\pcores\ip_vga_v1_00_a\data\_ip_vga_xst.prj : 13
+XPS interface files successfully generated ...
+Creating development directory ...
+Generating command option file ...
+Generating readme file ...
+Development misc files successfully generated ...
+Creating projnav directory ...
+Generating ProjNav support files ...
+ProjNav support files successfully generated ...
+Creating synthesis directory ...
+Generating XST synthesis support files ...
+XST synthesis support files successfully generated ...
+No BFM simulation files will be generated at this time ...
+Creating software driver data directory ...
+Generating software driver XPS interface (mdd/tcl) files ...
+Software driver data definition file (.mdd) successfully generated ...
+Software driver data generation file (.tcl) successfully generated ...
+Creating software driver src directory ...
+Generating software driver template files ...
+Software driver compile file (Makefile) successfully generated ...
+output user slave register(s) offset to software driver header ...
+Software driver header file (.h) successfully generated ...
+Software driver source file (.c) successfully generated ...
+Software driver SelfTest file (.c) successfully generated ...
+Software driver template files successfully generated ...
+
+----------------------------------------------------------------------------
+--                              Final Report                              --
+----------------------------------------------------------------------------
+Thank you for using Create and Import Peripheral Wizard! Please find your
+peripheral hardware templates under J:\Hebin\system/pcores/ip_vga_v1_00_a and
+peripheral software templates under J:\Hebin\system/drivers/ip_vga_v1_00_a
+respectively.
+
+Peripheral Summary:
+
+  top name       : ip_vga
+  version        : 1.00.a
+  type           : AXI4LITE slave
+  features       : slave attachment
+                   user s/w registers
+
+Address Block Summary:
+
+  user logic slv : C_BASEADDR + 0x00000000
+                 : C_BASEADDR + 0x000000FF
+
+File Summary
+
+  - HDL source -
+  J:\Hebin\system/pcores/ip_vga_v1_00_a/hdl
+  top entity     : vhdl/ip_vga.vhd
+  user logic     : verilog/user_logic.v
+
+  - XPS interface -
+  J:\Hebin\system/pcores/ip_vga_v1_00_a/data
+  mpd            : ip_vga_v2_1_0.mpd
+  pao            : ip_vga_v2_1_0.pao
+
+  - ISE project -
+  J:\Hebin\system/pcores/ip_vga_v1_00_a/devl/projnav
+  ise project    : ip_vga.xise
+  tcl script     : ip_vga.tcl
+
+
+  - XST synthesis -
+  J:\Hebin\system/pcores/ip_vga_v1_00_a/devl/synthesis
+  xst script     : ip_vga_xst.scr
+  xst project    : ip_vga_xst.prj
+
+  - Misc file -
+  J:\Hebin\system/pcores/ip_vga_v1_00_a/devl
+  help           : README.txt
+  option         : ipwiz.opt
+  log            : ipwiz.log
+
+  - Driver source -
+  J:\Hebin\system/drivers/ip_vga_v1_00_a/src
+  makefile       : Makefile
+  header         : ip_vga.h
+  source         : ip_vga.c
+  selftest       : ip_vga_selftest.c
+
+  - Driver interface -
+  J:\Hebin\system/drivers/ip_vga_v1_00_a/data
+  mdd            : ip_vga_v2_1_0.mdd
+  tcl            : ip_vga_v2_1_0.tcl
+
+
