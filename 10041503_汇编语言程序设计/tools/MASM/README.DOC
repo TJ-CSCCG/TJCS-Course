@@ -1,0 +1,270 @@
+		    Microsoft Macro Assembler Package
+			     Version 5.00
+
+	Text files on the Macro	Assembler disks	are tabbed to save
+	disk space. If your printer does not automatically handle
+	tabs during printing, you must use a print program that
+	expands	tabs. For example, use the DOS PRINT program to	print
+	this and other document	or source files	on the disk.
+
+  Note to DOS 3.0 Users
+
+	Because	of an incompatibility between DOS 3.0 and the batch
+	file enhancer on this disk, you	cannot run the setup batch
+	files under DOS	3.0. Instead, follow the setup instructions in
+	Chapter	1 of the Programmer's Guide. You can run the CodeView
+	demo on	Disk 2.	Type DEMO to run DEMO.BAT.
+
+  ==( MASM.EXE )==
+
+  New Feature
+
+	The /LA	option has been	added to specify a complete listing
+	of all symbols,	macros,	and false conditionals.	It is
+	equivalent to using the	.LIST, .LFCOND,	.LALL, and .CREF
+	directives throughout the source file. The option overrides
+	any conflicting	directives in the source file.
+
+  Clarification
+
+	The PTR	operator can be	used to	specify	the size of a
+	register indirect operand for a	CALL or	JMP instruction.
+	However, the size cannot be specified with NEAR	or FAR.	Use
+	WORD or	DWORD instead. (In 80386 32-bit	segments, use DWORD
+	or FWORD.) Examples are	shown below:
+
+	  ; 8086, 80826, or 80386 16-bit mode
+
+	  jmp  WORD PTR	[bx]	    ; Legal near jump
+	  call NEAR PTR	[bx]	    ; Illegal near call
+	  call DWORD PTR [bx]	    ; Legal far	call
+	  jmp  FAR PTR [bx]	    ; Illegal far jump
+
+	  ; 80386 32-bit mode only
+
+	  jmp  DWORD PTR [bx]	    ; Legal near jump
+	  call NEAR PTR	[bx]	    ; Illegal near call
+	  call FWORD PTR [bx]	    ; Legal far	call
+	  jmp  FAR PTR [bx]	    ; Illegal far jump
+
+	This limitation	only applies to	register indirect operands.
+	NEAR or	FAR can	be applied to operands associated with
+	labels.	Examples are shown below:
+
+	  jmp  NEAR PTR	pointer[bx] ; Legal
+	  call FAR PTR location	    ; LegalŠ
+  Correction
+
+	When evaluating	expressions, MASM does 16-bit arithmetic except
+	when the 80386 processor is enabled. If	the .386 or .386P
+	directive has been given, MASM does 32-bit arithmetic. This
+	behavior is consistent with earlier versions of	MASM, which
+	always did 16-bit arithmetic. The notes	in Sections 9.2.1 and
+	9.2.1.5	of the Programmer's Guide are incorrect. They should say
+	that MASM always does 16-bit arithmetic.
+
+  Clarification
+
+	The description	of declaring external symbols in Section 8.2
+	is incomplete and the example is incorrect. You	cannot
+	access the segment of an external far data variable with the
+	@FARDATA equate. Instead you must use the SEG operator as
+	shown below:
+
+		 .FARDATA
+		 EXTRN	   fvar:WORD	   ; FAR variable in far data
+		 .CODE
+	  start: ASSUME	   es:SEG fvar	   ; Tell the assembler
+		 mov	   ax,SEG fvar	   ; Tell the processor
+		 mov	   es,ax
+
+	This is	the same limitation described for communal variables
+	in Section 8.4.	The reason is that under the DOS segment
+	conventions, multiple far data segments	share the same name
+	(FAR_DATA) and have private combine type. Segments with	the
+	same name can only be distinguished indirectly using the SEG
+	operator.
+
+  Clarification
+
+	The .286P and .386P processor directives enable	instructions
+	that are normally used in systems programming. However,
+	some of	these instructions do not necessarily require that
+	the processor be in privileged or protected mode.
+
+  Correction
+
+	Public absolute	symbols	must be	declared during	pass 1.	This
+	means that aliases for absolute	symbols	or other forward
+	references to them will	cause errors. For example, the
+	following code generates an error:
+
+		 PUBLIC	lines
+	  lines	 EQU	rows
+	  rows	 EQU	25
+
+	This behavior is different than	in previous versions of	MASM
+	and contrary to	the note in Section 8.1.
+
+Š
+  Behavior Change
+
+	Some errors and	questionable practices that were ignored by
+	earlier	versions are now flagged as errors. As a result,
+	existing source	code may produce errors	or warnings.
+	The following are examples:
+
+	  - Labels defined only	during pass 1 will cause errors	if
+	    used in expressions.
+	  - A CS assume	that changes from pass 1 to pass 2 causes
+	    an error.
+	  - Constants are now checked for type overflow.
+	  - Reserved words used	as labels produce warnings.
+	  - The	OFFSET operator	used with a constant causes an error.
+
+  ==( CREF.EXE )==
+
+  New Feature
+
+	Cross-reference	listing	files created with CREF	now have an
+	additional symbol. A line number followed by + indicates
+	that a symbol is modified at the given line. For example:
+
+	  TST .	. . . .	. . . .	. . . .	.  134#	  237	 544+
+
+	The symbol TST is defined at line 134, used at line 237, and
+	modified at line 544.
+
+  ==( MASM.EXE and LINK.EXE	)==
+
+  Clarification
+
+	The description	of STACK combine type in Section 5.2.2.3
+	does not explain how multiple initialized stack	segments are
+	combined. The total size of the	stack is the total size	of
+	all stack definitions. LINK puts initialized data for each
+	defined	stack segment at the end of the	stack. Data initialized
+	in the last segment linked overrides data initialized in
+	previoussegments. This behavior	is usually not relevant, since
+	most programs only define one stack of uninitialized data.
+	Stack data cannot be initialized with simplified segment
+	directives.
+
+  ==( CodeView Debugger	)==
+
+  New Feature
+
+	The /R option has been added to	enable the CodeView debugger
+	to use the debug registers (DR0, DR1, DR2, and DR3) of the
+	80386 processor. The option is ignored if you do not have an
+	80386 processor.
+
+	The display does not change to indicate	that the debug
+	registers are in use, but debugger operations withŠ	tracepoint or trace memory statements (but not with
+	watchpoint statements) will be much faster. Any	of the
+	following conditions will prevent the debugger from using
+	debug registers:
+
+	  1) /E	is used.
+	  2) More than four tracepoints	are set.
+	  3) A tracepoint watches more than four bytes of memory.
+	  4) A watchpoint is set.
+
+  Clarification
+
+	The Pascal expression evaluator	described in the CodeView
+	and Utilities manual is	not implemented	in this	version	of
+	the CodeView debugger. It will be implemented in the
+	debugger supplied with the next	version	of Pascal, which
+	will also produce executable files with	CodeView symbolic
+	information. Current versions of Pascal	do not work with the
+	CodeView debugger.
+
+  Clarification
+
+	Section	4.2, "FORTRAN Expressions," of the CodeView and
+	Utilities manual should	mention	that FORTRAN relational
+	operators do not work with string variables or constants.
+
+  Warning
+
+	Some versions of the GENOA EGA short card are incompatible
+	with CodeView when used	with a mouse. You can work around this
+	problem	by turning off the mouse with /M.
+
+  ==( LINK.EXE )==
+
+  New Feature
+
+	The following new LINK message warns about a practice that is
+	legal in real mode, but	illegal	in protected mode:
+
+	  warning L4003: intersegment self-relative fixup at <position>
+
+	In assembly-language, the warning only occurs if the DOSSEG
+	directive or /DOSSEG linker option is used. It indicates a
+	16-bit jump to an address in another segment. For example,
+	the following code produces the	error:
+
+	  _TEXT	  SEGMENT
+		  EXTRN	   doit:NEAR
+		  jmp	   _TEXT2:doit
+		  .
+		  .
+		  .
+	  _TEXT	  ENDS
+
+	  _TEXT2  SEGMENTŠ		  PUBLIC   doit
+	  doit	  PROC	   NEAR
+		  .
+		  .
+		  .
+	  doit	  ENDP
+	  _TEXT2  ENDS
+
+	The warning usually indicates a	fatal error in high-level-
+	language programs. It can occur	when the /NT option is used
+	to compile a small-model C program.
+
+  ==( Mixed-Languages Programming Guide	)==
+
+  Clarification
+
+	Naming convention rules	on page	10 are incomplete. If you
+	combine	BASIC with other high-level languages, avoid using
+	symbolic names longer than eight characters. Pascal and	C
+	will recognize only the	first eight characters,	whereas
+	BASIC will recognize more than eight characters.
+
+  Clarification
+
+	The example programs for BASIC in Chapter 6 will not work
+	with QuickBASIC	Versions 2.0 or	3.0. They will work if you
+	rewrite	the function as	a subprogram, and omit the DECLARE
+	statement. Functions and DECLARE statements will be supported
+	in future versions of Microsoft	BASIC compilers.
+
+  ==( Macro Files )==
+
+  New Feature
+
+	Macro files have been added to the Macro Assembler package.
+	The following files are	provided:
+
+	      MIXED.INC	      For defining assembler procedures
+			      that can be called from high-level
+			      languages
+
+	      MIXED.DOC	      Documentation for	the macros in
+			      MIXED.INC.
+
+	      DOS.INC	      For calling common DOS interrupts
+
+	      BIOS.INC	      For calling common BIOS interrupts
+			      used on IBM and IBM-compatible computers
+
+	      MACRO.DOC	      Description, syntax, and reference
+			      for using	the macros in DOS.INC and
+			      BIOS.INC.
+
+
