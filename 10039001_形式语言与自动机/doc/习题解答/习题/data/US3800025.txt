@@ -1,0 +1,194 @@
+
+[in 3,800,025
+[45] Man 26, 1974
+United States Patent
+Fox
+[54] RECOVERY OF TUNGSTEN FROM LOW GRADE TUNGSTEN ORES
+[75] Inventor: Joseph S. Fox, Lewiston, N.Y.
+[73] Assignee: Union Carbide Corporation, New York, N.Y.
+[22]
+[21] Appl. No.: 239,618
+[52] U.S. Cl..................... 423/61, 423/53
+[51] Int. Cl.........................COlg 41/00
+[58]	Field of Search................ 423/53, 61 56
+[56]	References Cited
+UNITED STATES PATENTS
+1,015,469	1/1912	Blecker............... 423/65
+2,501,952	3/1950	Maier................  423/53
+FOREIGN PATENTS OR APPLICATIONS
+122,051	1/1919	Great Britain......... 423/53
+227,521	1/1960 Australia..................... 423/61
+607,641	10/1960 Canada....................... 423/61
+Primary Examiner—Herbert T. Carter
+Attorney, Agent, or Firm—Frederick J. McCarthy, Jr.
+[57]	ABSTRACT
+A method of extracting tungsten from ores containing low tungsten concentrations comprising the steps of roasting a particulated low grade tungsten-containing ore in the presence of the reagents Na2C03 or Na3P04 and NaCl, followed thereafter by water-leaching and filtering. About 85 percent of the tungsten reports in the filtrate whereupon it can be extracted by conventional techniques.
+4	Claims, No Drawings
+Filed:	Mar. 30, 1972
+2
+1
+3,800,025
+RECOVERY OF TUNGSTEN FROM LOW GRADE TUNGSTEN ORES
+FIELD OF THE INVENTION	5
+This invention is directed to a simplified and economical process for substantially recovering tungsten from a low grade ore containing less than about 5 percent tungsten trioxide.
+10
+BACKGROUND OF THE INVENTION
+Tungsten trioxide (WO,,) is found in ore deposits in the United States and other countries in various concentrations. In addition, the various grades of deposits contain many other constituents such as calcium, iron, silica, manganese and the like. The economical extraction of tungsten from ore grades containing in excess of 5 percent W03 has been accomplished by the physical up-grading process which consists mainly in the steps 2q of separating the scheelite from the ore by physical methods and then dissolving the tungsten with Na2C03 under pressure in an autoclave.
+The extraction of tungsten from low grade ore containing less than about 5 percent W03 has been a major 25 problem to industry. One method successfully employed for the extraction of tungsten from low grade ore, however, has entailed the roasting of the ore with various amounts of calcium oxide (CaO) and calcium chloride (CaCl2). The roasting is conducted at a tern- 30 perature of about 900°C. for a period of about three hours whereupon the roasted ore is then pressure leached at an elevated temperature using sodium carbonate (Na2C03). The filtering of the leach solution nominally yields an extraction of W03 of about 92 to 35 97 percent. Although this process is successful in extracting a percentage of the W03 from low grade ore, it is rather costly and time consuming to be carried out on a large scale basis for the recovery of tungsten.
+U.S. Pat. No. 1,013,364 discloses a method for extracting tungsten from ore deposits whereby the ore is roasted in the presence of Na2C03 at a temperature between 650°C. and 800°C. The calcines are then leached with water, or NaOH, or leached under pressure with 45 a Na2C03 solution. The use of Na2C03 alone in the roast cycle has been found to inadequately produce tungsten solubilization to render the process suitable for commercial exploitation.
+The present invention overcomes the above limita- 50 tions and is directed primarily to a simplified process for economically recovering tungsten from a low grade tungsten ore containing less than about 5 percent tungsten trioxide.
+55
+SUMMARY OF THE INVENTION
+The invention relates to a roast-water leach process whereby at least 70 percent of the tungsten can be extracted from a low grade tungsten ore. The ore is first pulverized to a particulated form whereupon it is then 60 roasted in the presence of sodium chloride (NaCl) and at least one of the reagents selected from the group consisting of sodium carbonate (Na2C03) and sodium phosphate (Na3P04). The roast is heated in a water- 65 containing atmosphere at a temperature and for a time period sufficient to solubilize the tungsten values in the ore according to one of the following reactions:
+Na2C03 + W03 NasWO, + C02 and H20 + 2NaCl + W03 Na2W04 + 2HC1
+OR
+2Na3P04 4- Metal Tungstate (i.e. 3CaW04) 3Na2W04 + Metal Phosphate [i.e. Ca3(P04)2] and H2Q + 2NaCl + W03 Na2W04 + 2HC1
+The burning of natural gas in the presence of air during the roasting step produces a water-containing atmosphere. If the wet atmosphere is less than desired, then an excessive amount of wet air could be passed over the ore mixture during the roasting step.
+The roasted ore is then water-leached whereupon the soluble tungsten is substantially dissolved in the mixture. The tungsten-containing mixture is thereafter filtered by conventional means whereupon the tungsten reports in the filtrate where it can then be extracted by conventional techniques such as by solvent extraction and stripping.
+The ore can be pulverized, ground or otherwise granulated to a size substantially between about 50 Tyler mesh and about 325 Tyler mesh with a size substantially between about 200 Tyler mesh and about 325 Tyler mesh being preferable. The particulated ore will thus be in a form suitable to facilitate the reaction of the tungsten values in the ore with Na2C03 or Na3P04, and NaCl to produce a soluble state of the tungsten according to the above reactions.
+In the preferred embodiment, the ratio of the sodium carbonate or sodium phosphate reagent to sodium chloride which is to be added to the ore prior to roasting is variable but should be between about 1/1 and about 1/3 with the preferable ratio being about 1/1. The proportions should be such that the tungsten in the ore can be substantially reduced to a soluble form during roasting according to the above reactions (Equation I and II). A suitable proportion of the sodium carbonate or sodium phosphate, and sodium chloride for the process of this invention can be between about 6 percent and about 30 percent for the former and between about 6 percent and about 30 percent for the latter as based on the weight of the ore. The preferred proportion when using sodium carbonate in the roasting step should be between about 6 percent and about
+12.5	percent sodium carbonate and between about 7 percent and about 12.5 percent sodium chlorode as based on the weight of the ore. It is within the scope of this invention that lower proportions of sodium carbonate and sodium chloride can be employed but lowered recovery of tungsten would result. When employing sodium phosphate as the reagent in the roasting step, the preferred proportion would be between about 10 percent and about 15 percent sodium phosphate and about 15 percent sodium chloride as based on the weight of the ore.
+The roasting temperature of the ore, with the added reagents Na2C03 or Na3P04, and NaCl, is variable with a temperature about 600°C. and about 900°C. being suitable and a temperature between about 750°C. and about 850°C. being preferable. The roasting time should be between about 1 and about 3 hours since a roasting time in excess of 3 hours would not appreciably increase the yield of soluble tungsten values.
+The water-leaching of the roasted ore can be carried out at a temperature of between about 50°C. and about 1Q0°C. for a time period of no longer than about 4
+3,800,025
+3
+hours and at least more than one-half hour. This will enable the substantially soluble form of the tungsten (Na2W04) to be dissolved in the liquor. The mixture, so formed, can thereafter be filtered whereupon the tungsten values reporting in the filtrate can be recovered by conventional techniques such as solvent extraction and stripping.
+In the preferred embodiment, sodium carbonate would be selected as one of the reagents rather than sodium phosphate because sodium carbonate is less expensive and is less of a polluant than sodium phosphate. Thus the increased cost of sodium phosphate over sodium carbonate would render the former somewhat less desirable for large scale extraction of tungsten values from low grade tungsten ores. However, the benefit derived from the elimination of a pressure leach procedure as required in the prior art methods for extracting tungsten from low grade ores makes the use of either Na2C03 or Na3P04 admirably suited for such tungsten extraction.
+EXAMPLE 1
+Low grade tungsten ore obtained from Golconda, Nevada was chemically and spectrographically analyzed to determine the composition of the ore. The results of the analysis are shown in Table 1 and disclose that the percentage of tungsten trioxide (W03) in the ore was 1.12 percent. Thirteen test samples, each weighing 50 grams and sized 200 Tyler mesh and finer, were placed in separate 4 inch by 6 inch rectangular Inconel *
+(Trademark for alloy containing — 76 percent Ni, 16 percent Cr and 6 percent Fe.) dishes along with various proportions of Na2C03 and/or NaCl. Each sample was roasted in a muffle furnace for three hours at various temperatures. The calcines of each sample were then air cooled and water leached for 4 hours at the boiling point. The mixtures, so formed from each sample, were then filtered and water washed. The filtrate and residue from the filtration were analyzed from tungsten trioxide, the results of which are found in Table 2. In addition, Table 2 shows the proportions of Na2C03 and/or NaCl added during the roast and the temperature at which the roast was performed. As demonstrated from the results of these tests, the amount of tungsten values extracted from the ore increased with the amount of NaCl added. The extraction of tungsten values from the ore using 10 percent NaCl and 10 percent Na2C03 in the 800°C, roast (Test 6) was 88 percent. A favorable result was also obtained when 10 percent Na2COa and 30 percent NaCl was added to the roast (Test 2). The addition of only Na2C03 in the 900°C. roast (Test I), resulted in the ore fusing in the dish thereby preventing the extraction of the tungsten values. Several of the tests conducted with the addition of only Na2COa in various proportions in the ore roast at different temperatures yielded an extraction of tungsten values from a low of 15 percent (Test 5) to a high of 69 percent (Test 7). The increase in the extraction of tungsten values, under identical roasting conditions, using the combination of Na2C03 and NaCl in the roast over the use of Na2C03 alone, is demonstratively apparent from the test results. The best extraction of W03 from the ore as illustrated by the tests is an addition of 10 percent Na2C03 and 10 percent NaCl to the ore prior to roasting at 800°C. Variation in the roasting temperature and the proportions of the reactants, Na2COa and NaCl, in the roast also gave good tungsten recovery from the ore as illustrated from the test results.
+TABLE 1
+CHEMICAL ANALYSES Moisture	3.41%
+W03	1.12% (1.16% on oven dry basis)
+SPECTROGRAPHIC ANALYSES
+Elements	Range in %
+A1	0.8-8
+As	0.03-0.3
+B	0.008-0.08
+Ba	0.08-0.8
+Be	0.0008-0.008
+Ca	Major
+Cr	0.002-0.02
+Cu	0.0008-0.008
+Fe	Major
+Ge	0.008-0.08
+Mg	0.04-4
+Mn	0.8-8
+4
+TABLE 1-Continued
+CHEMICAL ANALYSES
+Na	0,3-3
+Ni	0.004-0.04
+Pb	0.004-0.04
+Si	Major
+Sr	0.04-0.4
+Ti	0.08-0.8
+V	0.004-0.04
+W	0.8-8
+Zr	0.002-0.02
+TABLE 2
+Reagents Added	W03 Extraction After
+-----------------;---- Filtration
+Test No.	Name	Amount g./ioo g.Ore	Temp, of Roast °C.	% wo3 Ext.	% W03 in Residue
+1	Na2C03 NaCl	30 0	900	Fused	in Dish
+2 NaCl	Na2C03 30	10	. 900	84	0.17
+3 NaCl	Na2C03 20	10	900	78	0.23
+4 NaCl	Na2C03 10	10	900	74	0.27
+5 NaCl	Na2C03 0	10	900	15	1.07
+6 NaCl	Na2C03 10	10	800 (85-87)	88 (0.17)*	0.14
+7 NaCl	Na2C03 0	10	800	69	0.39
+8 NaCl	Na2C03 10	. 10	700	79	0.22
+9 NaCl	Na2C03 0	l.o	700	51	0.51
+10 NaCl	Na2C03 30	10	550	20	0.97
+11 NaCl	Na2C03 0	30	550	38	0.77
+12 NaCl	Na2C03 10	30	400	24	0.94
+13 NaCl	Na2C03 0	30	400	20	0.98
+*(0.17%) by chemical analysis
+EXAMPLE 2
+Eighteen samples of low grade tungsten ore obtained from Golconda, Nevada were analyzed and found to contain 1.48 per cent tungsten trioxide (W03). Each sample, weighing 50 grams and sized 200 Tyler mesh and finer, was placed in separate 4 inch by 6 inch rectangular Inconel dishes along with various proportions of Na2C03 and/or NaCl. Each sample was roasted in a muffle furnace for various time periods at various temperatures, The calcines of each sample were than air cooled and water leached for four hours at the boiling point. The mixtures so formed from each sample, were then filtered and water washed. The filtrate and residue from the filtration were analyzed for tungsten trioxide, the results of which are found in Table 3. In addition, Table 3 shows the proportions of NajC03 and/or NaCl added during the roast and the temperature at which the roast was performed. As demonstrated from the results of these tests, excellent tungsten recovery was had using Na2C03 to NaCl ratios of 6.25/10 (Test 6) and 1/1 (Tests 11 through 14). The 1/1 ratio of Na2C03 to NaCl appears to be effective only when NaCl is present in an amount greater than 7 percent as based on the weight of the ore.
+5
+1°
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,025
+5	6
+TABLE 3
+Reagents Added
+W03 Extraction After Filtration
+Test No.	g./IOO g.Ore NaaC03	g./lOO g.Ore NaCl	Temp, of Roast (hr.)	Roast Time (hr.)	% WO, Ext.	% W03 in Residue
+1	3.00	10.0	800	3	20.3	1.27
+2	3.7 5	7.5	800	3	31.6	0.94
+3	3.75	10.0	800	3	35.8	0.78
+4	5.00	5.00	800	3	30.8	0.77
+5	5.00	7.5	800	3	66.2	0.50
+6	6.25	10.0	800	3	87.4	0.20
+7	7.5	7.5	800	3	78.8	0.31
+8	5.00	0.0	800	3	2.7	1.18
+9	0.0	5.0	800	3	1.6	1.09
+10	12.5	12.5	800	3	89.3	0.16
+11	10.0	10.0	850	3	85.0	0.20
+12	10.0	10.0	750	3	86.4	0.21
+13	10.0	10.0	800	5	86.0	0.20
+14	7.5	7.5	800	1	75.0	0.41
+15	6.0	6.0	800	3	58.2	0.63
+16	6.0	12.0	800	3	78.6	0.32
+17	6.0	12.0	900	3	65.0	0.47
+18	3.0	8.0	800	3	18.9	1.43
+EXAMPLE 3	What is claimed is:
+Six test samples of the 1.12 percent W03 ore of Example 1, each weighing 50 grams and sized 200 Tyler mesh and finer, were placed in separate 4 inch by 6 inch rectangular Inconel dishes along with various proportions of Na3P04 and/or NaCl. Each sample was roasted in a muffle furnace for 3 hours at 900°C. The calcines of each sample were then air cooled and water leached for 4 hours at the boiling point. The mixtures, so formed from each sample, were then filtered and water washed. The filtrate and residue from the filtration were analyzed for tungsten trioxide, the results of which are found in Table 4. In addition, Table 4 shows the proportions of Na3P04 and/or NaCl added during the roast. As demonstrated from the results of these tests, excellent tungsten recovery was had using Na3P04 to NaCl ratios of 10/15 (Test 3) and 1/1 (Test 4).
+As shown in Table 4, an extraction of 92 percent W03 was obtained using an addition to the ore prior to roasting of 15 percent Na3P04 and 15 percent NaCl as based on the weight of the ore.
+TABLE 4
+	Reagents Added	W03 Extraction After
+		Filtration
+Test No.	Name g./lOO g.	% WOa Ext. % WOj in
+	Ore	Residue
+1	Na3P04	2.5	53	0.52
+	NaCl	15		
+2	Na3PO,	5	61	0.35
+	NaCl	15		
+3	Na.iPO,	10	79	0.18
+	NaCl	15		
+4	Na.iP04	15	92	0.11
+	NaCl	15		
+5	NaCl	30	23	1.03
+6	NaCl	50	21	1.05
+1.	A process for extracting tungsten values from a low grade tungsten ore comprising the steps:
+a.	roasting a particulated tungsten-containing ore in a water containing atmosphere in the presence of NaCl and at least one of the reagents selected from the group consisting of Na2C03 and Na3P04, at a temperature in the range of about 600°C to about 900°C for about 1 to 3 hours, the amount of NaCl being from about 6 to 30 percent of the weight of the ore, and the aggregate amount of selected reagents being from about 6 to 30 percent of the weight of the ore and also being in a weight ratio to the amount of NaCl of from about 1/1 to 1/3;
+b.	water leaching the resulting calcines of the roasted ore at a temperature in the range of about 50°C to l00°C for from about one-half hour to 4 hours to substantially dissolve the soluble tungsten values of said calcines in the leach liquor; and
+c.	filtering the leach liquor during which the tungsten values substantially report to the filtrate where they can then be extracted.
+2.	The process of claim 1 wherein the particulated ore is substantially sized between about 50 Tyler mesh and about 325 Tyler mesh.
+3.	The process of claim 1 wherein the step a. the selected reagent is Na2C03 and is present in an amount between about 6 percent and about 12.5 percent; said NaCl is present in an amount between about 7 percent and about 12.5 percent and said temperature of the roast is between about 750°C. and 850°C.
+4.	The process of claim 1 wherein in step a. the selected reagent is Na3P04 and is present in an amount between about 10 percent and about 15 percent; said NaCl is present in an amount about 15 percent and said temperature is present between about 750°C- and about 900°C.
+* * * * *
+25
+30
+35
+40
+45
+50
+55
+60
+UNITED STATES PATENT OFFICE
+CERTIFICATE OF CORRECTION
+So. l-SnO.O?1) _________Issue Bate March 26, 1974
+1
+Inv*ntor(a) Joseph. S. Fox	____________________
+It is certified that error appears in the above-identified patent and that said Letters Patent are hereby corrected as shown below:
+r"
+In column 2 at lines 1, 2 and 7 after "WO3" insert -- --->
+In column 2 at line 5 after "(i.e. CaWO^)"
+insert -- ---
+Signed and sealed this 10th day of September 1974.
+(SEAL)
+Attest:
+C. MARSHALL DANN Commissioner of Patents
+McCOY M. GIBSON, JR. Attesting Officer

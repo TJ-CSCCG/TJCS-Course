@@ -1,0 +1,341 @@
+
+-18,14
+SR
+X R 3*800*010
+United States 1
+Nachbur et al.
+]	3,800,010
+] Mar. 26, 1974
+[54]
+[75]
+[73]
+[22]
+[21]
+PHQSPHONOPROPIONIC ACID AMIDE
+DERIVATIVES
+Inventors: Hermann Nachbur, Dornach;
+Arthur Maeder, Therwil, both of Switzerland
+[57]	ABSTRACT
+The subject of the invention are phosphonopropionic
+acid amide derivatives of the formula
+Assignee: Ciba-Geigy AG, Basel, Switzerland Filed: Feb. 4, 1971	(l)	Ri-0 X V / \ r2— o ch2
+Appl. No.: 112,769		
+- I
+Y
+OH
+[30] Foreign Application Priority Data
+Feb. 6, 1970 Switzerland............... 1775/70
+[52] U.S. Cl....... 260/943, 106/15 FP, 260/45.7 P,
+260/45.7 PS, 424/211 [51] Int. Cl..................C07f 9/40, C08f 45/58
+[58] Field of Search................... 260/943
+[56]	References Cited
+UNITED STATES PATENTS
+3,259,540	7/1966 Pianka et al........ 260/943 X
+Primary Examiner—Anton H. Sutto
+Attorney, Agent, or Firm—Joseph G. Kolodny; Stanley
+A. Marcus
+wherein R, and R2 each denote an alkyl, halogeno-alkyl or alkenyl radical with up to 4 carbon atoms each, X denotes a sulphur atom or preferably an oxygen atom, Y denotes a methyl group or preferably a hydrogen atom and A denotes a halogenated alkyl radical. These compounds are made by reacting the corresponding phosphonopropionic acid amide with the corresponding halogenoaldehyde. The compounds are used as flameproofing agents for fibers or in plas-tics or they serve as intermediates for the manufacture of other valuable compounds.
+11 Claims, No Drawings
+3,800,010
+PHOSPHONOPROPIONIC ACID AMIDE DERIVATIVES
+The subject of the invention are phosphonopropionic acid amide derivatives of the formula
+wherein Ri, R2, X and Y have the indicated meaning and Z denotes a halogen atom.
+Preferred phosphonopropionic acid amide derivatives correspond to the formula
+(6)
+(1)	Ki-0 X
+V
+R2-0/ ^CHj—CH-CO-NH-CH-A	10
+I	I
+Y	OH
+It i—0 X
+\ ^ p
+R,-o'/ ^CHj-CH-CO-NH-CH-CtZ)!
+±	in
+wherein Ri and R2 each denote an alkyl, halogenoalkyl or alkenyl radical with up to 4 carbon atoms each, X denotes a sulphur atom or preferably an oxygen atom, Y denotes a methyl group or preferably a hydrogen atom and A denotes a halogenated alkyl radical.
+In particular, these compounds are phosphonopropionic acid derivatives of the formula
+wherein Ri, X, Y and Z have the indicated meaning. Compounds of particular interest are phosphor.opro-15 picnic acid amide derivatives of the formula
+(7)
+20
+Ks-0 X
+X
+Ra—0/	CHs—CH—GO—NH—CH—C(Z,)a
+Y	(!)H
+(2)
+Ri-0 X P
+Rj-c/ \hj-CH-CO-NH-CH-Ai i	OH
+wherein R3 denotes an ethyl radical or especially a 25 methyl radical and Z! denotes a chlorine or bromine atom, and X and Y have the indicated meaning.
+Particularly advantageous phosphonopropionic acid amide derivatives correspond to the formula
+wherein Ai denotes a polyhalogenated alkyl radical 3q with 1 to 4 carbon atoms and R,, R2, X and Y have the (8) indicated meaning.
+Amongst these phosphonopropionic acid derivatives, those of the formula
+Ra-0 0
+Ra-0
+OH
+^ ^CHe—CHa— CO— NH— in— C(Zi)a
+(3)
+Ri-0 X \ ^
+P
+R,-0/ ^CHr-CH-C 0—NH—CH—A2
+35 wherein R3 and Zj have the indicated meaning.
+Amongst the phosphonopropionic acid amide derivatives, those of the formula
+Y	OH
+wherein A2 denotes a dihalogenomethyl or preferably trihalogenomethyl radical, and Ri, R2, X and Y have the indicated meaning, are preferred.
+Very suitable compounds are above all phosphonopropionic acid derivatives of the formula
+(«
+Ra-0 X \ ^
+P
+Re—o'7 \)Ha—CH— CO— NH— CH—As Y	in
+40 (g)
+45
+Rj—0	O
+\ ##
+P
+R3-0'/ ^CHe-CHe-CO-NH-CH-CCI,
+Alt
+wherein R3 has the indicated meaning, enjoy particular preference, and amongst these above all the compound of the formula
+50
+(10)	H3C-0	0
+HjC-0'/ ^CHs—CHa—CO—NH—CH—CCI3
+55	Ah
+wherein A3 denotes a trihalogenomethyl radical, and R,, R2, X and Y have the indicated meaning.
+The phosphonopropionic acid amide derivatives above all correspond to the formula
+(5)	Ri—0	X
+\ ^
+P
+Re—o' ^CHe—CH—CO—NH—CH—C(Z)3
+Y	Ah
+65
+In Formulae (1) to (5), R, and R2 can thus be identical or different from one another. Preferably, R, and R2 denote two identical radicals of the indicated composition, as is for example implied in the Formula (6). n-Butyl, n-propyl, isopropyl, ethyl, methyl, allyl or chlo-roalkyl groups, such as 2-chloroethyl or 2,3-dichloropropyl groups, may be mentioned as examples. Ethyl radicals, and above all methyl radicals, are preferred.
+The radicals A, A1; A2 and A3 are as a rule substituted by bromine or especially by chlorine atoms.
+3,800,010
+3
+The halogen atoms Z in the Formulae (5 ) and (6) are also preferably bromine atoms or especially chlorine atoms.
+The phosphonopropionic acid amide derivatives of the formula (1) are appropriately manufactured by re- 5 acting a) a phosphonopropionic acid amide of the formula
+4
+wherein R;), X and Y have the indicated meaning.
+The preferred compound of the Formula (10) is manufactured using 3-(dimethylphosphonopropionic acid amide).
+The halogenoaldehydes to be used for the manufacture of the compounds of the Formulae (2) to (4) correspond to the formulae
+(ID
+Hi—0	X
+\ ^
+P
+R,-0/ ^CH-CH-CO-NHj
+I
+Y
+wherein R,, R2, X and Y have the indicated meaning, with b) a halogenoaidehyde of the formula
+(16)	0
+	/ H
+(17)	O t
+and	\ / H
+(18)	0 (
+	)/
+or its hydrate, in an inert organic solvent, at elevated temperature, for example at 50° to 150°C. The components a) and b) are here as a rule reacted with one another in a molar ratio of 1:1. Preferably, the reaction temperature is 70° to 120°C. Possible inert organic solvents, that is to say solvents which do not undergo reactions with the reactants are for example aromatic hydrocarbons such as xylene, toluene or especially benzene. The reaction is appropriately allowed to take place at the boiling point of the solvent used.
+To manufacture the phosphonopropionic acid amide derivatives of the Formula (2) to (5), phosphonopropionic acid amides of the Formula (11) are again used, and correspondingly, to manufacture phosphonopropionic acid amide derivatives of the Formula (6), phosphonopropionic acid amides of the formula
+(13)	Hi—o X
+X
+Hi—c/ VCIIi—CII— CO—NIIj "ST
+25 wherein Ah A2 and A3 have the indicated meaning. Where the halogenoaldehydes are capable of forming stable hydrates, the corresponding hydrates can also be used instead of the free aldehydes in the manufacture of the phosphonopropionic acid amide derivatives. In 30 particular, halogenoacetaldehydes, such as chloral or bromal, are capable of forming stable hydrates.
+To manufacture the compound of the Formulae (7) and (8), the aldehydes of the formula
+40
+or
+(20) 0^
+45	X'C—C(Zi)j
+/
+H
+wherein Ri, X and Y have the indicated meaning, are used.
+The phosphonopropionic acid amide derivatives of the Formulae (7) to (9) are manufactured from phosphonopropionic acid amides of the formula
+(14)	Ra—0 X
+\ ^
+P
+Rj—0^ ^CHs-CH—CO—NH2
+Y
+or
+(15)	Rj—O O
+\ ^
+1^
+HJ-0/ \jH2-CHj-CO-NIl2
+wherein Z and Z[ have the indicated meaning, are used. The aldehyde of the Formula (20) can advantageously also be used as the hydrate. The compounds of the Formulae (9) and (10) are manufactured from chloral or chloral hydrate by reaction with the corresponding phosphonopropionic acid amide.
+The compounds, of the Formulae (1) to (10) can be employed in the most diverse fields, for example as flameproofing agents or pesticides. They can however also be used as intermediate products in the manufacture of other valuable compounds, since further reactions can be carried out at the hydroxyl group, or possibly also at the —NH— group, or the halogen atoms can be replaced by other substituents.
+If the compounds are used as flameproofing agents, cellulose-containing fibre materials, for example, can be provided with a flameproof finish. Possible fibre materials are, for example, linen, cotton, rayon, viscose staple or fibre mixtures of such materials with others, such as wool, polyamide fibres or polyester fibres.
+3,800,010
+5
+6
+Appropriately, compounds of the Formula (1) are used as solutions in organic solvents such as dimethyl-formamide or trichloroethylene.
+Another possibility for using the compounds of the Formula (1) as flameproofmg agents consists of incor- 5 porating them directly into the spinning composition of, for example, polyacrylonitrile. The phosphonopro-pionic acid amide derivatives can furthermore also be used for flameproofing polyurethanes, polystyrene, polyvinyl chloride, polyvinylidene copolymers or poly- 10 olefines, such as polyethylene or polypropylene, by incorporating them into the composition of these polymers.
+The percentages and parts in the examples which follow are units by weight, unless otherwise stated. The 15 relationship of parts by volume to parts by weight is as of ml to g.
+EXAMPLE 1
+90.5	parts (0.5 mol) of 3-(dimethylphosphono)- 20 propionic acid amide and 82.75 parts (0.5 mol) of chloral hydrate are suspended in 175 parts of benzene, and heated to the boiling point of the benzene, in a stirred flask of 500 parts by volume capacity, equipped ^ with a water separator, reflux condenser and thermometer. Over the course of 3 hours, 10 parts of water, originating from the chloral hydrate, are trapped in the water separator. When the separation of water is complete, the mixture is treated at the reflux temperature 30 for a further 15 hours. After cooling, the crystalline reaction product which has precipitated is filtered off, rinsed with a little ether and dried.
+Yield: 146 parts (89 percent of the theory), melting point 133 to 135°C (decomposition).	35
+A sample of the crude product is recrystallised from methanol and dried over phosphorus pentoxide.
+Melting point 140° to 141°C (decomposition).
+Elementary analysis confirms that the product obtained corresponds to the Formula (10).	40
+EXAMPLE 2
+133 parts (0.5 mol) of 3-(dibutylphosphono)-propionic acid amide and 82.75 parts (0.5 mol) of chloral hydrate in 210 parts of benzene are treated 45 analogously to Example 1, in the apparatus described in Example 1. After completion of the reaction, the benzene is removed by distilling it off in vacuo. 203 parts of a yellowish, highly viscous product corresponding to the following formula are obtained:	50
+distilling off the benzene, the crude product is recrystallised from isopropanol.
+The compound of the formula
+(22)
+CHiO
+\ ^ I*
+/ \
+CIIiO
+0
+Hr
+CIIj—CIIj—CO—Nil—Oil—0—-Hr ill Hr
+is obtained as a white powder.
+EXAMPLE 4
+139 parts (0.5 mol) of 3-[di-(chloroethyI)phos-phono] propionic acid amide and 82.75 parts of chloral hydrate (0.5 mol) are suspended in 250 parts of toluene, and heated to the boiling point of the toluene, in the apparatus described in Example 1.11 parts of water are collected in the water separator over the course of 35 minutes. Thereafter the mixture is cooled to room temperature, 200 parts by volume of methanol are added, and the solution is freed of insoluble constituents by filtration. Thereafter, the toluene-methanol mixture is removed in vacuo at 50°C.
+203 parts of a yellowish viscous paste are obtained; this crystallises completely after a few days, and corresponds to the product of the following formula
+(23)
+CI-CHi—CH2—0
+Cl-CHj—CHj—O'
+^P —CHi—CIIi— C 0—NH—CII— C—Cl
+EXAMPLE 5
+116 parts (0.5 mol) of 3-(diallylphosphono)pro-pionic acid amide and 82.75 parts of chloral hydrate (0.5 mol) are suspended in 250 parts of benzene, and heated to the boiling point of the benzene, in the apparatus described in Example 1. 9 parts of water are obtained over the course of 2 hours 40 minutes. Thereafter the mixture is cooled to room temperature, 100 parts by volume of methanol are added, and the solution is freed of insoluble constituents by filtration. Thereafter, the benzene-methanol mixture is removed in vacuo at 50°C. 191 parts of a yellowish, viscous product, corresponding to the product of the following formula, are obtained:
+(21)	C,H„0	0
+^p"^	Cl	55
+C)H(0/ NjHj-CHj-CO-NH-CH-O-CI
+d)H
+EXAMPLE 3	60
+87 parts (0.48 mol) of 3-(dimethylphosphono)-propionic acid amide and 135 parts of bromal (0.48 mol) in 175 parts of benzene are treated for 4Vz hours at the reflux temperature (78°C), in a stirred flask of 500 parts by volume capacity, equipped with a reflux condenser and thermometer. The reaction product separates out as a brownish-coloured viscous mass. After
+(24) CH2=CH-CHj-0	Cl
+^P-CHi-CHj-CO—NH—CH-C—Cl CHj=CH—CHj—O ^ ■	>	' Nil
+EXAMPLE 6
+97.5	parts of 3-(dimethylphosphono)-2-methylpropionic acid amide (0.5 mol) and 82.75 parts of chloral hydrate (0.5 mol) are suspended in 250 parts of benzene, and heated to the boiling point of the benzene, in the apparatus described in Example 1.10 parts of water are obtained over the course of 1 hour. Thereafter, the mixture is cooled to room temperature, 100 parts by volume of methanol are added, and the solu-
+3,800,010
+7
+tion is freed of insoluble constituents by filtration. Thereafter, the benzene-methanol mixture is removed in vacuo at 50°C. 187 parts of a light beige viscous product are obtained, which contains 10 percent of residual solvent, and the product of the following for- 5 mula:
+8
+rated into a spinning composition of polyacrylonitrile in dimethylformamide. The amount employed is 70 percent, relative to polyacrylonitrile.
+The film produced from the spinning composition is slightly opaque and can only be ignited with difficulty.
+(25) CITj-0	Cl
+P—CHj-CII—CO—NI-I—CH—C-Cl
+ciii-o/I iih	in XC1
+10
+EXAMPLE 7	15
+98.5	parts (0.5 mol) of 3-(dimethyl-thiophosphono)-propionic acid amide and 82.75 parts (0.5 mol) of chloral hydrate are suspended in 250 parts of benzene, and heated to the boiling point of the benzene, in the apparatus described in Example 1. Nine parts of water 20 are obtained over the course of 70 minutes. Therafter the mixture is cooled to room temperature, 150 parts by volume of methanol are added, and the solution is freed of insoluble constituents by filtration. Therafter, the benzene-methanol mixture is removed in vacuo at 25 50°C. 165 parts of a yellow, partly crystalline viscous product, corresponding to the following formula, are obtained:
+(25)
+CH3-0	Cl
+'''p-CIIj-CHr-CONII—CH-C—Cl
+cir3-o/s	d)H ^ci
+30
+35
+Use Examples EXAMPLE 8
+30 parts of the product according to Example 1 are ^ dissolved in 70 parts of dimethylformamide at room temperature, and a woven cotton strip is impregnated with this solution and dried at 100°C. The fabric possesses excellent flame-proof properties according to DIN 53,906.
+45
+EXAMPLE 9
+40 parts of the product according to Example 2 are dissolved in 60 parts of trichloroethylene at room temperature, and a woven cotton fabric is padded with this solution. Thereafter it is dried at 80° to 100°C.
+The fabric possesses a 43 percent deposit of shrinkproofing agents and shows a soft handle. The flameproofing effect according to DIN 53,906 is good.
+EXAMPLE 10	55
+30 parts of the product according to Example 3 are dissolved in 70 parts of dimethylformamide, and a woven polyester-cotton fabric (50:50 mixture) is padded with this solution. Thereafter it is dried at 100°C. 6Q
+The fabric possesses a 45 percent deposit of flame-proofing agent. The flameproofing effect according to DIN 53,906, at an ignition time of 12 seconds, is excellent.
+EXAMPLE 11
+A product of the Formula (13) according to Example (1), which is in the form of a white powder, is incorpo-
+EXAMPLE 12
+4.4 g of the compound of the Formula (10) are stirred into a polyurethane coating composition of 40 g of isocyanate-modified polyester, 2 g of reaction accelerator and 2 g of polyfunctional isocyanate as a crosslinking agent. This mixture is knife-coated onto a woven cotton fabric provided with a flameproof finish (wet film thickness 1 mm) and is subsequently dried at 25°C. A colourless, heat-resistant (5 minutes at 100°C) coating is produced. The fabric thus coated is tested for flameproof properties according to DIN 53,906. The ignition time is 6 seconds and the samples are 15 cm long. At the same time, a coating without addition of the compound of the Formula (10) is also tested.
+Flameproof	Without	With addition of the
+properties	addition	compound of the Formula (10)
+Burning time (seconds)	30	15
+Tear length (cm)	0	4.25
+The compound of the Formula (10) causes immediate extinction of the sample when the igniting flame is removed.
+EXAMPLE 13
+A woven cotton fabric already provided with a flameproof finish is coated by the “release process” with the following polyurethane preparations:
+Constituents Product of the formula:
+(23)	g
+(24)	g
+(25)	g
+(26)	g
+Dimethylformamide/methyl
+ethyl ketone
+1:1	ml
+Thermoplastic polyester-polyurethane resin (30% solution in 1:1, DFM/MEK)
+Preparation No.
+12	3	4	5
+iO 10	10 10	10
+50 50	50 50	50
+The coated fabric weighs 490 g/m2.
+After drying, the coating is tested for its flameproof properties as indicated in Example 12. The ignition time is 8 seconds.
+Preparation	Subsequent burning	Tear length
+No.	time, in seconds	in cm
+!	burns
+2	8	12
+3	1	9.5
+4	5	13
+5	3	12.5
+We claim:
+1. A phosphonopropionic acid amide derivative of the formula
+Rs—0	X
+\ ##
+P
+/ \
+Hi—0	CHj—CH—CO—NH—CH—A
+±	in
+9
+3,800,010
+10
+wherein Ri and R2each denote an alkyl, halogenalkyl or alkenyl radical with up to 4 carbon atoms each, X denotes a sulphur or oxygen atom, Y denotes a methyl group or a hydrogen atom and A denotes a halogenated 5 alkyl radical with 1 to 4 carbon atoms.
+2. A phosphonopropionic acid amide derivative according to claim 1 of the formula
+Ra— O O
+y
+\jH2-CIl2-CO-NII—CH-C(Zi)j
+Ei—O X
+\ ^
+P
+Ra—0/ ^CII2—CH—CO—NH—CH—A2
+I	Ah
+wherein A2 denotes a dihalogenomethyl or trihalogeno-methyl radical and R,, R2, X and Y have the meaning indicated in claim 1.
+3. A phosphonopropionic acid amide derivative according to claim 1 of the formula
+7. A phosphonopropionic acid amide derivative ac-10 cording to claim 5 of the formula
+15
+Ra—O 0 \ ^
+P
+Ra—o'' \jH2-CH2—CO—Nil—CH—CCla
+Ah
+8. The compound according to claim 1 of the formula
+20
+Ki-0 X
+\ tf#
+P
+Ra—Cir2-*-CH—CO— NH— CE—A;
+y	Ah
+H3C—0	0
+\ ^ p
+25	HaC-07" XCHa-CH2-CO-NH-CH-CCla
+A TT
+9. The compound according to claim 1 of the formula
+wherein A3 denotes a trihalogenomethyl radical and Rj, 30 R2, X and Y have the meaning indicated in claim 1.
+4. A phosphonopropionic acid amide derivative according to claim 1 of the formula 35
+35
+CHa-0	Cl
+^P—CHa—CH—CO—NH—CH—C-Cl
+CH3—Ah3	Ah Cl
+Ri-0 X
+\ **
+P
+Ri-O7” \jH2-CH—CO—NH— CH-C(Z)a
+±	Ah
+10. The compound according to claim 1 of the formula
+40
+Cl—CH2—CH2—0
+Cl
+wherein Z is a halogen atom.	p—CEr-ch2—co— nh— ch—C—ci
+5. A phosphonopropionic acid amide derivative ac-	ci— CH—ch2—o^A	Ah ^ci
+cording to claim 1 of the formula
+45
+Ra-0 X \
+P
+Ra—0^ '''CHa—CH—CO—NH—CH—C(Zi)a
+•A Ah .
+wherein R3 denotes an ethyl or a methyl radical and Z2 denotes a chlorine or bromine atom, and X and Y have the meaning in claim 1.
+6. A phosphonopropionic acid amide derivative according to claim 5 of the formula
+11. The compound according to claim 1 of the formula
+50
+CiHsO O
+C(H,0
+V
+/ \
+Cl
+CHj-CHa—CO— NH— CH—C—Cl
+Ah ^ci
+55
+* * * * *
+60
+65

@@ -1,0 +1,309 @@
+
+United States Patent H9]	tm 3,800,033
+Flawnetal.	[45] Mar. 26, 1974
+[ 54] HAIR CONTROL COMPOSITIONS AND METHOD OF USE
+[75] Inventors: Richard Edwin Flawn, Shepperton; Malcolm Richard Neam, Camberley; Peter John Petter,
+Maidenhead, all of England
+[73] Assignee: Lever Brothers Company, New York, N.Y.
+[22] Filed:	Dec. 7, 1972
+[21] Appl. No.: 313,077
+[30] Foreign Application Priority Data
+Dec. 8, 1971 Great Britain............ 56968/71
+[52] U.S. Cl.........................424/47, 424/71
+[51] Int. Cl..............................A6lk 7/10
+[58]	Field of Search.................... 424/71,47
+[56]	References Cited
+UNITED STATES PATENTS
+3,400,198	9/1968	Lang...................... 424/71
+3,723,616	3/1973	Erlemann et al............ 424/71
+Primary Examiner—Sam Rosen
+Attorney, Agent, or Firm—Louis F. Kline, Jr.
+[57]	ABSTRACT
+A hair control preparation, particularly an aerosol hairspray, comprises a solution of a film-forming resin and a normally solid plasticiser for the resin which gradually volatilises from the resin after the hair control preparation has been applied to the hair, the weight ratio of resin to volatile plasticiser being from 1:2 to 20:1.
+8	Claims, No Drawings
+3,800,033
+1
+HAIR CONTROL COMPOSITIONS AND METHOD OF USE
+This invention relates to hair preparations, and more particularly to hair control preparations for holding the hair in a desired configuration. Preparations of this kind include hair setting lotions and hairsprays, the most popular form of such product being the aerosol hairspray or hairdressing.
+These preparations act by forming a deposit of a filmforming resin on the hair which acts to hold the hair in place and maintain it in the desired configuration.
+Users of products of this type, particularly users of hairsprays, who use the products frequently find that the resin deposited on the hair tends to build up despite brushing of the hair between applications and that as a consequence the hair becomes progressively more difficult to comb and brush out. Furthermore, this accumulation of resin gives the hair an unnatural feel. One can, of course, mitigate this disadvantage by applying less resin to the hair but this, however, results in less hold being obtained.
+In the work leading up to the present invention we found that the resins which have the better hair retaining properties are those which are relatively flexible whereas those which are the more easily combed or brushed out of the hair are the more brittle resins. In other words, those resins having the lower glass transition temperatures (Tg) have the better hold characteristics and those of higher glass transition temperatures have the better comb-out properties.
+We have now discovered that improved hair control preparations can be formulated by including along with resin a resin-modifying agent which is normally solid (i.e., is solid at 20° C) and which softens the resin and improves its initial holding properties but which over a relatively short period of time, say Within 15 hours, volatilises from the hair whereby the resin is gradually converted into a form in which it is more easily combed out of the hair.
+Accordingly the invention provides a hair control preparation comprising a solution of a film-forming resin and a normally solid material which plasticises the resin and which gradually volatilises from the resin after applying the preparation to the hair, the weight ratio of resin to volatile plasticiser being from 1:2 to 20:1. .
+An advantage of the invention is that by the use of the volatile plasticiser one can improve the initial holding properties of the resin (matching that obtainable with a comparable or even greater amount of a softer resin) and produce a resin deposit which develops over a period of time an improved ease of removal as the plasticiser volatilises from the hair. From another aspect, the use of a volatile plasticiser in accordance with the invention permits one to improve the initial hold properties of a hair preparation without increasing the amount of the resin in the preparation: an increase in the amount of the resin would result in more resin being applied to the hair with the consequence that the hair would be more difficult to comb out.
+The film-forming resins used in preparations in accordance with the invention desirably have glass transition temperatures (Tg) of at least 20° C. The use of the Tg is a common way of characterising resins and is described for example by Burrell, H in “Official Digest,” 34, 131 (1962). It can be determined by the technique
+2
+known as Differential Thermal Analysis (see, for example, the method of Keavney, JJ and Eberlin, EC in J.Appl.Polymer Sci., 3 47 (1960). A high Tg is an indication of the brittleness of a resin. In accordance with our finding that the more brittle the resin the more easily it is combed out of the hair, the preferred resins used in hair compositions of this invention are those having a Tg of at least 35° C and usually no more than 150° C.
+The volatile plasticisers used in preparations in accordance with the invention desirably have a vapour pressure at a temperature of 25° and at a pressure of 760 mm Hg of from 0.00001 mm to 2 mm Hg. The preferred plasticisers have a vapour pressure of from 0.0001 mm to 0.1 mm Hg.
+Suitable combinations of resin and volatile plasticiser that illustrate the invention are listed below together with relevant glass transition temperature and vapour
+pressure data.	
+Resin	Compatible Volatile Plasticisers
+LUVISKOL VA 281 (a copolymer containing 20% vinyl pyrrolidone and 80% vinyl acetate having a Tg value of 42°C and supplied as a 50% solution in isopropanol)	propionamide benzoic acid salicylic acid menthol thymol methyl-2-naphthylketone
+LUVISKOL VA 37E (a copolymer containing 30% vinyl pyrrolidone and 70% vinyl acetate having a Tg value of 65°C and supplied as a 50% solution in ethanol	propionamide benzoic acid salicylic acid hexachloroethane benzophenone
+A copolymer containing about 43% methacrylic acid and about 57% methyl acrylate having a Tg value of 95°C	propionamide acetamide hexachloroethane benzophenone
+We have also found that propionamide is also a suitable volatile plasticiser for use with the following resins:
+Resin	Tg Value* °C
+Bina 405, an acrylic ester amide	
+copolymer containing carboxyl groups	90
+National Starch Resyn 28-1310, a copolymer of vinyl acetate and crotonic acid	47
+Aristoflex C, a copolymer of vinyl acetate and crotonic acid	48
+VEM 640 - M48, a vinyl terpolymer containing ester, acrylic and carboxyl groups (supplied as a 48% solution in ethanol)	35
+Gantrez ES 225, a copolymer of methyl vinyl ether and monoethyl ester of maleic acid (supplied as a 50% solution in ethanol)	90
+Gantrez ES 335-1, a copolymer of methyl vinyl ether and monoisopropyl ester of maleic acid (supplied as a 50% solution in isopropanol)	35
+Gantrez ES 435, a copolymer of methyl vinyl ether and monobutyl ester of maleic acid (supplied as a 50% solution in isopropanol)	96
+(* as determined by the Keavney et al. method)
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,033
+3
+The vapour pressures at a temperature of 25° C and at a pressure of 760 mm Hg of the volatile plasticisers referred to above are as follows:
+Volatile Plasticiser	Vapour Pressure (mm Hg)
+Propionamide	i,2 x io~2
+Benzoic acid	6.5 X 10—*
+Salicylic acid	1.4 X 10-*
+Menthol	5.0 X !0~2 *
+Thymol	1.6 X 10“2
+Methyl-2-naphthylketone	4.0 x 10-4 *
+Hexachloroethane	6.3 X 10-'
+Benzophenone	2.0 X 10-" *
+Acetamide	1.8 X 10-2
+* estimated values
+It is to be understood that the invention is not limited solely to the resin/volatile plasticiser combinations specifically referred to above. Some experimentation may be necessary in order to select other suitable combinations of resin and normally solid volatile plasticiser for use in the present invention. A plasticiser for one resin is not necessarily suitable for plasticising another resin. For instance, benzophenone, when used with resins obtained by copolymerising vinyl pyrrolidone with no more than an equal amount of vinyl acetate (and with certain other water-soluble resins) is reported in British Patent Specification No. 868,879 to result in a stiffening of the resin (i.e., the opposite of a plasticising effect).
+The film-forming resin and the volatile plasticiser are both present in the hair preparation as a solution in a mutually suitable solvent. As an example, the solvent can be a volatile organic solvent such as an alcohol, especially ethanol, isopropanol or 2-methoxyethanol: methylene chloride is also a suitable volatile organic solvent.
+The weight ratio of film-forming resin to volatile plasticiser in the hair preparation according to the invention is from 1:2 to 20:1. By appropriate choice of the ratio of resin to plasticiser and of the content of resin in the solution, it is possible to obtain hair preparations which differ widely in their properties.
+At low resin:plasticiser ratios, the difference between the degree of hold exerted by the hair preparation initially and that exerted when the majority of the plasticiser has volatilised is quite marked, whereas at high resimplasticiser ratios the difference between the initial hold and the hold at a later time is less marked.
+The preferred weight ratio of film-forming resin to volatile plasticiser is from 1:1 to 10:1.
+The amount of resin present in the solution will depend on the degree of hold the product is intended to produce and will usually be from 1 to 10 percent by weight of the solution.
+The hair preparation is preferably in the form of an aerosol hairspray. In this case the solvent, especially one of those previously exemplified, the film-forming resin and the volatile plasticiser will be present in an aerosol dispenser together with a suitable aerosol propellant, usually a liquefied normally gaseous substance. Commonly used propellants are trichloroflu-oromethane (propellant 11) and dichlorodifluoro-methane (propellant 12) but others may be employed. Suitable propellants and propellant mixtures
+4
+for use with hairsprays are well known to those in the art.
+Aerosol hairspray preparations in accordance with the invention will comprise concentrate and propellant in the usual ratios, generally from about 2:1 to 1:5 with the concentrate having typically the following composition:
+% by weight
+Resin	2 to 10
+Volatile plasticiser	0.05 to	10
+Perfume	0.3 to 1
+Solvent	balance	to 100
+In aerosol hairsprays, the amount by weight of resin based on the total weight of hairspray is usually from
+0.5 to 4.0 percent.
+In further embodiments of the hair control preparation of the invention other than those based on an aerosol formulation, the preparation may simply be in the form of a solution of the resin and plasticiser in the solvent, for example in the weight proportions as set out for the above concentrate. In other product forms, particularly for hair setting lotions, an aqueous alcoholic solvent can be used. In certain other cases it might also be possible to use water as the solvent, although the presence of a volatile organic solvent is preferred to give a quick drying product. Other conventional ingredients can be incorporated, if desired, for example a denaturant for ethanol.
+. In accordance with a further aspect of the invention, a process is provided for treating human hair to impart hold to a desired style and subsequently to facilitate the brush out property of the hair as the hold diminishes by applying to the hair a hair control preparation of the type defined herein.
+Examples of hair control preparations in accordance with the invention will now be described. Percentages are by weight.
+EXAMPLE 1
+A hairspray of lotion was prepared having the following composition:
+%
+Luviskol VA 37E (50% solution	
+in ethanol)	6.0
+Propionamide	0.6
+Perfume	0.5
+Denaturant	0.2
+Industrial methylated spirit	to 100.0
+EXAMPLE 2	
+An aerosol hairspray was prepared having the follow-	
+mg composition:	%
+Luviskol VA 37E (50% solution	
+in ethanol)	4.00
+Propionamide	0.40
+Perfume	0.20
+Denaturant (sucrose octaacetate)	0.05
+Industrial methylated spirit	35.35
+Propellant 11	39.00
+Propellant 12	to 100.00
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,033
+5
+EXAMPLE 3
+An aerosol hairspray was prepared having the following composition:
+%
+Luviskol VA 37E (50% solution
+in ethanol)	4.0
+Benzoic acid	0.4
+Perfume	0.2
+Denaturant	0.1
+Industrial methylated spirit	35.3
+Propellant 11	39.0
+Propellant 12	to 100.0
+EXAMPLE 4
+An aerosol hairspray was prepared having the following composition:
+%
+Luviskol VA 281 (50% solution in isopropanol)	3.2
+Propionamide	1.0
+Perfume	0.2
+Denaturant	0.1
+Industrial methylated spirit	35.5
+Propellant 11	39.0
+Propellant 12	to 100.0
+EXAMPLE 5
+An aerosol hairspray was prepared having the following composition:
+%
+6
+-Continued
+%
+Perfume .	0.20
+2-methoxyethanol	6.00
+- Methylene chloride	36.21
+Propellant 11	27.50
+Propellant 12	to 100.00
+The following Tests illustrate in vitro and in vivo experiments where hair control preparations according to 10 the invention were applied to hair and certain properties of the hair were evaluated over a period of a few hours as the plasticiser volatilised from the resin. In two experiments, control data where a plasticiser was omitted from the hair preparation is also provided for com-15 parison.
+TEST 1
+The following experiment showed the variation with time of the resistance to combing of hair switches when 20 sprayed with an aerosol hairspray of the following composition:
+%
+Copolymer *
+25 Plasticiser
+Industrial methylated spirit Propellant 11 Propellant 12
+* Containing about 43% of methacrylic acid and about 57% of methyl acrylate
+2.0 0.4 37.6 39.0 to 100.0
+National Starch Resyn 28-1310	1.50
+2-amino-2-methyl-1 -propanol	0.14
+Propionamide	0.75
+Perfume	0.20
+Denaturant	0.10
+Industrial methylated spirit	37.31
+Propellant 11	39.00
+Propellant 12	to 100.00
+20 switches of 28 cms length, prepared from untreated Italian hair fitted with clips at each end were sprayed with the above aerosol hairspray for a predetermined time so that the same amount of resin was sprayed onto each switch. After various intervals of 35 time four of the switches were taken and each switch
+2-amino-2-methyl-l-propanol is present as a neutralizing agent for the resin. _ _
+EXAMPLE 6
+An aerosol hairspray was prepared having the following composition:
+%
+Bina 405	1.20
+Propionamide	0.24
+Perfume	0.20
+Denaturant	0.10
+Industrial methylated spirit	38.26
+Propellant 11	39.00
+Propellant 12	to 100.00
+EXAMPLE 7
+An aerosol hairspray was prepared having the following composition:
+%
+National Starch Resyn 28-1310	2.00
+2-amino-2-methyl-l-propanol	0.19
+Propionamide	0.40
+drawn through a comb five times and an average combining resistance value determined for the switches. In this experiment, the comb used was one which had a.. strain gauge transducer cemented onto the back of it and the varying resistance produced by varying strains on the gauge as the hair travelled through the comb was processed electronically. During the determination of the combing resistance value, the hair switches were in a cabinet maintained at a temperature of 23° C and a relative humidity of 35 percent.
+The combing resistance values given below have been corrected to allow for any variation in resistance to combing of the untreated switches, so that the values given are a measure, in empirical units, of the increase in work required to comb the hair due to the applied hairspray.
+The above test procedure was carried out on a number of compositions containing different plasticisers and the results are given in Table I.
+We have found that the hold of the hair as judged by users correlates well with the combing resistance.
+40
+45-
+50
+55
+TABLE I
+Time of Measurement of Combing Resistance		Combing Resistance value Plasticiser		
+	Benzophenone	Hexachloroe thane	Acetamide	Propionamide
+I hour after spraying	^ 195	195	225	130
+2 hours after spraying	180	175	150	110
+3 hours after spraying	170	145	120	95
+4 hours after spraying	160	130	110	85
+5 hours after spraying	155	125	105	80
+3,800,033
+7	8
+TEST 2	TABLE IVa
+A similar test was carried out with an aerosol hairspray of the following composition and the results are			Product Preferred	Level of Statistical Significance
+	%	^ Holding power Lack of stiffness Ease of brushing Stickiness after brushing	C	1 in 50
+Luviskol 37E (50% solution in ethanol)	4.0		A A	1 in 20 1 in 20
+Perfume Industrial methylated spirit Propellant 11 Propellant 12	0.2 35.4 39.0 to 100.0	10 A similar comparison of the results for products B and C showed the preferences as set out in Table IVb.		
+TABLE II
+Time of Measurment of Combing Resistance		Combing Resistance Value		
+		Plasticiser		
+	Propionamide	Hexachloroe thane	Benzoic Acid	Salicylic Acid
+1 hour after spraying	170	180	114	256
+2 hours after spraying	166	155	110	200
+3 hours after spraying	164	130	107	145
+5 hours after spraying	160	82	92	132
+8 hours after spraying	92	85	54	120
+TEST 3
+A further test, similar to those described above, was performed to demonstrate the effect on combing resistance at two hourly intervals after spraying of variation in the resin'.plasticiser ratio. The test products used had the following formula:
+%
+Copolymer used in Test 1 Propionamide	2.4
+Industrial methylated spirit	37.6
+Propellant 11	39.0
+Propellant 12	to 100.0
+The results are given in Table III.
+TABLE III
+TABLE IVb
+	Product Preferred	Level of Statistical Significance
+Holding power	B = C		
+Lack of stiffness	B	1 in 100
+Ease of brushing	B	1 in 20
+Stickiness after brushing	B	1 in 10
+Thus the addition of propionamide to a lightly holding resin allowed the superior hold of the control (product C) to be matched while retaining the superior ease of brushing and feel after brushing of the lighter holding resin (in product B).
+25
+30
+35
+ResjniPlastjciser (wt. ratio)
+Combing Resistance Value after
+	2 hours	4 hours	6 hours	
+5:1	106	84	51	
+2:1	176	95	85	45
+1:2	140	129	58	
+40	TEST 5
+The following experiment was performed to investigate the loss by volatilisation of propionamide from a film of Luviskol VA 37E resin plasticized with this
+Five switches of hair of 25 cms length prepared from untreated Italian hair and fitted with clips at the root ends, were sprayed with the aerosol hairspray used in For a comparative product containing 2.4 percent of Test 2 and containing propionamide as the plasticiser, the resin and no plasticiser, the combing resistance 50 After various time intervals the switches were combed value was constant with time at 88 units.	9U* an^ the resin flakes were collected in specimen
+tubes. Each sample was analysed for the presence of propionamide by gas/liquid chromatography. The results are given in Table V.
+55
+TEST 4
+Two experimental hairsprays, one containing 2.4 percent of Luviskol VA 37E solution (product A), the other containing 2.4 percent of Luviskol VA 37E solution together with 6.24 percent of propionamide (product B), were compared with a commercial hairspray 60 containing 2.25 percent of National Starch Resyn 28-1310 (product C) in a user panel test involving 80 women. All the women used each of the three products for a two week period, at the end of which they completed a questionnaire on the performance of the hair- 65 spray.
+Comparison of the results for products A and C showed the preferences as set out in Table IVa.
+TABLE V
+Time of Analysis after spraying	% by weight of propionamide present in resin sample
+30 mins	14.9
+50 mins	6.7
+100 mins	4.1
+150 mins	2.3
+20 hours	0.5
+What is claimed is:
+1.	A hair control preparation for imparting hold to the hair yet enabling the hair subsequently to be easily
+.3,800,033
+9
+brushed out as the hold diminishes, said hair control preparation comprising a solution of
+1.	from about 1 percent to about 10 percent by weight of a film-forming resin having a glass transition temperature of from about 20° C to about 150° C,
+ii.	a plasticiser for the resin which is a solid and which has a vapour pressure at a temperature of 25° C and a pressure of 760 mm Hg of from about
+0.00001 mm to 2 mm Hg, and which gradually volatilises from the resin thereby diminishing the hold property of the preparation, after applying the preparation to the hair, and the weight ratio of film-forming resin to volatile plasticiser being from 1:2 to 20:1.
+2.	The hair control preparation as claimed in claim 1, wherein the resin is a copolymer of vinyl pyrrolidone and vinyl acetate containing at least 70 percent by weight of vinyl acetate.
+10
+3.	The hair control preparation as claimed in claim
+1,	wherein the resin is a copolymer of vinyl acetate and crotonic acid.
+4.	The hair control preparation as claimed in claim
+2,	wherein the volatile plasticiser is propionamide.
+5.	The hair control preparation as claimed in claim
+2,	wherein the volatile plasticiser is selected from the group consisting of benzoic acid and salicylic acid.
+6.	The hair control preparation as claimed in claim
+3,	wherein the volatile plasticiser is propionamide.
+7.	The hair control preparation as claimed in claim 1, additionally comprising an aerosol propellant.
+8.	A process for treating human hair to impart hold to a desired style and subsequently to facilitate the brush-out property of the hair as the hold diminishes, which process includes the step of applying to the hair a hair control preparation as claimed in claim 1.
+$ * $ $ *
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
