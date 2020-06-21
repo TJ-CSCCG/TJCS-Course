@@ -1,0 +1,109 @@
+sll $0,$0,0
+j RIGHT
+
+WRONG:
+addi $1,$0,0xffffffff
+addi $2,$0,0xffffffff
+addi $3,$0,0xffffffff
+addi $4,$0,0xffffffff
+addi $5,$0,0xffffffff
+addi $6,$0,0xffffffff
+addi $7,$0,0xffffffff
+addi $8,$0,0xffffffff
+addi $9,$0,0xffffffff
+addi $10,$0,0xffffffff
+addi $11,$0,0xffffffff
+addi $12,$0,0xffffffff
+addi $13,$0,0xffffffff
+addi $14,$0,0xffffffff
+addi $15,$0,0xffffffff
+addi $16,$0,0xffffffff
+addi $17,$0,0xffffffff
+addi $18,$0,0xffffffff
+addi $19,$0,0xffffffff
+addi $20,$0,0xffffffff
+addi $21,$0,0xffffffff
+addi $22,$0,0xffffffff
+addi $23,$0,0xffffffff
+addi $24,$0,0xffffffff
+addi $25,$0,0xffffffff
+addi $26,$0,0xffffffff
+addi $27,$0,0xffffffff
+addi $28,$0,0xffffffff
+addi $29,$0,0xffffffff
+addi $30,$0,0xffffffff
+addi $31,$0,0xffffffff
+beq $0,$0, END
+
+RIGHT:
+addi $1,$1,0x0001
+addi $2,$0,0x0002
+addi $3,$0,0x0001
+addi $4,$0,0x0001
+addi $5,$0,0x0001
+addi $6,$0,0x0001
+addi $7,$0,0x0001
+addi $8,$0,0x0001
+addi $9,$0,0x0001
+addi $10,$0,0x0001
+addi $11,$0,0x0001
+addi $12,$0,0x0001
+addi $13,$0,0x0001
+addi $14,$0,0x0001
+addi $15,$0,0x0001
+addi $16,$0,0x0001
+addi $17,$0,0x0001
+addi $18,$0,0x0001
+addi $19,$0,0x0001
+addi $20,$0,0x0001
+addi $21,$0,0x0001
+addi $22,$0,0x0001
+addi $23,$0,0x0001
+addi $24,$0,0x0001
+addi $25,$0,0x0001
+addi $26,$0,0x0001
+addi $27,$0,0x0001
+addi $28,$0,0x0001
+addi $29,$0,0x0001
+addi $30,$0,0x0001
+addi $31,$0,0x0001
+beq $1,$2,END
+j RIGHT
+
+
+END:
+addi $31,$0,0xffffffff
+
+WRONG2:
+addi $1,$0,0xffffffff
+addi $2,$0,0xffffffff
+addi $3,$0,0xffffffff
+addi $4,$0,0xffffffff
+addi $5,$0,0xffffffff
+addi $6,$0,0xffffffff
+addi $7,$0,0xffffffff
+addi $8,$0,0xffffffff
+addi $9,$0,0xffffffff
+addi $10,$0,0xffffffff
+addi $11,$0,0xffffffff
+addi $12,$0,0xffffffff
+addi $13,$0,0xffffffff
+addi $14,$0,0xffffffff
+addi $15,$0,0xffffffff
+addi $16,$0,0xffffffff
+addi $17,$0,0xffffffff
+addi $18,$0,0xffffffff
+addi $19,$0,0xffffffff
+addi $20,$0,0xffffffff
+addi $21,$0,0xffffffff
+addi $22,$0,0xffffffff
+addi $23,$0,0xffffffff
+addi $24,$0,0xffffffff
+addi $25,$0,0xffffffff
+addi $26,$0,0xffffffff
+addi $27,$0,0xffffffff
+addi $28,$0,0xffffffff
+addi $29,$0,0xffffffff
+addi $30,$0,0xffffffff
+addi $31,$0,0xffffffff
+
