@@ -1,0 +1,105 @@
+
+United States Patent im
+Starkweather, Jr.
+[li] 3,800,008
+[45] Mar. 26, 1974
+[ 54]	ORIENTED POLYMER STRAP
+[75]	Inventor:	Howard W. Starkweather, Jr.,
+Wilmington, Del.
+[73] Assignee: E. I. du Pont de Nemours and Company, Wilminton, Del.
+[22]	Filed:	Aug. 5, 1971
+[21]	Appl. No.:	169,333
+Related U.S. Application Data
+[62] Division of Ser. No. 845,692, July 29, 1969, Pat. No. 3,651,196.
+[52] U.S. Cl.... 260/897 B, 260/94.9 GD, 264/178,
+264/210, 264/280, 264/288
+[51]	Int. Cl......................... C08f	29/12
+[58] Field of Search....... 260/897; 264/210, 288
+[56]	References Cited
+UNITED STATES PATENTS
+3,651,196	3/1972 Starkweather............... 260/897
+3,354,023	1 1/1967 Dunnington et al......... 161/165
+3,290,420	12/1966	Orser................ 264/210
+3,104,937	9/1963	Wyckoff................ 18/48
+FOREIGN PATENTS OR APPLICATIONS
+1,002,373	8/1965	Great Britain........ 260/897
+Primary Examiner—Murray Tillman Assistant Examiner—C. J. Seccuro
+[57]	ABSTRACT
+Manufacture of strapping from resin at least 75 percent of which is polyethylene having a density of at least 0.95 g/cc and preferably from 0.955 to 0.967 g/cc and a melt index of from 0.2 to 1.0 and preferably from 0.4 to 0.9 by extruding a billet, roll orienting the billet, followed by stretching at ambient temperature, followed by stretching in a liquid bath maintained at from 93°C. to the melting point of the polyethylene and preferably from 110° to 130°C. to give a total deformation of from 10 to 18 times and preferably 11 to 13.5 times.
+3	Claims, 1 Drawing Figure
+FIG
+PATENTED MAR 2 6 1974
+3.800.008
+1
+ORIENTED POLYMER STRAP
+3,800,
+CROSS-REFERENCE TO RELATED APPLICATION
+This application is a divisional of copending U.S. Pat. 5 application Ser. No. 845,692, filed July 29, 1969 by Howard W. Starkweather, Jr now U.S. Pat. 3,651,196.
+BACKGROUND OF THE INVENTION
+The conventional strapping used to bind large con- 10 tainers is currently made from steel. Another type of strapping which is widely used where the very high strengths of steel are unnecessary is a strap formed of a series of parallel rayon cords held together by means of a binder. This latter type of strapping is described in 15 U. S. Pat. No. 3,028,281, issued Apr: 3, 1962 to Thomas J. Karass. Another type of strapping is roll oriented plastic strapping such as described in U. S. Patent
+3,354,023	issued Nov. 21, 1967 to Gordon Beale Dun-nington and Reuben Thomas Fields on Nov. 21, 1967. 20
+SUMMARY OF THE INVENTION
+This invention has as an object the manufacture of a strap from polyethylene which has a strength high 25 enough to act as a substitute for steel strapping or roll oriented strapping from other polymers.
+These objects are accomplished by the following invention in which polyethylene having a density of at least 0.95 and preferably from 0.955 to 0.967 and a 30 melt index of from 0.2 to 1.0 and preferably from 0.4 to 0.9 is extruded into a billet which is then rolled from
+2.5	to 6.5 times its original length so as to produce a uniplanar, axial oriented crystalline product which strap is then stretched further at ambient temperature 35 from 1.05 to 3.0 times its length which strap then is stretched further in a hot oil bath from 1.6 to 3.0 times and preferably from 2.0 to 2.5 times its length to produce a strapping having a deformation ratio of 10 to 18 times and preferably from 11 to 13.5 times the original 40 length of the billet. The oil bath may be maintained at a temperature required to heat the strapping being hot stretched at from 93°C. up to the melting point of the polyethylene with the range of from 110° to 130°C. being preferred. The residence time in the oil bath and 45 the temperature of the oil bath are interdependent variables in controlling this temperature. The width of the final strapping is preferably from 0.4 to 0.75 times the width of the billet from which it is rolled. To accomplish this objective it has been found that the unifor- ^ mjty of the extruded billet prior to the roll orienting step is of extreme importance to the sucessful production of a high strength rolled shape. This uniformity relates both to the cross-sectional dimensions of the ex-truded billet and to any orientation imposed on the billet. An irregular billet cannot be roll oriented into a useful hgih strength strapping because some sections will pass their maximum orientation potential and fi-brillate or become hairy before the central sections 6Q have been oriented to their optimum. Roll-oriented polyethylene tapes and ribbons have been made before but such prior art tapes and ribbons have not had sufficient strength to compete with steel strapping or other polymer strapping because it had not been possible to &5 impart sufficient orientation to such polyethylene tapes and ribbons for them to have the requisite strength. The strapping of this invention is preferably from 4 to
+50 mils thick and from V4 to % of an inch wide although wider widths can be made and are desirable for some purposes such as helically wrapping large diameter pipe, and widths as narrow as Vb inch are useful. The strapping of this invention has particular utility as a tape with an adhesive on one side thereof for use in packaging moderate sized objects due to the “dead bend” property of the tape without significant loss in tensile strength. That is, the straps or tapes of the present invention may be creased to 90° or even 180° without any significant tendency to straighten and without significant loss in tensile strength.
+DESCRIPTION OF THE DRAWINGS
+FIG. 1 is a schematic side view of the entire apparatus.
+In carrying out the process of this invention, pellets are fed by means of metering feeder 1 into the extruder hopper 2, and extruded through extruder head 3 into a quench bath 4. The billet thus formed, is drawn out of the quench bath by rolls 7 and 8, and is fed across dancer arm 9, into preheater 10, wherein it is passed back and forth across rollers 11.
+The temperature of the billet is from ambient temperature to 15°C. below the crystalline melting point of the particular polyethylene being roll-oriented. Although the billet can be roll oriented at room temperature the operation is performed more smoothly and with a substantial reduction in power consumption when an elevated temperature is used. It should be further noted that even though water is preferably used in the quench bath because of its ready availability and high specific heat, the billet is preferably in anhydrous condition as it is fed into the orienting rolls. This is because the heat developed in the orientation rolls by the rearrangement of the polyethylene molecules in the billet may cause vaporization of any water or other low boiling liquid present in the billet, and thereby, create voids or other flaws in the final strapping. The preheated billet is then fed through one or more pairs of orienting rolls 12 and 13 and is drawn under tension out of the orienting rolls by means of tension rolls 14 and IS, and skew roll 16 used to enable multiple wraps whereupon it is passed into hot oil stretching bath 17 in which it passes over roll 18 down through the hot oil around roll 19 and up and out of the hot oil bath over roll 20 and passed between tension rolls 21 and 22 and around skew roll 23 to enable multiple wraps around the tension rolls. The strapping is then passed through heat conditioner 24 equipped with exhaust 25, through wash tank 26 and finally is taken up onto spool 27.
+The orienting rolls preferably are of tongue and groove construction as shown in U. S. Pat. No.
+3,354,023	referred to above. It is to be understood that while two pairs of orienting rolls are shown in FIG. 1, any desired number of rolls may be used. The function of the flanges on the tongue and groove rolls is to assist in controlling the width of the oriented strapping by controlling the size of opening defined by the rolls. The amount of tension on the strapping which is imposed by the speed of tension rolls 14, 15, and 16 relative to the speed rolls 12 and 13, controls the amount of decrease in width the strapping undergoes after leaving orienting rolls 12 and 13. The strappings of this invention are distinguished from films in that they have a high uniaxial orientation. The amount of stretch or necking down of the strapping on leaving the orienting rolls must be ac-
+3,800,008
+curately controlled since the width of the final strapping is preferably within ±0.005 inch of the width being sought or the strapping cannot readily be fastened with commercially available fasteners. These fasteners generally are heavy gauge metal seals or clips which fit around the strapping joint and are crimped with a machine similar to that commercially used to join steel strapping, such as those illustrated in U. S. Pat. No. 3,028,281, except preferably with straight sides or edges. Clips or seals require width tolerances. In order to obtain a uniform rectangular billet it is necessary to have the cross-section near the corners of the extrusion die somewhat oversize. By using a die of this shape the tendency of the extrudate towards becoming round is overcome and a billet of truly rectangular cross-section can be obtained. If a rectangularly shaped die opening is used, the billet will have a nearly oval cross-section, and excessive cross orientation will be imposed by the orienting rolls, thereby lowering the amount of length deformation which can be imposed on the strapping which in turn lowers its ultimate strength and usefulness.
+The polyethylene as used herein may be blended with up to 25 percent by weight as based on the total composition of an addition polymer such as low density polyethylene, ethylene/vinyl acetate copolymer, ethylene/methacrylic acid copolymer, ethylene/vinyl acetate/methacrylic acid terpolymer, isotactic polypropylene, or moldable styrene/butadiene rubber. Blending with 5-20 percent by weight as based on the total composition of ethylene/vinyl acetate copolymer containing from 70 to 80 percent ethylene and from 20 to 30 percent vinyl acetate is particularly helpful in improving resistance to splitting. The addition of isotactic polypropylene tends to improve surface hardness. Pigments are readily added as a concentrate dispersed in low density polyethylene.
+The melting behavior of the strapping of the present invention provides an indication of the difference in structure between the strapping of the present invention and prior art strappings. The melting behavior of various high density polyethylene strappings is studied by differential thermal analysis using a thermal analyzer using various heating rates of from 0.5 to
+ditional information. A heating rate of 10°C./minute when used on samples of strapping which have been oriented by rolling and air stretching alone exhibit a single melting peak near 137°C. However, samples pre-5 pared in accordance with the present invention using a rolling, air stretch and final hot oil stretch to high deformation ratios when examined using a heating ratio of 10°C./minute have multiple peaks with a major peak at from 140° to 145°C. It is believed that this higher 10 melting peak reflects the partial unfolding of lamellar crystals to form extended chain crystals. Very slow heating rates would permit these extended chain crystals to refold before melting.
+15
+DESCRIPTION OF THE PREFERRED EMBODIMENTS
+In each of the following examples the strapping was made on the apparatus above described using one or two pairs of three-inch diameter tongue and groove roll 20 ( orienting rolls as at 12 and 13, take-off rolls consisting of one 4 inch diameter rubber roll as at 14, one 4 inch diameter steel roll as at 15 and one skew roll as at 16 to permit about 15 wraps, a vertical hot oil bath as at 17 and another set consisting of a 4 inch diameter rub-25 ber roll as at 22, 4 inch diameter steel roll as at 21 and a skew roll as at 23 to draw the strapping in the hot oil bath. The melt index of the polyethylene being used is determined in accordance with A.S.T.M. D-1238 using a temperature of 190°C. and a load of 2160 g. on the 30 melt indexer. The total deformation ratio is the weight per unit length of the unoriented billet divided by that of the oriented product. The stretch ratio in air (air str.) is the linear speed of the take-off rolls 14, 15 and 16 divided by the linear speed of the final rolling stage 35 12 and 13. The oil stretch (Oil str.) ratio is the ratio of the linear speeds of the tension rolls 21, 22 and 23 divided by the linear speed of rolls 14, 15 and 16.
+In Examples 4.5.7.8.9 and 10 the polyethylene contained 1 percent and in Example 11,3 percent of a pigment concentrate consisting of 75 percent titanium dioxide, 0.75 percent aluminum stearate, and 24.25 percent of a polyethylene having a melt index of 3.5 and a density of 0.923 g./cc. In Example 8, 5 percent; in Example 9, 10 percent; and in Examples 10 and 11, 20
+40
+TABLE I. —Examples
+Properties of final strap
+Poly-	Deformation	X-ray DTA
+ethylene	ratios	Ulti-	Trans- orien- major
+Example	Melt index	Den- sity	Total	Air str.	Oil str.	Oil temp. (°c.)	Thick (mils)	Width (in.)	Tensile str. (p.s.i.)	mate elong. (%)	Initial modulus (p.s.i.)	verse str. (p.s.i.)	tation angle O	melt peak (°C.)	Melt draw ratio	No. rolling stages
+1.....		... 0.55	0.964	8.8	2.8 ...			37	.362	36,900 95,100	17	671,000 3,110,000 ,	2100 .				
+2		... 0.5	0.952	13.4	2.0	2.5	no	14.5	.371		5.5					7.5	1
+3		... 0.4	0.955	11.1	1.3	1.6	113	24	.157	69,300	11	1,157,000 .		4.8	141	6.5	1
+4		... 0.85	0.962	11.4	2.0	1.7	115	18	.400	68,000	10	1,035,000 ,				6.9	1
+5		... 0.7	0.967	. 12.8	2.0	2.4	117	16	.439 -	67,500	9	1,284,000 ,		5.2	142	6.6	1
+6		... 0.7	0.967	9.2	1.0 ...			16	.606	43,800	9	615,000 .				7.6	2
+7		... 0.7	0.967	16.5	1.2	2.2	114	14	.387	77,800	4.5	3,057,000				6.8	2
+8		... 0.7	0.967	12.8	1.2	1.9	121	17	.393	62,300	11	1,751,000	1270	5.3	140	2.4	2
+9		... 0.7	0.967	15.0	1.2	2.0	114	15	.410	63,500	5	1,553,000		5.3	142	2.6	2
+10		... 0.7	0.967	16.6	1.1	2.5	122	9	.436	65,200	5	1,487,000		4.6	141	5.6	2
+11		... 0.7	0.967	11.3	1.4	1.7	123	5.2	.650	56,300	10	613,000	1110 .		140	8.6	2
+100°C./minute. The slowest heating rate of 0.5°C./minute apparently permits recrystallization and a single melting peak of 134°-137°C. is observed for all high density polyethylene strappings. High heating rates give evidence of serious thermal lags and do not give any ad-
+percent by weight as based on the total composition of an ethylene/vinyl acetate copolymer containing 25 percent by weight of vinyl acetate and 75 percent by weight of ethylene and having a melt index of 2.0 ± 0.4 was incorporated in the polyethylene from which the
+3,800,008
+5
+strapping was formed. The column headed DTA is the differential thermal analysis as measured at 10°C./mi-nute and the value reported is that of the largest peak. The quench bath was water maintained at temperatures of from ambient to 50°C. in all cases. The tensile strength and modulus data were obtained in a conventional test machine equipped with slotted mounting rolls with a one-inch per minute loading rate and a five inch separation between rolls. The test results are all based on the original dimensions of the strapping.
+The term “uniplanar, axial orientation” employed in defining the product of this invention may be fully understood from the following discussion.
+“Axial,” “planar,” and “uniplanar axial” indicate different types of crystal orientation in high polymeric materials. “Axial” orientation means that a given crystal axis (frequently the polymer chain axis) is parallel to a macroscopic axis (e.g., the machine direction in an extruded object). For example, prior art materials which had been drawn in only one direction (e.g., fibers or one-way stretched films) generally exhibit an appreciable degree of axial orientation in which the polymer chain axes are aligned parallel to the stretched direction. “Planar” orientation means that a given crystal axis is parallel to a macroscopic level planed Conventional two-way stretched films for example generally exhibit a degree of planar orientation in that the molecular chain axes lie approximately parallel to the surface of the film although said axes are arranged at random within this plane. “Uniplanar axial” orientation means a given crystal axis is parallel to a macroscopic axis and a given crystal plane is parallel to a macroscopic plane. In the roiled, extruded shapes discussed here the molecular chain axis is generally in the direction of rolling and a certain crystal plane is parallel to the rolled surface. As used here the terms “axial,” “planar,” and “uniplanar axial” orientation refer not only to perfect alignment of the types discussed but also to structures in which there is a preferred orientation even though there may be some angular distributions about the preferred orientation. Roll-oriented polymers generally exhibit “uniplanar, axial orientation.”
+X-ray diffraction furnishes a convenient technique for observing the type of orientation in the ogjects of this invention. A sample is mounted on an instrument such as a Single Crystal Orienter which has the ability to rotate the sample in the X-ray beam about two mutually perpendicular axes. Since a crystalline material will diffract X-rays only when the X-ray beam, the detector, and suitable crystalline planes within the sample are arranged in the manner described by Bragg’s Law, it is possible to determine the crystal orientation within the sample by studying the variation in the intensity of the diffracted X-rays as the sample is rotated. This intensity will pass through a maximum as the angular orientation of the sample reaches a value corresponding to the most populous orientation of the crystals within the
+6
+sample. The breadth of the distribution of crystal orientations may be characterized by the width of a plot of X-ray intensity vs. the angular orientation of the sample at an intensity value equal to one-half of the peak maximum. Further aspects of the definition of the types of orientation and of techniques for determining the distribution of crystal orientation in synthetic polymers are described in a paper by C. J. Heffelfinger and R. L. Burton in the Journal of Polymer Science, Volume 47, pages 289-306 (1960).
+In an extruded, rolled shape made from high density polyethylene, the uniplanar axial orientation is such that the polymer chains tend to be in the direction of rolling and either the (100) or the (110) crystal planes tend to be parallel to the rolled surface. The angular width at the one-half maximum corresponding to the tilting of the polymer chains from the roll direction toward the transverse direction is less than 7° and preferably from 4.5° to 6°. These angles correspond to those obtained for uniplanar axial orientation in high density polyethylene which has been roll and stretched to increase its length at least ten-fold and preferably from 11 to 13.5 fold.
+It is well known in the art that controlled deformation of a crystalline polymer results in an improvement in the physical properties of the polymer in the direction of deformation. This is most highly developed in the case of fiber and filaments where very marked improvement in tensile strength and modulus with an axial orientation is obtained by cold drawing of the extruded fiber or filament. Attempts to obtain equivalent improvement in physical properties in more massive polyethylene shapes with triaxial symmetry such as tapes, straps, sheets, angles, tees, and the like have not succeeded in producing strengths above about 40,000 psi. as is illustrated by control Examples 1 and 6 which do not utilize the hot stretch step.
+I claim:
+1.	A uniformly oriented strap formed of at least 75 weight percent polyethylene having a density of from 0.95 to 0.967 g per cc, a melt index of from 0.2 to 1.0, said strap having a major melt peak as measured by differential thermal analysis at a rate of 10°C. per minute of 140° to 145°C., and an angular width at the one-half maximum as determined by X-ray corresponding to the tilting of the polymer chains from the longitudinal direction toward the transverse direction of from 4.5° to 6.0°.
+2.	The strap of claim 1 wherein the resin consists essentially of polyethylene having a melt index between 0.4 and 0.9.
+3.	The strapping of claim 1 wherein the resin consists essentially of polyethylene and a copolymer of ethylene and vinyl acetate having a melt index from 1.0 to 3.0 and containing from 70 to 80 weight per cent ethylene and from 20 to 30 weight percent vinyl acetate.
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+65

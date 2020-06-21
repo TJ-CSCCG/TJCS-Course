@@ -1,0 +1,204 @@
+
+United States Patent
+Long et al.
+[ii] 3,800,030
+[45] Mar. 26, 1974
+[54] PROCESS FOR PURIFYING SILVER COMPOUNDS
+[75] Inventors: Darla Long, Boston; Kenneth
+Norland, Belmont, both of Mass.
+[73] Assignee: Polaroid Corporation, Cambridge, Mass.
+[22] Filed:	May 2, 1972
+[21] Appl. No.: 249,513
+[52] U.S. Cl........... 423/491, 423/395, 260/430
+[51] Int. Cl..........................COlg 5/00
+[58] Field of Search....... 423/395, 491; 75/108;
+260/438.1,430 56
+[56]	References Cited
+UNITED STATES PATENTS
+2,382,317	8/1945 Hoff................. 423/395 X
+3,420,862	1/1969 Long................ 260/438.1
+OTHER PUBLICATIONS
+McPherson & Henderson Book, “A Course in General Chemistry,” Third Ed., 1927, pages 272 and 273,
+Ginn and Co., New York, Personal Copy in Grays
+A.U. 113.
+“An Outline of Organic Chemistry,” College Outline Series, by Degering et al., (1937 Ed.), pages 33 and 34, Barnes & Noble, Inc., New York.
+“Organic Chemistry - An Outline,” by C. Hansch and
+G.	Helmkamp, p. 17, 1959 Ed., McGraw-Hill Book Co., Inc., New York.
+“The Chem. Elements and Their Compounds,” 1950, pages 112 & 113, N.V. Sidgwick, Vol. 1, Oxford.
+Primary Examiner—Edward Stern
+[57]	ABSTRACT
+Heavy metal impurities may be separated from silver ion by precipitating and separating silver acetylide from an impure silver salt solution. Reaction of the appropriate acid with the separated silver acetylide may be employed to generate a purified silver salt therefrom. The process of the present invention is useful for purifying aqueous silver nitrate solutions for use in manufacturing photographic silver halide emulsions,
+10 Claims, No Drawings
+3,800,030
+1
+PROCESS FOR PURIFYING SILVER COMPOUNDS
+BACKGROUND OF THE INVENTION
+1.	Field of the Invention
+This invention relates to chemistry and particularly to the purification of silver compounds.
+2.	Description of the Prior Art
+The most common impurities present in silver compounds are the heavy metals, i.e., those metals occupying the lower half of the Periodic Table of Elements. Since lead, lead-zinc, copper, gold and copper-nickel ores are the major sources of silver, it can be appreciated that the elimination of these heavy metals is of general concern in connection with the purification of all silver compounds. Of course, however, other heavy metal impurities may be of more particular importance depending on the silver compound involved and its ultimate use.
+Silver nitrate is a particularly useful silver compound and finds extensive employment in the field of photography as the source of silver ions in the manufacture of photosensitive silver halide emulsions. The aqueous silver nitrate solutions used in photographic emulsions must be extremely pure since the presence of even trace amounts of heavy metal impurities therein may have adverse effects on the photographic sensitivity of the resultant product. For example, it has been determined that ferric, mercuric, lead, thallium, and copper salts may reduce the sensitivity of a photographic silver halide emulsion, and generally increase the fog level. Likewise, nickel impurities are known to reduce sensitivity and sometimes increase the contrast. Rhodium, iridium and palladium impurities have been found to have particularly powerful action on silver halide emulsions, and may result in a reduction in sensitivity even when present in the parts per billion range. See: Glafke-dis, P., Photographic Chemistry; Foundation Press; London (1960) Pg. 318.
+Various procedures for the elimination of the aforementioned and other heavy metal impurities from aqueous silver nitrate solutions have been described in the art. For example, a common method consists of the fractional recrystallization of the silver nitrate from a nitric acid solution — a time-consuming and tedious procedure. Another method involves precipitating silver by means of copper and redissolving the silver in nitric acid; however, copper is expensive to use and the photographically harmful metal palladium, if present, is not removed. See: Sneed, Maynard and Brasteel; Comprehensive Inorganic Chemistry, Vol. II, (1954) D. Von Nostrand Co., Inc.; New York; Pg. 165.
+U.S. Pat. No. 2,543,792 describes a process for purifying aqueous silver nitrate solutions to photographic quality by passing the silver nitrate solution into contact with elemental carbon, passing the resulting solution into contact with activated alumina and subsequently filtering the solution through a silver oxide impregnated filter. This process, however, has the disadvantage that alumina must be replaced or regenerated frequently because it is exhausted rapidly by the acid nature of the silver nitrate solution and the relatively large amounts of metal impurities which must be removed.
+Other methods in the art generally involve the addition of silver oxide to the aqueous silver nitrate solution in an amount sufficient to raise the pH to a specified
+2
+level, thereby precipitating the metallic impurities. See, for example, U.S. Pat. No. 3,141,731 (addition of silver oxide and iron nitrate with heating); U.S. Pat. No. 2,614,029 (addition of silver oxide to a pH of
+6.1-9.0 followed by treatment of the solution with absorbents such as alumina, magnesia and elemental carbon) and French Pat. No. 2,010,282 (addition of silver oxide to a pH of 5.1-5.8; followed by another addition to a pH of 5.9-6.3).
+BRIEF SUMMARY OF THE INVENTION
+It has now been discovered that heavy metal ions particularly those having a valence greater than one, may be effectively separated from the silver ion of a soluble silver salt, e.g., silver nitrate, by reacting an acetylene with a silver salt solution containing other heavy metal ions to form a precipitate of silver acetylide which is subsequently separated from the supernatant liquid. The heavy metal ion impurities are retained in solution and are thereby separated from the silver ion, which has been removed as silver acetylide. If desired, the silver acetylide may then be reacted with an acid to generate the silver salt of the acid used.
+Preferably, the above-described silver acetylide precipitation takes place by passing an acetylene gas, preferably methyl acetylene gas, into an aqueous solution of, for example, silver nitrate having a silver ion concentration less than 1.0 M, preferably about 0.05 M, and buffered to a pH less than 7 with an aqueous acetic acid-sodium acetate buffer.
+The purification process of the present invention may find particular utility in preparing very pure silver nitrate which may in turn be employed, for example, to manufacture relatively impurity-free photosensitive silver halide emulsions or may be used in other applications calling for silver ion free from heavy metal ion impurities.
+An object of the present invention is therefore to provide a simple and effective process for separating polyvalent heavy metal ions from monovalent silver ion.
+Another object is to provide a process for purifying silver salt solutions.
+Another object is to provide a process for purifying aqueous silver nitrate solutions for use in photography.
+A further object is to provide a process for preparing photosensitive silver halide emulsions having a reduced amount of heavy metal ion impurities.
+Other objects of this invention will in part be obvious and in part appear hereinafter.
+DETAILED DESCRIPTION OF THE INVENTION AND PREFERRED EMBODIMENTS
+The novel process of the present invention embodies the discovery that the precipitation of silver acetylide may be employed as a means for separating silver ion from other heavy metal ions present in solution as impurities.
+Accordingly, in one embodiment this invention comprises:
+1.	reacting acetylene with a silver salt solution containing ions of other heavy metals to form a precipitate of silver acetylide; and
+2.	separating the silver acetylide thus formed from the supernatant liquid which retains the other heavy metal ions.
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,030
+3
+A preferable extension of this procedure takes advantage of the properties of the separated silver acety-lide and involves:
+3.	reacting the separated silver acetylide with the appropriate acid to liberate acetylene and also generate a purified silver salt.
+The term “silver salt” as used herein is intended to encompass any of the numerous compounds formed by the replacement of part or all of the acid hydrogen of an acid by silver ion, which compound will react with an acetylene gas to form silver acetylide. The term “soluble” designates a solubility which is greater than that of silver acetylide in a particular medium. The terms “acetylene” and “silver acetylide” are intended herein and in the appended claims to be generic terms designating acetylene, C2H2, and silver acetylide, Ag2C2, per se as well as substituted derivatives thereof. The substituted acetylenes contemplated as suitable for the practice of this invention may be represented by the formula
+H—CsC—R
+wherein R is a group such as alkyl, aryl, etc.; preferably, R is a methyl group. Cif course, it will be readily apparent to those skilled in the art that R does not enter into the reaction forming the acetylide, and therefore may be any group which does not interfere with the formation, precipitation or separation of silver acetylide according to the processes herein described.
+The preferred embodiment of the present invention is specifically directed to the purification of silver nitrate solutions. Impure solutions of silver nitrate of the type purifiable by the process of this invention may be solutions derived from the dissolution of commercially available silver nitrate in a suitable medium or from the dissolution of silver ingots in nitric acid or even from the electrolyte resulting from the refining of silver by electrolysis. However derived, the above-described silver nitrate solutions contain a certain amount of undesirable heavy metal impurities such as, for example, copper, lead, nickel, gold, iron, tin, zinc, chromium, bismuth, magnesium, cadmium, palladium, mercury, rhodium, iridium, manganese, aluminum, platinum, rubidium, antimony, etc.
+As examples of dissolution media for silver nitrate mention may be made of any of those which allow the effective precipitation of silver acetylide therefrom, such as, for example, alcoholic or aqueous media. Particularly advantageous results have been obtained with aqueous silver nitrate solutions, for example, the solutions employed in the photographic art for preparing silver halides.
+The first step of the purification of aqueous silver nitrate solutions according to the preferred embodiment of the present invention involves the reaction of a quantity of an acetylene gas, e.g., C2H2 or more preferably, methyl acetylene, CH3C2H, with the silver nitrate solution to form a precipitate of a silver acetylide, e.g., Ag2C2 or AgC2CH3 respectively. The above-described step may be effected by slowly bubbling the acetylene gas through the silver nitrate solution at room temperature. The silver acetylide thus formed precipitates from solution as a solid, and the bubbling of the gas is preferably continued until the solution has cleared.
+It has been found that improved results are obtained in the precipitation step just described if the concentration of silver ion in the impure solution to be purified
+4
+is less than 1.0 M, and most advantageous results may be obtained at a silver concentration of about 0.05 M. Silver concentrations much in excess of 1.0 M have been found to be undesirable because of the handling difficulties encountered in separating the voluminous precipitate produced at such high concentrations.
+Since the reaction forming silver acetylide involves the generation of a certain amount of acid and a resultant decrease in solution pH, it has also been found advantageous to provide a buffer in the silver salt solution in order to maintain a reasonably constant pH during the precipitation. Maintaining a pH value below about 7 is advisable in the practice of this aspect of the invention since some undesirable precipitation of silver hydroxide and of the heavy metal ion impurities may occur at higher pH values. The maintenance of the desired pH interval (e.g., from 4 to 6) may be accomplished by employing any appropriate buffer, preferably a dilute aqueous buffer solution of sodium acetate.
+Any effective process for the separation of a solid from a liquid, or any combination thereof, may be used for the separation of the silver acetylide precipitate formed in the above-described first step of the process such as, for example, by centrifugation, filtration, sedimentation and/or decantation. Once removed from the mother liquor, the silver acetylide may then undergo a washing procedure effected to remove any adsorbed impurities remaining thereon, if desired.
+It should be noted that silver acetylide, Ag2C2, is highly explosive if allowed to dry, and detonates even on gentle friction. For this reason, it is much more preferable to employ the precipitation of non-explosive acetylides such as, for example, silver methyl acetylide, AgC2CH3 in the practice of the herein-described processes. If for any reason the precipitation of Ag2C2 is employed, the silver acetylide should not be dried or allowed to stand exposed to heat for any length of time. Furthermore, it is advisable to employ laboratory or commercial procedures wherein any separated silver acetylide is immediately subjected to the third step explained hereinafter, without allowing any appreciable amount of the separated material to become dry.
+It has long been known that acetylene has the property of reacting with many heavy metals to form insoluble acetylides. These heavy metals generally occupy Groups IB and IIB of the Periodic Table, and include silver, copper, zinc and cadmium.
+It was therefore surprising to find that the selective separation of silver ion as silver acetylide according to this invention is possible from a solution which also contains the heavy metal ions which would normally be expected to likewise form acetylides which coprecipitate from solution. It has been hypothesized that this selective separation may be a function of the relative ease in which the monovalent silver ion can enter into the acetylide crystal lattice over the higher valence heavy metal ions commonly found as impurities in silver compounds. At any rate, due to the expected adsorption of a relatively large amount of the heavy metal impurities to the surfaces of the silver acetylide crystals, one would not even anticipate any degree of success for a selective separation of silver ion from those heavy metals which do not form acetylides.
+However, contrary to the above-mentioned expectations, processes are herein disclosed whereby a silver acetylide may be precipitated and separated from other
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,030
+5
+heavy metal ions, particularly those having valences greater than 1, to provide silver ion with vastly reduced levels of contamination from such ions, for example, levels below one part per million. The discovery that a selective separation of silver ion from ions of other heavy metals is effected through the precipitation of silver acetylide forms the substance of the present invention.
+Separation of the silver ion as a silver acetylide is particularly advantageous when the desired end product is a purified silver salt, for example, purified silver nitrate. By utilizing the well-known property of acetylides to react with an acid and liberate acetylene gas, a silver salt of the acid employed may be generated from the separated silver acetylide. The acid employed for this reaction should be substantially free of heavy metal ions and other impurities so that a silver salt may be obtained which is of considerably higher purity than the silver salt which was initially reacted with the acetylene to form the silver acetylide.
+Thus, in the practice of one aspect of this invention, high purity acid, for example, nitric acid, may be reacted with the silver acetylide, said acetylide having been formed and purified as a result of the first two steps described hereinbefore, to provide a silver salt solution of very high purity. Extremely pure acids suitable for employment as described immediately above are commercially available, e.g., the acid marketed under the “Ultrex” trademark of J. T. Baker.
+It should be recognized and obvious to those in the art that one is not necessarily limited to regenerating the silver salt initially employed to form the silver acetylide, but may form any desired silver salt depending on the choice of acid employed. Thus, the generation of any such silver salt or elemental silver itself from a silver acetylide which has been separated from a silver salt solution for the purposes of purification is intended to fall within the scope of the present invention.
+Aqueous silver nitrate solutions purified by the process forming the subject matter of the present invention may be advantageously employed in a variety of ways, for example, in the manufacture of photographic silver halide emulsions. As examples of photographically harmful heavy metal ions which may be separated from silver ion by the practice of this invention, mention may be made of the polyvalent ions of Mn, Ni, Co, Fe, Rh, Pb, Cd, Zn, Cu, Ir, Pd and Pt.
+In a typical photographic emulsion preparation embodying this invention, a silver nitrate solution purified by the above-described novel three-step process may be reacted with at least one water-soluble halide, such as ammonium, potassium or sodium bromide, preferably together with a corresponding iodide, in an aqueous solution of a protective colloid such as a colloidal gelatin solution according to the traditional procedures of the art, as described, for example, in Neblette, C. B.; Photography, Its Materials and Processes, 6th Ed., 1962.
+Alternatively, it is contemplated that the precipitation of silver acetylide according to this invention may be employed to provide a source of high purity silver ion for reaction with a high purity halogen gas, e.g., bromine, to produce silver halide essentially in accordance with known procedures in the art such as, for example, the process of Malinowski as described in The Journal of Photographic Science, vol. 8, 1960, pages 69-71. Such silver halide may then be employed for the
+6
+fabrication of photographic elements, including those formed by evaporation of silver halide and the condensation of the vapors on a substrate surface to form thereon a stratum of light sensitive silver halide suitable for photographically recording images. For a general discussion of processes of the foregoing type see: U.S. Pat. No. 3,297,463.
+The invention will be further illustrated in conjunction with the following specific examples which are intended to be illustrative and not to be interpreted as limiting in any way.
+Example 1
+About 100 cc of a 0.06 M aqueous silver nitrate solution (equivalent to about 1 gm of AgN03) was mixed in a suitable vessel with about 7 cc. of a 1.0 M aqueous sodium acetate solution to form a buffered AgN03 solution having a pH in the range of from 5 to 6. This buffered AgN03 solution was then “contaminated” with heavy metal ion impurities by “doping” the AgN03 solution with a solution comprising the nitrates of the metal ions Mn+2, Ni+2, Co+2, Fe+3, Rh+3, Pb+2, Cd+2, Zn+2 and Cu+2; each ion at a concentration of about 20 jugm/gm of AgN03 in solution. In this manner, a silver nitrate solution was provided having a known heavy metal ion impurity level in the vicinity of about 20 parts per million for each contaminating ion.
+Next, methyl acetylene gas was bubbled through the “doped” silver nitrate solution prepared above. A white precipitate of silver methyl acetylide formed immediately and the bubbling of the gas was continued until the precipitation had been completed (as evidenced by solution clarity and a solution pH of about 4). The precipitate was then removed by filtration and the remaining supernatant analyzed for the content of each of the above mentioned ions by employing a Perkin Elmer Model 403 Atomic Absorption Spectrophotometer.
+Example II
+A buffered AgN03 solution was prepared exactly as described in Example I. However, this AgN03 solution was not “doped” before the methyl acetylene gas was bubbled therethrough. The precipitate formed as a result of the reaction with methyl acetylene was first removed by filtration and then the “doping” solution described in Example I was added to the remaining supernatant, which was subsequently analyzed by atomic absorption spectrophotometry as in Example I.
+Table A below summarizes the results obtained when the analysis for each ion remaining in the supernatant of Example I was compared with the analysis for the same ion in the supernatant of Example II. The results are expressed as percentages of a particular ion that were found remaining in the supernatant of Example I, making the assumption that the amount of that ion found in the supernatant of Example II represents what was initially present in Example I:
+Table A
+Percentage remaining in Example I supernatant
+Metallic Ion	(and therefore separated from Ag115 )
+Mn+2	98%
+Ni+2	97%
+Co+a	95%
+Fe«	78%
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+7
+3,800,030
+Table A-Continued
+Metallic Ion	Percentage remaining in Example I supernatant (and therefore separated from Ag115 )
+Rh"*3	96%
+Pb+2	96%
+Cd+2	95%
+Zn+2	99%
+Cu+2	60%
+It can be seen from Table A that a substantial amount of each of the heavy metal ions remain in solution, thereby separating these impurities from the silver ion which was precipitated and separated as silver methyl acetylide according to the present invention.
+Examples III and IV
+The procedures of Examples I and II were essentially repeated respectively as Examples III and IV; except that acetylene, C2H2, was used to precipitate the silver acetylide rather than methyl acetylene, the ions of Pb+2 and Cd+2 were added at 10 /xgms/gm rather than 20 /j-gms/gm and the ion Fe+3 was not added. Table B below summarizes the results of these examples in percentages remaining in the Example III supernatant when the level found in the Example IV supernatant was considered to be 100 percent.
+Table B
+Metallic Ion	Percentage remaining in Example
+III supernatant
+Mn*2	120%
+Ni+2	92%
+Co+2	96%
+Rh+3	55%
+Pb+2	90%
+Cd+2	85%
+Zn+2	100%
+Cu-*2	70%
+Again, it can be seen from Table B that at least a majority of every heavy metal ion remains in the supernatant of Example III after the precipitation of silver acetylide therefrom.
+Since certain changes may be made in the above processes without departing from the scope of the invention herein described, it is intended that all matter contained in the above description shall be interpreted as illustrative and not in a limiting sense.
+What is claimed is:
+1. A process of purifying a soluble silver salt which comprises the steps of:
+dissolving the impure soluble silver salt to form a solution containing monovalent silver ion and at least
+8
+one contaminating heavy metal ion having a valence greater than one;
+reacting an acetylene with said solution to form a precipitate of silver acetylide, at least a majority of said contaminating heavy metal ion remaining in solution;
+separating said silver acetylide precipitate from the supernatant liquid containing said majority of contaminating heavy metal ion; and
+reacting said separated silver acetylide with an acid to generate a high purity silver salt of said acid.
+2.	A process as defined in claim 1 wherein said acetylene is methyl acetylene and said silver acetylide is silver methyl acetylide.
+3.	A process as defined in claim 1 wherein said silver salt is silver nitrate and said acid is nitric acid.
+4.	A process as defined in claim I wherein said solution is aqueous.
+5.	A process as defined in claim 4 wherein the concentration of monovalent silver ion in said aqueous solution is less than 1.0 M and the solution pH is less than
+7.
+6.	A process as defined in claim 1 wherein said contaminating heavy metal ion is a polyvalent ion of Mn, Ni, Co, Fe, Rh, Pb, Cd, Zn, Cu, Ir, Pd or Pt.
+7.	A process for preparing high purity photosensitive silver halide which comprises:
+dissolving impure silver nitrate in water to form an aqueous solution containing monovalent silver ion and at least one contaminating heavy metal ion having a valence greater than one;
+reacting an acetylene gas with said solution to form a precipitate of silver acetylide, at least a majority of said contaminating heavy metal ion remaining in solution;
+separating said silver acetylide precipitate from the supernatant liquid containing said majority of contaminating heavy metal ion;
+reacting said separated silver acetylide with nitric acid to generate high purity silver nitrate; and
+reacting said high purity silver nitrate with a water-soluble halide to form high purity silver halide.
+8.	A process as defined in claim 7 wherein said acetylene gas is methyl acetylene and said silver acetylide is silver methyl acetylide.
+9.	A process as defined in claim 7 wherein the concentration of the monovalent silver ion is about 0.05 M and the solution pH is less than 7.
+10.	A process as defined in claim 7 wherein said contaminating heavy metal ion is a polyvalent ion of Mn, Ni, Go, Fe, Rh, Pb, Cd, Zn, Cu, Ir, Pd or Pt.
+. * * * * *
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+65
