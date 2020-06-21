@@ -1,0 +1,681 @@
+
+United States Patent n*]
+Martin et ai.
+[in 3,800,037
+[45] Mar. 26, 1974
+[54] INSECTICIDAL AND ACARICIDAL
+SUBSTITUTED CARBANILIC ACID ESTERS
+[75] Inventors: Henry Martin, Basel, Switzerland;
+Georg Pissiotas, Loerrach,
+Germany; Otto Rohr, Therwil, Switzerland
+[73] Assignee: Ciba-Geigy Corporation, Midland, Mich.
+[22] Filed:	Sept. 4, 1970
+[21] Appl. No.: 69,887
+[30] Foreign Application Priority Data
+Sept. 4, 1969 Switzerland......... 13420/69
+[52] U.S. Cl.................... 424/186, 424/300
+[51] Int. Cl............................A0In 9/08
+[58] Field of Search............ 424/300, 314, 186 56
+[56]	References Cited
+UNITED STATES PATENTS
+2,526,660	10/1950	Hester et al.......... 424/314
+2,788,268	4/1957	Tursich.............   424/300
+2,903,478	9/1959	Lambrech.............. 424/300
+2,990,318	6/1961	Jones et al........... 424/300
+FOREIGN PATENTS OR APPLICATIONS
+681,376	10/1952 Great Britain.......:.. 424/300
+OTHER PUBLICATIONS
+The Merck Index, 8th Ed., Merch & Co., Inc. 1968, pp. 30-31.
+The Merck Index, 8th Ed., Merch & Co., Inc. 1968, p. 149.
+The Merck Index, 8th Ed., Merch & Co., Inc. 1968, p. 639.
+Primary Examiner—Albert T. Meyers Assistant Examiner—Douglas W. Robinson
+[57]	ABSTRACT
+Substituted carbanilic acid propargyl esters of the formula
+El
+B3	Kb
+in which R1; R2 and R4, which may be the same or different, each represents a hydrogen atom or a halogen atom or an alkyl, alkoxy or halogenalkyl radical each having from one to four carbon atoms or a —N02 or —SCN group, and R4 and R5, which may be the same or different, each represents a hydrogen atom or an alkyl group having from one to four carbon atoms, used as synergistic agents for insecticidally and/or a acaricidally active substances.
+27 Claims, No Drawings
+1
+3,800,037
+INSECTICIDAL AND ACARICIDAL SUBSTITUTED CARBANILIC ACID ESTERS
+This invention relates to substituted carbanilic acid propargyl esters which may be used as synergistic agents for insecticidally and/or acaricidally active substances, and to preparations which in addition to insecticidal or acaricidal substances contain such carbanilic acid propargyl esters.
+The compounds which are used as synergistic agents according to the present invention have the formula
+10
+
+o
+■NH—llOCHa—C=CH
+NOa
+(VI)
+This compound is new and therefore also forms a subject of the invention.
+The compounds of the formula I may be prepared according to methods which are, in themselves, known, for example, by the reaction of an isocyanate of the formula
+El
+Ea I Es
+0
+
+NH-i-0-C-C=CH
+Ej
+15
+(I)
+Ei
+Ej
+E,
+■N=C=0
+(VII)
+in which R,, R2 and R3, which may be the same or different, each represents a hydrogen atom or a halogen 20 atom or an alkyl, alkoxy or halogenalkyl radical each having from one to four carbon atoms or a —N02 or —SCN group, and R4 and Rs, which may be the same or different, each represents a hydrogen atom or an alkyl group having from one to four carbon atoms. 25 The alkyl and alkoxy groups which are represented by Rj, R2, R3i R4 and R5, may be substituted or unsubstituted, branched or straight-chained. Suitable alkyl and alkoxy groups are, for example, methyl, ethyl and methoxy groups.	30
+Compounds of special importance are those of the formulae
+35
+Es	(III)
+Es _	O CHs
+60
+in each of which R6, R7 and Rs, which may be the same or different, each represents a hydrogen, fluorine, chlorine or bromine atom or a methyl, methoxy, —CF3 ■
+—N02 or —SCN group.	65
+An especially suitable compound is that of the formula
+with an alcohol of the formula
+Es
+ho-c!:-c=ch
+I
+Et	(vm)
+in an inert solvent, for example, benzene, petroleum ether or dimethylformamide, the substituents Rx, R2, R3, R4 and Rs having the same meanings as those specified for formula I.
+The compounds defined by the general formula .1 are capable of increasing the activity of insecticidal and/or acaricidal compounds many-fold (synergism). Surprisingly, it has also been found that when using compounds of the formula I, insects or representatives of the order Acarina, which are resistant to carbamates or phosphoric acid esters, can be rendered completely sensitive to these latter compounds. Suitable insecticidally or acaricidally active substances are, for example, the following compounds:
+PHOSPHORIC ACID DERIVATIVES
+Bis-O,0-diethylphosphoric acid anhydride (TEPP)
+0,0,0,0-Tetrapropyldithiopyrophosphate
+Dimethyl(2,2,2-trichloro-l-hydroxyethyl)phosphon-ate (TRICHRORFON)
+1.2-	Dibromo-1,2-dichlorethyldimethylphosphate (NALED)
+2.2- Dichlorovinyldimethylphosphate	(DICHLOR-FOS)
+2-	Methoxycarbamyl-1 -methy lviny ldimethylphos-phate (MEVINPHOS)
+Dimethyl-1 -methyl-2-( methylcarbamoyl) vinylphos-phate cis (MONOCROTOPHOS)
+3-	(Dimethoxyphosphinyloxy)-N-methyl-N-methoxy-cis-croton-amide
+3-(Dimethoxyphosphinyloxy)-N,N-dimethyl-cis-crotohamide (DICROTOPHOS)
+2-Chloro-2-diethylcarbamoyl-1 -methylvinyldime-thylphosphate (PHOSPHAMIDON)
+O,O-Diethyl-0-2-(ethylthio)-ethylthiophosphate
+(DEMETON)
+0,0-Diethyl-S-2-(ethylthio)-ethylthiophosphate
+S-Ethylthioethyl-0,0-dimethyl-dithiophosphate
+(THIOMETON)
+O.O-Diethyl-S-ethylmercaptomethyldithiophosphate
+(PHORATE)
+3,800,037
+3
+0,0-Diethyl-S-2- [ (ethy lthio )ethyl ] dithiophosphate (DISULFOTON)
+0,0-Dimethyl-S-2-(ethylsulphinyl)ethylthiophos-phate (OXYDEMETONMETHYL)
+0,0-Dimethyl-S-( 1,2-dicarbethoxyethyI)dithiophos-phate (MALATHION)
+(0,0,0,0-Tetraethyl-S,S'-methylene-bis-t dithiophosphate] (ETHION)
+0-Ethyl-S,S-dipropyldithiophosphate 0,0-Dimethyl-S-(N-methyl-N-formylcarbamoylmethyl )-dithiophosphate (FORMO-TION)
+S-N-( 1-Cyano-l-
+methylethyl)carbamoylmethyldiethylthiolphosphate
+(CYANTHOAT)
+S-(2-Acetamidoethyl)-0,0-dimethyldithiophosphate
+Hexamethylphosphoric acid triamide (HEMPA) 0,0-Dimethyl-O-p-nitrophenylthiophosphate (PA-RATHION-METHYL)
+0,0-Diethyl-O-p-nitrophenylthiophosphate (PARA-THION)
+O-Ethyl-O-p-nitrophenylthiophosphonate (EPN) 0,0-Dimethyl-0-(4-nitro-m-tolyl)thiophosphate (FENITROTHION)
+0,0-Dimethyl-0-(2-chloro-4-nitrophenyl)thiophos-phate (DICAPTHON)
+O.O-Dimethyl-O-p-cyanophenylthiophosphate
+(CYANOX)
+O-Ethyl-O-p-cyanophenylphenylthiophosphonate 0,0-Diethyl-0-2,4-dichlorophenylthiophosphate (DICHROFENTHION)
+0-2,4-Dichlorophenyl-0-methylisopropylamidothio-
+phosphate
+0,0-Dimethyl-0-2,4,5-trichlorophenylthiophos-phate (RONNEL)
+0-Ethyl-0-2,4,5-trichiorophenylethylthiophosphon-ate (TRICHLORONAT)
+0,0-Dimethyl-0-2,5-dichloro-4-bromophenylthio-phosphate (BROMOPHOS) 0,0-Diethyl-0-2,5-dichloro-4-bromophenylthio-phosphate (BROMOPHOS-ETHYL)
+4-tert.	Butyl-2-chlorophenyl-N-methyl-O-
+methylamidophosphate (CRUFOMAT)
+Dimethyl-p-( methylthio )phenylphosphate 0,0-Dimethyl-0-(3-methyl-4-methylmercaptophenyl)thiophosphate (FENTHION) Isopropylamino-0-ethyl-0-(4-Methylmercapto-3-methylphenyl)phosphate 0,0-Diethyl-O-p-[(methylsulphinyl)phenyl]-thiophosphate (FENSULFQTHION) 0,0-DimethyI-O-p-sulphamidophenylthiophosphate 0-[p-(Dimethylsulphamido)phenyl]0,0-dimethyl-thiophosphate (FAMPHUR) 0,0,0',0'-Tetramethyl-0,0'-thiodi-p-phenylenethi-ophosphate
+0-( p-( p-Chlorophenylazophenyl )0,0-dimethylthio-phosphate (AZOTHOAT) O-Ethyl-S-phenyl-ethyldithiophosphonate O-Ethyl-S-4-chIorophenyl-ethyldithiophosphonate O-Isobutyl-S-p-chlorophenyl-ethyldithiophosphon-ate
+0,0-Dimethyl-S-p-chlorophenylthiophosphate
+0,0-Dimethyl-S-(p-chlorophenylthiomethyl)-
+dithiophosphate
+O.O-Diethyl-p-chlorophenylmercaptomethyl-dithiophosphate (CARBONPHENOTHION)
+4
+O.O-Diethyl-S-p-chlorophenylthiomethyl-
+thiophosphate
+0,0-Dimethyl-S-( carbethoxy-phenylmethyl )dithio-phosphate (PHENOTHOAT)
+0,0-Diethyl-S-( carbofluorethoxy-phenylmethyl )-dithiophosphate
+0,0-Dimethy!-S-(carbisopropoxy-phenylmethyl)-
+dithiophosphate
+0,0-Dimethyl-0-(alpha-methylbenzyl-3-hydroxy-crotony 1 )phosphate,
+2-Chloro-1 -( 2,4-dichloropheny 1) viny 1-diethyiphosphate (CHLORFENVINPHOS)
+2-Chloro-l-(2,4,5-trichlorophenyl)vinyl-dimethylphosphate
+0-( 2-Chloro-1 -(2,5-dichlorophenyl)vinyl)-0,0-diethylthiophosphate
+Phenylglyoxylonitriloxime-0,0-diethylthiophos-phate (PHOXIM)
+O,0-Diethyl-O-( 3-chloro-4-methyl-2-oxo-2-H-1 -benzopyran-7-yl)-thiophosphate (COUMAPHOS) 0,0-Diethyl-7-hydroxy-3,4-tetramethylene-coumarinyl-thiophosphate (COUMITHOAT)
+2,3 -p-Dioxanedithiol-S ,S-bis( 0,0-diethy ldithiophos-phate) (DIOXATHION)
+2-Methoxy-4-H-1,3,2-benzodioxaphosphorine-2-sulphide
+0,0-Diethyl-0-(5-phenyl-3-isooxyzolyl (sic)) thio-phosphate
+S- [ (6-Chlor-2-oxo-3-benzoxazolinyl )methyl ] 0,0-diethyldithiophosphate (PHOSALON)
+2-( Diethoxyphosphinylimino) -4-methyl-2,3 -dithiolane
+0,0-Dimethyl-S-[2-methoxy-1,3,4-thiadiazol-5-(4H )-onyl-( 4 )-methyl ] dithiophosphate T ris-( 2-methyl-1 -aziridinyl )-phosphine-oxide (M E-TEPA)
+0,0-Dimethyl-S-phthalimidomethyl-dithiophosphate
+S-( 2-Chloro-1 -phthalimidoethyl )-0,0-diethy ldithio-phosphate
+N-Hydroxynaphthalimido-diethylphosphate Dimethyl-3,5,6-trichloro-2-pyridylphosphate 0,0-Dimethyl-0-(3,5,6-trichloro-2-pyridyl)thio-phosphate
+0,0-Diethyl-0-( 3,5,6-trichloro-2-pyridyl )thiophos-phate
+0,0-Diethyl-0-2-pyrazinylthiophosphate (THIONA-ZIN) 0,0-Diethyl-0-(2-quinoxylyl)thiophosphate 0,0-Dimethyl-S-(4-oxo-l,2,3-benzotriazin-3(4H)-ylmethyl)dithiophosphate (AZINPHOSMETHYL) 0,0-Diethyl-S-(4-oxo-l,2,3-benzotriazin-3(4H)-ylmethyl)dithiophosphate (AZ1NPHOSETHYL) S-[(4,6-Diamino-s-triazin-2-yl)methyl]-0,0-dimethyldithiophosphate (MENAZON)
+S- [ 2-( Ethylsulphonyl )ethy 1 ] dimethylthiophosphate (DIOXYDEMETON-S-METHYL)
+Diethyl-S- [ 2-( ethylsulphinyl )ethyl ] dithiophosphate (OXYDISULFOTON)
+Bis-0,0-diethylthiophosphoric acid anhydride (SUL-FOTEP)
+Dimethyl-l,3-di(carbomethoxy)-l-propen-2-yl-phosphate
+Dimethyl-( 2,2,2-trichloro-1 -butyroyloxyethyl )phos-phonate (BUTONAT)
+0,0-Dimethyl-0-( 2,2-dichloro-1 -methoxy-vinyl)phosphate
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,037
+5
+0,0-Dimethyl-0-( 3-chloro-4~nitrophenyl )thiophos-phate (CHLORTHION)
+0,0-Dimethyl-0( or S )-2-( ethylthioethyl )thiophos-phate (DEMETONS-METHYL)
+Bis-( dimethylamido )fluorophosphate (DIMEFOX) 2-(0,0-Dimethyl-phosphoryI-thiomethyl)-5-methoxy-pyrone-4
+3,4-Dichlorobenzyl-triphenylphosphonium chloride Dimethyl-N-methoxymethylcarbamoylmethyl-dithiophosphate (FORMOCARBAM) 0,0-Diethyl-0-(2,2-dichloro-1 -chlorethoxyvinyl )-phosphate
+0,0-Dimethyl-0-( 2,2-dichloro-1 -chlorethoxyvinyl)-phosphate
+O-Ethyl-S.S-diphenyldithiolphosphate O-Ethyl-S-benzyl-phenyldithiophosphonate 0,0-Diethyl-S-benzyl-thiophosphate 0,0-Dimethyl-S-(4-chlorophenylthiomethyl)dithio-phosphate (METHYLCARBOPHENOTHION) 0,0-Dimethyl-S-( ethylthiomethyl )dithiophosphate Diisopropylaminofluorophosphate (MIPAFOX)
+0,0-Dimethyl-S-( morpholinylcarbamoylmethyl )di-thiophosphate (MORPHOTHION) Bismethylamido-phenylphosphate 0,0-Dimethyl-S-(benzenesulphonyl)dithiophos-phate
+0,0-Dimethyl-(S and 0)-ethylsulphinylethylthio-phosphate
+0,0-Diethyl-0-4-nitrophenylphosphate 0,0-Diethyl-S-(2,5-dichlorophenylthiomethyl)dithi-ophosphate (PHENDAPTON)
+T riethoxy-isopropoxy-bis (thiophosphinyl )disulphide 0,0-Diethyl	-0-(4-methyl-coumarinyl-7 )-
+thiophosphate (POTASAN)
+2-Methoxy-4H-1,3,2-benzodioxaphosphorine-2-oxide
+Octamethylpyrophosphoramide (SCHRADAN) Bis(dimethoxythiophosphinylsulphido)-phenylmethane
+5-Amino-bis(dimethylamido)phosphinyl-3-pheny|-
+1,2,4-triazole (TRIAMIPHOS) N-Methyl-5-(0,0-dimethylthiolphosphoryl)-3-thiav-aleramide (VAMIDOTF1ION) and N ,N,N',N '-T etramethyldiamidofluorophosphate (DIMEFOX)	.
+CARBAMIC ACID DERIVATIVES
+1 -Naphthyl-N-methylcarbamate (CARBARYL)
+2-Butinyl-4-chlorophenylcarbamate
+4-Dimethylamino-3,5-xylyl-N-methylcarbamate
+4-	Dimethylamino-3-tolyl-N-methylcarbamate (AM1NOCARB)
+3,4,5-Trimethylphenyl-N-methylcarbamate 2-Chlorophenyl-N-methylcarbamate (CPMC)
+5-	Chlor-6-oxo-2-norbornane-carbonitrile-0-(me-thylcarbamoyl )-oxime
+1 -(Dimethylcarbamoyl )-5-methyl-3-pyrazolyl-N,N-dimethylcarbamate (DIMET1LAN)
+2,3-Dihydro-2,2-dimethyl-7-benzofuranyl-N-methylcarbamate (CARBOFURAN) 2-Methyl-2-methylthio-propidnaldehyde-0-(methyl-carbamoyl)oxime (ALDICARB) 8-Quinaldyl-N-methylcarbamate and its salts Methyl 2-isopropyl-4-( methy lcarbamoyloxy )car-banilate
+m-( 1 -Ethylpropyl)phenyl-N-methylcarbamate 3,5 -Di-tert .buty 1-N -methy lcarbamate
+6
+m-( 1 -Methylbutyl )phenyl-N-methylcarbamate 2-Isopropylphenyl-N-methylcarbamate
+2-	sec. Butylphenyl-N-methylcarbamate m-Tolyl-N-methylcarbamate
+2.3-	Xylyl-N-methylcarbamate
+3-	Isopropylphenyl-N-methylcarbamate
+3-tert.Butylphenyl-N-methylcarbamate 3-sec.-Butylphenyl-N-methylcarbamate 3-lsopropyl-5-methylphenyl-N-methylcarbamate
+(PROMECARB)
+3.5-	Diisopropylphenyl-N-methylcarbamate 2-Chlor-5-isopropylphenyl-N-methylcarbamate 2-Chloro-4,5-dimethylphenyl-N-methylcarbamate 2-( 1,3-Dioxolan-2-yl)phenyl-N-methylcarbamate
+(DIOX YC ARB)
+2-(4,5-Dimethyl-1,3-dioxolan-2-yl)phenyl-N-methylcarbamate
+2-( l,3-Dioxan-2-yl)phenyl-N-methylcarbamate 2-( 1,3-Dithiolan-2-yl)phenyl-N-methy lcarbamate 2-( 1,3-Dithiolan-2-yl)phenyl-N,N-dimethylcarba-mate
+2-Isopropoxyphenyl-N-methylcarbamate (AR-PROCARB)
+2-(2-Propinyloxy)phenyl-N-methylcarbamate
+2-	( 2-Propinyloxy )phenyl-N-methylcarbamate
+3-	(2-Propinyloxy)phenyl-N-methylcarbamate 2-Dimethylaminophenyl-N-methylcarbamate
+2-	Diallylaminophenyl-N-methylcarbamate
+4-	Diallylamino-3,5-xylyl-N-methylcarbamate (AL-LYXICARB)
+4-	Benzothienyl-N-methylcarbamate
+2.3-	Dihydro-2-methyl-7 -benzofuranyl-N -methylcarbamate
+3-	Methyl-1 -phenylpyrazol-5-yl-N,N-dimethylcarba-mate
+1-	Isopropyl-3-methylpyrazol-5-yl-N,N-dimethylcar-bamate (ISOLAN)
+2-	(N',N'-Dimethylcarbamoyl)-3-methylpyrazol-5-yl-N ,N-dimethylcarbamate
+2-	Dimethylamino-5,6-dimethylpyrimidin-4-yl-N,N-dimethylcarbamate
+3-	Methyl-4-dimethylaminomethyleneiminophenyl-N-methylcarbamate
+3-Dimethylamino-methyleneiminophenyUN-
+methylcarbamate
+1-	Methylthio-ethylimino-N-methylcarbamate (ME-THOXYMYL)
+2-	Methylcarbamoyloxyimino-1,3-dithiolane
+5-	Methyl-2-methylcarbamoyloxyimino-1,3-oxathiolane
+2-( 1 -Methoxy-2-propoxy )phenyl-N-methylcarbamate
+2-	( 1 -Butin-3-yl-oxy )pheny 1-N-methylcarbamate
+3- Methyl-4	-(dimethylamino-methylmercapto-methyleneimino)phenyl-N-methylcarbamate
+1.3-	Bis(carbamoylthio )-2-( N,N-dimethylamino)-propane hydrochloride
+5.5-	Dimethylhydroresorcinoldimethylcarbamate 2- [ Propargylethy lamino ] -phenyl-N-
+methylcarbamate
+2- [ Propargylmethylamino ] -phenyl-N-methylcarbamate
+2-	[Dipropargylamino]-phenyl-N-methylcarbamate
+3-	Methy 1-4- [ dipropargylamino ] -pheny 1-N-methylcarbamate
+3.5-	Dimethyl-4- [ dipropargylamino ] -pheny 1-N-methylcarbamate
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,037
+7
+2-	[ Allyl-isopropy lamino ]-phenyl-N-methylcarbamate and
+3-	[Allyl-isopropylamino]-phenyl-N-methylcarbamate.
+Chlorinated Hydrocarbons y-Hexachlorocyclohexane [Gammerxane; Lindane; y HCH]
+1.2.4.5.6.7.8.8-	Octachloro-3a,4,7,7a'-tetrahydro-4,7-methyleneindane [Chlordan]
+1.4.5.6.7.8.8-	Heptachloro-3a,4,7,7a-tetrahydro-4,7-methyleneindane [Heptachlor]
+1.2.3.4.10.10-	Hexachloro-1,4,4a,5,8,8a-hexahydro-endo-1,4-exo-5,8-dimethanonaphthalene [Aldrin]
+1.2.3.4.10.10-	Hexachloro-6,7 -epoxy-l,4,4a,5,6,7,8,8a-octahydro-exo-l,4-endo-5,8-dimethanonaphthalene [Dieldrin]
+ditto, endo-endo- [Endrin]
+6.7.8.9.10.10-	Hexachloro-1,5,5a,6,9,9a-hexahydro-6,9-methano-2,3,4 benzo [e]-dioxa-thiepene-3-oxide [Endosulfan]
+Chlorinated camphor [Toxaphen]Decachloroctahy-dro-1,3,4-metheno-2H-cyclobuta[e d] pentalen-2-one
+Dodecachloroctahydro-1,3,4-metheno-1H-cyclobuta[c djpentalene [Mirex]
+Ethyl-1,1 a,3,3a,4,5,5,5a,5a,6-decachloroctahydro-2-hydroxy-1,3,4-metheno-1 H-cyclobuta[c d]penta-lene-2- laevulinate
+Bis(pentachloro-2,4-cyclopentadien-l-yl)
+Dinoctone
+1.1.1	-T richloro-2,2-bis(p-chlorophenyl)ethane [DDT]
+Dichlorodiphenyl-dichloroethane [TDE]
+Di( p-chlorophenyl )-trichloromethylcarbinol [ Dico-fol]
+Ethyl-4,4'-dichlorophenylglycollate [Chloroben-zylate]
+Ethyl-4,4'-dibromobenzylate [Bromobenzylate] Isopropyl-4,4'-dichlorobenzylate
+1.1.1	-T richloro-2,2 bis(p-methoxyphenyl)ethane [Methoxychlor]
+Diethyl-diphenyl-dichloroethane Decachloropentacyclo(3,3,2, O2,6, O3-9, O7,10)decan-
+4-one [Chlordecon].
+NITROPHENOLS AND DERIVATIVES
+4,6-Dinitro-6-methylphenol Na salt [dinitrocresol] Dinitrobutylphenol-2,2',2''-triethanolamine salt 2-Cyclohexyl-4,6-dinitrophenol [Dinex]
+2-	( l-Methylheptyl)-4,6-dinitrophenyl-crotonate [Dinocap]
+2	sec.-Butyl-4,6-dinitrophenyl-3-methyl-butenoate [Binapacryl]
+2	sec.-Butyl-4,6-dinitrophenyl-cyclopropionate and 2 sec.-Butyl-4,6-dinitrophenyl-isopropyl-carbonate [Dinobuton]
+VARIOUS SUBSTANCES
+Sabadilla
+Rotenone
+Cevadine
+Veratridine
+Ryania
+Pyrethrin
+3-	Allyl-2-methyl-4-oxo-2-cyclopenten-1 -yl-chrysanthemumate (Allethrin)
+6-Chloropiperonyl-chrysanthemumate (Barthrin)
+8
+2.4-	Dimethylbenzyl-chrysanthemumate (Dimethrin)
+2,3,4,5-T etrahydrophthalimidomethyl-chrysanthemumate
+(5-Benzyl-3-furyI)-methyl-2,2-dimethyl-3-(2-methylpropanyl )cyclopropanecarboxylate Nicotine
+Bacillus thuringiensis Berliner Dicyclohexylcarbodiimide Diphenyldiimide [azobenzene (sic)]
+4-Chlorobenzyl-4-chlorophenylsuIphide [ Chloroben-side]
+Creosote oil
+6-Methyl-2-oxo-1,3-dithiolo-[4,5-b]-quinoxaline [ Quinomethionate ]
+(I)-3-(2-Furfuryl)-2-methyl-4-oxocyclopent-2-
+enyI(I)-(cis+trans)chrysanthemum-monocarboxylate
+[Furethrin]
+2-Pivaloyl-indane-1,3-dione [Pindon] 2-Fluorethyl(4-bisphenyl)acetate 2-Fluoro-N-methyl-N( 1 -naphthyl)-acetamide Pentachlorophenol and salts
+2,2,2-Trichloro-N-(pentachlorophenyl)-acetimidoyl chloride
+N'-(4-Chloro-2-methylphenyl)-N,N-dimethylfor-mamidine (Chlorphenamidine)
+4-Chlorobenzyl-4-fluorophenyl-sulphide (Fluoro-benside)
+5,6-Dichloro-1 -phenoxycarbanyl-2-trifluoromethyl-benzimidazole (Fenozaflor) Tricyclohexyl-stannic-hydroxide 2-Thiocyanatoethyl-lauric acid ester /3-Butoxy-/3'-thiocyanatodiethyl-ether Isobomyl-thiocyanatoacetate p-Chlorophenyl-p-chlorobenzenesulphonate (Ovex)
+2.4-	Dichlorophenyl-benzenesulphonate p-Chlorophenyl-benzenesulphonate (Fenson) p-Chlorphenyl-2,4,5-trichlorophenylsulphone (Tet-
+radifon)
+p-Chlorophenyl-2,4,5-trichlorophenylsulphide (Tet-rasul)
+Methyl bromide p-Chlorophenyl-phenylsulphone p-Chlorobenzyl-p-chlorophenylsulphide (Chloroben-side)
+4-Chlorophenyl-2,4,5-trichlorophenylazosulphide
+2(p-tert.-Butylphenoxy)-l-methylethyl-2-chloroeth-
+yl-sulphite
+2( p-tert.-Butylphenoxy )cyclohexyl-2-propinyl-sulphite
+4,4'-Dichloro-N-methylbenzenesulphonanilide N-(2-Fluoro-l ,1,2,2-tetrachloroethylthio)-methanesulphonanilide
+2-Thio-1,3-dithiolo-(4,5-6)quinoxaline	(Thi-
+oquinox)
+Chloromethyl-p-chlorophenylsulphone	(lauseto
+(sic!) new)
+1,3,6,8-Tetranitrocarbazole and Prop-2-ynyl-(4-t-butylphenoxy)-cyclohexylsulphite (Propargil).
+The ratio of the insecticidally and/or acaricidally active substance to the compounds of the formula I is preferably within the range of from 0.01:10 to 200:1.
+Such synergistically active mixtures can preferentially be employed against all harmful insects, for exam-
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,037
+9
+pie against aphids, such as the green peach aphid (Myzuspersicae), and the black bean aphid (Doralisfa-bae)\ scale insects lice such as Aspidiotus hederae, Lecanium hesperidium, Pseudococcus maritimus; Thysanoptera such as Hercinothrios femoralis, and bugs such as the beet bug (Piesma quadrata) or the bed bug (Cimex lectularius), caterpillars, such as Plutella maculipennis and Lymantria dispar; weevils such as the granary weevil (Calandra granaria) or the Colorado beetle (Leptinotarsa decemlineata), but also varieties which live in soil, such as wireworms (Agriotes sp.) or cockchafer grubs (Melolontha melolontha); cockroaches, such as the German cockroach (Blattella germanica); Orthoptera, such as the cricket (Gryllus domesticus)', termites, such as Beticulitermes; Hymenoptera, such as ants; Diptera, such as the vinegar fly (Drosophila melanogaster), the Mediterranean fruit fly (Ceratitis capitata), the housefly (Musca domestica), and gnats, such as the yellow fever mosquito (Aedes aegypti).
+The use of this synergistic mixture is also especially effective in combatting representatives of the order Ac-arina such as for example Eulaelaps, Echinolaelaps, Laelaps, Haemogamasus, Dermanyssus, Ornithonyssus, Allodermanyssus, in particular Allodermanyssus sanguineus, Pneumonyssus, Amblyomma, Aponomma, Boophilus, Dermacentor, Haemophysalis, Hyalomma, Ixodes, Margaropus, Rhipicephalus, Ornithodorus; Oc-tobius, Gheyletidae, for example Cheyletus, Psorer-gates, Demodicidae, Trombiculidae, for example Trombicula, Eutrombicula, Schongastia, Acomatacu-rus, Neoschongastia, Euschongastia, Sarcoptiformes for example Notoedres, Sarcoptes, Knemidokoptes, Psoroptidae, for example Psoroptes, Chorioptes, oto-dectes or Tetranychidae, for example Tetranychus tela-rius; Tetranychus urticae and the like.
+The mixtures can either be used by themselves or together with suitable carriers and/or additives.
+Suitable carriers and additives can be solid or liquid and correspond to the substances which are customary in formulation technology, for example, natural or regenerated mineral substances, solvents, dispersing agents, wetting agents, adhesives, thickeners, binders or fertilisers.
+Such preparations can be employed in the form of solutions, emulsions, suspensions, granules or dusting agents. The methods of application depend on the end uses and must ensure that the active substance can be finely distributed.
+The content of active substance in the preparations described above is between 0.1 and 95 percent. At the same time it should be mentioned that in the case of application from aircraft or by means of other suitable application instruments, concentrations of up to 99.5 percent or even a pure active substance may be employed.
+To manufacture solutions, it is possible to employ solvents, especially alcohols, for example ethyl alcohol or isopropyl alcohol, ketones, such as acetone or cyclohexanone, aliphatic hydrocarbons, such as kerosene, and cyclic hydrocarbons, such as benzene, toluene, xylene, tetrahydronaphthalene and alkylated naphthalenes, and also chlorinated hydrocarbons, such as tetra-chloroethane, ethylene chloride, and finally also mineral and vegetable oils or mixtures of the above mentioned substances.
+Aqueous preparations are preferably dispersions. The compounds of formula (I) and the active sub-
+10
+stance, as such or in one of the above mentioned solvents, are homogenised in water, preferably by means of wetting agents or dispersing agents. Amongst cationic dispersing agents, quaternary ammonium compounds may be mentioned as an example, and amongst anionic dispersing agents, soaps, aliphatic long-chain sulphuric acid monoesters, aliphatic-aromatic sul-phonic acids and long-chain alkoxyacetic acids may for example be mentioned; amongst non-ionic dispersing agents, polyglycol ethers of fatty alcohols or ethylene oxide condensation products with p-tert. alkylphenols may be mentioned. On the other hand, it is also possible to manufacture concentrates consisting of active substance, synergistic agent or dispersing agent and optionally solvents. Such concentrates can be diluted before use, for example with water.
+Dusting agents can be manufactured by mixing or conjoint grinding of the active substance and the synergistic agent with a solid carrier. Possible carriers are for example: talc, diatomaceous earth, kaolin, bentonite, calcium carbonate, boric acid or tricalcium phosphate, but also wood flour, cork powder, charcoal and other materials of vegetable origin. The substances can also be absorbed on the carriers by means of a volatile solvent. Pulverulent preparations and pastes can be rendered capable of suspension in water, and usable as spraying agents, by the addition of wetting agents and protective colloids.
+In many cases the use of granules for uniformly releasing the active substance-synergistic agent combinations over a longer period of time is of advantage. These granules can be manufactured by dissolving the active substance in an organic solvent, absorbing this solution by a granular mineral, for example attapulgite or Si02, and removing the solvent. They can also be manufactured by mixing the active substances of formula I with polymerisable compounds, after which a polymerisation is carried out which leaves the active substances unaffected, with the granulation being carried out whilst the polymerisation is still proceeding.
+The following Examples illustrate the invention.
+EXAMPLE 1
+Manufacture of N-o-nitrophenylpropargyl-carbamate
+41 of o-nitrophenylisocyanate in 75 ml of dimethyl-formamide were added dropwise to 14 g of propargyl alcohol in 75 ml of dimethylformamide, at 25°C, whilst cooling. The reaction mixture was stirred at room temperature for approx.
+10 to 12 hours and subsequently poured into ice water. The crystals of the compound of formula
+■NH—COO—CHr- C=CH
+which precipitated were recrystallised from benzene/-petroleum ether. Melting point 77°-79°C.
+The following compounds of formula
+Yt Ys
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+	3,800,037			
+11			12	
+were also manufactured analogously:				
+Active Y, Y2 Ya substance No.	y4 y5		- x2	Melting point/boiling point °C
+2	Br	H	H	H	H	H	H	58 59
+3	H	Br	H	H	H	H	H	58-59
+4	H	H	Br	H	H	H	H	144-145
+5	H	H	Br	H	H	CHa	H	114-116
+6	Cl	H	H	H	H	H	H	45
+7	H	H	Cl	H	H	H	H	49
+8 9	H Cl	H Cl	Cl H	H H	H H	CHa H	H H	100-102 72 73
+10	Cl	Cl	H	H	H	CHa	H	75 76
+1 1	Cl	Cl .	H	H	H	CHa	CHa	83-85
+12	Cl	H	H	Cl	H	H	H	71 73
+13	Cl	H	H	C!	H	CH3	H	87-88
+1 4	Cl	H	H	Cl	H	CHa	CHa	102-104
+15	H	Cl	H	Cl	H	H	H	111-113
+16	H	Cl	H	Cl	H	CH3	CHa	104-106
+I 7	H	Cl	Cl	H	H	H	H	78-80
+18	H	Cl	Cl	H	H	CHa	H	84-85
+19	H	Cl	Cl	H	H	CHa	CHa	111-112
+20	Cl	H	Cl	Cl	H	H	H	101-103
+2 1	H		Cl	H	H	H	H	77 79
+22	H	CF.(	CI	H	H	CHa	CHa	103-105
+23	H	H	no2	H	H	H	H	174 177
+24	NOa	H	Cl	H	H	H	H	84-87
+25	NO,	H	H	Cl	H	H	H	69 6A
+26	OCH-,	H	H	H	H	. H	H	65-66
+27	CHa	H	SCN	CHa	H -	H	H	109-111
+28	H	CHa	SCN	H	H	H	H	92 93
+29	H	CF3	OCHa	H	H	H	H	78 81
+30	H	H	H	H	H	H	H	92-94
+3 1	H	Cl	H	H	H	CH3	CHa	88 93
+32	Cl	H	H	H	H	CHa	CHa	47-50
+33	H	H	H	H	H	CH3	CHa	102-103
+34	H	H	Cl	H	H	CHa	CHa	117-119
+35	H	Cl	H	H	H	CHa	C2H5	68-72
+36	Cl	H	H	H	H	CH3	c2h5	108-111/0.06 mm
+37	H	H	Cl	H	H	CH3	c2h5	Hg 63-65
+3 8	H	CF3	H	H	H	CHa	c2h5	57-58
+39	H	H	H	H	H	CHa	c2h5	68-69
+40	H	CF3	H	CFa	H	H	H	30 35
+41	H	CFa	H	CFa	H	CHa	CHa	128-130
+42	H	H	CFa	H	H	H	H	98-99
+43	H	H	CFa	H	H	CHa	H	75-78
+44	H	H	CFa	H	H	CHa	CHa	107-109
+45	H	CFa	H	H	H	H	H	Oil
+46	H	CFa	H	H	H	CHa	CH3	84-85
+47	H	H	Br	H	H	CHa	CHa	115-117
+48	H	H	CHa	H	H	H	H	88-90
+49	H	CHa	H	H	H	H	H	52-54
+50	H	CHa	H	H	H	CHa	CHa	47-48.5
+51	CH3	H	H	H	H	H	H	42 44
+52	ch3	H	H	H	H	CHa	CHa	90-92
+53	H	H	F	H	H	H	H	98 99
+54	CH3	H	Cl	H	H	H	H	79 80
+55	ch3	Cl	H	H	H	H	H	97 98
+56	CHa	Cl	H	H	H	CHa	CHa	125-127
+57	ch3	H	H	CHa	H	H	H	105-107
+58	CHa	H	CHa	H	H’	H	H	79-80
+59	CHa	H	CH3	H	H	CHa	H	73-75
+60	OCH-j	H	OCHa	Cl	H	H	H	109-11!
+61	OCHa	H	H	Cl	H	H	H	93-95
+62	F	H	H	H	H	H	H	Oil
+63	H	Cl	H	H	H	H	H	46-47
+64	H	Cl	H	H	H	CH3	H	Oil
+65	OCHa	H	no2	H	H	H	H	146-148
+66	CH3	H	no2	Cl	H	H	H	135-138
+67	CH3	CH3	H	H	H	H	H	68-69
+68	CH3	CHa	H	H	H	CHa	H	72-73
+69	CH3	CH3	H	H	H	CHa	CH3	104-106
+70	H	Cl	OCHa	H	H	H	H	79-80
+71	OCHa	H	Cl	OCHa	H	H	H	108-109
+72	OCHa	H	OCHa	H	H	H	H	58-60
+73	OCHa	H	H	OCHa	H	H	H	55
+74	CH3	H	H	Cl	H	H	H	81-82
+75	CHa	H	H	H	CH3	H	H	103-104
+76	CHa	H	H	H	CHa	CHa	H	83-85
+77	CHa	H	H	H	CHa	CHa	CH3	106-108
+78	Cl	H	H	CFa	H	H	H	57-58
+79	H	Cl	CFa	H	H	H	H	Oil
+80	H	Cl	CFa	H	H	CHa	H	82-84
+SI	H	Ci	CFa	H	H	CHa	CH3	98-99
+82	H	Cl	CHa	H	H	H	H	83-85
+83	H	Cl	CHa	H	H	CHa	H	60-62
+84	H	Cl	CH3	H	H	CHa	CHa	86-87
+85	H	Br	OCHa	Br	H	H	H	115-116
+13
+EXAMPLE 2
+14
+0—C—NH—CHs
+3,800,037
+Dusting Agents
+Equal parts of a mixture of active substance and synergistic agent and of precipitated silica are finely ground. Dusting agents, preferably containing 1-6 percent of active substance, can be manufactured therefrom by mixing with kaolin or talc.
+Spraying Powder
+To manufacture a spraying powder, the following components are for example mixed and finely ground:
+50 parts of a mixture of active substance and synergistic agent
+20 parts of highly adsorbent silica
+25 parts of Bolus alba (Kaolin)
+1.5	parts of sodium 1 -benzyl-2-stearyl-benzimidazole-6,3 '-disulphonate and
+3.5	parts of a reaction product of p-tert. octylphe-nol and ethylene oxide.
+Emulsion Concentrate
+The easily soluble mixture of active substance and synergistic agent can also be formulated as an emulsion concentrate in accordance with the following instruction:
+20 parts of a mixture of active substance and synergistic agent,
+70 parts of xylene and
+10 parts of a mixture of a reaction product of an alkyl phenol with ethylene oxide and calcium dodecylbenzenesulphonate are mixed. On dilution with water to the desired concentration, a sprayable emulsion results.
+Granules
+7.5	g of a mixture of active substance and synergistic agent are dissolved in 100 ml of acetone and the acetone solution thus obtained is added to 92 g of granular attapulgite. The whole is well mixed and the solvent is stripped off in a rotary evaporator. Granules containing 7.5 percent of active substance are obtained.
+5
+CH
+0—CHi
+0—CHi
+(A)
+c. 0.08-y of compound (A) and 0.08-y of compounds Nos. 1, 2, 3, 6, 7, 9, 12, 15, 20, 45, 49, 53, 55, 57 and
+Compound No.	0.08'y of synergistic agent	0.08y of (A)	0.08'y of A and 0.08y of synergistic agent
+1		17	92
+2	0	17	65
+3	0	17	50
+6	0	17	90
+7	0	17	40
+9	0	17	95
+12	0	17	95
+15	0	17	45
+20	0	17	60
+45	0	17	80
+49	0	17	65
+53	0	17	65
+55	0	17	90
+57	0	17	45
+78	0	17	75
+EXAMPLE 4
+A test of the synergistic action of the compound No. 30 1 on the compounds of formulae
+35
+40
+O-C—NHCHs I 0 O—CHj
+/Vc^
+\
+O—CHj
+V
+dioxacarb
+O
+(A)
+O—C—NHCHs
+x\A
+EXAMPLE 3
+v\/
+(B)
+Test for Synergistic Action
+For this test, female house flies aged from 2 to 5 days were used. Before the start of the test, the flies were 50 sorted as to gender under C02 narcosis, and the females were placed in groups of 10. The flies, which were kept motionless with C02, were treated with a dispenser which on pressing the button each time releases 1 microlitre of the solution of the test substance in ace- 55 tone. After the treatment, the flies were placed in groups of 10 in Petri dishes into which a cottonwool pad impregnated with honey water had been introduced for the flies to feed on. After 24 hours the test was evaluated by counting the flies which could no 6Q longer move. The results quoted in the table represent average values of the percentage destruction from four repeat tests.
+The following were each used per fly (weight of one fly 20 mg (average value)):	65
+a.	0.08-y of each of the compounds Nos. 1,2,3, 6, 7,
+9, 12, 15, 20, 45, 49, 53, 55, 57 and 78
+b.	0.08-y of the compound of formula
+carbaryl
+0
+0—H:-NHCHs
+-o-c^ \_
+CHi
+CHs
+
+propoxur
+CHs CHi
+0 i
+(CHi)iN——0—c^ \r
+H(i----ft-CHa
+isolan OCONHCH3 I	CHi
+V
+CHaC=CH
+V
+(C)
+(D)
+..(E)
+15
+CHjO S \ //
+P—S-CH—COOC2Hs
+^ i
+3,800,037
+16
+CHjO
+CIIiO O
+Vo-o
+CIIjO"7
+Hi—COOC2H5 malathlon
+O C2H5 II /
+C-
+(F)
+d)Ha il phosphamidon
+i-t/
+\
+CiHs
+(G)
+CHjO H
+X|i-/
+s
+0=C/ ^C-OCHj
+10
+-h—mii— n-
+(ii)
+15
+(1)
+oiiio
+mnUildiillilmi pyrotlirum
+was carried out analogously to example 3.
+The results listed in the table represent average values of the percentage destruction of female house flies, 20 from two repeat experiments.
+0.327	Compound No. 1	0
+0.327	(A)	5
+0.327	Compound No. I +	
+0.327	(A)	84
+O.O87	Compound No. 1	0
+0:087	(B)	5
+O.O87	Compound No. 1 +	
+O.O87	(B)	95
+0.17	Compound No. 1	0
+O.I7	(C)	3
+O.I7	Compound No. 1 +	
+O.I7	(C)	80
+0.27	Compound No. 1	0
+O.27	(D)	10
+0.27	Compound No. H-	
+O.27	(D)	99
+O.O87	Compound No. 1	0
+O.O87	(E) ,	15
+O.O87	Compound No. 1 +	
+O.O87	(E)	88
+O.67	Compound No. 1	0
+O.67	(F)	15
+O.67	Compound No. 1 +	
+O.67	(F)	73
+0.17	Compound No. 1	0
+0.17	(G)	3
+0.17	Compound No. 1 +	
+0.17	(G)	78
+0.17	Compound No. 1	0
+0.17	(H)	15
+0.17	Compound No. 1 +	
+0.17	(H)	99
+0.077	Compound No. 1	0
+0.077	(I)	10
+0.077	Compound No. 1 +	
+0.077	(I)	29
+25
+30
+35
+40
+45
+50
+We claim:
+1. An insecticidal and acaricidal composition consisting essentially of equal parts by weight of (1) 2-( 1 ',3'-dioxalan-2'-yl)-phenyl-N-methyl carbamate and (2) a 5 synergist compound selected from the group consisting of N-(2-nitrophenyl)-propargyl carbamate, N-(2-bromophenyl)-propargyl	carbamate,
+N-(3-bromophenyl)propargyl carbamate, N-(2-chlorophenyl propargyl carbamate, N-(4-chloro-phenyD-propargyl carbamate, N-(2,3-dichlorophenyl)-propargyl carbamate, N-(2,5-dichlorophenyl)propar-gyl carbamate, N-(3,5-dichlorophenyl)-propargyl carbamate, N-(2,4,5-trichlorophenyl)-propargyl carbamate, N-(3-trifluoromethylphenyl)-propargyl carbamate, N-(3-methylphenyl)-propargyl carbamate, N-(4-fluorophenyl)-propargyl carbamate, N-(2-
+60
+65
+methyl-3-chlorophenyl)-propargyl carbamate, N-(2,5-dimethylphenyl)-propargyl carbamate and N-(2-chloro-5-trifluoromethylphenyl)-propargyl carbamate.
+2.	The composition of claim 1 in which the synergist compound is N-(2-nitrophenyl)-propargyl carbamate.
+3.	The composition of claim 1 in which the synergist compound is N-(2-bromophenyl)-propargyl carbamate.
+4.	The composition of claim 1 in which the synergist compound is N-(3-bromophenyl)-propargyl carbamate.
+5.	The composition of claim 1 in which the synergist compound is N-(2-chlorophenyl)-propargyl carbamate.
+6.	The composition of claim 1 in which the synergist compound is N-(4-chlorophenyl)-propargyl carbamate.
+7.	The composition of claim 1 in which the synergist compound is N-(2,3-dichlorophenyl)-propargyl carbamate.
+8.	The composition of claim 1 in which the synergist compound is N-(2,5-dichlorophenyl)-propargyl carbamate.
+9.	The composition of claim 1 in which the synergist compound is N-(3,5-dichlorophenyl)-propargyl carbamate.
+10.	The composition of claim 1 in which the synergist compound is N-(2,4,5-trichlorophenyl)-propargyl carbamate.
+11.	The composition of claim 1 in which the synergist compound is N-(3-trifluoromethylphenyl)-propargyl carbamate.
+12.	The composition of claim 1 in which the synergist compound is N-(3-methylphenyl)-propargyl carbamate.
+13.	The composition of claim 1 in which the synergist compound is N-(4-fluorophenyl)-propargyl carbamate.
+14.	The composition of claim 1 in which the synergist compound is N-(2-methyl-3-chlorophenyl)-propargyl carbamate.
+15.	The composition of claim 1 in which the synergist compound is N-(2,5-dimethylphenyl)-propargyl carbamate.
+16.	The composition of claim 1 in which the synergist compound is N-(2-chloro-5-trifluoromethylphenyl)-propargyl carbamate.
+17.	An insecticidal and acaricidal composition con-
+sisting essentially of equal parts by weight of (1) a pes-ticidal compound selected from the group consisting of
+1-naphthyl-Nmethyl carbamate, 2-isopropoxyphenyl-N-methyl carbamate, l-Isopropyl-3-methylpyrazol-
+5-yl-N,N-dimethyl	carbamate,	2-
+[Propargylmethylamino]-phenyl-N-methylcarbamate, 0,0-Dimethyl-S- (1,2-dicarbethoxyethyl) dithiophos-phate, 2-Chloro-2-diethylcarbamoyl-1 -methlvinyl-dimethylphosphate, 0,0-Dimethyl-S-[2-methoxy-
+l,3,4-thiadiazol-5-(4H)-onyl-4-methyl]dithiophos-phate and pyrethrum and (2) N-(2-nitrophenyl)-propargyl carbamate.
+18.	The composition of claim 17 in which the pestici-dal compound is 1-naphthyl-N-methyl carbamate.
+19.	The composition of claim 17 in which the pestici-dal compound is 2-isopropoxyphenyl-N-methyl carbamate.
+3,800,037
+17
+20.	The composition of claim 17 in which the pestici-dal compound is l-Isopropyl-3-methylpyrazol-5-yl-N,N-dimethylcarbamate.
+21.	The composition of claim 17 in which the pestici-dal compound is 2-[propargylmethylamino]-phenyI-N-methylcarbamate.
+22.	The composition of claim 17 in which the pestici-dal compound is 0,0-Dimethyl-S-( 1,2-dicarbethox-yethyl) dithiophosphate.
+23.	The composition of claim 17 in which the pestici-dal compound is 2-Chloro-2-diethylcarbamoyl-l-methylvinyldimethylphosphate.
+18
+24.	The composition of claim 17 in which the pestici-dal compound is O, O Dimethyl-S-[2-methoxy-l ,3,4--thiadiazol-5-(4H)-onyl-(4)-methyl ] dithiophosphate.
+25.	The composition of claim 17 in which the pestici-dal compound is pyrethrum.
+26.	A method of combatting insects and representatives of the order acarina, which comprises applying thereto an insecticidally and acaricidally effective amount of the composition of claim 1.
+27.	A method of combatting insects and representatives of the order acarina, which comprises applying thereto an insecticidally and acaricidally effective amount of the composition of claim 17.
+* * % * *
+5
+10
+15
+20
+25.
+30
+35
+40
+45
+65
+UNITED STATES PATENT OFFICE
+CERTIFICATE OF CORRECTION
+Patent No. 3,800,037_______'	Dated
+Inventor(s)
+Henry Martin et al.
+March 26, 1974
+It is certified that error appears in the above-identified patent and that said Letters Patent are hereby corrected as shown below:
+-- Ciba-Geigy AG, Basle Switzerland, a company of Switzerland.
+Signed and sealed this 15th day of October 1974.
+(SEAL)
+Attest:
+McCOY M. GIBSON JR.	C. MARSHALL DANN
+Attesting Officer	Commissioner of Patents
+FORM PO-1050 (10-69)
+USCOMM-DC .0.O37 6-P.69 U'S: ‘GOVERNMENT MINTING OFFICE .	009.93 0

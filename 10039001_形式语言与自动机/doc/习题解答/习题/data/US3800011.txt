@@ -1,0 +1,831 @@
+
+United States Patent
+Fujimoto et al.
+[li] 3,800,011
+[45] Mar. 26, 1974
+[54] AMIDOTHIOL PHOSPHORIC ACID ESTERS
+[75] Inventors: Keimei Fujimoto, Kobe; Kunio Mukai, Nishinomiya; Masachika Hirano, Minoo; Katsutoshi Tanaka; Hisami Takeda, both of Takarazuka; Suminori Kawano, Osaka, all of Japan
+[73] Assignee:
+[22]
+[21]
+Filed: Appl. No.:
+Sumitomo Chemical Company,
+Osaka, Japan
+Oct. 12, 1970 80,224
+[30] Foreign Application Priority Data
+Oct. 23, 1969 Japan................ 44-85059
+[52] U.S. Cl........... 260/940, 260/948, 260/950,
+260/956, 260/957, 260/979, 260/987, 424/210, 424/216, 424/217, 424/219
+[51] Int. Cl................AOln 9/36, C07f 9/24
+[58] Field of Search...... 260/940, 950, 948, 956,
+260/957, 959 56
+[56]	References Cited
+FOREIGN PATENTS OR APPLICATIONS
+1,508,632	1/1968 France................ 260/959
+Primary Examiner—Lorraine A. Weinberger Assistant Examiner—Richard L. Raymond Attorney, Agent, or Firm—Stevens, Davis, Miller & Mosher
+[57]	ABSTRACT
+Amidothiol phosphoric acid esters having the formula,
+Rs O ^N-l-S-A ^ d>Ri
+H
+wherein R, is methyl, ethyl or propyl, R2 is a C3-C10 alkenyl, a C2-CI0 alkylthioalkyl, a C2-C10 alkoxyalkyl or a C2-C,„ cyanoalkyl, and A is a C,-C3 alkyl, a C3-C6 alkenyl, a C3-C6 alkinyl, a halogen-substituted Cs-C,, alkenyl or a halogen-substituted C3-C„ alkinyl, which are used as an active ingredient of a pest controlling composition with a systemic action.
+13	Claims, No Drawings
+3,800,011
+1
+AMIDOTHIOL PHOSPHORIC ACID ESTERS
+This invention relates to a novel amidothiol phosphoric acid ester, to a process for preparing the same and to a composition containing the same.
+More particularly, the invention pertains to a novel amidothiol phosphoric acid ester represented by the formula (I),
+Hs
+\
+K
+/
+O
+II
+-P —S-t-A
+d>Ri
+(I)
+wherein R, is methyl, ethyl or propyl group; R2 is an alkenyl group having three to 10 carbon atoms or an al-kylthioalkyl, alkoxyalkyl or cyanoalkyl group having two to 10 carbon atoms; and A is an alkyl group having one to three carbon atoms or an alkenyl, alkinyl, halo-
+dies of platns and animals and those which have such property as to move after permeation, but the present compounds have both of the said properties. Further, common insecticides are used in order to directly kill 5 injurious insects, but the present compounds have such physiological actions that when used at less than lethal concentrations, the compounds disturb the metamorphosis of pests and decrease the number of eggs laid by the pests to disturb the normal propagation thereof. In 10 addition, the present compounds have excellent contact-pesticidal actions and show marked insecticidal and miticidal action against pests which are resistant to conventional chemicals.
+Heretofore, there are a few reports on phosphoric 15 acid esters similar to the present compounds. Japanese Patent Publication No. 27,356/68 discloses O-alkyl-S-alkyl-N-phenyl phosphorothioamidates, and “Chemistry and Industry,” May 6, 1961, discloses on page 591 O-alkyl-S-alkyl-N-cycloalkyl phosphorothioamidates,
+gensubstituted alkenyl or halogen-substituted alkinyl 20 but these compounds have low insecticidal activities
+group having three to six carbon atoms, and a process for preparing the same, which comprises dealkylating a thionophosphoric acid amidate represented by the formula (II),
+Rj
+(RiO)2PN‘
+./
+\
+..(ID
+wherein Ri and R2 are as defined above, with an alkali hydrosulfide represented by the formula (III),
+M S H
+(ill)
+wherein M is an alkali metal, to form a phosphoric acid salt represented by the formula (IV),
+35
+Rs
+l/ V
+„ V V
+_ RgO S_
+M
+(IV)
+wherein Ri, R2 and M are as defined above, and condensing said phosphoric acid salt with a halogen compound represented by the formula (V),
+Hal • A
+(V)
+wherein Hal is a halogen atom, and A is as defined above.
+The present compounds represented by the formula (I) are particularly suitable for the control of pests in agriculture, forestry and live-stock, and can most effectively control plant-hoppers, mites, aphids, stem borers, rice stem borers, lady beetles, scales and nematodes. Further, the present compounds have effects on such insects as Lepidoptera, Diptera, Coleoptera, He-miptera and Orthoptera, and on arthropods, molluscs, filamentous fungi and bacteria. What is to be particularly mentioned is that the present compounds characteristically have a so-called systemic action. Systemic chemicals are classified, in general, into those which have such property as to merely permeate into the bo-
+shown below in the test examples. Japanese Patent Publication No. 14,525/67 discloses O-alkyl-S-methyl phosphorothioamidates, but it is apparent from the test examples shown below that these compounds are ex-25 tremely high in toxicity to warm-blooded animals. It has been found that the present compounds are not only high in insecticidal activity but also low in toxicity to warm-blooded animals. Accordingly, the present compounds are quite excellent compounds which can 30 be used safely without any injury to mammals. Further, they are excellent compounds which have no phytotoxicity on rice plants and ordinary farm crops, when used at practical application concentrations.
+The present compounds of the formula (I) may be prepared according to the following manner:
+An alkali hydroxide, e.g. sodium hydroxide or potassium hydroxide, is dissolved in a suitable solvent, e.g. an alcohol such as methanol, ethanol or methyl cello-solve, water, N,N-dimethylformamide or dimethyl sulf-40 oxide. The resulting solution is saturated with hydrogen sulfide to form a solution of an alkali hydrosulfide represented by the formula (III). The thionophosphoric acid amidate represented by the formula (II) is added to the solution of the alkali hydrosulfide and the resulting mixture is heated while being stirred to complete dealkylation. Subsequently, the phosphoric acid salt in the form of a wet crystal or a viscous liquid is isolated and then condensed with the halogen compound represented by the formula (V) in the presence or absence of a suitable solvent, e.g. an alcohol such as methanol or ethanol, a ketone such as methyl ethyl ketone or acetone, or water, whereby a phosphoroamidothiolate represented by the formula (I) can be obtained easily in a high yield.
+The reaction temperature in the dealkylation varies depending on the kinds of the starting materials and the solvent, and is ordinarily the reflux temperature of the solvent used, and the reaction time is in the range of several hours to 10 and several hours. The reaction temperature and time in the condensation reaction with the halogen compound are 30° to 80°C and 2 to 5 hours, whereby a desired compound can be obtained in a high yield.
+Several examples of the starting materials used in the present invention, i.e. the phosphorothionoamidate, the alkali hydrosulfide and the halogen compound, are shown below, but it is needless to say that compounds
+45
+50
+55
+60
+65
+3,800,011
+4
+3
+usable in the present invention are not limited only to these.
+Examples of the phosphorothionoamidate are
+0,0-dimethyl-N-allyl phosphorothionoamidate,
+0,0-diethyl-N-allyl phosphorothionoamidate,
+0,0-di-n-propyl-N-allyl phosphorothionoamidate,
+0,0-dimethyl-N-2-methylthioethyl phosphorothionoamidate,
+0,0-dimethyl-N-2-ethylthioethyl	phosphoroth-
+ionoamidate,
+0,0-dimethyl-N-3 -methoxy propyl phosphorothionoamidate,
+Q,0-dimethyl-N-3-ethoxypropyl	phosphoroth-
+ionoamidate,
+0,0-dimethyl-N-cyanoethyl phosphorothionoamidate,
+0,0-dimethyl-N-cyanomethyl phosphorothionoamidate,
+0,0-diethyl-N-2-methylthioethyl phosphorothionoamidate and
+0,0-diethyl-N-3-methoxypropyl phosphorothionoamidate.
+Examples of the alkali hydrosulfide are sodium hydrosulfide and potassium hydrosulfide.
+Examples of the halogen compound are 3-chloro-l-propene, 3-bromo-l-propene, 1,3-dichloropropene, l-chloro-2-butene, 1,3-dichloro-2-butene, 2,3-dichloropropene, 2,3-dibromopropene, 3-chloro-l-butene, l,4-dichloro-2-butene, y-chloro-(iso)-butene, propargyl bromide, (n)-propyl bromide, (iso)-propyl bromide, ethyl bromide, methyl bromide, methyl iodide and ethyl iodide.
+In the next place, examples of typical organophos-phoric acid esters belonging to the present invention are shown below.
+Compound
+number	Structural formula
+(1)......... 0
+CHs=CH.CH2NhJ—S—CHa icHa
+(2)......... O
+C Hj=CH- C H'NE- P— S — C 2H5
+icHa
+®............. ?
+C Ha=CH- CHaNII— P— S —CaH,(n)
+ictla
+(4)............................ O
+II
+CJl2=CII-CIl2NH— P— S — CIIaOsCH
+icila
+®............. ?
+CH2=CH-CH!NH-l>-S-CH2CH=CHa
+icHa
+(0)............................ 0	CHa
+II	I
+rjii2=cjji-c;u2nir p -,s-ciriaO -0JI2 A () 113
+OCIIj
+(8)......... 0
+CH2=CH-CH»NH—P—S— CH:CH=CII-C1
+(i)CHa
+(9) ........ O
+II
+CH2=CH-OH5NH—P—S— CHa icaHa
+(10)	....... 0
+II
+CH,=CH'CH!NH- P— S— C2H5
+ic2H5
+(11)	....... o
+CH2=CH-CH2NH— P—S—CaHi(n)
+(!) C2H5
+(12)	....... O
+CH2=CH-CH2NH— P—S—CHaCsCH icaHs
+(13)	....... O
+CHa=CH-CHaNH—P—S—CHSCH=CH2 (!) C aHs
+(14)	....... 0
+CH2=CH-CH2NH—P—S—CH2CH=CHCHa
+_____	icHa
+C2HfiSCH2CH2NH—P—S—CHaC=CH A CHa
+(16)........ 0
+CH3OCH2CH2CH2NH—P—S—CH2C=CH
+icHa
+(17)	....... 0
+NC—CH2CH2NH— P-S-CHaCsCH (itCHa
+(18)	....... O
+CH3SCH2CH2NH— I—S—CH2C=CH <*)CHa
+(19)	....... 0
+CHaSCHaCHaNH—I—S—CH2CH=CH2
+icHa
+(20)	....... 0
+CH3SCH2CH2NH—J?—S—C2H5
+icHa
+(21)........ 0
+O2H5SCH2CHNH—1!—s—ch2c=ch (!) CaHs
+(22)	....... O
+CII3OCH2CH2CH2NH—f—S—CIIj icila
+(23)	....... O
+CH3SCH2CH2NH-I—S—CH2CH=CIICI
+icHa
+(24)	....... O
+CalleSCHaCHaNH—Ls—CHaC=CH2 icaTIa
+In actual application, the present compounds may be used as it is without incorporation of carriers. Alternatively, they may be used in admixture with inert carriers for easier application as pesticides and can be formulated, according to procedures thoroughly known to those skilled in the art, without any particular condi-
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,011
+5
+6
+tions like in the case of ordinary organo-phosphorus preparations, into any of such ordinarily adopted forms as emulsifiable concentrates, wettable powders, oil sprays, dusts, aerosols, fumigants and granules for soil application and seed-coating. Thus, the present com- 5 pounds can be used in any required forms. Further, the present compounds may be used in admixture with one or more of other chemicals and fertilizers to make the effects thereof broader and higher. For example, the compounds are mixed with organo-phosphorus type in- 10 secticides such as Sumithion (registered trade name for an insecticide produced by Sumitomo Chemical Co.; the same shall apply hereinafter) and Dimethoate, py-rethroid type insecticides such as allethrin and phthalthrin, organo-chlorine type insecticides such as 15 BHC and DDT, carbamate type insecticides such as 3,-
+4-dimethylphenyl-N-methylcarbamate,	2-sec-
+butylphenyl-N-methylcarbamate, 3-methylphenyl-N-methylcarbamate and 1-naphthyl-N-methylcarbamate, synergists, repellants, attractants and the like, whereby 20 multi-purpose compositions can be prepared and, depending on the combinations, synergistic effects can also be expected.
+In order to clarify the prominent characteristics and effects of the present compounds, typical test results 25 are shown in the test examples set forth below.
+In the test examples, the present compounds are represented by the aforesaid exemplification numbers.
+Test Example 1	30
+Lethal effects (contact poison):
+Mottled kidney bean plants at the two-leaves stage, which had elapsed 20 days after sowing, were parasitized with a larger number of adults of twospotted red spiders (Tetranychus telarius). The kidney bean 35 leaves parasitized with said spiders were immersed for 1 minute in a solution formed by diluting with water each of the present compounds in the form of wettable powders. Subsequently, water was supplied so as not to wither the leaves. After 48 hours, 40 the alive and dead of the spiders were observed by means of a magnifying glass and, from the mortality, the value of LC50 was calculated according to the Finney’s simplified iconography. The results obtained were as shown in Table 1.	4"i
+TABLE 1
+LC5O (dilution times of active
+Compound number	ingredient) 50
+(4)	..
+(5)	~
+(6)	„ (7)~ <8)~.
+(9)	.~
+(10)	. (12).
+2,000,000
+800,000
+200,000
+660,000
+600,000
+800,000
+450,000	5 5
+1,300,000
+C'TU'O CH3
+(Compound disclosed in Japanese patent publication No. 27,356/68)
+Ineffective
+60
+0,0-dimethyl-S-(N-mcthylcarbamolyl)-methyl phos-phorodithioate*..................................... 500,000
+•Control.
+Test Example 2
+Lethal effects (insecticidal effects on smaller brown planthoppers, Laodelphax striatellus Fallen):
+Rice seedlings (15 - 20 cm in height), which has elapsed 15 days after germination, were immersed for 1 minute in an emulsion prepared by diluting to a given concentration each of the present compounds in the form of emulsifiable concentrates which had been formulated according to Example 1. After air-drying, the seedlings were placed in a large test tube. Into the test tube were liberated 20 to 30 smaller brown planthoppers, and the test tube was covered with a wire net. After 24 hours, the mortality of the planthoppers were measured and, from the mortality, the value of LC50 was calculated according to the Finney’s iconography. The results obtained were as shown in Table 2.
+Table 2
+Compound No.	LC50 (dilution times of active ingredient)
+(2)	30,000
+(4)	100,000
+(5)	32,000
+(8)	32,000
+(9)	45,000
+(12)	30,000
+(13)	25,000
+(14)	60,000
+Test Example 3
+Residual insecticidal effects:
+Mottled kidney bean plants grown in a flower pot which had elapsed 20 days after sowing were dusted, using a bell jar duster, with 3 kg/10 ares of each of the present compounds in the form of 3 percent dusts. After the dusting, the plants were parasitized at intervals of several days with spider mite adults, and the mortality of the mites after 48 hours from the dusting was investigated. The results obtained were as shown in Table 3.
+Table?
+Compound No.	After 3 days	Mortality (%) After After 5 days 9 days		After 13 days
+(4)	79.4%	92.4%	100 %	100 %
+(5)	21.4	92.8	73.4	61.2
+(8)	84.5	100.0	100.0	72.6
+(11)	100.0	63.4	60.0	21.4
+(12)	92.4	100.0	99.3	76.5
+(14)	89.1	93.2	100.0	98.8
+0,0-Dimethyl-S-(N- methylcarbamoyl)- methyl phosphoro-dithioate*	100.0	97.1	96.3	32.4
+* Control
+Text Example 4
+Systemic effects:
+Mottled kidney bean plants were grown to the two-leaves stage in a flower pot of 9 cm in diameter. To the root portion of the plants were applied in a proportion of 4 kg per 10 acres each of the present compounds in the form of 3 percent granules. After 4 days, the mottled bean leaves were parasitized with a large number of adults of two-spotted red spiders. Six days thereafter, the leaves were cut, and the alive and dead of the spiders were observed to calculate the mortality thereof. The results obtained were as shown in Table 4.
+3,800,011
+8
+7
+Table 4
+Compound No.	Number of	Mortality
+test insects	(9c)
+(-)	291	93.4
+(2)	388	99.4
+(4)	121	100.0
+(6)	211	83.4
+(10)	561	73.8
+(12)	620	92.7
+(14)	315	100.0
+0,0-DimethyI-S-(N-methyl-	631	90.8
+carbamoyl )-methyl
+phosphorodithioate*
+* Control
+Test Example 5 Mice oral acute toxicity:
+Male mice having an average body weight of about 20 g was orally administrated with an emulsion formed by diluting with water each of the present compounds in the form of emulsifiable concentrates. After 48 hours, the alive and dead of the mice were observed and, from the mortality, the value of LDS0 was calculated according to the Richfield method. The results obtained were as shown in Table 5.
+TABLE 5
+LDso
+Compound number	(mg./kg.)
+(1)................................................„ 200-
+(2)................................................ 300
+(6)................................................. 120
+(10)............................................... 93
+0,0-di<?thyl-0-(4-nitrophenyl)phosphorothioate*............. 6
+NH2	O*	3
+V
+/ \
+C2H&O S-CIIs
+(Compound disclosed in Japanese patent publication No.
+14,525/67) * 30
+•Control.
+Test Example 6
+Rice plants at the offshoot stage which had elapsed
+30 days after planting were grown in a 1/50,000 Wagner pot and parasited with 50 rice stem borer larvae immediately after hatching. Each of the present compounds in the form of 50 percent emulsifiable concentrates was diluted with water to 200 times, and 6 cc per pot of the resulting emulsion was sprayed to the rice plants. After 3 days, the leaves of the rice plants were
+broken, and the alive and dead of the larvae were observed to calculate the mortality thereof. The results obtained were as shown in Table 6. Table 6	
+Compound No.	Mortality (9c)
+(4)	100
+(6)	100
+(12)	83.4
+(13)	100
+Sumithion *	77,4
+* Control	
+Test Example 7	
+To each root portion of 5 years old apple trees grown in an orchard, which was being attacked by leaf rollers
+and aphids, 100 g per tree of each of the present compounds in the form of 5 percent granules was sprayed to in the form of a circle of 1 cm in radius. After 5 days, the number of survival insects was counted to obtain the results as set forth in Table 7.
+Table 7
+Number of survival insects after 5 days (per 500 leaves)
+Compound No.	Moths	Aphids
+(1)	0	0
+(4)	0	0
+(8)	12.4	0
+(12)	3.4	6.1
+0,0-Dimethyl-S-(N-methyl-	8.2	12.3
+carbamoyl)-methyl
+phosphorodithioate *
+Non-treatment	635	831
+* Control
+Test Example 8
+“Mandarin” orange fruits, which had been parasitized with a large number of Yaneno scales (Unaspis yanenoensis Kuwana), were immersed for 1 minute in a solution formed by diluting with water each of the present compounds in the form of 50 percent wettable powders. After 2 weeks, the alive and dead of the scales were observed to calculate the mortality thereof. The results obtained were as shown in Table 8.
+Table 8
+Compound No.	Mortality	(9c)
+(4)	100
+(5)	81.2
+(7)	73.4
+(8)	92.8
+(12)	100
+0,0-Dimethyl-S-( N-methyl-	63.4
+*carbamoyi)-methyl
+phosphorodithioate
+* Control
+Test Example 9
+Preventive effects on rice blast:
+Rice plants (variety “Waseasahi”), which had been cultivated to the three-leaves stage in a flower pot of 9 cm in diameter, were sprayed with 7 ml per pot of each of test chemicals diluted to a given concentration. After 4 hours, the plants were further sprayed and inoculated with a spore suspension of rice blast fungus. Three days thereafter, the number of spots generated was counted to investigate the fungicidal effect of each chemical. The results obtained were as shown in Table 9.
+Number of spots in non-treated Preventive	area— Number of spots in treated
+value	area
+(percent) =----------------------------------— X100
+Number of spots in non-treated area
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,011
+10
+9
+Table 9
+Compound No.	Active ingredient	Preventive value
+	(p.p.m.)	(%)
+(6)	500	85.4
+(7)	do.	96.3
+(8)	do.	92.8
+(12)	do.	89.3
+EBP*	do.	93.4
+Non-treatment	do.	0
+was calculated according to the Finney’s iconography. The results obtained were as shown in Table 11.
+Table 11
+Compound No.	LCj,,(p.p.m.)
+(15)	28
+(16)	23
+(17)	47
+(18)	3!
+(19)	4
+(21)	45
+* Control
+Test Example 10	15
+A field of Chinese cabbages, which had elapsed 40 days after sowing, was sectioned to areas of 100 m2, and each of the present compounds (1), (4), (5), (8), (10) and (14) in the form of 3 percent granules was sprinkled over the field in a proportion of 3 kg per 10 20 ares. Over a period of 1 month, 300 eggs per 3.3 m2 of Prodenia litura Fabricius were attached onto the leaves of said cabbages every 5 days. As the result, no emergence of Prodenia litura Fabricius was observed at all during 2 months before harvest.	25
+Test Example 11
+Mottled kidney bean plants at the two-leaves stage which had elapsed 10 days after sowing were parasitized with a large number of adults of two-spotted red spiders (Tetranychus telarius). The kidney bean leaves 30 parasitized wth the said red spiders were immersed for 1 minute in a solution formed by diluting with water each of the present compound in the form of wettable powders, and then water was supplied so as not to wither the leaves. After 48 hours, the alive and dead of the 35 red spiders were observed by use of a binocular microscope and, from the mortality, the value of LC50 was calculated according to the Finney’s simplified iconography. The results obtained were as shown in Table 10.
+Test Example 13 Residual insecticidal effects:
+Mottled kidney bean plants grown in a flower pot which had elapsed 10 days after sowing were dusted, using a bell jar duster, with 3 kg/10 ares of each of the present compounds in the form of 3 percent dusts. After the dusting, the plants were parasitized at intervals of several days with spider mite adults, and the mortality of the mites after 48 hours from the dusting was investigated. The results obtained were as shown in Table 12.
+...... TABLE 12	..............
+Mortality (percent) after—
+Compound number	2 days	5 days	8 days	12 days
+(15)		100	Too	90.0	100
+.US) 	 (17)			100	75.0	47.1	60.0
+	100	100	93.8	84.6
+(18)			. 98.0	100	95,3	100
+(19) 		 0,0-dimethy)-S-(N-mcthy carbamoyl)-	10/1	100	96.7	73.2
+methyl phosphorodJ bioa e*.			J00	97.1	96.3	32.4
+NIL O X CII3O S—CHiCsCH	3.1	7.8	2. 0	
+(Compound disclosed in Japanese patent publication No. 7,357/68)
+•Control.
+TABLE 10
+Compound number
+(15)	.
+(16)	.
+(17)	.
+(18)	. (19).
+CHi—^
+NH O*
+X
+C2H5O S CH3
+(Compound disclosed in Japanese patent publication No. 27,356/68)
+Test Example 14
+---------- Systemic effects:
+(p pLm‘) Mottled kidney bean plants were grown to the two-
+---------- leaves stage in a flower pot of 9 cm in diameter. To the
+21 45 root portion of the plants was applied in a proportion I® of 4 kg per 10 area each of the present compounds in 15 the form of 3 percent granules, and the plants were par-ineffective. asitized at intervals of several days with two-spotted red spider adults. After 48 hours, the leaves of the plants 50 were cut and taken up, and the alive and dead of the red spiders were observed by use of a binocular microscope. The results obtained were as shown in Table 13.
+---------- ............ ........... TABLE 13	"
+* Control.
+Test Example 12
+Lethal effects (insecticidal effects on smaller brown planthoppers):
+Rice seedlings (15 - 20 cm in height), which had elapsed 15 days after sowing, were immersed for 1 minute in an emulsion prepared by diluting to a given concentration each of the present compounds in the form of emulsifiable concentrates. After air-drying, the seedlings were placed in a large test tube. Into the test tube were liberated 20 to 30 smaller brown planthopper adults, and the test tube was covered with a wire net. After 24 hours, the mortality of the planthoppers was measured and, from the mortality, the value of LC50
+55	Mortality (percent) after-
+Compound number -------------------------------------------------
+2 days 5 days 8 days 12 days
+(15)	...................... 13.6	83.3	100	100
+(16)	....................... 5.0	86.0	88.5	73.3
+(17)	...................... 22.7	84.5	90.0	54.5
+60 (18).......................   18.5	91.	88.7	64.2
+'(19)...................... 20.0	83.5	100	89.7
+NHa O	16.2	14.4	0	1.5
+CHsO^S —CH2C = CH
+(compound disclosed in Japanese patent publication No. 7,357/68)
+Control.
+11
+3,800,011
+12
+Table 16
+Test Example 15
+Insecticidal effects on green peach aphids (Myzus persicae Sulzer):
+Potted Chinese cabbages which had elapsed 1 month after sowing were parasitized with a large number of green peach aphids. To the root portion of the cabbages, each of the present compounds in the form of 5 percent granules was sprinkled in a proportion of 6 kg/10 ares. After 3 days, the alive and dead of the green peach aphids were observed to calculate the mortality thereof. The results obtained were as shown in Table 14.
+Compound No.	After 1 day	Mortality (%) After After 4 days 7 days		After 11 days
+(15)	93.3	92.0	86.6	26.7
+(16)	100.0	86.6	74.0	29.6
+(18)	100.0	90.0	13.3	10.0
+(19	96.2	92.6	71.4	29.6
+3,4-DimethylphenyI-* N-Methylcarbamate	93.1	70.0	10.0	6.4
+Table 14
+Compound No.	Mortality (%)
+(15)	97.1
+(16)	83.5
+(18)	100.0
+(19)	75.0
+0,0-Dimethyl-S-(N-methylcarbamoyl-	*methyl)-phosphorodithioate 85.3
+* Control
+Test Example 16
+Tomato seedlings which had elapsed 1 month after sowing were sprayed with an emulsion prepared by diluting with water to 1,000 times each of the present compounds in the form of 5 percent emulsifiable concentrates. The tomato seedlings were cut and then placed in a glass Petri dish together with 2 8-spotted lady beetles (Epilachna vigintioctopunctata). After 48 hours, the alive and dead of the beetles were observed to calculate the mortality thereof. The results obtained were as shown in Table 15.
+Table 15
+Compound No.	Mortality (%)
+(15)	100.0
+(16)	95.0
+(IS)	73.5
+(21)	65.3
+Sumithion*	88.1
+* Control
+* Control
+15
+Test Example 18 Mice oral acute toxicity:
+Male mice having an average body weight of about 20 20 g were orally administrated with an emulsion formed by diluting with water each of the present compounds in the form of emulsifiable concentrates. After 48 hours, the alive and dead of the mice were observed to calculate the value of LD50 according to The Rich-25 field method. The results obtained were as shown in Table 17.
+TABLE 17
+Compound number	I2D5O (mg./kg.)
+(15)	-	 ■16)	 (17)		-			 (18)		-	 119)	-	-	-	 (20)			 0,0-dl<!thyi-0*(4-niti'oph<!nyl)-pho3phoroth!oate*		100 50 120 50 600 1,000 6
+NIh 0 * \ ^ P CH3o'/ \-chc = ch	5
+(Compound disclosed in Japanese patent publication No. 7,357/68)	
+NH2 O P CzHsO^ \-CHs	3
+(Compound disclosed in Japanese patent publication No. 525/671 		
+50
+Test Example 17
+18-23 Rice seedlings were grown to the 3-to 4-leaves stage in a flower pot of 9 cm in diameter and sprayed with an emulsion formed by diluting with water to 1,000 times each of the present compounds in the form of 50 percent emulsifiable concentrates. After airdrying, the rice seedlings were covered with a wire net, and smaller brown planthopper adults were liberated into the wire net. After 24 hours, the alive and dead of the planthoppers were observed to calculate the mortality thereof. Further, smaller brown planthopper adults were freshly liberated in the wire net at intervals of several days to examine the residual effect of each of the present compounds. The results obtained were as shown in Table 16.
+Test Example 19
+Preventive effects on rice blast Rice plants (variety 55 “Waseasahi”), which had been cultivated to the three-leaves stage in a flower pot of 9 cm in diameter, were sprayed wifhJ7jnl per pot of an emulsion formed by diluting to a given concentration each of the present compounds in the form of emulsifiable concentrates. 60 After 4 hours, the plants were inoculated with a spore suspension of rice blast fungus. Three days thereafter, the number of spots generated was counted to investigate the fungicidal effect of each compound. The results obtained were as shown in Table 18. All the pres-65 ent compounds displayed quite excellent effects as compared with the known analogous compound.
+The preventive value was calculated according to the same equation as in Test Example 9.
+13
+3,800,011
+14
+Active ingredient	(%)	Binder	(9c) Extender	(%)
+Compound (4)	2	Sodium lignin sulfonate	1 Clay	97
+Compound (12)	5	do.	2 do.	93
+table is__________________ Example 4
+Active Preventive insredient	value
+Compound number	(p.p.m.) (percent)
+(22)................................... 1,000	90.4
+NH>	0 *	1,000	11.2
+V ^
+/ \
+C2H5O S-CH3
+(Compound di'closed in Japanese patent publication No. 14,525/67)
+Non-treatment.,................................. 0.0
+,. 'Control
+The present invention illustrated in further detail below with reference to examples, but it is needless to say that the invention is variable within a wide scope without being limited only to these examples.
+Example 1
+Preparation of dust:
+j 0	According to the table shown below, each compound
+was dissolved in a small amount of acetone and thoroughly mixed with 200 mesh talc, and then the acetone was removed by vaporization to obtain a dust. The dust was dusted as it was.
+15
+Active ingredient	(%>	Extender	(%)
+Compound (7)	2	Talc	98
+Do.	4	do.	96
+Example 5
+25
+Preparation of emulsifiable concentrate:
+According to the table shown below, each compound was thoroughly mixed with the solvent and the emulsifier in this order to obtain a homogeneous emulsifiable concentrate. In application, the emulsifiable concentrate was diluted with water and the resulting emulsion was sprayed.
+Preparation of emulsifiable concentrate:
+According to the table shown below, each compound was thoroughly mixed with the solvent and the emulsifier in this order to obtain a homogeneous emulsifiable' concentrate. In application, the emulsufiable concentrate was diluted with water and the resulting emulsion was sprayed.
+Active ingredient	(%>	Solvent	(%>	Emulsifier	(%>
+Compound (15)	50	Xylene	30	Sorpol 2020	20
+Compound (19)	20	Cyclohexanone	50	Sorpol 2492	30
+Active ingredient	(%>	Solvent	w	Emulsifier	(%)
+Compound (1)	50	Xylene	30	Sorpol 2020	20
+Compound (5)	20	Cyclohexanone	50	Sorpol 2492	30
+___	Example 2
+Preparation of wettable powder:	50
+40 Parts of the compound (9) was thoroughly mixed with 5 parts of Sorpol 5029 (registered trade name for an emulsifier produced by Toho Chemical Co.). The resulting mixture was dropped in 55 parts of 200 mesh talc, while sufficiently stirring the talc in a mortar, to 55 obtain a wettable powder. In application, the wettable powder was diluted with water and the resulting solution was sprayed.
+Example 3	60
+Preparation of granule:
+According to the table shown below, each compound was thoroughly mixed with the binder and the extender in this order. After kneading with a small amount of water, the resulting mixture was granulated by means 65 of a granulator and then dried to obtain a granule. In application, the granule was sprinkled as it was.
+Example 6
+Preparation of wettable powder:
+40 Parts of the compound (23) was thoroughly mixed with 5 parts of Sorpol 5029. The resulting mixture was dropped in 55 parts of 200 mesh talc, while sufficiently stirring the talc in a mortar, to obtain a wettable powder. In application, the wettable powder was diluted with water and the resulting solution was sprayed.
+Example 7
+Preparation of granule:
+According to the table shown below, each compound was thoroughly mixed with the binder and the extender in this order. After kneading with a small amount of water, the resulting mixture was granulated by means of a granulator and then dried to obtain a granule. In application, the granule was sprinkled as it was.
+IS
+3,800,011
+16
+Active ingredient (%)	Binder	(%)	Extender	<%)
+Compound (18) 2		1	Clay	97
+Sodium lignin sulfonate				
+Compound (21) 5		2	do.	93
+do.				
+Example 8 Preparation of dust:
+According to the table shown below, each compound was dissolved in a small amount of acetone and thoroughly mixed with 200 mesh talc, and then the acetone was removed by vaporization to obtain a dust. In application, the dust was dusted as it was.
+Active ingredient	(%>	Extender	(%>
+Compound (21)	2	Talc	98
+Compound (24)	4	do.	96
+Example 9
+Synthesis of compound (1):
+11.2	g of potassium hydroxide was dissolved in 100 ml of methyl cellosolve, and the resulting solution was saturated under cooling with hydrogen sulfide to prepare a methyl cellosolve solution of potassium hydro sulfide. To this solution was added at room temperature 36.2 g of 0,b-dimethyI-N-allyl phos-phorothionoamidate, and the resulting mixture was stirred at 95° to 100°C for 5 hours.
+Subsequently, the solvent was removed under reduced pressure, the residue was mixed with acetone and freed from insolubles, and then the acetone was removed under reduced pressure. Thereafter, the residue! was dissolved in water and then washed with toluene. From the aqueous layer, water was removed under re-! duced pressure to obtain 40.2 g of potassium o-methyl-N-allyl phosphorothioamidate in the form of a pale yellow viscous liquid.
+10.3	g of this salt was dissolved in 50 ml of methyl alcohol, and the resulting solution was charged with 7.5 g of methyl iodide and stirred at 50° to 55° C for 1 hour.' Subsequently, the solvent was removed under reduced pressure, the residue was charged with water and chloroform, and the chloroform layer was drid with anhydrous sodium sulfate. Thereafter, the chloroform was removed under reduced pressure to obtain 8.7 g of 0,S-diemthyl-N-allyl phosphorothioamidate in the form of a pale yellow oil, n025 1.5032.
+Elementary analysis:		
+	Calculated (%)	Found (%)
+	(for CsH12N02PS)	
+P	17.10	17.07
+S	17.70	17.83
+N	7.73	7.51
+Example 10
+Synthesis of compound (4):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 6.5 g of propargyl bromide was stirred and refluxed for 2 hours in 50 ml of methyl alcohol. The reaction liquid was treated in
+the same manner as in Example 9 to obtain 9.8 g of • 0 O-methyl-S-propargyl-N-allyl phosphorothioamidate in the form of a reddish brown oil, nD25 1.5140.
+Elementary analysis:
+	Calculated (%) (for C7H12N02PS)	Found (%)
+P	15.09	14.69
+s	15.59	15.26
+N	6.83	6.52
+20
+Example 11
+Synthesis of compound (9):
+To a methyl cellosolve solution of potassium hydro-5 sulfide prepared from 100 ml of methyl cellosolve, 12.2 g of potassium hydroxide and hydrogen sulfide was added 41.8 g of 0,0-diethyl-N-allyl phosphoroth-ionoamidate, and the resulting mixture was stirred at
+95° to 100°C for 7 hours. The mixture was treated in 30
+the same, manner as in Example 9 to obtain 39.5 g of potassium O-ethyl-N-allyl phosphorothioamidate in the form of a wettable white crystal.
+10.9	g of the thus obtained thiophosphoric acid salt and 7.5 g of methyl iodide were stirred at 45° to 50°C 3 for 1 hour of 50 ml of ethyl alcohol. Subsequently, the reaction liquid was treated in the same manner as in Example 9 to obtain 8.6 g of O-ethyl-S-methyl-N-allyl phosphorothioamidate in the form of a pale yellow oil, nD31-5 1.4950. * 55 * * * * 60 * * * * 65
+Elementary analysis:	Calculated (%) (for CaH„N02PS)	Found (%)
+P	15.86	15.44
+S	16.39	16.41
+N	7.18	7.03
+Example 12
+55
+Synthesis of compound (5):
+To a methyl cellosolve solution of sodium hydrosul-
+fide prepared from 50 ml of methyl cellosolve, 4.0 g of
+sodium hydroxide and hydrogen sulfide was added 18.1
+60 6 °f O.O-dimethyl-N-allyl phosphorothionoamidate,
+and the resulting mixture was stirred at 95° to 100°C for
+5 hours. After cooling to room temperature, the mix-
+ture was charged with 13.2 g of ally] bromide and then
+stirred at 55° to 60°C for 2 hours. Subsequently, the re-
+65 action liquid was treated in the same manner as in Example 9 to obtain 17.5 g of O-methyl-S-allyl-N-allyl phosphorothioamidate in the form of a pale yellow oil, n030-5 1.5039.
+17
+3,800,011
+18
+EXAMPLE 16
+Elementary analysis:	Calculated {%) (for C7H14N02PS)	Found (%)
+P	14.94	14.79
+S	15.47	15.30
+N	6.76	6.59
+EXAMPLE 13 Synthesis of compound (2):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 6.0 g of ethyl bromide was stirred under reflux for 3 hours in 50 ml of acetone. Subsequently, the mixture was treated in the same manner as in Example 9 to obtain 8.3 g of O-methyl-S-ethyl-N-allyl-phosphorothioamidate, in the form of a pale yellow oil, n027 1.4930.
+Elementary analysis:	Calculated (%) (for C6HI4N02PS)	Found (%)
+p	15.86	15.82
+S	16.42	16.71
+N	7.18	6.78
+EXAMPLE 14 Synthesis of compound (3):
+A mixture comprising 19.0 g of sodium O-methyl-N-allyl phosphorothioamidate and 6.8 g of (n)-propyl bromide was stirred under reflux for 3 hours in 50 ml of methyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 7.6 g of 0-methyl-S-(n)-propyl-N-allyl phosphorothioamidate in the form of a pale yellow oil, n031-5 1.4853.
+Elementary analysis:	Calculated (%) (for C7HlflN02PS)	Found (%)
+P	14.80	14.79
+S	15.32	15.47
+N	6.69	6.37
+EXAMPLE 15 Synthesis of compound (6):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 5.0 g of methallyl chloride was stirred under reflux for 2 hours in 50 ml of methyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 9.1 g of O-methyl-S-methallyl-N-allyl phosphorothioamidate in the form of a yellow oil, no31-0 1.5018.
+Elementary analysis:	Calculated (%) (for ChHI6N02PS)	Found (%)
+P	14.80	14.79
+S	15.32	15.51
+N	6.69	6.37
+Synthesis of compound (7):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 6.6 g of 1,3-dichloro-2-butene was stirred under reflux for 2 hours in 50 ml of methyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 11.1 g of 0-methyl-S-( 3-chloro-2-butenyl)-N-allyl phosphorothioamidate in the form of a pale yellowish green oil, n032-5 1.5174.
+Elementary analysis:	Calculated (%) (for C8HI5C1N02PS)	Found (%)
+P	12.11	12.08
+S	12.54	12.67
+N	5.48	5.36
+Cl	13.86	13.57
+EXAMPLE 17 Synthesis of compound (8):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 5.8 g of 1,3-dichloropropene was stirred under reflux for 2 hours in 50 ml of methyl alcohol. Thi mixture was treated in the same manner as in Example 9 to obtain 9.1 g of O-methyl-S-(3-chloro-2-propenyl)-N-allyl phosphorothi-oamidate in the form of a pale yellow oil, n033 0 1.5199.
+Elementary analysis:	Calculated (%) (for C,H13C1NOjPS)	Found (%)
+P	12.76	12.77
+S	13.21	13.30
+N	5.77	5.57
+Cl	14.61	14.39
+EXAMPLE 18
+Synthesis of compound (10):
+A mixture comprising 11.0 g of potassium O-ethyl-N-allyl phosphorothioamidate and 7.1 g of ethyl bromide was stirred at 70° to 75°C for 3 hours in 50 ml of ethyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 9.5 g of O.S-diethyl-N-allyl phosphorothioamidate in the form of a yellow oil, n031-s 1.4889.
+Elementary analysis:
+Calculated (%)	Found (%)
+(for C,H,„N02PS)
+P	14.80	14.53
+S	15.32	15.58
+N	6.69	6.31
+EXAMPLE 19 Synthesis of compound (11):
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,011
+20
+A mixture comprising 11.0 g of potassium O-ethyl-N-allyl phosphorothioamidate and 6.8 g of (n)-propyl bromide was stirred under reflux for 3 hours in 50 ml of ethyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 9.5 g of 0-ethyl-S-(n)-propyl-N-allyI phosphorothioamidate in the form of a pale yellow oil, nD28-5 1.4824.
+Elementary analysis:	Calculated (%) (for C«HI8N02PS)	Found (%)
+p	13.87	13.28
+S	14.36	14.51
+N	6.27	5.68
+	EXAMPLE 20	
+Synthesis of compound (12):		
+A mixture comprising 11.0 g of potassium O-ethyl-N-allyl phosphorothioamidate and 6.5 g of propargyl bromide was stirred at 55° to 60°C for 2 hours in 50 ml of		
+ethyl alcohol. The mixture was treated		in the same
+manner as in	Example 9 to obtain	9.8 g of
+O-ethyl-S-propargyl-N-allyl phosphorothioamidate in the form of a reddish brown oil, n,/2 1.5091.		
+Elementary analysis:		
+	Calculated (%) (forCsHi.NOjPS)	Found (%)
+p	14.12	13.64
+s	14.62	15.16
+N	6.39	6.08
+EXAMPLE 21 Synthesis of compound (13):
+A mixture comprising 11.0 g of potassium O-ethyl-N-allyl phosphorothioamidate and 6.5 g of allyl bromide was stirred under reflux for 2 hours in 50 ml of ethyl alcohol. The mixture was treated in the same manner as in Example 9 to obtain 10.0 g of O-ethyl-S-allyl-N-allyl phosphorothioamidate in the form of a yellow oil, nfl28,5 1.4969.
+Elementary analysis:	Calculated (%) (for C„HuiN02PS)	Found (%)
+P	13.99	13.70
+S	14.46	14.58
+N	6.33	6.10
+EXAMPLE 22
+Synthesis of Compound (14):
+A mixture comprising 10.3 g of potassium O-methyl-N-allyl phosphorothioamidate and 4.6 g of l-chloro-2-butene was stirred and refluxed for 3 hours in 50 ml of methyl alcohol. The reaction liquid was treated in the same manner as in Example 9 to obtain 9.2 g of O-methyl-S-2-butenyl-N-allylphosphorothioamidate in the form of a yellow oil, nD25 0 1.5079.
+Elementary analysis:	Calculated (9c) (for ChHI6N02PS	Found (9c
+P	14.00	13.87
+S	14.40	14.28
+N	6.33	6.27
+EXAMPLE 23
+Synthesis of compound (18):
+11.2 g of potassium hydroxide was dissolved in 100 ml of methyl alcohol, and the resulting solution was saturated under cooling with hydrogen sulfide to prepare a methyl alcohol solution of potassium hydrosulfide. To this solution was added at room temperature 43.0 g of 0,0-dimethyl-N-methylthioethyl phosphorothionoami-date, and the resulting mixture was stirred under reflux for 4 hours. Subsequently, the solvent was removed under reduced pressure, the residue was charged with acetone and freed from insolubles, and then the acetone was removed under reduced pressure. Thereafter, the residue was dissolved in water and then washed with toluene. From the aqueous layer, water was removed under reduced pressure to obtain quantitatively potassium O-methyl-N-methylthioethyl phosphorothioamidate in the form of a wettable pale yellow crystal.
+12.0	g of this salt was dissolved in 50 ml of methyl alcohol, and the resulting solution was charged with 6.3 g of propargyl bromide and stirred under reflux for 2 hours. Subsequently, the solvent was removed under reduced pressure, the residue was charged with water and chloroform, and the chloroform layer was dried with anhydrous sodium sulfate. Thereafter, the chloroform was removed under reduced pressure to obtain
+9.9	g of O-methyl-S-propargyl-M-methylthioethyl phosphorothioamidate in the form of a reddish brown oil, nD220 1.5457.
+Elementary analysis:	Calculated (%) (for CjHhNOjPS,)	Found (9c)
+P	12.94	12.97
+S	26.79	26.31
+N	5.85	5.73
+	EXAMPLE 24	
+Synthesis of compound (17):		
+To a methyl alcohol solution of potassium hydrosulfide prepared from 100 ml of methyl alcohol, 11.2 g of potassium hydroxide and hydrogen sulfide was added 39.2 g of Q.O-dimethyl-N-cyanoethyl phosphoroth-ionoamidate, and the resulting mixture was stirred under reflux for 3 hours. The mixture was treated in the same manner as in Example 23 to obtain quantitatively potassium O-methyl-N-cyanoethyl phosphorothioamidate in the form of a yellow viscous oil.
+10.9	g of the thus obtained thiophosphoric acid salt and 6.3 g of propargyl bromide were stirred under reflux for 2 hours in 50 ml of acetone. The reaction mixture was treated in the same manner as in Example 23 to obtain 7.8 g of O-methyl-S-propargyl-N-cyanoethyl phosphorothioamidate in the form of a reddish brown oil, ne26 1.6188.
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+21
+3,800,011
+22
+Elementary analysis:	Calculated (%) (for C7HnN202PS)	Found (%)
+P	14.19	13.69
+S	14.68	14.23
+N	12.84	12.51
+EXAMPLE 25
+Synthesis of compound (22):
+To a methyl cellosolve solution of potassium hydrosulfide prepared from 100 ml of methyl cellosolve, 11.2 g of potassium hydroxide and hydrogen sulfide was added 42.6 g of 0,0-dimethyl-N-methoxypropyl phos-phorothionoamidate, and the resulting mixture was stirred at 95° to 100°C for 2 hours. The mixture was treated in the same manner as in Example 23 to obtain quantitatively potassium O-methyl-N-3-methoxypropyl phosphorothioamidate in the form of a pale yellow viscous liquid.
+11.9	g of the thus obtained thiophosphoric acid salt and 7.3 g of methyl iodide were stirred at 46° to 50°C for 1 hour in 50 ml of methyl alcohol. Subsequently, the reaction mixture was treated in the same manner as in Example 23 to obtain 8.9 g of 0,S-dimethyl-N-methoxypropyl phosphorothioamidate in the form of a colorless transparent oil, nD250 1.4872.
+Elementary analysis:
+	Calculated {%) (for CttH,6N203PS)	Found(%)
+P	14.52	14.46
+S	15.03	14.87
+N	6.57	6.46
+EXAMPLE 26 Synthesis of compound (19):
+A mixture comprising 12.0 g of potassium
+O-methyl-N-methylthioethyl phosphorothioamidate and 6.5 g of allyl bromide was stirred at 60°C for 4 hours. A separated oily substance was treated in the same manner as in Example 23 to obtain 9.5 g of O-methyl-S-allyl-N-methylthioethyl phosphorothioamidate in the form of a yellow oil, nn23 1.5305.
+Elementary analysis:	Calculated {% ) (for C7HlfiN02PS2)	Found (%)
+P	12.83	12.69
+S	26.57	26.36
+N	5.81	5.75
+EXAMPLE 27 Synthesis of compound (15):
+A mixture comprising 12.7 g of potassium
+O-methyl-N-ethylthioethyl phosphorothioamidate and
+6.3	of propargyl bromide was stirred under reflux for
+2 hours in 50 ml of methyl alcohol. Subsequently, the mixture was treated in the same manner as in Example 23 to obtain 10.2 g of O-methyl-S-propargyl-N-ethyl-thioethyl phosphorothioamidate in the form of a red-
+dish brown oil, nD26	1.5382.	
+Elementary analysis:	Calculated (%) (for CflH18N02PS2)	Found (%)
+p	12.23	12.11
+s	25.31	24.99
+N	5.53	5.40
+EXAMPLE 28
+Synthesis of compound (16):
+A mixture comprising 11.9 g of potassium
+O-methyl-N-3-methoxypropyl phosphorothionoami-date and 6.3 g of propargyl bromide was stirred under reflux for 2 hours in 50 ml of methyl alcohol. Subsequently, the mixture was treated in the same manner as in Example 23 to obtain 10.0 g of O-methyl-S-propargyl-N-3 -methoxypropyl phosphorothioamidate in the form of a reddish brown oil, nfl* 23 * 1.5048.
+Elementary analysis:
+	Calculated (%) (for C8H16N03PS)	Found (%)
+P	13.05	12.69
+S	13.51	13.49
+N	5.90	5.64
+EXAMPLE 29 Synthesis of compound (21):
+A mixture comprising 12.0 g of potassium
+O-ethyl-N-ethylthioethyl phosphorothioamidate and
+6.3	g of propargyl bromide was stirred under reflux for 2 hours in 50 ml of ethyl alcohol. Subsequently, the mixture was treated in the same manner as in Example
+23 to obtain 11.2 g of O-ethyl-S-propargyl-N-ethyl-
+thioethyl phosphorothioamidate in the form of a red-
+dish brown oil, nc25 1.5351.
+Elementary analysis:	Calculated (%) (for CbH1hN02PS2)	Found (%)
+P	11.58	11.73
+S	23.99	23.65
+N	5.24	5.08
+EXAMPLE 30 Synthesis of compound (20):
+A mixture comprising 12.0 g of potassium
+O-methyl-N-methylthioethyl phosphorothioamidate and 6.0 g of ethyl bromide was stirred at 60°C for 3 hours in 50 ml of methyl alcohol. Subsequently, the mixture was treated in the same manner as in Example
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50<
+55
+60
+65
+3,800,011
+23
+23 to obtain 8.5 g of O-methyl-S-ethyl-N-methylthio-ethyl phosphorothioamidate in the form of a yellow oil, nD23 1.5197.
+Elementary analysis:	Calculated (9c) (for C6H,6N02PS2)	Found (9c)
+P	13.51	13.07
+S	27.96	27.63
+N	6.11	6.06
+	EXAMPLE 31	
+Synthesis of compound (24):		
+A mixture	comprising 12.0	g of sodium
+O-ethyl-N-ethylthioethyl phosphorothioamidate and 10.2 g of 2.3-dibromopropene was stirred under reflux for 2 hours in 50 ml of ethyl alcohol. Subsequently, the mixture was treated in the same manner as in Example 23 to obtain 13.0 g of O-ethyl-S-2-bromopropenyl-M-ethylthioethyl phosphorothioamidate in the form of a yellow oil, nc24 1.5627.
+Elementary analysis:		
+	Calculated {%) (for CflHjaBrN02PS)	Found (%)
+P	8.89	8.53
+S	18.41	18.27
+N	4.02	3.71
+EXAMPLE 32 Synthesis of compound (23):
+A mixture comprising 12.0 g of potassium O-methyl-N-methylthioethyl phosphorothioamidate and 5.7 g of 1,3-dichloropropene was stirred under reflux for 3 hours in 50 ml. of methyl alcohol. Subsequently, the mixture was treated in the same manner as in Example 23 to obtain 11.3 g of O-methyl-S-3-chloropropenyl-N-methylthioethyl phosphorothioamidate in the form of a yellow oil, nc25 1.5528.
+Elementary analysis:
+	Calculated (9c) (for C7H15C1N02PS2)	Found (9c)
+P	11.23	11.45
+S	23.26	23.58
+N	5.08	5.31
+What is claimed is:
+1.	An amidothiol phosphoric acid ester having the formula,
+/ I H ORi
+wherein R, is methyl, ethyl or propyl, R2 is a C:1-C,„ alkenyl, a C2-C,„ alkylthioalkyl, a C2-C|0 alkoxyalkyl or a C2-C|„ cyanoalkyl, and A is a C,-C.i alkyl, a C;)-C,|
+24
+alkenyl, a C3-C6 alkinyl, a halogen-substituted C3-C6 alkenyl or a halogen-substituted Cj-C6 alkinyl.
+2.	An amidothiol phosphoric acid ester of claim 1, wherein Rt is methyl group.
+3.	An amidothiol phosphoric acid ester of claim 1, wherein R2 is allyl group.
+4.	A compound of the formula,
+OCH,
+5.	A compound of the formula,
+o
+CH2=CH-CH!NH— P-S-C2Hj
+Lh,
+6.	A compound of the formula,
+o
+GH2=CH-CHsNH-P-S-CHsCH=CHCH3 ____________ d>CH3__________
+7.	A compound of the formula,
+o
+CHj=CH.CH8NH—P-S~CH) dlCHs
+8.	A compound of the formula,
+o
+CH2=CH-CH2NH-l--S-CHiCH=CH2
+d)CH3
+9.	A compound of the formula,
+0	CHi
+II	1
+CHr=CH-CHiNH- P— S—CHsC=CHa
+1
+OCHs___
+10.	A compound of the formula,
+_______________OC2H5_______
+11.	A compound of the formula,
+o
+II
+CH2=CH-CH2NH—P—S-CsHs _	_	__OC2H5
+12.	A compound of the formula,
+0
+C2HsSCH2CH2NH— p-s—ch2c=ch
+icHj
+13.	A compound of the formula,
+o
+NC-CH,CHiN»-I—S—CHiCSCH icHi ...............
+* * * * *
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65

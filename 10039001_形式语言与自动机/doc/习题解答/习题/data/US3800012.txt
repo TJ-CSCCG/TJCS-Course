@@ -1,0 +1,138 @@
+
+United States Patent tun	tm 3,800,012
+Hiorth	[45] Mar. 26, 1974
+[54] METHOD AND APPARATUS FOR
+SEMI-CONTINUOUS PREPARATION OF AN EXPLOSIVE COMPOSITION
+[75]	Inventor:	Hans Hiorth, Lierbyen,	Norway
+[73]	Assignee:	Dyno Industrier	A.S., Oslo, Norway
+[22]	Filed:	Feb. 13, 1973
+[21]	Appl. No.:	332,165
+[52] U.S. Cl.......... 264/3 R, 149/104, 149/105,
+149/109, 86/1 R, 86/20 C
+[51] Int. Cl........................C06b 21/02
+[58]	Field of Search..... 264/3 R, 3 C; 149/109,
+149/105, 104; 86/1 R, 20 C
+[56]	References Cited
+UNITED STATES PATENTS
+2,903,969	9/1959 Kolbe................. 86/20 C
+3,660,546	5/1972	Lovold................... 264/3 C
+3,678,140	7/1972	Adams et al.............. 264/3 R
+Primary Examiner—Stephen J. Lechert, Jr.
+Attorney, Agent, or Firm—Wenderoth, Lind & Ponack
+[57]	ABSTRACT
+The invention relates to a method and apparatus for the semi-continuous mixing of an explosive composition containing a premixed powder component and gelatine component, in which the components from the respective containers are blown out from nozzleshaped outlet orifices as jets by means of pressure media controlled by weight impulses. The jets meet to cause a premixing in a predetermined ratio whereafter the composition resulting from the mixing of the jets is postmixed more thoroughly by kneading, is subdivided into lumps and is transported away.
+6 Claims, 1 Drawing Figure
+PATENTED MAR26 1974
+3.800,012
+3
+3,800,012
+1
+METHOD AND APPARATUS FOR SEMI-CONTINUOUS PREPARATION OF AN EXPLOSIVE COMPOSITION
+BACKGROUND OF THE INVENTION
+This invention relates to a method and apparatus for the semi-continuous mixing of an explosive composition comprising a premixed powder component and a gelatine component.
+For example, the method of the invention may be used for mixing plastic explosives such as dynamite, and the main object of the present invention is to carry out a mixing of this type in such a rapid and effective manner that the amount of explosives in the mixing apparatus and in the area in which the mixing is carried out, is minimised.
+Another object of the invention is to provide for the blending of the major components in the appropriate proportions at once without using any mobile mechanic devices in the first mixing stage, which is considered very important to obtain maximum safety.
+MOdern mixing methods for explosives mostly use large mixing units, in which the various process stages are carried out in an apparatus wherein the charge may be 600 kg or even more. The mixing itself is performed with mechanical agitators having a great power consumption, and, in order to obtain sufficient strenth the apparatus will necessarily have to be heavy.
+When using the same vessel for the whole mixing cycle it is first necessary to prepare the so-called gelatine by mixing the liquid nitro compounds with nitrocellulose. After some time, when the gelatinizing process has been completed, the powder component can be added. Then, the mixing must continue until gelatine and solids have been mixed in the correct proportions and until the desired consistency has been achieved. Thus, when using the same mixing vessel under such different mixing conditions, it will be appreciated that the apparatus can hardly be optimal for each of the operation stages.
+The complete cycle also comprises charging, discharging and transport operations, so that, in practice, total time periods of 10 minutes or more result. One result of this method is the substantial accumulation of explosives before, during and after the mixing operation, which is not attractive from the aspect of safety.
+SUMMARY OF THE INVENTION
+The object of the present invention is to obtain sufficient mixing capacity in a rapid mixing process with very small amounts of explosives present in front of, and inside the apparatus, the final composition immediately being transported away from the mixing apparatus and out of the area in small portions and sufficiently spaced in order to prevent any explosion from propagating to the next adjacent area.
+According to the present method the premixed powder component and the gelatine component are blown out by meansof pressure media, controlled by weight impulses, through nozzle-shaped outlet orifices from their respective containers in the form of jets which meet to cause a premixing in a predetermined ratio. The composition resulting from the mixing of the jets passes down into an aftermixer in which the explosive composition is postmixed by kneading and subdivided into lumps which are then transported away.
+2
+The present invention also relates to an apparatus for the preparation of an explosive composition as stated above. The apparatus comprises two sets of containers, one set having a container for each of the components of the explosive composition. These sets are charged and discharged alternately so that jets are provided from one set or the other.
+One characteristic feature of the present invention is that the gelatine component is prepared in a container by rapidly mixing metered amounts of components at the same time as the powder component is metered in a second container, and wherein both major components from their respective containers are fed through nozzles arranged so that their jets meet and wherein the discharge rate is determined by air pressures in both containers, so as to maintain the predetermined ratio during the entire discharging operation.
+Using two sets of containers for the major components and allowing one set to be discharged while the second set is being filled, and vice versa, will provide an essentially continuous mixing operation, in that jets then are always issuing from one or the other set of containers.
+The last stage of the process, comprising an after-treatment to achieve the desired consistency, may be carried out in a mixing apparatus of various types, primarily determined by the desired consistency. In order to reduce the amount of explosives, however, a rapidly working and continuous mixing is preferred, which is terminated by cutting off one lump after another and transporting the lumps away, sufficiently spaced on a rapidly moving conveyor.
+The method of the invention allows reduction of the residence time in the mixing apparatus to less than 1 minute. Thereby the amount of explosives in the mixing area will be reduced to about one tenth that customary in conventional batch type mixing systems.
+The present invention will be more fully described in the following detailed description, with reference to the accompanying drawing, for the mixing of dynamite in a plant which is subject to remote control and is fully automated.
+The weighing system used is, however, not described, since it is generally known to weight electronically by means of a computer combined with sequential control of valves etc.
+BRIEF DESCRIPTION OF THE DRAWING
+The drawing shows an elevated view of the apparatus of the present invention, for the sake of clearness here illustrated having only a single set of containers for the gelatine and powder components, respectively.
+DETAILED DESCRIPTION OF THE INVENTION
+In the drawing the gelatine container 1 and the powder component container 2 are shown. The charging of the gelatine container is carried out by automatically metering predetermined quantities of the liquid components, which in the case of dynamite may be dinitro toluene and nitroglycol/glycerine supplied by the two lines 3 and 4 to the weighing vessels 5 and 6.
+These components are released into the funnel system 7 by means of respective valves, in which system a certain phlegmatising is caused, due to the components meeting before they enter into the gelatine container wherein further mixing and washing out of resi-
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+3,800,012
+3
+dues after the previous charge is performed by means of the stirring device 8 having a motor 9.
+From a separate silo 10 containing nitrocellulose there is metered, e.g., on a conveyor balance 11, a predetermined quantity which is transfereed to a tube 12 which is very smooth on the inside, and from which, by means of a disc-valve arrangement, the nitrocellulose may be rapidly charged into the container, in which it is dispersed and gelatinized under intensive stirring by the stirring device 8.
+At the same time as the above process in the gelatine container is carried out, the powder component 14 is loaded into container 2, e.g., by transferring it from a conveyor via a funnel 15 until the predetermined weight has been achieved. Schematically, the weighing equipment for the respective unities is shown by means of the triangle symbols 16, 17, 32, 33 and 34.
+In the containers 1 and 2 all inlets may be closed and opened by means of the illustrated closing devices which are of a known design.
+In the bottom of the two containers 1 and 2 are arranged nozzle-shaped outlets 18 and 19 respectively, having high-speed devices 20 and 21 for opening and closing, of the outlet from nozzles.
+Before the containers 1 and 2 are discharged the supply lines must be closed in addition to the outlet nozzles already being closed. Then the containers are placed under pressure from an air source 22 having branches leading to the two containers 1 and 2 via automatic pressure contol valves which are operated by weight impulses from the weighing cells 16 and 17. By suddenly opening the discharge openings 20 and 21 through the nozzles 18 and 19 jets are formed from the respective containers. The speed of the jets is controlled automatically by means of the air pressure and weight impulses, so that a proportional and predetermined ratio of powder to gelatin is obtained during the discharging operation. A suitable discharge velocity is achieved in the containers at pressures of 1 - 2 atmospheres gauge.
+The nozzles are arranged in such relationship to each other that the jets meet under conditions which provide the best possible mixing effect.
+The combined jets run into an afterblender 24, the purpose of which is to provide the above mentioned admixture with the desired consistency.
+For the blending of dynamite this may be achieved with a so-called screw blender, wherein the first part of the screws thereof operate to provide a mixing effect, and the last part of the screws thereof operate to provide a kneading effect, in that the screws are operating in an open position 25 and a closed position 26, respectively. By contracting the outlet 27 at the discharge end of the blender, it is possible to combine kneading under a suitable counter-pressure with shaping of the mass into a thick string, suitable for being cut into lumps of desired size by means of a cutting and feeding arrangement 29. Via a short conveyor 30 the lumps are passed onto the conveyor 31.
+What is claimed is:
+1.	A method for the semi-continuous mixing of an explosive composition containing a premixed powder component and a gelatine component, said method comprising:
+providing a predetermined weight of each of said premixed powder component and said gelatine com-
+4
+ponent in separate containers, each of said containers having therein a nozzle-shaped outlet orifice; injecting a pressure medium into each of said containers in response to indications of the predetermined weight of each of said components, and thereby forcing each of said components in the form of a jet out of the respective container through the respective outlet orifice thereof; causing the jets of said components to impinge to thereby cause premixing of said components in a predetermined ratio;
+thereafter kneading said premixed components in a post mixing operation to form an explosive mass; subdividing said mass into lumps; and removing said lumps individually from the mixing area.
+2.	A method as claimed in claim 1, wherein there are provided two separate sets of containers for each of said components, and wherein said method further comprises alternating the use of each of said sets, whereby when one of said sets is being provided with said components, the other of said sets is injected with said pressure medium to cause said premixing.
+3.	An apparatus for the semi-continuous mixing of an explosive composition containing a premixed powder component and a gelative component, said apparatus comprising:
+first and second sets of containers; each of said sets of containers comprising a container for said premixed powder component and a container for said gelatine component; each of said containers of each of said sets having a nozzle-shaped outlet orifice therein; means to charge the respective containers of each of said sets respectively with predetermined weights of said premixed powder component and said gelatine component;
+means for injecting a pressure medium into said containers of said sets in response to indications of the predetermined weight of each of said components and for thereby forcing each of said components in the form of a jet out of the respective of said containers through the respective outlet orifice thereof;
+said outlet orifices of the containers of each of said sets being aligned to have said jets thereform impinge to cause premixing of said components in a predetermined ratio;
+means for postmixing said premixed components to thereby form an explosive mass; means for subdividing said mass into lumps; and means for removing said lumps from the mixing area.
+4.	An apparatus as claimed in claim 3, wherein said means for charging and said means for injecting are alternately applicable to each of said sets of said containers.
+5.	An apparatus as claimed in claim 3, wherein said means for postmixing comprises a screw-type mixer having an open section for mixing and a closed section for kneading, said mixer having at an end thereof adjacent said closed section a contracted outlet.
+6.	An apparatus as claimed in claim 3, wherein said means for removing comprises transport means for removing each of said lumps individually.
+* * * # *
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+UNITED STATES PATENT OFFICE
+CERTIFICATE OF CORRECTION
+Patent No. 3,800,012____________ Dated March 26, 1974
+Inventor(s) Hans Hiorth____________________________________
+It is certified that error appears in the above-identified patent and that said Letters Patent are hereby corrected as shown below:
+Page one, first column, below the line reading "[21] Appl. No.:	332,165", insert the following:
+— [30] Foreign Application Priority Data
+February 23, 1972 Norway. . . . 567/72 —.
+Signed and seaLed this 8th day of October 1974.
+(SEAL)
+Attest:
+McCOY M. GIBSON JR.	C. MARSHALL DANN
+Attesting Officer	Commissioner of Patents * IS.
+FORM PO-1050 (10-69)
+USCOMM-DC 60376-P69
+IS. GOVERNMENT PRINTING OFFICE : 1969 0-366-334.
+UNITED STATES PATENT OFFICE
+CERTIFICATE OF CORRECTION
+Patent No. 3,800 , 012__________ Dated March 26, 1974
+Inventor(s) Hans Hiorth___________________________________
+It is certified that error appears in the above-identified patent and that said Letters Patent are hereby corrected as shown below:
+Page one, first column, below the line reading "[21] Appl. No.:	332,165", insert the following:
+— [30] Foreign Application Priority Data
+February 23, 1972 Norway. ... 567/72 —.
+Signed and sealed this 8th day of October 1974.
+(SEAL)
+Attest:
+'McCOY M. GIBSON JR.	C. MARSHALL DANN
+: Attesting Officer	Commissioner of Patents
+FORM P0-1050 (10-69)
+USCOMM-DC 60376-P69
+IS, GOVERNMENT PRINTING OFFICE :
