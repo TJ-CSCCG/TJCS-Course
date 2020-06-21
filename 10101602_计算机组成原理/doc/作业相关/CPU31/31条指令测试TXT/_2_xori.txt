@@ -1,0 +1,74 @@
+sll $0,$0,0
+addi $1, $1, 0x0000 
+addi $2, $2, 0x0000 
+addi $3, $3, 0x0000 
+addi $4, $4, 0x0000 
+addi $5, $5, 0x0000 
+addi $6, $6, 0x0000 
+addi $7, $7, 0x0000 
+addi $8, $8, 0x0000  
+
+addi $9, $9, 0xffffffff
+addi $10,$10,0xffffffff
+addi $11,$11,0xffffffff
+addi $12,$12,0xffffffff
+addi $13,$13,0xffffffff
+addi $14,$14,0xffffffff
+addi $15,$15,0xffffffff
+addi $16,$16,0xffffffff
+
+addi $17,$17,0xffffffff
+addi $18,$18,0xffff8000
+addi $19,$19,0x7fff
+addi $20,$20,0xfffff0f0
+addi $21,$21,0x5555
+addi $22,$22,0xffffaaaa
+addi $23,$23,0x1234
+addi $24,$24,0x0000
+
+addi $25,$25,0x0000
+addi $26,$26,0x7fff
+addi $27,$27,0xffff8000
+addi $28,$28,0x0f0f
+addi $29,$29,0xffffaaaa
+addi $30,$30,0x5555
+addi $31,$31,0xffffedcb
+
+xori $0, $0, 0xffff 
+
+xori $1, $1, 0xffff
+xori $2, $2, 0x8000
+xori $3, $3, 0x7fff
+xori $4, $4, 0xf0f0
+xori $5, $5, 0x5555
+xori $6, $6, 0xaaaa
+xori $7, $7, 0x1234
+xori $8, $8, 0x0000 
+
+xori $9, $9, 0xffff
+xori $10,$10,0x8000
+xori $11,$11,0x7fff
+xori $12,$12,0xf0f0
+xori $13,$13,0x5555
+xori $14,$14,0xaaaa
+xori $15,$15,0x1234
+xori $16,$16,0x0000
+
+xori $17,$17,0xffff
+xori $18,$18,0x8000
+xori $19,$19,0x7fff
+xori $20,$20,0xf0f0
+xori $21,$21,0x5555
+xori $22,$22,0xaaaa
+xori $23,$23,0x1234
+xori $24,$24,0x0000
+
+xori $25,$25,0xffff
+xori $26,$26,0x8000
+xori $27,$27,0x7fff
+xori $28,$28,0xf0f0
+xori $29,$29,0x5555
+xori $30,$30,0xaaaa
+xori $31,$31,0x1234
+            
+

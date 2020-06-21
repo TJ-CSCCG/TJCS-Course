@@ -1,0 +1,75 @@
+j _start
+sll $0,$0,0
+j _exceptions
+sll $0,$0,0
+
+_start:
+addi $1,$0,0xf
+mtc0 $1,$12
+break   			 		#转调至j _exceptions代码处
+sll $0,$0,0
+lui $1,0xffff
+ori $1,$1,0xffff
+bne $1,$10,wrong
+sll $0,$0,0
+
+syscall
+sll $0,$0,0
+lui $1,0xffff
+ori $1,$1,0xffff
+bne $1,$11,wrong
+sll $0,$0,0
+
+addi $1,$0,1
+addi $2,$0,1
+teq $1,$2
+sll $0,$0,0
+lui $1,0xffff
+ori $1,$1,0xffff
+bne $1,$12,wrong
+sll $0,$0,0
+_loop:
+j _loop
+sll $0,$0,0
+
+wrong:
+j wrong
+sll $0,$0,0
+
+_exceptions:				#根据异常号，转跳至_syscall，_break，_teq某处
+mfc0 $k0,$13
+andi $k1,$k0,0xff
+addi $k0,$0,0x20
+beq $k0,$k1,_syscall
+sll $0,$0,0
+addi $k0,$0,0x24
+beq $k0,$k1,_break
+sll $0,$0,0
+addi $k0,$0,0x34
+beq $k0,$k1,_teq
+sll $0,$0,0
+
+_break:
+lui $10,0xffff
+ori $10,$10,0xffff
+j _epc_plus4
+sll $0,$0,0
+
+_syscall:
+lui $11,0xffff
+ori $11,$11,0xffff
+j _epc_plus4
+sll $0,$0,0
+
+_teq:
+lui $12,0xffff
+ori $12,$12,0xffff
+j _epc_plus4
+sll $0,$0,0
+
+_epc_plus4:
+mfc0 $k0,$14
+addi $k0,$k0,0x4
+mtc0 $k0,$14
+eret
+sll $0,$0,0

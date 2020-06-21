@@ -1,0 +1,208 @@
+<html>
+<head>
+  <title></title>
+  <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=GB2312">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="vars.js"></script>
+	<script type="text/javascript" src="messaging.js"></script>
+</head>
+<body onLoad="Preload();">
+<center>
+<!-------------------------- Start Sidebar ---------------------------->
+<div id="sidebar">  
+<table cellpadding="0" cellspacing="0" class="main_table">
+  
+  <tr>
+    <!-- START TOP_PANE -->
+    <td colspan="3" valign="middle" id="top_pane"> 
+      <h1 id="top_headline">UltraCompare Trial Reminder</h1>
+      <div id="headline_subtext">
+      <h2>This is an unregistered program. </h2>
+      <p>You are using this application on a free trial basis. </p> 
+    </div>
+    </td>
+    <!-- END TOP_PANE -->
+  </tr>
+  <tr>
+    <!-- START PROGRESS_BAR -->
+    <td valign="middle" colspan="3" id="progress_bar">
+     <table cellpadding="0" cellspacing="0" width="100%" border="0">
+      <tr>
+        <td class="progress_bar_cell">
+          	<img src="images/progress_bar_overlay.gif" alt="" align="right" id="progress_bar_overlay" />
+        </td>
+        <td><span class="reminder"><span id="reminder_text">Days Remaining:</span> <span id="days">xx</span></span></td>
+      </tr>
+    </table>
+    
+    </td>
+    <!-- END PROGRESS_BAR -->
+  </tr>
+  <tr>
+    <!-- START PROGRS-MAIN_SEPARATOR (horizontal spacing between progress bar and main content) -->
+    <td valign="top" colspan="3" class="progrs-main_separator"></td>
+    <!-- END PROGRS-MAIN_SEPARATOR -->
+  </tr> 
+  <tr>
+    <!-- START MAIN -->
+    <td valign="top" rowspan="3" width="*%" id="main">
+    <div class="main_inner_div" id="main_inner_div">
+
+    <h2>Thank You for Evaluating UltraCompare</h2>
+		<p class="subtext">You are using this application on a free trial basis</p>
+		<p>This is an unregistered copy of UltraCompare. If you continue use this program, please purchase a license. </p>
+		<p><a href="http://www.ultraedit.com/redirects/registration/en/uc_register.html?utm_source=UltraCompare&utm_medium=ipm&utm_campaign=default" target="_blank">Click here to register</a></p>
+		<p style="clear: all"><b>Visa, MasterCard, Amex accepted</b></p>
+		<p>IDM Computer Solutions, Inc.<br />5559 Eureka Dr. Ste. B<br />Hamilton, OH 45011<br />Fax: (513) 892-8600<br />Email: <a href="mailto:idm@idmcomp.com" target="_blank">idm@idmcomp.com</a></p>
+		<p><a href="http://www.ultraedit.com/company/contact_us.html?utm_source=ultracompare&utm_medium=ipm&utm_campaign=default" target="_blank">Contact us</a> for questions.</p>
+
+    </div> <!--end main_inner_div-->
+    
+    </td>
+    <!-- END MAIN -->
+    
+    <!-- START MAIN-RIGHT_SEPARATOR (vertical spacing between main and right side) -->
+    <td valign="top" rowspan="3" class="main-right_separator"></td>
+    <!-- END MAIN-RIGHT_SEPARATOR -->
+    
+    <!-- START TOP_RIGHT -->
+    <td valign="top" id="top_right">
+    <div class="top_right_inner_div" id="top_right_inner_div">
+      
+      <p class="register_title">Register</p>
+       <p><img src="images/ucbox_sm.gif" alt="UltraCompare" border="0" class="ucbox" />Register for only: <span class="price" id="ucNewPrice">$##.##</span></p>
+       <a href="#" onClick="purchaseLink('BuyUC', langStr); return false;" target="_blank"><p class="buy_button">BUY</p></a>
+       <p class="upgrade_text">Upgrade: <span class="price" id="ucUpgradePrice">$##.##</span></p>
+       <a href="#" onClick="purchaseLink('UpgradeUC', langStr); return false;" target="_blank"><p class="upgrade_button">UPGRADE</p></a>       
+
+    </div><!-- end top_right_inner_div -->
+    </td>
+    <!-- END TOP_RIGHT -->
+    
+  </tr>
+  <tr>
+    
+    <!-- START TOP-BOTTOM-RIGHT_SEPARATOR (horizontal spacing between top and bottom and right side) -->
+    <td valign="top" class="top-bottom-right_separator" ></td>
+    <!-- END TOP-BOTTOM-RIGHT_SEPARATOR -->
+    
+  </tr>
+  <tr>
+    
+    <!-- START BOTTOM_RIGHT -->
+    <td valign="top" id="bottom_right">
+      <div class="bottom_right_inner_div" id="bottom_right_inner_div">
+            <p class="register_title">UE/UC </p>
+            <p><img src="images/ue_uc_box.gif" alt="UltraEdit UltraCompare Bundle" border="0" class="bundlebox" />Register both for only: <span class="price" id="ueUcBundleNewPrice">$##.##</span></p>
+            <a href="#" onClick="purchaseLink('BuyUEUCBundle', langStr); return false;" target="_blank"><p class="buy_button">BUY</p></a>
+            <p class="save_on_uc_text">Save ##% on UC!</p>
+      </div><!-- end bottom_right_inner_div -->
+    </td>
+    <!-- END BOTTOM_RIGHT -->
+  </tr>
+</table>
+</div> <!-- end sidebar -->
+
+<!-------------------------- Start Side by Side ---------------------------->
+<div id="side_by_side" style="display: none">  
+  
+  <table cellpadding="0" cellspacing="0" class="main_table">
+	
+	<tr>
+		<!-- START TOP_PANE -->
+		<td colspan="3" valign="middle" id="top_pane_clock"> 
+			<h1 id="top_headline">UltraCompare Trial Reminder</h1>
+      <div id="headline_subtext">
+      <h2>This is an unregistered program. </h2>
+      <p>You are using this application on a free trial basis. </p>	
+      </div>
+		</td>
+		<!-- END TOP_PANE -->
+	</tr>
+	<tr>
+		<!-- START PROGRESS_BAR -->
+		<td valign="middle" colspan="3" id="progress_bar">
+		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+      <tr>
+        <td class="progress_bar_cell">
+          	<img src="images/progress_bar_overlay.gif" alt="" align="right" id="progress_bar_overlay" />
+        </td>
+				<td><span class="reminder"><span id="reminder_text">Days Remaining:</span> <span id="days">xx</span></span></td>
+			</tr>
+		</table>
+		
+		</td>
+		<!-- END PROGRESS_BAR -->
+	</tr>
+	<tr>
+		<!-- START PROGRS-MAIN_SEPARATOR (horizontal spacing between progress bar and main content) -->
+		<td valign="top" colspan="3" class="progrs-main_separator"></td>
+		<!-- END PROGRS-MAIN_SEPARATOR -->
+	</tr>	
+	<tr>
+		<!-- START LEFT_SIDE -->
+		<td valign="top" id="left_side">
+		<div class="left_side_inner_div" id="left_side_inner_div">
+
+		<img src="images/ucbox_big.gif" alt="UltraEdit Box" border="0" class="ucbox_big" />
+		<h2>UltraCompare</h2>
+		<p>UltraCompare Professional is loaded with features that enable you to track differences between files, directories, and .zip archives! </p>
+		<div class="bonus">		  
+      <p><span class="subtext">User-Based Licensing!</span><br />
+      Have a laptop or an extra PC? Registration grants installation authority on multiple systems*.</p>
+    </div>
+		<div class="register_upgrade_container">
+			<div class="register">
+				<p class="register_text">Register For <span class="price" id="ucNewPrice">$##.##</span></p>
+				<a href="#" onClick="purchaseLink('BuyUC', langStr); return false;" target="_blank"><p class="buy_button">BUY</p></a>
+			</div>
+			<div class="upgrade">
+				<p class="register_text">UC Upgrade<span class="price" id="ucUpgradePrice">$##.##</span></p>
+				<a href="#" onClick="purchaseLink('UpgradeUC', langStr); return false;" target="_blank"><p class="buy_button">UPGRADE</p></a>
+		</div>
+		
+		</div> <!-- end left_side_inner_div -->
+		</td>
+		<!-- END LEFT_SIDE -->
+		
+		<!-- START LEFT-RIGHT_SEPARATOR (vertical spacing between right and left side) -->
+		<td valign="top" class="left-right_separator"></td>
+		<!-- END LEFT-RIGHT_SEPARATOR  -->
+		
+		<!-- START RIGHT_SIDE -->
+		<td valign="top" id="right_side">
+		<div class="right_side_inner_div" id="right_side_inner_div">
+		
+		<img src="images/ue_uc_box_big.gif" alt="UltraEdit UltraCompare Bundle Box" border="0" class="ue_uc_box_big" />
+		<h2>UE/UC Bundle</h2>
+		<p class="ue_uc_bundle_offer">Retail: <span class="retail_price" id="ueUcBundleRetailPrice">$##.##</span><br />
+			You Pay: <span class="price" id="ueUcBundleNewPrice">$##.##</span><br />
+			You Save: <span class="you_save" id="ueUCBundleYouSavePercentage">##</span>
+		</p>
+		<p style="clear: both">UE/UC are fully integrated to give you the perfect editing, programming, comparison, and merge solution. The UE/UC Bundle - <i>The Greatest Value in a Text Editing Solution!</i></p>
+	  
+	  <div class="register_upgrade_container">
+	   <div class="best_value">BEST VALUE</div>
+			<div class="register">
+				<p class="register_text">Register Both <span class="price" id="ueUcBundleNewPrice">$##.##</span></p>
+				<a href="#" onClick="purchaseLink('BuyUEUCBundle', langStr); return false;" target="_blank"><p class="buy_button">BUY</p></a>
+			</div>
+			<div class="upgrade">
+				<p class="register_text">UE Upgrade + UC <span class="price" id="ueUpgradeToUeUcBundlePrice">$##.##</span></p>
+				<a href="#" onClick="purchaseLink('UpgradeUE2UEUCBundle', langStr); return false;" target="_blank"><p class="buy_button">UPGRADE</p></a>
+		</div>
+
+		</div> <!-- end right_side_inner_div -->
+		</td>
+		<!-- START RIGHT_SIDE -->
+		
+	</tr>
+
+</table>
+
+</div> <!-- end side_by_side -->
+
+
+</center>
+</body>
+</html>

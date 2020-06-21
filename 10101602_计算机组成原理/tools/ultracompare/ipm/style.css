@@ -1,0 +1,509 @@
+
+/* structure */
+
+body {
+overflow: hidden;
+margin: 5px 0px 0px 0px;
+padding: 0;
+background-color: #ccc;
+}
+
+
+.main_table {
+width: 490px;
+height: 353px; 
+}
+
+#top_pane, #top_pane_clock {
+height: 81px;
+padding: 3px;
+}
+
+#content {
+margin-top: 5px;
+margin-right: auto;
+margin-left: auto;
+width: 500px;
+}
+
+#main {
+padding: 5px 3px 5px 5px;
+}
+
+#main .main_inner_div {
+height: 242px;
+width: 335px;
+overflow: auto;
+padding-right: 3px;
+}
+
+#left_side, #right_side {
+padding: 5px 3px 5px 4px;
+position: relative;
+}
+
+#left_side .left_side_inner_div, #right_side .right_side_inner_div {
+width: 233px;
+height: 242px;
+padding-left: 1px;
+}
+
+
+#top_right {
+width: 145px;
+height: 129px;
+padding: 3px 3px 0px 3px;
+}
+
+#top_right .top_right_inner_div {
+height: 129px;
+}
+
+
+#bottom_right {
+width: 145px;
+height: 108px;
+padding: 3px 3px 0px 3px;
+}
+
+#bottom_right .bottom_right_inner_div {
+height: 108px;
+}
+
+
+.top-bottom-right_separator {
+height: 5px;
+}
+
+.progrs-main_separator {
+height: 5px;
+}
+
+.main-right_separator {
+width: 5px;
+}
+
+.left-right_separator {
+width: 5px;
+background-color: #ccc;
+}
+
+#main p {
+margin-bottom: 8px;
+}
+
+#main .tip_screenshot {
+float: left;
+margin-right: 5px;
+margin-top: 3px;
+}
+
+#main .benefits {
+	padding-top: 3px;
+}
+
+.subtext {
+	font-size: 1.1em;
+}
+
+
+#top_pane h1, #top_pane_clock h1 {
+margin: 3px 0px 0px 0px;
+padding-left: 130px;
+}
+
+#top_pane h2, #top_pane_clock h2 {
+margin: 0px 0px 2px 0px;
+padding-left: 130px;
+}
+
+
+#top_pane p, #top_pane_clock p {
+padding-left: 130px;
+}
+
+#main .resource_title {
+	margin-bottom: -5px;
+}	
+
+#main .powertips {
+	padding-left: 35px;
+}
+
+#main .forums {
+	padding-left: 35px;
+}
+
+#main .faq {
+	padding-left: 35px;
+}
+
+#main .tech_support {
+	padding-left: 35px;
+}
+
+#main .resource_link, #main .powertip_link  {
+	margin-right: 0px;
+	padding-right: 2px;
+	margin-bottom: 3px;
+}
+
+#left_side .ucbox_big, #right_side .ue_uc_box_big {
+	float: left;
+	margin-right: 5px;
+}
+
+#left_side .register_text, #right_side .register_text  {
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	clear: both;
+}
+
+#left_side .buy_button, #right_side .buy_button {
+	height: 20px;
+	width: 75px;
+	padding-top: 3px;
+}
+
+.register_upgrade_container {
+text-align: center;
+padding: 0px;
+margin: 0px auto 0px auto;
+position: absolute;
+bottom: 0px;
+}
+
+.register_upgrade_container .register {
+float: left;
+margin-right: 5px;
+width: 47%;
+}
+
+.register_upgrade_container .upgrade {
+float: right;
+margin-left: 5px;
+width: 47%;
+}
+
+
+#right_half .bundle_learn_more {
+	margin-left: 20px;
+}
+
+.register_title, .bundle_register, .support_title  {
+	padding: 3px 5px 5px 30px;
+	margin: 0px 0px 3px 0px;
+}
+
+#top_right .ucbox, #bottom_right .bundlebox {
+	float: left;
+	margin-right: 5px;
+	margin-left: 3px;
+}
+
+#top_right .buy_button, #bottom_right .buy_button {
+	height: 20px;
+	width: 75px;
+	padding-top: 3px;
+	float: right;
+}
+
+#top_right .upgrade_button {
+	height: 20px;
+	width: 75px;
+	margin-top: 8px;
+	padding-top: 3px;
+	float: right;
+}
+
+#top_right .upgrade_text {
+	float: left;
+	margin-top: 10px;
+	margin-left: 3px;
+}
+
+#bottom_right .support_title {
+	height: 25px;
+}
+
+#bottom_right {
+padding-left: 5px;
+}
+
+
+
+/* General style */
+
+table {
+font-size: 1.0em;
+}
+
+body {
+font-size: 11px; 
+font-family: Arial, Verdana, Sans-Serif;
+background-color: #fff;
+background-color: #ccc;
+}
+
+a
+{
+cursor: hand; 
+color: blue;
+text-decoration: underline;
+}
+
+p {
+text-align: left;
+margin-top: 4px;
+margin-bottom: 5px;
+}
+
+li {
+padding-bottom: 7px;
+}
+
+/* style */
+
+#content {
+text-align: left;
+}
+
+#top_pane, #top_pane_clock  {
+background-color: #265093;
+border-top: 1px solid #a3a3a3;
+border-right: 1px solid #a3a3a3;
+border-bottom: none;
+border-left: 1px solid #a3a3a3;
+color: #fff;
+}
+
+#top_pane_clock {
+background-image: url(images/clock_bg.png);
+background-repeat: no-repeat;
+background-position: 0% 0%;
+}
+
+#top_pane {
+background-image: url(images/uc_bg.png);
+background-repeat: no-repeat;
+background-position: 0% 0%;
+}
+
+#top_pane h1, #top_pane_clock h1 {
+font-size: 1.9em;
+font-weight: bold;
+}
+
+#top_pane h2, #top_pane_clock h2 {
+font-size: 1.4em;
+font-weight: bold;
+}
+
+.reminder {
+font-weight: bold;
+font-size: 1.3em;
+color: #fff;
+}
+
+
+#progress_bar {
+background-color: #265093;
+border-top: none;
+border-right: 1px solid #a3a3a3;
+border-bottom: 1px solid #a3a3a3;
+border-left: 1px solid #a3a3a3;
+color: #fff;
+height: 36px;
+padding: 0px;
+}
+
+.progress_bar_cell {
+background-image: url(images/progress_bar.gif);
+background-repeat: no-repeat;
+background-position: 7px 0px;
+width: 313px;
+}
+
+#progress_bar_overlay {
+height: 11px;
+margin-top:1px;
+margin-right:8px;
+}
+
+#main, #top_right, #bottom_right, #right_side, #left_side {
+background-color: #fff;
+border: 1px solid #a3a3a3;
+}
+
+#main h2, #top_right h2, #bottom_right h2, #left_side h2, #right_side h2 {
+font-size: 1.4em;
+margin: 3px 0px 0px;
+}
+
+#main .resource_title {
+font-weight: bold;
+}	
+
+#main .powertips {
+background: url(images/powertip_icon.gif);
+background-repeat: no-repeat;
+}
+
+#main .forums {
+background: url(images/forums_icon.gif);
+background-repeat: no-repeat;
+}
+
+#main .faq {
+background: url(images/faq_icon.gif);
+background-repeat: no-repeat;
+}
+
+#main .tech_support {
+background: url(images/tech_support_icon.gif);
+background-repeat: no-repeat;
+}
+
+#main .resource_link, #main .powertip_link  {
+text-align: right;
+float: right;
+}
+
+#main .subtext {
+font-weight: bold;
+}
+
+#main .benefits span.subtext {
+font-weight: bold;
+}
+
+#left_side .register_text, #right_side .register_text  {
+	font-size: 1.05em;
+	font-weight: bold;
+}
+
+
+.register_title, .bundle_register  {
+	font-weight: bold;
+	font-size: 1.3em;
+	background: url(images/lock-key_icon.gif);
+	background-repeat: no-repeat;
+	background-position: 3% 4%;
+}
+
+#top_right .buy_button, #bottom_right .buy_button, #left_side .buy_button, #right_side .buy_button  {
+	background: url(images/button.gif);
+	background-repeat: no-repeat;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+#top_right .upgrade_button {
+	background: url(images/button.gif);
+	background-repeat: no-repeat;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+#top_right a .buy_button, #top_right a .upgrade_button, #bottom_right a .buy_button, #right_side a .buy_button, #left_side a .buy_button {
+	text-decoration: none;
+	color: #fff;
+}
+
+#bottom_right .support_title {
+	background: url(images/support_icon.gif);
+	background-repeat: no-repeat;
+	background-position: 0% 6%;
+	font-weight: bold;
+	font-size: 1.3em;
+}
+
+
+.price {
+color: #ac071f;
+}
+
+.retail_price {
+	text-decoration: line-through;
+}
+
+.you_save {
+	color: #293897;
+	font-weight: bold;
+}
+
+.ue_uc_bundle_offer {
+	font-weight: bold;
+}
+
+.register_text .price {
+	display: block;
+	font-size: 1.4em;
+}
+
+.bonus {
+border: 2px dashed  #cccccc;
+background-image: url(images/bonus.gif);
+background-repeat: no-repeat;
+background-position: 2% 17%;
+padding-left: 47px;
+padding-right: 3px;
+}
+
+#left_side div.bonus {
+	margin-top: 8px;
+}
+
+.bonus span.subtext {
+font-weight: bold;
+color: #AC071F !important;
+font-style: italic;
+}
+
+.save_on_uc_text {
+	color: #ac071f;
+	font-weight: bold;
+	float: left;
+	font-style: italic;
+	text-align: center;
+	clear: left;
+	width: 55px;
+	margin-bottom: -10px;
+	font-size: .8em;
+}
+
+.best_value {
+ background-image: url(images/best_value_bg.gif);
+ background-repeat: no-repeat;
+ background-position: 50% 50%;
+ text-align: center;
+ height: 24px;
+ padding-top: 5px;
+ font-size: 1.05em;
+ font-weight: bold;
+}
+
+#left_side div.bonus_upgrade .subtext {
+	font-size: 1em;
+}
+
+#left_side div.bonus_upgrade {
+border: 2px dashed  #cccccc;
+padding-right: 3px;
+padding-left: 3px;
+}
+
+#left_side div.bonus_upgrade {
+	margin-top: 8px;
+}
+
+#left_side div.bonus_upgrade span.subtext {
+font-weight: bold;
+color: #AC071F !important;
+font-style: italic;
+}
+

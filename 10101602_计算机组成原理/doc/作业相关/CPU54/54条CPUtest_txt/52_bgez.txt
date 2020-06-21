@@ -1,0 +1,28 @@
+main:
+sll $0,$0,0
+addi $10,$0,0
+bgez $10,TAG1
+j TAG0
+TAG1:
+addi $10,$10,1
+bgez $10,TAG2
+j TAG0
+TAG2:
+addi $20,$0,1
+sub $10,$0,$20
+bgez $10,TAG0
+j TAG3
+
+TAG0:
+addi $2,$0,1
+addi $3,$0,1
+addi $4,$0,1
+addi $5,$0,1
+j TAG0
+
+TAG3:
+addi $2,$0,2
+addi $3,$0,2
+addi $4,$0,2
+addi $5,$0,2
+
