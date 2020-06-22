@@ -1,10 +1,7 @@
 # TJCS-Course
 
-<<<<<<< HEAD
 ![GitHub](https://img.shields.io/github/license/TJ-CSCCG/TJCS-Course?color=green)  ![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)
-=======
-![GitHub](https://img.shields.io/github/license/TJ-CSCCG/TJCS-Course?color=green)![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)
->>>>>>> d4f42c2f0d4415b369a172e2497bf64dc94fc9c4
+
 
 ## 精神
 
