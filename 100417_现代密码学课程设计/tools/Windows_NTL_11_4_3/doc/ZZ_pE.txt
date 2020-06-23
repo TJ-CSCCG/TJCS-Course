@@ -1,0 +1,402 @@
+
+
+/**************************************************************************\
+
+MODULE: ZZ_pE
+
+SUMMARY:
+
+The class ZZ_pE is used to represent polynomials in Z_p[X] modulo a
+polynomial P.  The modulus P may be any polynomial with deg(P) > 0,
+not necessarily irreducible.  The modulus p defining Z_p need
+not be prime either.
+
+Objects of the class ZZ_pE are represented as a ZZ_pX of degree < deg(P).
+
+An executing program maintains a "current modulus", which is set to P
+using ZZ_pE::init(P).  The current modulus for ZZ_pE (as well as for ZZ_p)
+*must* be initialized before an operations on ZZ_pE's are performed.
+
+The modulus may be changed, and a mechanism is provided for saving and
+restoring a modulus (see classes ZZ_pEPush and ZZ_pEContext below).
+
+
+\**************************************************************************/
+
+#include <NTL/ZZ_pX.h>
+
+class ZZ_pE {
+public:
+   
+   ZZ_pE(); // initial value 0
+
+   ZZ_pE(const ZZ_pE& a); // copy constructor
+   explicit ZZ_pE(const ZZ_p& a); // promotion
+   explicit ZZ_pE(long a); // promotion
+   
+   ZZ_pE& operator=(const ZZ_pE& a); // assignment
+   ZZ_pE& operator=(const ZZ_p& a); // assignment
+   ZZ_pE& operator=(long a); // assignment
+   
+   ~ZZ_pE(); // destructor
+
+   ZZ_pE(ZZ_pE&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   ZZ_pE& operator=(ZZ_pE&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+#endif
+
+   static void init(const ZZ_pX& P);
+   // ZZ_pE::init(P) initializes the current modulus to P;
+   // required: deg(P) >= 1.
+   
+   static const ZZ_pXModulus& modulus();
+   // ZZ_pE::modulus() yields read-only reference to the current modulus 
+
+   static long degree();
+   // ZZ_pE::degree() returns deg(P)
+
+
+   // typedefs to aid generic programming
+   typedef ZZ_pX rep_type;
+   typedef ZZ_pEContext context_type;
+   typedef ZZ_pEBak bak_type;
+   typedef ZZ_pEPush push_type;
+   typedef ZZ_pEX poly_type;
+
+};
+
+
+const ZZ_pX& rep(const ZZ_pE& a); // read-only access to representation of a
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+long operator==(const ZZ_pE& a, const ZZ_pE& b);
+long operator!=(const ZZ_pE& a, const ZZ_pE& b);
+
+long IsZero(const ZZ_pE& a);  // test for 0
+long IsOne(const ZZ_pE& a);  // test for 1
+
+// PROMOTIONS: ==, != promote {long, ZZ_p} to ZZ_pE on (a, b).
+
+
+/**************************************************************************\
+
+                                    Addition 
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ_pE operator+(const ZZ_pE& a, const ZZ_pE& b);
+
+ZZ_pE operator-(const ZZ_pE& a, const ZZ_pE& b);
+ZZ_pE operator-(const ZZ_pE& a);
+
+ZZ_pE& operator+=(ZZ_pE& x, const ZZ_pE& a);
+ZZ_pE& operator+=(ZZ_pE& x, const ZZ_p& a);
+ZZ_pE& operator+=(ZZ_pE& x, long a);
+
+ZZ_pE& operator++(ZZ_pE& x); // prefix
+void operator++(ZZ_pE& x, int); // postfix
+
+ZZ_pE& operator-=(ZZ_pE& x, const ZZ_pE& a);
+ZZ_pE& operator-=(ZZ_pE& x, const ZZ_p& a);
+ZZ_pE& operator-=(ZZ_pE& x, long a);
+
+ZZ_pE& operator--(ZZ_pE& x); // prefix
+void operator--(ZZ_pE& x, int); // postfix
+
+// procedural versions:
+
+void add(ZZ_pE& x, const ZZ_pE& a, const ZZ_pE& b); // x = a + b
+void sub(ZZ_pE& x, const ZZ_pE& a, const ZZ_pE& b); // x = a - b 
+void negate(ZZ_pE& x, const ZZ_pE& a); // x = - a 
+
+// PROMOTIONS: +, -, add, sub promote {long, ZZ_p} to ZZ_pE on (a, b).
+
+
+/**************************************************************************\
+
+                                  Multiplication 
+
+\**************************************************************************/
+
+
+// operator notation:
+
+ZZ_pE operator*(const ZZ_pE& a, const ZZ_pE& b);
+
+ZZ_pE& operator*=(ZZ_pE& x, const ZZ_pE& a);
+ZZ_pE& operator*=(ZZ_pE& x, const ZZ_p& a);
+ZZ_pE& operator*=(ZZ_pE& x, long a);
+
+// procedural versions:
+
+
+void mul(ZZ_pE& x, const ZZ_pE& a, const ZZ_pE& b); // x = a * b
+
+void sqr(ZZ_pE& x, const ZZ_pE& a); // x = a^2
+ZZ_pE sqr(const ZZ_pE& a); 
+
+// PROMOTIONS: *, mul promote {long, ZZ_p} to ZZ_pE on (a, b).
+
+
+
+/**************************************************************************\
+
+                                     Division
+
+\**************************************************************************/
+
+
+// operator notation:
+
+ZZ_pE operator/(const ZZ_pE& a, const ZZ_pE& b);
+
+ZZ_pE& operator/=(ZZ_pE& x, const ZZ_pE& a);
+ZZ_pE& operator/=(ZZ_pE& x, const ZZ_p& a);
+ZZ_pE& operator/=(ZZ_pE& x, long a);
+
+
+// procedural versions:
+
+void div(ZZ_pE& x, const ZZ_pE& a, const ZZ_pE& b);
+// x = a/b.  If b is not invertible, an error is raised.
+
+void inv(ZZ_pE& x, const ZZ_pE& a);
+ZZ_pE inv(const ZZ_pE& a);
+// x = 1/a
+
+PROMOTIONS: /, div promote {long, ZZ_p} to ZZ_pE on (a, b).
+
+
+/**************************************************************************\
+
+                                  Exponentiation
+
+\**************************************************************************/
+
+
+
+void power(ZZ_pE& x, const ZZ_pE& a, const ZZ& e); 
+ZZ_pE power(const ZZ_pE& a, const ZZ& e);
+
+void power(ZZ_pE& x, const ZZ_pE& a, long e); 
+ZZ_pE power(const ZZ_pE& a, long e);
+
+// x = a^e (e may be negative)
+
+
+
+/**************************************************************************\
+
+                               Random Elements
+
+\**************************************************************************/
+
+
+void random(ZZ_pE& x);
+ZZ_pE random_ZZ_pE();
+// x = random element in ZZ_pE.
+
+/**************************************************************************\
+
+                               Norms and Traces
+
+\**************************************************************************/
+
+
+
+void trace(ZZ_p& x, const ZZ_pE& a);  // x = trace of a
+ZZ_p trace(const ZZ_pE& a);
+
+void norm(ZZ_p& x, const ZZ_pE& a);   // x = norm of a
+ZZ_p norm(const ZZ_pE& a);
+
+
+
+/**************************************************************************\
+
+                                Input/Output
+
+\**************************************************************************/
+
+
+ostream& operator<<(ostream& s, const ZZ_pE& a);
+
+istream& operator>>(istream& s, ZZ_pE& x);
+// a ZZ_pX is read and reduced mod p
+
+
+/**************************************************************************\
+
+                       Modulus Switching 
+
+A class ZZ_pEPush is provided for "backing up" the current modulus
+and installing a new one.
+
+Here is what you do to save the current modulus, temporarily
+set it to P, and automatically restore it:
+
+   { 
+      ZZ_pEPush push(P); 
+
+      ...
+
+   }
+
+The constructor for push will save the current modulus, and install P as the
+current modulus.  The destructor for push will restore the old modulus when the
+scope enclosing it exits.  This is the so-called RAII (resource acquisition is
+initialization) paradigm.
+
+You could also do the following:
+
+   {
+      ZZ_pEPush push; // just backup current modulus
+
+        ...
+
+      ZZ_pE::init(P1); // install P1 
+
+        ...
+
+      ZZ_pE::init(P2); // install P2
+
+      // reinstall original modulus as close of scope
+   }
+
+      
+The ZZ_pEPush interface is good for implementing simple stack-like
+modulus "context switching".  For more general context switching,
+see ZZ_pEContext below.  There is also an older ZZ_pEBak class
+that may also be useful.
+
+..........................................................................
+
+It is critical that ZZ_pE objects created under one ZZ_pE modulus are not used in
+any non-trivial way "out of context", i.e., under a different (or undefined)
+ZZ_pE modulus.  However, for ease-of-use, some operations may be safely
+performed out of context.  These safe operations include: the default and copy
+constructor, the destructor, and the assignment operator.  In addition is is
+generally safe to read any ZZ_pE object out of context (i.e., printing it out, or
+fetching its underlying representive using the rep() function).
+
+Any unsafe uses out of context are not in general checked, and may 
+lead to unpredictable behavior.
+
+
+\**************************************************************************/
+
+
+// A convenient interface for common cases
+
+class ZZ_pEPush {
+
+public:
+ZZ_pEPush();  // backup current modulus
+explicit ZZ_pEPush(const ZZ_pX& P); 
+explicit ZZ_pEPush(const ZZ_pEContext& context); 
+  // backup current modulus and install the given one
+
+private:
+ZZ_pEPush(const ZZ_pEPush&); // disabled
+void operator=(const ZZ_pEPush&); // disabled
+
+};
+
+
+
+// more general context switching:
+// A ZZ_pEContext object has a modulus Q (possibly "null"),
+
+class ZZ_pEContext {
+
+
+public:
+
+ZZ_pEContext(); // Q = "null"
+explicit ZZ_pEContext(const ZZ_pX& P); // Q = P
+
+void save(); // Q = CurrentModulus
+void restore() const; // CurrentModulus = Q
+
+ZZ_pEContext(const ZZ_pEContext&);  // copy
+ZZ_pEContext& operator=(const ZZ_pEContext&); // assignment
+~ZZ_pEContext(); // destructor
+
+
+};
+
+
+// An older interface:
+// To describe this logic, think of a ZZ_pEBak object
+// of having two components: a modulus Q (possibly "null") and 
+// an "auto-restore bit" b.
+
+
+class ZZ_pEBak {
+public:
+
+
+   ZZ_pEBak();  // Q = "null", b = 0
+
+   ~ZZ_pEBak();  // if (b) CurrentModulus = Q
+
+   void save();  // Q = CurrentModulus, b = 1 
+   void restore();  // CurrentModulus = Q, b = 0
+
+
+private:
+   ZZ_pEBak(const ZZ_pEBak&);  // copy disabled
+   void operator=(const ZZ_pEBak&);  // assignment disabled
+};
+
+
+
+
+
+
+/**************************************************************************\
+
+                               Miscellany
+
+\**************************************************************************/
+
+void clear(ZZ_pE& x); // x = 0
+void set(ZZ_pE& x); // x = 1
+
+static const ZZ_pE& ZZ_pE::zero();
+// ZZ_pE::zero() yields a read-only reference to zero
+
+void ZZ_pE::swap(ZZ_pE& x);
+void swap(ZZ_pE& x, ZZ_pE& y);
+// swap (done by "pointer swapping", if possible).
+
+static ZZ& ZZ_pE::cardinality();
+// yields the cardinality, i.e., p^{ZZ_pE::degree()}
+
+ZZ_pE::ZZ_pE(INIT_NO_ALLOC_TYPE);
+// special constructor: invoke as ZZ_pE x(INIT_NO_ALLOC);
+// initializes x to 0, but allocates no space (this is now the default)
+
+ZZ_pE::ZZ_pE(INIT_ALLOC_TYPE);
+// special constructor: invoke as ZZ_pE x(INIT_ALLOC);
+// initializes x to 0, but allocates space
+
+ZZ_pE::allocate();
+// useful in conjunction with the INIT_NO_ALLLOC constructor:
+// x.allocate() will pre-allocate space for x, using the
+// current modulus
+

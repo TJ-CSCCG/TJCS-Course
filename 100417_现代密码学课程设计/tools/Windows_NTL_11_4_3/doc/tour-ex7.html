@@ -1,0 +1,200 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Thread Pools</title>
+</head>
+
+<center>
+<a href="tour-ex6.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<img src="arrow3.gif" alt="[Next]" align=bottom>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Thread Pools
+</p>
+</h1>
+
+<p> <hr> <p>
+
+If you have built NTL with <tt>NTL_THREAD_BOOST=on</tt>,
+then not only is NTL thread safe, but certain parts
+of NTL are designed to use multiple threads to speed things
+up. 
+To implement this, NTL makes use of a <i>thread pool</i>,
+which is a collection of threads that are created once
+and then used over and over again, to avoid the significant
+overhead of thread creation and destruction.
+You can also use this same thread pool to speed up 
+NTL client code.
+<p>
+To use this feature, you have to include the header file
+<tt>NTL/BasicThreadPool.h</tt>. 
+In your main program, you should also indicate how many threads
+you want in the pool.
+If you want, say, 8 threads, you so this by calling the function
+<tt>SetNumThreads(8)</tt>.
+<p>
+If you do this, then certain parts of NTL will use these
+threads when possible (this is a working in progress).
+To use these threads in your own code, the easiest way
+to do this is with a <i>parallel for loop</i>,
+illustrated in the following example.
+
+See <a href="BasicThreadPool.cpp.html"><tt>BasicThreadPool.txt</tt></a>
+for more details.
+
+Consider the following routine:
+
+
+<!-- STARTPLAIN
+   void mul(ZZ *x, const ZZ *a, const ZZ *b, long n) 
+   {
+      for (long i = 0; i < n; i++)
+         mul(x[i], a[i], b[i]);
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; <font color="#008b00"><b>void</b></font>&nbsp;mul(ZZ *x, <font color="#008b00"><b>const</b></font>&nbsp;ZZ *a, <font color="#008b00"><b>const</b></font>&nbsp;ZZ *b, <font color="#008b00"><b>long</b></font>&nbsp;n) <br>
+&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = <font color="#ff8b00">0</font>; i &lt; n; i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mul(x[i], a[i], b[i]);<br>
+&nbsp;&nbsp; }<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+
+
+
+<p>
+We can parallelize it as follows:
+
+<!-- STARTPLAIN
+   void mul(ZZ *x, const ZZ *a, const ZZ *b, long n) 
+   {
+      NTL_EXEC_RANGE(n, first, last) 
+
+         for (long i = first; i < last; i++)
+            mul(x[i], a[i], b[i]);
+
+      NTL_EXEC_RANGE_END
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; <font color="#008b00"><b>void</b></font>&nbsp;mul(ZZ *x, <font color="#008b00"><b>const</b></font>&nbsp;ZZ *a, <font color="#008b00"><b>const</b></font>&nbsp;ZZ *b, <font color="#008b00"><b>long</b></font>&nbsp;n) <br>
+&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NTL_EXEC_RANGE(n, first, last) <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = first; i &lt; last; i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(x[i], a[i], b[i]);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NTL_EXEC_RANGE_END<br>
+&nbsp;&nbsp; }<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+
+<p>
+<tt>NTL_EXEC_RANGE</tt> and 
+<tt>NTL_EXEC_RANGE_END</tt> are macros that just <i>do the right
+thing</i>.  If there are <i>nt</i> threads available, the interval 
+&#91;0..<i>n</i>) will be
+partitioned into (up to)  <i>nt</i> subintervals, and a different thread will be
+used to process each subinterval. You still have to write the for loop
+yourself: the macro just declares and initializes variables <i>first</i> and
+<i>last</i> (or whatever you want to call them) of type <tt>long</tt> 
+that represent the
+subinterval &#91;<i>first</i>..<i>last</i>) to be processed by one thread.
+
+
+
+<p>
+Note that the current thread participates as one of the <i>nt</i> available
+threads, and that the current thread will wait for all participating threads
+to finish their task before proceeding.
+
+<p>
+Withing the "body" of this construct, you can freely reference any variables
+that are visible at this point.  This is implemented using the C++ lambda
+feature (capturing all variables by reference).
+
+<p>
+This construct will still work even if threads are disabled, in which case
+it runs single-threaded with <i>first=0</i> and <i>last=n</i>.
+
+<p>
+Note that the code within the <tt>EXEC_RANGE</tt>
+ body could call other routines that
+themselves attempt to execute an  <tt>EXEC_RANGE</tt>: 
+if this happens, the latter
+<tt>EXEC_RANGE</tt> will detect this and run single-threaded.
+
+<p>
+You may wish to do other things within the <tt>EXEC_RANGE</tt>
+ body than just execute
+a loop.  One thing you may want to do is to declare variables.  Another
+thing you may want to do is setup a local context 
+for a <tt>ZZ_p</tt> modulus (or
+other type of modulus).  
+Here is an example of doing this:
+
+
+<!-- STARTPLAIN
+   void mul(ZZ_p *x, const ZZ_p *a, const ZZ_p *b, long n) 
+   {
+      ZZ_pContext context;
+      context.save();
+
+      NTL_EXEC_RANGE(n, first, last) 
+       
+         context.restore();
+
+         for (long i = first; i < last; i++)
+            mul(x[i], a[i], b[i]);
+
+      NTL_EXEC_RANGE_END
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; <font color="#008b00"><b>void</b></font>&nbsp;mul(ZZ_p *x, <font color="#008b00"><b>const</b></font>&nbsp;ZZ_p *a, <font color="#008b00"><b>const</b></font>&nbsp;ZZ_p *b, <font color="#008b00"><b>long</b></font>&nbsp;n) <br>
+&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZ_pContext context;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;context.save();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NTL_EXEC_RANGE(n, first, last) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; context.restore();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = first; i &lt; last; i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(x[i], a[i], b[i]);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NTL_EXEC_RANGE_END<br>
+&nbsp;&nbsp; }<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+
+<p>
+A lower-level set of tools is available, which allow for 
+more fine-grained control.
+See <a href="BasicThreadPool.cpp.html">BasicThreadPool.txt</a>
+for more details.
+
+<center>
+<a href="tour-ex6.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+ <img src="arrow3.gif" alt="[Next]" align=bottom>
+</center>
+
+</body>
+</html>

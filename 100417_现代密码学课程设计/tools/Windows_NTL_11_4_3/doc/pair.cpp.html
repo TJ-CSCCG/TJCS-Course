@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/pair.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: pair</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Pair templates.</span>
+
+<span class="Comment">The decalaration </span>
+
+<span class="Comment">   Pair&lt;S,T&gt; p;</span>
+
+<span class="Comment">creates a pair object using the default constructors for S and T.  The</span>
+<span class="Comment">member p.a is the first component (of type S) and the member p.b is</span>
+<span class="Comment">the second component (of type T).</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/tools.h&gt;</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+<span class="Type">class</span> Pair {
+<span class="Statement">public</span>:
+   S a;
+   T b;
+
+   Pair();
+   <span class="Comment">// default constructor...invokes default constructors for S and T</span>
+
+   Pair(<span class="Type">const</span> S&amp; x, <span class="Type">const</span> T&amp; y);  <span class="Comment">// initialize with (x, y)</span>
+
+   ~Pair();
+   <span class="Comment">// destructor...invokes destructors for S and T</span>
+
+   <span class="Comment">// defaut copy and move constructors and assignment </span>
+};
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+Pair&lt;S,T&gt; cons(<span class="Type">const</span> S&amp; x, <span class="Type">const</span> T&amp; y);
+<span class="Comment">// returns Pair&lt;S,T&gt;(x, y)</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Input/Output</span>
+
+<span class="Comment">The I/O format for a Pair is</span>
+
+<span class="Comment">   [a b]</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp;, Pair&lt;S,T&gt;&amp;);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp;, <span class="Type">const</span> Pair&lt;S,T&gt;&amp;);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Equality Testing</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> Pair&lt;S,T&gt;&amp; x, <span class="Type">const</span> Pair&lt;S,T&gt;&amp; y);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> S, <span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> Pair&lt;S,T&gt;&amp; x, <span class="Type">const</span> Pair&lt;S,T&gt;&amp; y);
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

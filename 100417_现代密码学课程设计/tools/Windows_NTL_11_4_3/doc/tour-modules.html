@@ -1,0 +1,747 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Summary of NTL's Main Modules  </title>
+</head>
+
+<center>
+<a href="tour-struct.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-unix.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Summary of NTL's Main Modules
+</p>
+</h1>
+
+<p> <hr> <p>
+
+<p>
+
+NTL consists of a number of software modules.
+Generally speaking, for each module <tt>foo</tt>, there is 
+<ul>
+<li>
+a header
+file <tt>&lt;NTL/foo.h&gt;</tt>, found in subdirectory <tt>include</tt>,
+<li>
+a documentation file <tt>foo.txt</tt>,
+found in subdirectory <tt>doc</tt>,
+and
+<li>
+a source file <tt>foo.cpp</tt>, found in subdirectory <tt>src</tt>.
+</ul>
+
+<p>
+Note that all of the header files for NTL modules include the header file
+<tt>&lt;NTL/tools.h&gt;</tt>, and by default, this header file includes
+the standard headers 
+<ul>
+<li>
+<tt>&lt;cstdlib&gt;</tt>,
+<li>
+<tt>&lt;cmath&gt;</tt>, and
+<li>
+<tt>&lt;iostream&gt</tt>.
+</ul>
+Moreover, 
+the standard library is wrapped in namespace <tt>std</tt>
+and NTL is wrapped in namespace <tt>NTL</tt>.
+
+
+
+<p>
+
+The documentation  file takes the form of a header file,
+but stripped of implementation
+details and declarations of some of the more esoteric 
+routines and data structures, and it contains more complete
+and usually clearer documentation than in the header file.
+Also, note that the documentation files do not explicitly
+mention anything about namespaces <tt>std</tt> and <tt>NTL</tt>.
+
+
+<p>
+
+There is a plethora of conversion routines.
+These are not documented in any of the individual
+documentation files, but rather,
+they are all briefly summarized in
+<a href="conversions.txt"><tt>conversions.txt</tt></a>.
+
+<p>
+
+The following is a summary of the main NTL modules.
+The corresponding documentation file can be obtained by clicking on
+the module name.  Note that the links below will take you to
+a "pretty printed" version of the correspinding .txt file.
+
+<p>
+
+<table >
+
+
+
+<!-- ----------- BasicThreadPool.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="BasicThreadPool.cpp.html"><tt>BasicThreadPool</tt></a>
+
+</b> <td>
+
+class <tt>BasicThreadPool</tt>: a simple thread pool; 
+plus additional <i>thread boosting</i> features
+
+
+
+<!-- ----------- GF2.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2.cpp.html"><tt>GF2</tt></a>
+
+</b> <td>
+
+class <tt>GF2</tt>: integers mod 2
+
+
+<!-- ----------- GF2X.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2X.cpp.html"><tt>GF2X</tt></a>
+
+</b> <td>
+
+class <tt>GF2X</tt>: polynomials over <tt>GF(2)</tt> (much more efficient
+than using <tt>zz_pX</tt> with <tt>p=2</tt>);
+includes routines for GCDs and minimal polynomials
+
+
+<!-- ----------- GF2XFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2XFactoring.cpp.html"><tt>GF2XFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>GF(2)</tt>;
+also includes routines for testing for and constructing
+irreducible polynomials
+
+
+<!-- ----------- GF2XVec.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2XVec.cpp.html"><tt>GF2XVec</tt></a>
+
+</b> <td>
+class <tt>GF2XVec</tt>: fixed-length vectors of fixed-length <tt>GF2X</tt>s;
+less flexible, but more efficient than <tt>vec_GF2X</tt>
+
+
+
+
+<!-- ----------- GF2E.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2E.cpp.html"><tt>GF2E</tt></a>
+
+</b> <td>
+class <tt>GF2E</tt>: polynomial extension field/ring over <tt>GF(2)</tt>,
+implemented as GF(2)[X]/(P).
+
+
+<!-- ----------- GF2EX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2EX.cpp.html"><tt>GF2EX</tt></a>
+
+</b> <td>
+class <tt>GF2EX</tt>
+class <tt>GF2EX</tt>: polynomials over <tt>GF2E</tt>;
+includes routines for modular polynomials arithmetic,
+modular composition, minimal and characteristic
+polynomials, and interpolation.
+
+
+
+<!-- ----------- GF2EXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="GF2EXFactoring.cpp.html"><tt>GF2EXFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>GF2E</tt>;
+also includes routines for testing for and constructing
+irreducible polynomials
+
+
+<!-- ----------- HNF.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="HNF.cpp.html"><tt>HNF</tt></a>
+
+</b> <td>
+routines for computing the Hermite Normal Form
+of a lattice
+
+<!-- ----------- Lazy.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="Lazy.cpp.html"><tt>Lazy</tt></a>
+
+</b> <td>
+Support for thread-safe lazy initialization of objects
+
+<!-- ----------- LazyTable.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="LazyTable.cpp.html"><tt>LazyTable</tt></a>
+
+</b> <td>
+Support for thread-safe lazy initialization of tables
+
+<!-- ----------- LLL.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="LLL.cpp.html"><tt>LLL</tt></a>
+
+</b> <td>
+routines for performing lattice basis reduction,
+including very fast and robust implementations of the Schnorr-Euchner LLL
+and Block Korkin Zolotarev reduction algorithm,
+as well as an integer-only reduction algorithm.
+Also, there are routines here for computing the kernel
+and image of an integer matrix, as well as finding integer
+solutions to linear systems of equations over the integers.
+
+
+
+<!-- ----------- RR.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="RR.cpp.html"><tt>RR</tt></a>
+
+</b> <td>
+class <tt>RR</tt>: arbitrary-precision floating point numbers.
+
+
+<!-- ----------- SmartPtr.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="SmartPtr.cpp.html"><tt>SmartPtr</tt></a>
+
+</b> <td>
+template classes <tt>SmartPtr</tt>, <tt>UniquePtr</tt>,
+and a few other useful classes for managing pointers.
+
+
+
+<!-- ----------- ZZ.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ.cpp.html"><tt>ZZ</tt></a>
+
+</b> <td>
+class <tt>ZZ</tt>: arbitrary length integers;
+includes routines for GCDs, Jacobi symbols,
+modular arithmetic, and primality testing;
+also includes small prime generation routines
+and in-line routines for single-precision
+modular arithmetic
+
+
+<!-- ----------- ZZ_limbs.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_limbs.cpp.html"><tt>ZZ_limbs</tt></a>
+
+</b> <td>
+Low-level routines for accessing the "limbs"
+of a <tt>ZZ</tt>.
+
+
+<!-- ----------- ZZVec.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZVec.cpp.html"><tt>ZZVec</tt></a>
+
+</b> <td>
+class <tt>ZZVec</tt>: fixed-length vectors of fixed-length <tt>ZZ</tt>s;
+less flexible, but more efficient than <tt>vec_ZZ</tt>
+
+
+
+<!-- ----------- ZZX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZX.cpp.html"><tt>ZZX</tt></a>
+
+</b> <td>
+class <tt>ZZX</tt>: polynomials over <tt>ZZ</tt>;
+includes routines for GCDs, minimal and characteristic
+polynomials, norms and traces
+
+
+
+<!-- ----------- ZZXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZXFactoring.cpp.html"><tt>ZZXFactoring</tt></a>
+
+</b> <td>
+routines for factoring univariate polynomials over <tt>ZZ</tt>
+
+
+
+<!-- ----------- ZZ_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_p.cpp.html"><tt>ZZ_p</tt></a>
+
+</b> <td>
+class <tt>ZZ_p</tt>: integers mod <tt>p</tt>
+
+<!-- ----------- ZZ_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_pE.cpp.html"><tt>ZZ_pE</tt></a>
+
+</b> <td>
+class <tt>ZZ_pE</tt>: ring/field extension of <tt>ZZ_p</tt>
+
+
+
+<!-- ----------- ZZ_pEX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_pEX.cpp.html"><tt>ZZ_pEX</tt></a>
+
+</b> <td>
+class <tt>ZZ_pEX</tt>: polynomials over <tt>ZZ_pE</tt>;
+includes routines for modular polynomials arithmetic,
+modular composition, minimal and characteristic
+polynomials, and interpolation.
+
+<!-- ----------- ZZ_pEXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_pEXFactoring.cpp.html"><tt>ZZ_pEXFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>ZZ_pE</tt>;
+also includes routines for testing for and constructing
+irreducible polynomials
+
+
+
+<!-- ----------- ZZ_pX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_pX.cpp.html"><tt>ZZ_pX</tt></a>
+
+</b> <td>
+class <tt>ZZ_pX</tt>: polynomials over <tt>ZZ_p</tt>;
+includes routines for modular polynomials arithmetic,
+modular composition, minimal and characteristic
+polynomials, and interpolation.
+
+
+
+<!-- ----------- ZZ_pXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="ZZ_pXFactoring.cpp.html"><tt>ZZ_pXFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>ZZ_p</tt>;
+also includes routines for testing for and constructing
+irreducible polynomials
+
+
+
+<!-- ----------- lzz_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_p.cpp.html"><tt>lzz_p</tt></a>
+
+</b> <td>
+class <tt>zz_p</tt>: 
+integers mod <tt>p</tt>, where <tt>p</tt> is single-precision
+
+
+<!-- ----------- lzz_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_pE.cpp.html"><tt>lzz_pE</tt></a>
+
+</b> <td>
+class <tt>zz_pE</tt>: 
+ring/field extension of zz_p
+
+
+<!-- ----------- lzz_pEX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_pEX.cpp.html"><tt>lzz_pEX</tt></a>
+
+</b> <td>
+class <tt>zz_pEX</tt>: polynomials over <tt>zz_pE</tt>;
+provides the same functionality as class <tt>ZZ_pEX</tt>,
+but for single-precision <tt>p</tt>
+
+<!-- ----------- lzz_pEXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_pEXFactoring.cpp.html"><tt>lzz_pEXFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>zz_pE</tt>;
+provides the same functionality as class <tt>ZZ_pEX</tt>,
+but for single-precision <tt>p</tt>
+
+
+<!-- ----------- lzz_pX.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_pX.cpp.html"><tt>lzz_pX</tt></a>
+
+</b> <td>
+class <tt>zz_pX</tt>: polynomials over <tt>zz_p</tt>;
+provides the same functionality as class <tt>ZZ_pX</tt>,
+but for single-precision <tt>p</tt>
+
+
+<!-- ----------- lzz_pXFactoring.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="lzz_pXFactoring.cpp.html"><tt>lzz_pXFactoring</tt></a>
+
+</b> <td>
+routines for factoring polynomials over <tt>zz_p</tt>;
+provides the same functionality as class <tt>ZZ_pX</tt>,
+but for single-precision <tt>p</tt>
+
+
+<!-- ----------- matrix.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="matrix.cpp.html"><tt>matrix</tt></a>
+
+</b> <td>
+template class for
+dynamic-size 2-dimensional arrays
+
+<!-- ----------- mat_GF2.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_GF2.cpp.html"><tt>mat_GF2</tt></a>
+
+</b> <td>
+class <tt>mat_GF2</tt>: matrices over <tt>GF(2)</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+
+<!-- ----------- mat_GF2E.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_GF2E.cpp.html"><tt>mat_GF2E</tt></a>
+
+</b> <td>
+class <tt>mat_GF2E</tt>: matrices over <tt>GF2E</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+
+
+<!-- ----------- mat_RR.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_RR.cpp.html"><tt>mat_RR</tt></a>
+
+</b> <td>
+class <tt>mat_RR</tt>: matrices over <tt>RR</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+and solving nonsingular systems of linear equations.
+
+
+
+<!-- ----------- mat_ZZ.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_ZZ.cpp.html"><tt>mat_ZZ</tt></a>
+
+</b> <td>
+class <tt>mat_ZZ</tt>: matrices over <tt>ZZ</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+and solving nonsingular systems of linear equations.
+See also the LLL module for additional routines.
+
+
+
+<!-- ----------- mat_ZZ_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_ZZ_p.cpp.html"><tt>mat_ZZ_p</tt></a>
+
+</b> <td>
+class <tt>mat_ZZ_p</tt>: matrices over <tt>ZZ_p</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+
+<!-- ----------- mat_ZZ_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_ZZ_pE.cpp.html"><tt>mat_ZZ_pE</tt></a>
+
+</b> <td>
+class <tt>mat_ZZ_pE</tt>: matrices over <tt>ZZ_pE</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+
+
+
+<!-- ----------- mat_lzz_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_lzz_p.cpp.html"><tt>mat_lzz_p</tt></a>
+
+</b> <td>
+class <tt>mat_zz_p</tt>: matrices over <tt>zz_p</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+<!-- ----------- mat_lzz_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_lzz_pE.cpp.html"><tt>mat_lzz_pE</tt></a>
+
+</b> <td>
+class <tt>mat_zz_pE</tt>: matrices over <tt>zz_pE</tt>;
+includes basic matrix arithmetic operations,
+including determinant calculation, matrix inversion,
+solving nonsingular systems of linear equations,
+and Gaussian elimination
+
+
+
+<!-- ----------- mat_poly_ZZ.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_poly_ZZ.cpp.html"><tt>mat_poly_ZZ</tt></a>
+
+</b> <td>
+routine for computing the characteristic
+polynomial of a <tt>mat_ZZ</tt>
+
+
+
+<!-- ----------- mat_poly_ZZ_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_poly_ZZ_p.cpp.html"><tt>mat_poly_ZZ_p</tt></a>
+
+</b> <td>
+routine for computing the characteristic
+polynomial of a <tt>mat_ZZ_p</tt>
+
+
+
+<!-- ----------- mat_poly_lzz_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="mat_poly_lzz_p.cpp.html"><tt>mat_poly_lzz_p</tt></a>
+
+</b> <td>
+routine for computing the characteristic
+polynomial of a <tt>mat_zz_p</tt>
+
+
+
+
+
+<!-- ----------- pair.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="pair.cpp.html"><tt>pair</tt></a>
+
+</b> <td>
+template class for 
+pairs
+
+
+
+<!-- ----------- quad_float.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="quad_float.cpp.html"><tt>quad_float</tt></a>
+
+</b> <td>
+class <tt>quad_float</tt>: quadruple-precision floating point numbers.
+
+
+
+<!-- ----------- tools.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="tools.cpp.html"><tt>tools</tt></a>
+
+</b> <td>
+some basic types and utility routines, including the
+timing function <tt>GetTime()</tt>, and several overloaded
+versions of <tt>min()</tt> and <tt>max()</tt>
+
+
+<!-- ----------- vector.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vector.cpp.html"><tt>vector</tt></a>
+
+</b> <td>
+template class for 
+dynamic-size vectors
+
+<!-- ----------- vec_GF2.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_GF2.cpp.html"><tt>vec_GF2</tt></a>
+
+</b> <td>
+class <tt>vec_GF2</tt>: vectors over <tt>GF(2)</tt>, with arithmetic
+
+<!-- ----------- vec_GF2E.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_GF2E.cpp.html"><tt>vec_GF2E</tt></a>
+
+</b> <td>
+class <tt>vec_GF2E</tt>: vectors over <tt>GF2E</tt>, with arithmetic
+
+
+<!-- ----------- vec_RR.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_RR.cpp.html"><tt>vec_RR</tt></a>
+
+</b> <td>
+class <tt>vec_RR</tt>: vectors over <tt>RR</tt>, with arithmetic
+
+
+
+<!-- ----------- vec_ZZ.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_ZZ.cpp.html"><tt>vec_ZZ</tt></a>
+
+</b> <td>
+class <tt>vec_ZZ</tt>: vectors over <tt>ZZ</tt>, with arithmetic
+
+
+
+<!-- ----------- vec_ZZ_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_ZZ_p.cpp.html"><tt>vec_ZZ_p</tt></a>
+
+</b> <td>
+class <tt>vec_ZZ_p</tt>: vectors over <tt>ZZ_p</tt>, with arithmetic
+
+<!-- ----------- vec_ZZ_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_ZZ_pE.cpp.html"><tt>vec_ZZ_pE</tt></a>
+
+</b> <td>
+class <tt>vec_ZZ_pE</tt>: vectors over <tt>ZZ_pE</tt>, with arithmetic
+
+
+
+<!-- ----------- vec_lzz_p.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_lzz_p.cpp.html"><tt>vec_lzz_p</tt></a>
+
+</b> <td>
+class <tt>vec_zz_p</tt>: vectors over <tt>zz_p</tt>, with arithmetic
+
+
+<!-- ----------- vec_lzz_pE.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="vec_lzz_pE.cpp.html"><tt>vec_lzz_pE</tt></a>
+
+</b> <td>
+class <tt>vec_zz_pE</tt>: vectors over <tt>zz_pE</tt>, with arithmetic
+
+
+<!-- ----------- version.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="version.cpp.html"><tt>version</tt></a>
+
+</b> <td>
+macros defining the NTL version number
+
+
+
+<!-- ----------- xdouble.txt ----------- -->
+<p><tr valign=top> <td> <b>
+<a href="xdouble.cpp.html"><tt>xdouble</tt></a>
+
+</b> <td>
+class <tt>xdouble</tt>: double-precision floating point numbers with
+extended exponent range.
+
+</table>
+
+<p>
+
+<h3>
+Some other types
+</h3>
+
+
+<p>
+In addition to the above, other generic vectors are declared,
+not explicitly documented elsewhere:
+<p>
+
+<ul>
+<li> <tt>vec_GF2XVec</tt>
+<li> <tt>vec_ZZVec</tt>
+<li> <tt>vec_double</tt>
+<li> <tt>vec_long</tt>
+<li> <tt>vec_quad_float</tt>
+<li> <tt>vec_ulong</tt>
+<li> <tt>vec_vec_GF2</tt>
+<li> <tt>vec_vec_GF2E</tt>
+<li> <tt>vec_vec_RR</tt>
+<li> <tt>vec_vec_ZZ</tt>
+<li> <tt>vec_vec_ZZ_p</tt>
+<li> <tt>vec_vec_ZZ_pE</tt>
+<li> <tt>vec_vec_long</tt>
+<li> <tt>vec_vec_lzz_p</tt>
+<li> <tt>vec_vec_lzz_pE</tt>
+<li> <tt>vec_vec_ulong</tt>
+<li> <tt>vec_xdouble</tt>
+</ul>
+
+<p>
+
+These decalarations are found in "<tt>.h</tt>" files with
+corresponding names.
+These header files simply provide typedefs for the
+corresponding template types, mainly for
+backward compatibility,
+e.g.,
+<tt>vec_double</tt> is a typedef for
+<tt>Vec&lt;double&gt;</tt>,
+and <tt>vec_vec_RR</tt> is a typedef for
+<tt>Vec&lt; Vec&lt;RR&gt; &gt;</tt>.
+No additional functionality is provided.
+
+<p>
+All of the header files for polynomial classes <tt>ZZ_pX</tt>,
+<tt>ZZX</tt>, etc., declare typedefs for the corresponding
+vectors of polynomials <tt>vec_ZZ_pX</tt>,
+<tt>vec_ZZX</tt>, etc.
+
+<p>
+There are also a number of generic pair classes defined,
+not explicitly documented elsewhere:
+
+<p>
+
+<ul>
+<li> <tt>pair_GF2EX_long</tt>
+<li> <tt>pair_GF2X_long</tt>
+<li> <tt>pair_ZZX_long</tt>
+<li> <tt>pair_ZZ_pEX_long</tt>
+<li> <tt>pair_ZZ_pX_long</tt>
+<li> <tt>pair_lzz_pEX_long</tt>
+<li> <tt>pair_lzz_pX_long</tt>
+</ul>
+
+<p>
+
+These decalarations are found in "<tt>.h</tt>" files with
+corresponding names.
+Again, these files mainly exist for backward compatibilty,
+and provide typedefs for the corresponding template types, 
+e.g., <tt>pair_GF2EX_long</tt> is a typedef for
+<tt>Pair&lt;GF2EX,long&gt;</tt>.
+These files also give typedefs for the corresponding vector types,
+e.g.,
+<tt>vec_pair_GF2EX_long</tt> is a typedef for
+<tt>Vec&lt; Pair&lt;GF2EX,long&gt; &gt;</tt>.
+No additional functionality is provided.
+
+
+<p>
+
+<center>
+<a href="tour-struct.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-unix.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+</body>
+</html>

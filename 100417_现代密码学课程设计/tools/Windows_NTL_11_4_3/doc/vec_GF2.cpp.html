@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/vec_GF2.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: vec_GF2</span>
+
+<span class="Comment">SUMMARY:</span>
+
+
+<span class="Comment">The class Vec&lt;GF2&gt; is explicitly specialized.  It behaves much like a generic</span>
+<span class="Comment">Vec&lt;T&gt; (see vector.txt), but there are some differences.</span>
+
+<span class="Comment">For efficiency, elements of a Vec&lt;GF2&gt; are &quot;packed&quot; into a word.  You can still</span>
+<span class="Comment">use subscript notation v[i] or v(i).  For const vectors, these evaluate to</span>
+<span class="Comment">values of type const GF2.  For non-const vectors, these evaluate to values of</span>
+<span class="Comment">the special type ref_GF2, which is defined in the GF2 header file.</span>
+
+<span class="Comment">There are implicit conversions from ref_GF2 to const GF2 and from GF2&amp; to</span>
+<span class="Comment">ref_GF2.  Therefore, if you want to declare a function that takes a non-const</span>
+<span class="Comment">reference to a GF2, you should declare the parameter of type ref_GF2: this will</span>
+<span class="Comment">allow you to pass variables of type GF2 as well as elements of vec_GF2's</span>
+<span class="Comment">obtained through indexing.</span>
+
+<span class="Comment">As an alternative, one can use the get and put methods below to access</span>
+<span class="Comment">vector elements.</span>
+
+<span class="Comment">There is a subtle but important difference in the semantics of Vec&lt;GF2&gt; and</span>
+<span class="Comment">that of generic NTL vectors.  With a Vec&lt;GF2&gt;, whenever its length is increased</span>
+<span class="Comment">(via SetLength), the &quot;new&quot; bits are always 0.  For example, if </span>
+<span class="Comment">v.length() == 20, then </span>
+
+<span class="Comment">   v.SetLength(10); v.setLength(20);</span>
+
+<span class="Comment">will effectively clear bits 10..19 of v.  This is quite different from the</span>
+<span class="Comment">semantics of generic NTL vectors, where the above sequence would not change the</span>
+<span class="Comment">value of v at all.  One has to be aware of this difference, but it will not</span>
+<span class="Comment">matter in most ordinary circumstances.</span>
+
+
+<span class="Comment">Another thing to be aware of is the use of Vec&lt;GF2&gt; in range-based</span>
+<span class="Comment">for loops.  The safest ways to do this are as follows:</span>
+
+<span class="Comment">   for (auto&amp;&amp; item : vec) { ... } // for read-only or read/write access</span>
+
+<span class="Comment">or</span>
+
+<span class="Comment">   for (GF2 item : vec) { ... } // for access via a copy</span>
+
+<span class="Comment">Note that:</span>
+<span class="Comment">   * declaring item as &quot;auto&amp;&quot; or &quot;GF2&amp;&quot; will yield a syntax error</span>
+<span class="Comment">   * declaring item as &quot;auto&quot; or &quot;const auto&amp;&quot; will potentially</span>
+<span class="Comment">     allow code to modify vec via item, without a warning or error,</span>
+<span class="Comment">     contrary to expectations (although this cannot happen if vec</span>
+<span class="Comment">     itself is const)</span>
+
+<span class="Comment">However, declaring item as &quot;auto&amp;&amp;&quot; will work as expected, and the compiler</span>
+<span class="Comment">will raise an error if you try to modify a const Vec&lt;GF2&gt;.  </span>
+
+<span class="Comment">All of these issues arise because ref_GF2 is not a true reference, and the</span>
+<span class="Comment">semantics of &quot;auto&quot; and &quot;auto&amp;&quot; interact badly.  Similar issues arise with</span>
+<span class="Comment">vector&lt;bool&gt; in the STL.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Type">template</span>&lt;&gt;
+<span class="Type">class</span> Vec&lt;GF2&gt; {
+
+<span class="Statement">public</span>:
+
+   Vec(); <span class="Comment">// 0 length vector</span>
+   Vec(INIT_SIZE_TYPE, <span class="Type">long</span> n); <span class="Comment">// initialize to length n</span>
+                                <span class="Comment">// usage: Vec(INIT_SIZE, n)</span>
+
+   Vec(<span class="Type">const</span> Vec&lt;GF2&gt;&amp; a); <span class="Comment">// copy constructor</span>
+   Vec&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> Vec&lt;GF2&gt;&amp; a); <span class="Comment">// assignment</span>
+
+   Vec(Vec&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+   <span class="Comment">// will revert to copy constructor if a is fixed</span>
+
+<span class="PreProc">#ifndef NTL_DISABLE_MOVE_ASSIGN</span>
+   Vec&amp; <span class="Statement">operator</span>=(Vec&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+   <span class="Comment">// will revert to copy assignment if *this or a is fixed</span>
+<span class="PreProc">#endif</span>
+
+   ~Vec(); <span class="Comment">// destructor</span>
+
+
+
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n); <span class="Comment">// set length to n bits</span>
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n, GF2 a);
+      <span class="Comment">// set length to n, if length increases, initialize new bits to a</span>
+
+   <span class="Type">void</span> SetMaxLength(<span class="Type">long</span> n); <span class="Comment">// allocate space for n bits</span>
+
+   <span class="Type">long</span> length() <span class="Type">const</span>; <span class="Comment">// current length, in bits</span>
+
+   <span class="Type">long</span> MaxLength() <span class="Type">const</span>; <span class="Comment">// maximum length, i.e., the maximum</span>
+                           <span class="Comment">// value passed to either SetLength or SetMaxLength</span>
+                           <span class="Comment">// since creation or last kill</span>
+
+   <span class="Type">long</span> allocated() <span class="Type">const</span>; <span class="Comment">// number of bits for which space is allocated;</span>
+                           <span class="Comment">// if n &lt;= v.allocated(), then v.SetLength(n)</span>
+                           <span class="Comment">// will not result in any memory re-allocation.</span>
+
+   <span class="Comment">// INVARIANT: </span>
+   <span class="Comment">//    length() &lt;= MaxLength() &lt;= allocated() &lt; 2^(NTL_BITS_PER_LONG-4)</span>
+
+
+   <span class="Type">void</span> FixLength(<span class="Type">long</span> n); <span class="Comment">// fix length to n bits</span>
+   <span class="Comment">// can only be applied after default initialization or kill</span>
+
+
+   <span class="Type">void</span> FixAtCurrentLength();
+   <span class="Comment">// fixes the length at the cuurent length and prohibits</span>
+   <span class="Comment">// all future length changes.  </span>
+
+   <span class="Comment">// It is required that length() == MaxLength() when called.</span>
+
+   <span class="Comment">// EXCEPTIONS: if length() != MaxLength() and error is raised;</span>
+   <span class="Comment">// Strong ES.</span>
+
+
+   <span class="Type">long</span> fixed() <span class="Type">const</span>; <span class="Comment">// test if length has been fixed</span>
+
+   <span class="Type">void</span> kill(); <span class="Comment">// free space and make length 0</span>
+
+   <span class="Type">const</span> GF2 get(<span class="Type">long</span> i) <span class="Type">const</span>; <span class="Comment">// fetch value at index i (indexing from 0)</span>
+
+   <span class="Type">void</span> put(<span class="Type">long</span> i, GF2 a); <span class="Comment">// write value a to index i (indexing from 0)</span>
+   <span class="Type">void</span> put(<span class="Type">long</span> i, <span class="Type">long</span> a);
+
+<span class="Comment">// Here are the subscripting operators, defined using the</span>
+<span class="Comment">// &quot;helper&quot; class ref_GF2</span>
+
+   ref_GF2 <span class="Statement">operator</span>[](<span class="Type">long</span> i);
+   ref_GF2 <span class="Statement">operator</span>()(<span class="Type">long</span> i);
+
+   <span class="Type">const</span> GF2 <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Type">const</span> GF2 <span class="Statement">operator</span>()(<span class="Type">long</span> i) <span class="Type">const</span>;
+
+
+   <span class="Type">void</span> swap(Vec&lt;GF2&gt;&amp; y);
+   <span class="Comment">// swap with y (fast: just swaps pointers)</span>
+
+   <span class="Type">void</span> move(Vec&lt;GF2&gt;&amp; y);
+   <span class="Comment">// move y to *this (fast: just moves pointers)</span>
+
+   <span class="Type">void</span> append(GF2 a);
+   <span class="Comment">// append a to end of vector</span>
+
+   <span class="Type">void</span> append(<span class="Type">const</span> Vec&lt;GF2&gt;&amp; w);
+   <span class="Comment">// append w to end of vector</span>
+
+
+<span class="Comment">// Some partial STL compatibility...also used</span>
+<span class="Comment">// to interface with the Matrix template class</span>
+
+   <span class="Type">typedef</span> GF2 value_type;
+   <span class="Type">typedef</span> ref_GF2 reference;
+   <span class="Type">typedef</span> <span class="Type">const</span> GF2 const_reference;
+   <span class="Type">typedef</span> <span class="Comment">/*</span><span class="Comment"> implementation defined type </span><span class="Comment">*/</span> iterator;
+   <span class="Type">typedef</span> <span class="Comment">/*</span><span class="Comment"> implementation defined type </span><span class="Comment">*/</span> const_iterator;
+
+   ref_GF2 at(<span class="Type">long</span> i);
+   <span class="Type">const</span> GF2 at(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing with range checking</span>
+
+
+   iterator begin();
+   const_iterator begin() <span class="Type">const</span>;
+   <span class="Comment">// pointer to beginning of vector</span>
+
+   iterator end();
+   const_iterator end() <span class="Type">const</span>;
+   <span class="Comment">// pointer to (one past) end of vector</span>
+
+   <span class="Comment">// NOTES: The iterator types act like pointers.  You can perform all the</span>
+   <span class="Comment">// usual arithmetic on them, as well as dereferencing and subscripting.</span>
+   <span class="Comment">// Dereferencing an iterator yields a ref_GF2.  Dereferencing a</span>
+   <span class="Comment">// const_iterator yields a const GF2.</span>
+
+
+};
+
+
+
+<span class="Type">void</span> swap(Vec&lt;GF2&gt;&amp; x, Vec&lt;GF2&gt;&amp; y);
+<span class="Comment">// swap x and y (fast pointer swap)</span>
+
+<span class="Type">void</span> append(Vec&lt;GF2&gt;&amp; v, GF2 a);
+<span class="Comment">// append a to v</span>
+
+<span class="Type">void</span> append(Vec&lt;GF2&gt;&amp; v, <span class="Type">const</span> Vec&lt;GF2&gt;&amp; a);
+<span class="Comment">// append a to v</span>
+
+<span class="Comment">// equality operators:</span>
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> Vec&lt;GF2&gt;&amp; a, <span class="Type">const</span> Vec&lt;GF2&gt;&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> Vec&lt;GF2&gt;&amp; a, <span class="Type">const</span> Vec&lt;GF2&gt;&amp; b);
+
+
+<span class="Comment">// I/O operators:</span>
+
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> Vec&lt;GF2&gt;&amp; a);
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, Vec&lt;GF2&gt;&amp; a);
+
+<span class="Comment">// The I/O format is [a_0 a_1 ... a_{n-1}], where each a_i is &quot;0&quot; or &quot;1&quot;.</span>
+<span class="Comment">// On input, the a_i may be arbitrary integers, which are reduced mod 2.</span>
+
+
+
+<span class="Type">typedef</span> Vec&lt;GF2&gt; vec_GF2;  <span class="Comment">// backward compatibility</span>
+
+<span class="Comment">// utility routines:</span>
+
+<span class="Type">void</span> clear(vec_GF2&amp; x); <span class="Comment">// clear all bits--length unchanged</span>
+<span class="Type">long</span> IsZero(<span class="Type">const</span> vec_GF2&amp; a); <span class="Comment">// test if all bits are zero</span>
+
+<span class="Type">void</span> shift(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> n);
+vec_GF2 shift(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a shifted n places, where n may be positive or negative.</span>
+<span class="Comment">// Generally, x[i] = a[i-n], so positive n shifts to a higher index.</span>
+<span class="Comment">// The length of x is set to the length of a, and bits </span>
+<span class="Comment">// are zero-filled or discarded as necessary.</span>
+
+<span class="Type">void</span> reverse(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a); <span class="Comment">// c = a reversed</span>
+vec_GF2 reverse(<span class="Type">const</span> vec_GF2&amp; a);
+
+<span class="Type">long</span> weight(<span class="Type">const</span> vec_GF2&amp; a); <span class="Comment">// return number of 1 bits in a</span>
+
+
+<span class="Comment">// arithmetic operations over GF(2):</span>
+
+<span class="Type">void</span> add(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+<span class="Type">void</span> sub(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+<span class="Type">void</span> negate(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a);
+
+<span class="Type">void</span> mul(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, GF2 b);
+<span class="Type">void</span> mul(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> b);
+
+<span class="Type">void</span> mul(vec_GF2&amp; x, GF2 a, <span class="Type">const</span> vec_GF2&amp; b);
+<span class="Type">void</span> mul(vec_GF2&amp; x, <span class="Type">long</span> a, <span class="Type">const</span> vec_GF2&amp; b);
+<span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> InnerProduct(ref_GF2 x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+<span class="Comment">// vectors may differ in length</span>
+
+<span class="Type">void</span> VectorCopy(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> n);
+vec_GF2 VectorCopy(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a copy of a of length exactly n.</span>
+<span class="Comment">// The input is truncated or padded with zeroes, as necessary.</span>
+
+<span class="Type">void</span> random(vec_GF2&amp; x, <span class="Type">long</span> n);  <span class="Comment">// x = random vector of length n</span>
+vec_GF2 random_vec_GF2(<span class="Type">long</span> n);
+
+
+
+<span class="Comment">// arithmetic operator notation:</span>
+
+vec_GF2 <span class="Statement">operator</span>+(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+vec_GF2 <span class="Statement">operator</span>-(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+vec_GF2 <span class="Statement">operator</span>-(<span class="Type">const</span> vec_GF2&amp; a);
+
+<span class="Comment">// scalar mul:</span>
+
+vec_GF2 <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2&amp; a, GF2 b);
+vec_GF2 <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> b);
+
+vec_GF2 <span class="Statement">operator</span>*(GF2 a, <span class="Type">const</span> vec_GF2&amp; b);
+vec_GF2 <span class="Statement">operator</span>*(<span class="Type">long</span> a, <span class="Type">const</span> vec_GF2&amp; b);
+
+<span class="Comment">// inner product: </span>
+
+<span class="Type">inline</span> GF2 <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> vec_GF2&amp; b);
+
+<span class="Comment">// assignment operator notation:</span>
+
+vec_GF2&amp; <span class="Statement">operator</span>+=(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a);
+vec_GF2&amp; <span class="Statement">operator</span>-=(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a);
+
+vec_GF2&amp; <span class="Statement">operator</span>*=(vec_GF2&amp; x, GF2 a);
+vec_GF2&amp; <span class="Statement">operator</span>*=(vec_GF2&amp; x, <span class="Type">long</span> a);
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

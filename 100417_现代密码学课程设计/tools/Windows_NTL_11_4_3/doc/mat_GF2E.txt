@@ -1,0 +1,173 @@
+
+/**************************************************************************\
+
+MODULE: mat_GF2E
+
+SUMMARY:
+
+Defines the class mat_GF2E.
+
+\**************************************************************************/
+
+
+#include <NTL/matrix.h>
+#include <NTL/vec_vec_GF2E.h>
+
+
+typedef Mat<GF2E> mat_GF2E; // backward compatibility
+
+
+void add(mat_GF2E& X, const mat_GF2E& A, const mat_GF2E& B); 
+// X = A + B
+
+void sub(mat_GF2E& X, const mat_GF2E& A, const mat_GF2E& B); 
+// X = A - B = A + B
+
+void negate(mat_GF2E& X, const mat_GF2E& A); 
+// X = - A  = A
+
+void mul(mat_GF2E& X, const mat_GF2E& A, const mat_GF2E& B); 
+// X = A * B
+
+void mul(vec_GF2E& x, const mat_GF2E& A, const vec_GF2E& b); 
+// x = A * b
+
+void mul(vec_GF2E& x, const vec_GF2E& a, const mat_GF2E& B); 
+// x = a * B
+
+void mul(mat_GF2E& X, const mat_GF2E& A, const GF2E& b);
+void mul(mat_GF2E& X, const mat_GF2E& A, GF2 b);
+void mul(mat_GF2E& X, const mat_GF2E& A, long b);
+// X = A * b
+
+void mul(mat_GF2E& X, const GF2E& a, const mat_GF2E& B);
+void mul(mat_GF2E& X, GF2 a, const mat_GF2E& B);
+void mul(mat_GF2E& X, long a, const mat_GF2E& B);
+// X = a * B
+
+
+
+void determinant(GF2E& d, const mat_GF2E& A);
+GF2E determinant(const mat_GF2E& a);
+// d = determinant(A)
+
+
+void transpose(mat_GF2E& X, const mat_GF2E& A);
+mat_GF2E transpose(const mat_GF2E& A);
+// X = transpose of A
+
+void solve(GF2E& d, vec_GF2E& x, const mat_GF2E& A, const vec_GF2E& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves x*A = b.
+
+void solve(GF2E& d, const mat_GF2E& A, vec_GF2E& x, const vec_GF2E& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves A*x = b (so x and b are treated as a column vectors).
+
+void inv(GF2E& d, mat_GF2E& X, const mat_GF2E& A);
+// A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
+// computes X = A^{-1}.
+
+void sqr(mat_GF2E& X, const mat_GF2E& A);
+mat_GF2E sqr(const mat_GF2E& A);
+// X = A*A   
+
+void inv(mat_GF2E& X, const mat_GF2E& A);
+mat_GF2E inv(const mat_GF2E& A);
+// X = A^{-1}; error is raised if A is  singular
+
+void power(mat_GF2E& X, const mat_GF2E& A, const ZZ& e);
+mat_GF2E power(const mat_GF2E& A, const ZZ& e);
+
+void power(mat_GF2E& X, const mat_GF2E& A, long e);
+mat_GF2E power(const mat_GF2E& A, long e);
+// X = A^e; e may be negative (in which case A must be nonsingular).
+
+
+void ident(mat_GF2E& X, long n);
+mat_GF2E ident_mat_GF2E(long n);
+// X = n x n identity matrix
+
+long IsIdent(const mat_GF2E& A, long n);
+// test if A is the n x n identity matrix
+
+void diag(mat_GF2E& X, long n, const GF2E& d);
+mat_GF2E diag(long n, const GF2E& d);
+// X = n x n diagonal matrix with d on diagonal
+
+long IsDiag(const mat_GF2E& A, long n, const GF2E& d);
+// test if X is an  n x n diagonal matrix with d on diagonal
+
+
+
+void random(mat_GF2E& x, long n, long m);  // x = random n x m matrix
+mat_GF2E random_mat_GF2E(long n, long m);
+
+
+
+long gauss(mat_GF2E& M);
+long gauss(mat_GF2E& M, long w);
+// Performs unitary row operations so as to bring M into row echelon
+// form.  If the optional argument w is supplied, stops when first w
+// columns are in echelon form.  The return value is the rank (or the
+// rank of the first w columns).
+
+void image(mat_GF2E& X, const mat_GF2E& A);
+// The rows of X are computed as basis of A's row space.  X is is row
+// echelon form
+
+void kernel(mat_GF2E& X, const mat_GF2E& A);
+// Computes a basis for the kernel of the map x -> x*A. where x is a
+// row vector.
+
+
+
+
+// miscellaneous:
+
+void clear(mat_GF2E& a);
+// x = 0 (dimension unchanged)
+
+long IsZero(const mat_GF2E& a);
+// test if a is the zero matrix (any dimension)
+
+
+// operator notation:
+
+mat_GF2E operator+(const mat_GF2E& a, const mat_GF2E& b);
+mat_GF2E operator-(const mat_GF2E& a, const mat_GF2E& b);
+mat_GF2E operator*(const mat_GF2E& a, const mat_GF2E& b);
+
+mat_GF2E operator-(const mat_GF2E& a);
+
+
+// matrix/scalar multiplication:
+
+mat_GF2E operator*(const mat_GF2E& a, const GF2E& b);
+mat_GF2E operator*(const mat_GF2E& a, GF2 b);
+mat_GF2E operator*(const mat_GF2E& a, long b);
+
+mat_GF2E operator*(const GF2E& a, const mat_GF2E& b);
+mat_GF2E operator*(GF2 a, const mat_GF2E& b);
+mat_GF2E operator*(long a, const mat_GF2E& b);
+
+// matrix/vector multiplication:
+
+vec_GF2E operator*(const mat_GF2E& a, const vec_GF2E& b);
+
+vec_GF2E operator*(const vec_GF2E& a, const mat_GF2E& b);
+
+
+// assignment operator notation:
+
+mat_GF2E& operator+=(mat_GF2E& x, const mat_GF2E& a);
+mat_GF2E& operator-=(mat_GF2E& x, const mat_GF2E& a);
+mat_GF2E& operator*=(mat_GF2E& x, const mat_GF2E& a);
+
+mat_GF2E& operator*=(mat_GF2E& x, const GF2E& a);
+mat_GF2E& operator*=(mat_GF2E& x, GF2 a);
+mat_GF2E& operator*=(mat_GF2E& x, long a);
+
+vec_GF2E& operator*=(vec_GF2E& x, const mat_GF2E& a);
+
+

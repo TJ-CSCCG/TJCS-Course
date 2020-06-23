@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/LazyTable.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">**************************************************************************</span>
+
+
+<span class="Comment">LazyTable&lt;T,MAX&gt;: template class for lazy initialization of objects whose</span>
+<span class="Comment">values do not change after initialization.  In a multi-threaded environment,</span>
+<span class="Comment">this makes use of &quot;double checked locking&quot; for an efficient, thread-safe</span>
+<span class="Comment">solution.</span>
+
+<span class="Comment">Usage:</span>
+
+<span class="Comment">   LazyTable&lt;T,MAX&gt; tab; // declaration of the lazy table, </span>
+<span class="Comment">                         // with max size == MAX</span>
+
+<span class="Comment">    ...</span>
+
+<span class="Comment">   do {</span>
+<span class="Comment">      LazyTable&lt;T,MAX&gt;::Builder builder(tab, n); // request length n</span>
+<span class="Comment">      long amt = builder.amt();</span>
+<span class="Comment">      if (!amt) break;      </span>
+
+<span class="Comment">      ... initialize elements i = n-amt..n-1 </span>
+<span class="Comment">          using builder.move(p), where p is a UnqiuePtr&lt;T&gt;</span>
+<span class="Comment">          note that each move application appends one element</span>
+<span class="Comment">                             </span>
+<span class="Comment">   } while(0);    // When this scope closes, </span>
+<span class="Comment">                  // the table is fully initialized to length n</span>
+
+
+<span class="Comment">   const T* val = table[i];  // read-only access to table elements 0..n-1</span>
+<span class="Comment">                             </span>
+
+<span class="Comment">It is important to follow this recipe carefully.  In particular,</span>
+<span class="Comment">the builder must be enclosed in a scope, as it's destructor</span>
+<span class="Comment">plays a crucial role in finalizing the initialization.</span>
+
+<span class="Comment">***************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">long</span> MAX&gt;
+<span class="Type">class</span> LazyTable {
+<span class="Statement">public</span>:
+   LazyTable();
+   ~LazyTable();
+
+   <span class="Type">const</span> T * <span class="Type">const</span>  <span class="Statement">operator</span>[] (<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// element access -- currently no range checking</span>
+
+
+   <span class="Type">long</span> length() <span class="Type">const</span>;
+   <span class="Comment">// current table length</span>
+
+   <span class="Type">class</span> Builder {
+      Builder(<span class="Type">const</span> LazyTable&amp;, <span class="Type">long</span> request);
+      <span class="Comment">// EXCEPTIONS: may throw an exception if request is out of range</span>
+      <span class="Comment">// or if alocation of table fails</span>
+
+     ~Builder()
+
+      <span class="Type">long</span> amt() <span class="Type">const</span>;
+
+      <span class="Type">void</span> move(UniquePtr&lt;T&gt;&amp; p);
+      <span class="Comment">// EXCEPTIONS: throws exception of move is not allowed.</span>
+      <span class="Comment">// Provides strong ES guarantee.</span>
+   };
+
+<span class="Statement">private</span>:
+   LazyTable(<span class="Type">const</span> LazyTable&amp;);             <span class="Comment">// disabled</span>
+   LazyTable&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> LazyTable&amp;);
+
+};
+
+
+
+<span class="Comment">// EXCEPTIONS: except where noted, no exceptions are thrown</span>
+
+<span class="Comment">// NOTE: For more on double-checked locking, see</span>
+<span class="Comment">// <a href="http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/">http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/</a></span>
+
+<span class="Comment">// NOTE: when compiled with the NTL_THREADS option, the LazyTable</span>
+<span class="Comment">// class may contain data members from the standard library</span>
+<span class="Comment">// that may not satisfy the requirements of the Vec class</span>
+<span class="Comment">// (i.e., relocatability).  One can wrap it in a pointer </span>
+<span class="Comment">// class (e.g., CopiedPtr) to deal with this.</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

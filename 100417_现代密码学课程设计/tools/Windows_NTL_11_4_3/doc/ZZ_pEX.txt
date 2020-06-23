@@ -1,0 +1,900 @@
+
+/**************************************************************************\
+
+MODULE: ZZ_pEX
+
+SUMMARY:
+
+The class ZZ_pEX represents polynomials over ZZ_pE,
+and so can be used, for example, for arithmentic in GF(p^n)[X].
+However, except where mathematically necessary (e.g., GCD computations),
+ZZ_pE need not be a field.
+
+\**************************************************************************/
+
+#include <NTL/ZZ_pE.h>
+#include <NTL/vec_ZZ_pE.h>
+
+class ZZ_pEX {
+public:
+
+   ZZ_pEX(); // initial value 0
+
+   ZZ_pEX(const ZZ_pEX& a); // copy
+
+   explicit ZZ_pEX(const ZZ_pE& a); // promotion
+   explicit ZZ_pEX(const ZZ_p& a); 
+   explicit ZZ_pEX(long a); 
+
+   ZZ_pEX& operator=(const ZZ_pEX& a); // assignment
+   ZZ_pEX& operator=(const ZZ_pE& a);
+   ZZ_pEX& operator=(const ZZ_p& a);
+   ZZ_pEX& operator=(long a);
+
+   ~ZZ_pEX(); // destructor
+
+   ZZ_pEX(ZZ_pEX&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   ZZ_pEX& operator=(ZZ_pEX&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+#endif
+
+   ZZ_pEX(INIT_MONO_TYPE, long i, const ZZ_pE& c); 
+   ZZ_pEX(INIT_MONO_TYPE, long i, const ZZ_p& c); 
+   ZZ_pEX(INIT_MONO_TYPE, long i, long c); 
+   // initialize to c*X^i, invoke as ZZ_pEX(INIT_MONO, i, c)
+
+   ZZ_pEX(INIT_MONO_TYPE, long i); 
+   // initialize to X^i, invoke as ZZ_pEX(INIT_MONO, i)
+
+   // typedefs to aid in generic programming
+   typedef ZZ_pE coeff_type;
+   typedef ZZ_pEXModulus modulus_type;
+
+   // ...
+
+};
+
+
+
+
+/**************************************************************************\
+
+                              Accessing coefficients
+
+The degree of a polynomial f is obtained as deg(f),
+where the zero polynomial, by definition, has degree -1.
+
+A polynomial f is represented as a coefficient vector.
+Coefficients may be accesses in one of two ways.
+
+The safe, high-level method is to call the function
+coeff(f, i) to get the coefficient of X^i in the polynomial f,
+and to call the function SetCoeff(f, i, a) to set the coefficient
+of X^i in f to the scalar a.
+
+One can also access the coefficients more directly via a lower level 
+interface.  The coefficient of X^i in f may be accessed using 
+subscript notation f[i].  In addition, one may write f.SetLength(n)
+to set the length of the underlying coefficient vector to n,
+and f.SetMaxLength(n) to allocate space for n coefficients,
+without changing the coefficient vector itself.
+
+After setting coefficients using this low-level interface,
+one must ensure that leading zeros in the coefficient vector
+are stripped afterwards by calling the function f.normalize().
+
+NOTE: the coefficient vector of f may also be accessed directly
+as f.rep; however, this is not recommended. Also, for a properly
+normalized polynomial f, we have f.rep.length() == deg(f)+1,
+and deg(f) >= 0  =>  f.rep[deg(f)] != 0.
+
+\**************************************************************************/
+
+
+
+long deg(const ZZ_pEX& a);  // return deg(a); deg(0) == -1.
+
+const ZZ_pE& coeff(const ZZ_pEX& a, long i);
+// returns the coefficient of X^i, or zero if i not in range
+
+const ZZ_pE& LeadCoeff(const ZZ_pEX& a);
+// returns leading term of a, or zero if a == 0
+
+const ZZ_pE& ConstTerm(const ZZ_pEX& a);
+// returns constant term of a, or zero if a == 0
+
+void SetCoeff(ZZ_pEX& x, long i, const ZZ_pE& a);
+void SetCoeff(ZZ_pEX& x, long i, const ZZ_p& a);
+void SetCoeff(ZZ_pEX& x, long i, long a);
+// makes coefficient of X^i equal to a; error is raised if i < 0
+
+void SetCoeff(ZZ_pEX& x, long i);
+// makes coefficient of X^i equal to 1;  error is raised if i < 0
+
+void SetX(ZZ_pEX& x); // x is set to the monomial X
+
+long IsX(const ZZ_pEX& a); // test if x = X
+
+
+
+
+ZZ_pE& ZZ_pEX::operator[](long i); 
+const ZZ_pE& ZZ_pEX::operator[](long i) const;
+// indexing operators: f[i] is the coefficient of X^i ---
+// i should satsify i >= 0 and i <= deg(f).
+// No range checking (unless NTL_RANGE_CHECK is defined).
+
+void ZZ_pEX::SetLength(long n);
+// f.SetLength(n) sets the length of the inderlying coefficient
+// vector to n --- after this call, indexing f[i] for i = 0..n-1
+// is valid.
+
+void ZZ_pEX::normalize();  
+// f.normalize() strips leading zeros from coefficient vector of f
+
+void ZZ_pEX::SetMaxLength(long n);
+// f.SetMaxLength(n) pre-allocate spaces for n coefficients.  The
+// polynomial that f represents is unchanged.
+
+
+
+
+
+
+
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+
+long operator==(const ZZ_pEX& a, const ZZ_pEX& b);
+long operator!=(const ZZ_pEX& a, const ZZ_pEX& b);
+
+long IsZero(const ZZ_pEX& a); // test for 0
+long IsOne(const ZZ_pEX& a); // test for 1
+
+// PROMOTIONS: ==, != promote {long,ZZ_p,ZZ_pE} to ZZ_pEX on (a, b).
+
+/**************************************************************************\
+
+                                   Addition
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ_pEX operator+(const ZZ_pEX& a, const ZZ_pEX& b);
+ZZ_pEX operator-(const ZZ_pEX& a, const ZZ_pEX& b);
+ZZ_pEX operator-(const ZZ_pEX& a);
+
+ZZ_pEX& operator+=(ZZ_pEX& x, const ZZ_pEX& a);
+ZZ_pEX& operator+=(ZZ_pEX& x, const ZZ_pE& a);
+ZZ_pEX& operator+=(ZZ_pEX& x, const ZZ_p& a);
+ZZ_pEX& operator+=(ZZ_pEX& x, long a);
+
+
+ZZ_pEX& operator++(ZZ_pEX& x);  // prefix
+void operator++(ZZ_pEX& x, int);  // postfix
+
+ZZ_pEX& operator-=(ZZ_pEX& x, const ZZ_pEX& a);
+ZZ_pEX& operator-=(ZZ_pEX& x, const ZZ_pE& a);
+ZZ_pEX& operator-=(ZZ_pEX& x, const ZZ_p& a);
+ZZ_pEX& operator-=(ZZ_pEX& x, long a);
+
+ZZ_pEX& operator--(ZZ_pEX& x);  // prefix
+void operator--(ZZ_pEX& x, int);  // postfix
+
+// procedural versions:
+
+void add(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b); // x = a + b
+void sub(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b); // x = a - b 
+void negate(ZZ_pEX& x, const ZZ_pEX& a); // x = - a 
+
+// PROMOTIONS: +, -, add, sub promote {long,ZZ_p,ZZ_pE} to ZZ_pEX on (a, b).
+
+
+
+/**************************************************************************\
+
+                               Multiplication
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ_pEX operator*(const ZZ_pEX& a, const ZZ_pEX& b);
+
+ZZ_pEX& operator*=(ZZ_pEX& x, const ZZ_pEX& a);
+ZZ_pEX& operator*=(ZZ_pEX& x, const ZZ_pE& a);
+ZZ_pEX& operator*=(ZZ_pEX& x, const ZZ_p& a);
+ZZ_pEX& operator*=(ZZ_pEX& x, long a);
+
+
+// procedural versions:
+
+
+void mul(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b); // x = a * b
+
+void sqr(ZZ_pEX& x, const ZZ_pEX& a); // x = a^2
+ZZ_pEX sqr(const ZZ_pEX& a); 
+
+// PROMOTIONS: *, mul promote {long,ZZ_p,ZZ_pE} to ZZ_pEX on (a, b).
+
+void power(ZZ_pEX& x, const ZZ_pEX& a, long e);  // x = a^e (e >= 0)
+ZZ_pEX power(const ZZ_pEX& a, long e);
+
+
+/**************************************************************************\
+
+                               Shift Operations
+
+LeftShift by n means multiplication by X^n
+RightShift by n means division by X^n
+
+A negative shift amount reverses the direction of the shift.
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ_pEX operator<<(const ZZ_pEX& a, long n);
+ZZ_pEX operator>>(const ZZ_pEX& a, long n);
+
+ZZ_pEX& operator<<=(ZZ_pEX& x, long n);
+ZZ_pEX& operator>>=(ZZ_pEX& x, long n);
+
+// procedural versions:
+
+void LeftShift(ZZ_pEX& x, const ZZ_pEX& a, long n); 
+ZZ_pEX LeftShift(const ZZ_pEX& a, long n);
+
+void RightShift(ZZ_pEX& x, const ZZ_pEX& a, long n); 
+ZZ_pEX RightShift(const ZZ_pEX& a, long n); 
+
+
+
+/**************************************************************************\
+
+                                  Division
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ_pEX operator/(const ZZ_pEX& a, const ZZ_pEX& b);
+ZZ_pEX operator/(const ZZ_pEX& a, const ZZ_pE& b);
+ZZ_pEX operator/(const ZZ_pEX& a, const ZZ_p& b);
+ZZ_pEX operator/(const ZZ_pEX& a, long b);
+
+ZZ_pEX operator%(const ZZ_pEX& a, const ZZ_pEX& b);
+
+ZZ_pEX& operator/=(ZZ_pEX& x, const ZZ_pEX& a);
+ZZ_pEX& operator/=(ZZ_pEX& x, const ZZ_pE& a);
+ZZ_pEX& operator/=(ZZ_pEX& x, const ZZ_p& a);
+ZZ_pEX& operator/=(ZZ_pEX& x, long a);
+
+ZZ_pEX& operator%=(ZZ_pEX& x, const ZZ_pEX& a);
+
+// procedural versions:
+
+
+void DivRem(ZZ_pEX& q, ZZ_pEX& r, const ZZ_pEX& a, const ZZ_pEX& b);
+// q = a/b, r = a%b
+
+void div(ZZ_pEX& q, const ZZ_pEX& a, const ZZ_pEX& b);
+void div(ZZ_pEX& q, const ZZ_pEX& a, const ZZ_pE& b);
+void div(ZZ_pEX& q, const ZZ_pEX& a, const ZZ_p& b);
+void div(ZZ_pEX& q, const ZZ_pEX& a, long b);
+// q = a/b
+
+void rem(ZZ_pEX& r, const ZZ_pEX& a, const ZZ_pEX& b);
+// r = a%b
+
+long divide(ZZ_pEX& q, const ZZ_pEX& a, const ZZ_pEX& b);
+// if b | a, sets q = a/b and returns 1; otherwise returns 0
+
+long divide(const ZZ_pEX& a, const ZZ_pEX& b);
+// if b | a, sets q = a/b and returns 1; otherwise returns 0
+
+
+/**************************************************************************\
+
+                                   GCD's
+
+These routines are intended for use when ZZ_pE is a field.
+
+\**************************************************************************/
+
+
+void GCD(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b);
+ZZ_pEX GCD(const ZZ_pEX& a, const ZZ_pEX& b); 
+// x = GCD(a, b),  x is always monic (or zero if a==b==0).
+
+
+void XGCD(ZZ_pEX& d, ZZ_pEX& s, ZZ_pEX& t, const ZZ_pEX& a, const ZZ_pEX& b);
+// d = gcd(a,b), a s + b t = d 
+
+
+/**************************************************************************\
+
+                                  Input/Output
+
+I/O format:
+
+   [a_0 a_1 ... a_n],
+
+represents the polynomial a_0 + a_1*X + ... + a_n*X^n.
+
+On output, all coefficients will be polynomials of degree < ZZ_pE::degree() and
+a_n not zero (the zero polynomial is [ ]).  On input, the coefficients
+are arbitrary polynomials which are reduced modulo ZZ_pE::modulus(), 
+and leading zeros stripped.
+
+\**************************************************************************/
+
+istream& operator>>(istream& s, ZZ_pEX& x);
+ostream& operator<<(ostream& s, const ZZ_pEX& a);
+
+
+/**************************************************************************\
+
+                              Some utility routines
+
+\**************************************************************************/
+
+
+void diff(ZZ_pEX& x, const ZZ_pEX& a); // x = derivative of a
+ZZ_pEX diff(const ZZ_pEX& a); 
+
+void MakeMonic(ZZ_pEX& x); 
+// if x != 0 makes x into its monic associate; LeadCoeff(x) must be
+// invertible in this case
+
+void reverse(ZZ_pEX& x, const ZZ_pEX& a, long hi);
+ZZ_pEX reverse(const ZZ_pEX& a, long hi);
+
+void reverse(ZZ_pEX& x, const ZZ_pEX& a);
+ZZ_pEX reverse(const ZZ_pEX& a);
+
+// x = reverse of a[0]..a[hi] (hi >= -1);
+// hi defaults to deg(a) in second version
+
+void VectorCopy(vec_ZZ_pE& x, const ZZ_pEX& a, long n);
+vec_ZZ_pE VectorCopy(const ZZ_pEX& a, long n);
+// x = copy of coefficient vector of a of length exactly n.
+// input is truncated or padded with zeroes as appropriate.
+
+
+
+
+/**************************************************************************\
+
+                             Random Polynomials
+
+\**************************************************************************/
+
+void random(ZZ_pEX& x, long n);
+ZZ_pEX random_ZZ_pEX(long n);
+// x = random polynomial of degree < n 
+
+
+/**************************************************************************\
+
+                    Polynomial Evaluation and related problems
+
+\**************************************************************************/
+
+
+void BuildFromRoots(ZZ_pEX& x, const vec_ZZ_pE& a);
+ZZ_pEX BuildFromRoots(const vec_ZZ_pE& a);
+// computes the polynomial (X-a[0]) ... (X-a[n-1]), where n = a.length()
+
+void eval(ZZ_pE& b, const ZZ_pEX& f, const ZZ_pE& a);
+ZZ_pE eval(const ZZ_pEX& f, const ZZ_pE& a);
+// b = f(a)
+
+void eval(ZZ_pE& b, const ZZ_pX& f, const ZZ_pE& a);
+ZZ_pE eval(const ZZ_pEX& f, const ZZ_pE& a);
+// b = f(a); uses ModComp algorithm for ZZ_pX
+
+void eval(vec_ZZ_pE& b, const ZZ_pEX& f, const vec_ZZ_pE& a);
+vec_ZZ_pE eval(const ZZ_pEX& f, const vec_ZZ_pE& a);
+//  b.SetLength(a.length()); b[i] = f(a[i]) for 0 <= i < a.length()
+
+void interpolate(ZZ_pEX& f, const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+ZZ_pEX interpolate(const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+// interpolates the polynomial f satisfying f(a[i]) = b[i].  
+
+/**************************************************************************\
+
+                       Arithmetic mod X^n
+
+Required: n >= 0; otherwise, an error is raised.
+
+\**************************************************************************/
+
+void trunc(ZZ_pEX& x, const ZZ_pEX& a, long n); // x = a % X^n
+ZZ_pEX trunc(const ZZ_pEX& a, long n); 
+
+void MulTrunc(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b, long n);
+ZZ_pEX MulTrunc(const ZZ_pEX& a, const ZZ_pEX& b, long n);
+// x = a * b % X^n
+
+void SqrTrunc(ZZ_pEX& x, const ZZ_pEX& a, long n);
+ZZ_pEX SqrTrunc(const ZZ_pEX& a, long n);
+// x = a^2 % X^n
+
+void InvTrunc(ZZ_pEX& x, const ZZ_pEX& a, long n);
+ZZ_pEX InvTrunc(ZZ_pEX& x, const ZZ_pEX& a, long n);
+// computes x = a^{-1} % X^m.  Must have ConstTerm(a) invertible.
+
+/**************************************************************************\
+
+                Modular Arithmetic (without pre-conditioning)
+
+Arithmetic mod f.
+
+All inputs and outputs are polynomials of degree less than deg(f), and
+deg(f) > 0.
+
+
+NOTE: if you want to do many computations with a fixed f, use the
+ZZ_pEXModulus data structure and associated routines below for better
+performance.
+
+\**************************************************************************/
+
+void MulMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b, const ZZ_pEX& f);
+ZZ_pEX MulMod(const ZZ_pEX& a, const ZZ_pEX& b, const ZZ_pEX& f);
+// x = (a * b) % f
+
+void SqrMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& f);
+ZZ_pEX SqrMod(const ZZ_pEX& a, const ZZ_pEX& f);
+// x = a^2 % f
+
+void MulByXMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& f);
+ZZ_pEX MulByXMod(const ZZ_pEX& a, const ZZ_pEX& f);
+// x = (a * X) mod f
+
+void InvMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& f);
+ZZ_pEX InvMod(const ZZ_pEX& a, const ZZ_pEX& f);
+// x = a^{-1} % f, error is a is not invertible
+
+long InvModStatus(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& f);
+// if (a, f) = 1, returns 0 and sets x = a^{-1} % f; otherwise,
+// returns 1 and sets x = (a, f)
+
+
+/**************************************************************************\
+
+                     Modular Arithmetic with Pre-Conditioning
+
+If you need to do a lot of arithmetic modulo a fixed f, build
+ZZ_pEXModulus F for f.  This pre-computes information about f that
+speeds up subsequent computations.
+
+As an example, the following routine the product modulo f of a vector
+of polynomials.
+
+#include <NTL/ZZ_pEX.h>
+
+void product(ZZ_pEX& x, const vec_ZZ_pEX& v, const ZZ_pEX& f)
+{
+   ZZ_pEXModulus F(f);
+   ZZ_pEX res;
+   res = 1;
+   long i;
+   for (i = 0; i < v.length(); i++)
+      MulMod(res, res, v[i], F); 
+   x = res;
+}
+
+NOTE: A ZZ_pEX may be used wherever a ZZ_pEXModulus is required,
+and a ZZ_pEXModulus may be used wherever a ZZ_pEX is required.
+
+
+\**************************************************************************/
+
+class ZZ_pEXModulus {
+public:
+   ZZ_pEXModulus(); // initially in an unusable state
+
+   ZZ_pEXModulus(const ZZ_pEX& f); // initialize with f, deg(f) > 0
+
+   ZZ_pEXModulus(const ZZ_pEXModulus&); // copy
+
+   ZZ_pEXModulus& operator=(const ZZ_pEXModulus&); // assignment
+
+   ~ZZ_pEXModulus(); // destructor
+
+   operator const ZZ_pEX& () const; // implicit read-only access to f
+
+   const ZZ_pEX& val() const; // explicit read-only access to f
+};
+
+void build(ZZ_pEXModulus& F, const ZZ_pEX& f);
+// pre-computes information about f and stores it in F.  Must have
+// deg(f) > 0.  Note that the declaration ZZ_pEXModulus F(f) is
+// equivalent to ZZ_pEXModulus F; build(F, f).
+
+// In the following, f refers to the polynomial f supplied to the
+// build routine, and n = deg(f).
+
+
+long deg(const ZZ_pEXModulus& F);  // return n=deg(f)
+
+void MulMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEX& b, 
+            const ZZ_pEXModulus& F);
+ZZ_pEX MulMod(const ZZ_pEX& a, const ZZ_pEX& b, const ZZ_pEXModulus& F);
+// x = (a * b) % f; deg(a), deg(b) < n
+
+void SqrMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEXModulus& F);
+ZZ_pEX SqrMod(const ZZ_pEX& a, const ZZ_pEXModulus& F);
+// x = a^2 % f; deg(a) < n
+
+void PowerMod(ZZ_pEX& x, const ZZ_pEX& a, const ZZ& e, const ZZ_pEXModulus& F);
+ZZ_pEX PowerMod(const ZZ_pEX& a, const ZZ& e, const ZZ_pEXModulus& F);
+
+void PowerMod(ZZ_pEX& x, const ZZ_pEX& a, long e, const ZZ_pEXModulus& F);
+ZZ_pEX PowerMod(const ZZ_pEX& a, long e, const ZZ_pEXModulus& F);
+
+// x = a^e % f; e >= 0, deg(a) < n.  Uses a sliding window algorithm.
+// (e may be negative)
+
+void PowerXMod(ZZ_pEX& x, const ZZ& e, const ZZ_pEXModulus& F);
+ZZ_pEX PowerXMod(const ZZ& e, const ZZ_pEXModulus& F);
+
+void PowerXMod(ZZ_pEX& x, long e, const ZZ_pEXModulus& F);
+ZZ_pEX PowerXMod(long e, const ZZ_pEXModulus& F);
+
+// x = X^e % f (e may be negative)
+
+void rem(ZZ_pEX& x, const ZZ_pEX& a, const ZZ_pEXModulus& F);
+// x = a % f
+
+void DivRem(ZZ_pEX& q, ZZ_pEX& r, const ZZ_pEX& a, const ZZ_pEXModulus& F);
+// q = a/f, r = a%f
+
+void div(ZZ_pEX& q, const ZZ_pEX& a, const ZZ_pEXModulus& F);
+// q = a/f
+
+// operator notation:
+
+ZZ_pEX operator/(const ZZ_pEX& a, const ZZ_pEXModulus& F);
+ZZ_pEX operator%(const ZZ_pEX& a, const ZZ_pEXModulus& F);
+
+ZZ_pEX& operator/=(ZZ_pEX& x, const ZZ_pEXModulus& F);
+ZZ_pEX& operator%=(ZZ_pEX& x, const ZZ_pEXModulus& F);
+
+
+
+/**************************************************************************\
+
+                             vectors of ZZ_pEX's
+
+\**************************************************************************/
+
+
+typedef Vec<ZZ_pEX> vec_ZZ_pEX; // backward compatibility
+
+
+
+/**************************************************************************\
+
+                              Modular Composition
+
+Modular composition is the problem of computing g(h) mod f for
+polynomials f, g, and h.
+
+The algorithm employed is that of Brent & Kung (Fast algorithms for
+manipulating formal power series, JACM 25:581-595, 1978), which uses
+O(n^{1/2}) modular polynomial multiplications, and O(n^2) scalar
+operations.
+
+
+\**************************************************************************/
+
+void CompMod(ZZ_pEX& x, const ZZ_pEX& g, const ZZ_pEX& h, 
+             const ZZ_pEXModulus& F);
+ZZ_pEX CompMod(const ZZ_pEX& g, const ZZ_pEX& h, 
+                    const ZZ_pEXModulus& F);
+
+// x = g(h) mod f; deg(h) < n
+
+void Comp2Mod(ZZ_pEX& x1, ZZ_pEX& x2, const ZZ_pEX& g1, const ZZ_pEX& g2,
+              const ZZ_pEX& h, const ZZ_pEXModulus& F);
+// xi = gi(h) mod f (i=1,2); deg(h) < n.
+
+
+void Comp3Mod(ZZ_pEX& x1, ZZ_pEX& x2, ZZ_pEX& x3, 
+              const ZZ_pEX& g1, const ZZ_pEX& g2, const ZZ_pEX& g3,
+              const ZZ_pEX& h, const ZZ_pEXModulus& F);
+// xi = gi(h) mod f (i=1..3); deg(h) < n.
+
+
+
+/**************************************************************************\
+
+                     Composition with Pre-Conditioning
+
+If a single h is going to be used with many g's then you should build
+a ZZ_pEXArgument for h, and then use the compose routine below.  The
+routine build computes and stores h, h^2, ..., h^m mod f.  After this
+pre-computation, composing a polynomial of degree roughly n with h
+takes n/m multiplies mod f, plus n^2 scalar multiplies.  Thus,
+increasing m increases the space requirement and the pre-computation
+time, but reduces the composition time.
+
+\**************************************************************************/
+
+
+struct ZZ_pEXArgument {
+   vec_ZZ_pEX H;
+};
+
+void build(ZZ_pEXArgument& H, const ZZ_pEX& h, const ZZ_pEXModulus& F, long m);
+// Pre-Computes information about h.  m > 0, deg(h) < n.
+
+void CompMod(ZZ_pEX& x, const ZZ_pEX& g, const ZZ_pEXArgument& H, 
+             const ZZ_pEXModulus& F);
+
+ZZ_pEX CompMod(const ZZ_pEX& g, const ZZ_pEXArgument& H, 
+                    const ZZ_pEXModulus& F);
+
+extern thread_local long ZZ_pEXArgBound;
+
+// Initially 0.  If this is set to a value greater than zero, then
+// composition routines will allocate a table of no than about
+// ZZ_pEXArgBound KB.  Setting this value affects all compose routines
+// and the power projection and minimal polynomial routines below, 
+// and indirectly affects many routines in ZZ_pEXFactoring.
+
+/**************************************************************************\
+
+                     power projection routines
+
+\**************************************************************************/
+
+void project(ZZ_pE& x, const ZZ_pEVector& a, const ZZ_pEX& b);
+ZZ_pE project(const ZZ_pEVector& a, const ZZ_pEX& b);
+// x = inner product of a with coefficient vector of b
+
+
+void ProjectPowers(vec_ZZ_pE& x, const vec_ZZ_pE& a, long k,
+                   const ZZ_pEX& h, const ZZ_pEXModulus& F);
+
+vec_ZZ_pE ProjectPowers(const vec_ZZ_pE& a, long k,
+                   const ZZ_pEX& h, const ZZ_pEXModulus& F);
+
+// Computes the vector
+
+//    project(a, 1), project(a, h), ..., project(a, h^{k-1} % f).  
+
+// This operation is the "transpose" of the modular composition operation.
+
+void ProjectPowers(vec_ZZ_pE& x, const vec_ZZ_pE& a, long k,
+                   const ZZ_pEXArgument& H, const ZZ_pEXModulus& F);
+
+vec_ZZ_pE ProjectPowers(const vec_ZZ_pE& a, long k,
+                   const ZZ_pEXArgument& H, const ZZ_pEXModulus& F);
+
+// same as above, but uses a pre-computed ZZ_pEXArgument
+
+
+class ZZ_pEXTransMultiplier { /* ... */ };
+
+void build(ZZ_pEXTransMultiplier& B, const ZZ_pEX& b, const ZZ_pEXModulus& F);
+
+void UpdateMap(vec_ZZ_pE& x, const vec_ZZ_pE& a,
+               const ZZ_pEXMultiplier& B, const ZZ_pEXModulus& F);
+
+vec_ZZ_pE UpdateMap(const vec_ZZ_pE& a,
+               const ZZ_pEXMultiplier& B, const ZZ_pEXModulus& F);
+
+// Computes the vector
+
+//    project(a, b), project(a, (b*X)%f), ..., project(a, (b*X^{n-1})%f)
+
+// Required: a.length() <= deg(F), deg(b) < deg(F).
+// This is "transposed" MulMod by B.
+// Input may have "high order" zeroes stripped.
+// Output always has high order zeroes stripped.
+
+
+/**************************************************************************\
+
+                              Minimum Polynomials
+
+These routines should be used only when ZZ_pE is a field.
+
+All of these routines implement the algorithm from [Shoup, J. Symbolic
+Comp. 17:371-391, 1994] and [Shoup, J. Symbolic Comp. 20:363-397,
+1995], based on transposed modular composition and the
+Berlekamp/Massey algorithm.
+
+\**************************************************************************/
+
+
+void MinPolySeq(ZZ_pEX& h, const vec_ZZ_pE& a, long m);
+ZZ_pEX MinPolySeq(const vec_ZZ_pE& a, long m);
+// computes the minimum polynomial of a linealy generated sequence; m
+// is a bound on the degree of the polynomial; required: a.length() >=
+// 2*m
+
+
+void ProbMinPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+ZZ_pEX ProbMinPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void ProbMinPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+ZZ_pEX ProbMinPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// computes the monic minimal polynomial if (g mod f).  m = a bound on
+// the degree of the minimal polynomial; in the second version, this
+// argument defaults to n.  The algorithm is probabilistic, always
+// returns a divisor of the minimal polynomial, and returns a proper
+// divisor with probability at most m/2^{ZZ_pE::degree()}.
+
+void MinPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+ZZ_pEX MinPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void MinPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+ZZ_pEX MinPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// same as above, but guarantees that result is correct
+
+void IrredPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+ZZ_pEX IrredPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void IrredPolyMod(ZZ_pEX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+ZZ_pEX IrredPolyMod(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// same as above, but assumes that f is irreducible, or at least that
+// the minimal poly of g is itself irreducible.  The algorithm is
+// deterministic (and is always correct).
+
+/**************************************************************************\
+
+           Composition and Minimal Polynomials in towers
+
+These are implementations of algorithms that will be described
+and analyzed in a forthcoming paper.
+
+The routines require that p is prime, but ZZ_pE need not be a field.
+
+\**************************************************************************/
+
+
+void CompTower(ZZ_pEX& x, const ZZ_pX& g, const ZZ_pEXArgument& h,
+             const ZZ_pEXModulus& F);
+
+ZZ_pEX CompTower(const ZZ_pX& g, const ZZ_pEXArgument& h,
+             const ZZ_pEXModulus& F);
+
+void CompTower(ZZ_pEX& x, const ZZ_pX& g, const ZZ_pEX& h,
+             const ZZ_pEXModulus& F);
+
+ZZ_pEX CompTower(const ZZ_pX& g, const ZZ_pEX& h,
+             const ZZ_pEXModulus& F);
+
+
+// x = g(h) mod f
+
+
+void ProbMinPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F,
+                      long m);
+
+ZZ_pX ProbMinPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void ProbMinPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+ZZ_pX ProbMinPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// Uses a probabilistic algorithm to compute the minimal
+// polynomial of (g mod f) over ZZ_p.
+// The parameter m is a bound on the degree of the minimal polynomial
+// (default = deg(f)*ZZ_pE::degree()).
+// In general, the result will be a divisor of the true minimimal
+// polynomial.  For correct results, use the MinPoly routines below.
+
+
+
+void MinPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+ZZ_pX MinPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void MinPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+ZZ_pX MinPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// Same as above, but result is always correct.
+
+
+void IrredPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+ZZ_pX IrredPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F, long m);
+
+void IrredPolyTower(ZZ_pX& h, const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+ZZ_pX IrredPolyTower(const ZZ_pEX& g, const ZZ_pEXModulus& F);
+
+// Same as above, but assumes the minimal polynomial is
+// irreducible, and uses a slightly faster, deterministic algorithm.
+
+
+/**************************************************************************\
+
+                   Traces, norms, resultants
+
+\**************************************************************************/
+
+
+void TraceMod(ZZ_pE& x, const ZZ_pEX& a, const ZZ_pEXModulus& F);
+ZZ_pE TraceMod(const ZZ_pEX& a, const ZZ_pEXModulus& F);
+
+void TraceMod(ZZ_pE& x, const ZZ_pEX& a, const ZZ_pEX& f);
+ZZ_pE TraceMod(const ZZ_pEX& a, const ZZ_pEXModulus& f);
+// x = Trace(a mod f); deg(a) < deg(f)
+
+
+void TraceVec(vec_ZZ_pE& S, const ZZ_pEX& f);
+vec_ZZ_pE TraceVec(const ZZ_pEX& f);
+// S[i] = Trace(X^i mod f), i = 0..deg(f)-1; 0 < deg(f)
+
+// The above trace routines implement the asymptotically fast trace
+// algorithm from [von zur Gathen and Shoup, Computational Complexity,
+// 1992].
+
+void NormMod(ZZ_pE& x, const ZZ_pEX& a, const ZZ_pEX& f);
+ZZ_pE NormMod(const ZZ_pEX& a, const ZZ_pEX& f);
+// x = Norm(a mod f); 0 < deg(f), deg(a) < deg(f)
+
+void resultant(ZZ_pE& x, const ZZ_pEX& a, const ZZ_pEX& b);
+ZZ_pE resultant(const ZZ_pEX& a, const ZZ_pEX& b);
+// x = resultant(a, b)
+
+// NormMod and resultant require that ZZ_pE is a field.
+
+
+
+
+/**************************************************************************\
+
+                           Miscellany
+
+
+\**************************************************************************/
+
+
+void clear(ZZ_pEX& x) // x = 0
+void set(ZZ_pEX& x); // x = 1
+
+void ZZ_pEX::kill();
+// f.kill() sets f to 0 and frees all memory held by f.  Equivalent to
+// f.rep.kill().
+
+ZZ_pEX::ZZ_pEX(INIT_SIZE_TYPE, long n);
+// ZZ_pEX(INIT_SIZE, n) initializes to zero, but space is pre-allocated
+// for n coefficients
+
+static const ZZ_pEX& zero();
+// ZZ_pEX::zero() is a read-only reference to 0
+
+void ZZ_pEX::swap(ZZ_pEX& x);
+void swap(ZZ_pEX& x, ZZ_pEX& y); 
+// swap (via "pointer swapping")
+
+
+ZZ_pEX::ZZ_pEX(long i, const ZZ_pE& c); 
+ZZ_pEX::ZZ_pEX(long i, const ZZ_p& c); 
+ZZ_pEX::ZZ_pEX(long i, long c); 
+// initialize to c*X^i, provided for backward compatibility

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/ZZ_limbs.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: ZZ_limbs</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Defines low-level access to the &quot;limbs&quot; of a ZZ.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+
+<span class="PreProc">#ifdef NTL_GMP_LIP</span>
+<span class="PreProc">#include </span><span class="String">&lt;gmp.h&gt;</span>
+<span class="PreProc">#endif</span>
+<span class="Comment">// NOTE: unlike other NTL header files, this one needs access</span>
+<span class="Comment">// to GMP's header file, which means that C++ files that include</span>
+<span class="Comment">// this file will need to ensure that the compiler has the </span>
+<span class="Comment">// right &quot;include path&quot; to get at GMP's header file.</span>
+
+
+<span class="Type">typedef</span> ... ZZ_limb_t;
+<span class="Comment">// The type of a limb. </span>
+<span class="Comment">// With GMP, this is mp_limb_t, wich is usually (but not always) </span>
+<span class="Comment">// typedef'd to unsigned long.</span>
+<span class="Comment">// Without GMP, this is unisigned long (although that is subject to change).</span>
+<span class="Comment">// In any case, all that one should assume is that this is an </span>
+<span class="Comment">// unisgned integral type.</span>
+
+<span class="PreProc">#define NTL_BITS_PER_LIMB_T (...)</span>
+<span class="Comment">// Integral constant defining the number of bits of ZZ_limb_t.</span>
+
+<span class="Type">const</span> ZZ_limb_t * ZZ_limbs_get(<span class="Type">const</span> ZZ&amp; a);
+<span class="Comment">// Get a pointer to the limbs of a (possibly null).</span>
+<span class="Comment">// The number of limbs can be obtained by invoking a.size().</span>
+
+<span class="Type">void</span> ZZ_limbs_set(ZZ&amp; x, <span class="Type">const</span> ZZ_limb_t *p, <span class="Type">long</span> n);
+<span class="Comment">// Sets the limbs of x to p[0..n-1].</span>
+<span class="Comment">// An error is raised on n &lt; 0 or p == NULL and n &gt; 0.</span>
+<span class="Comment">// It will work correctly even if p points to a limb of x</span>
+<span class="Comment">// itself.</span>
+
+
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

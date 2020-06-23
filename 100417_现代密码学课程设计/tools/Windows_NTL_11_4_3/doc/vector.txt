@@ -1,0 +1,622 @@
+
+
+/**************************************************************************\
+
+MODULE: vector
+
+SUMMARY:
+
+Template class for dynamic-sized vectors.
+
+The declaration
+
+   Vec<T> v;
+
+creates a zero-length vector.  To grow this vector to length n,
+execute
+
+   v.SetLength(n)
+
+This causes space to be allocated for (at least) n elements, and also causes
+the default constructor for T to be called to initialize these elements.
+
+The current length of a vector is available as v.length().
+
+Let n = v.length().  Calling v.SetLength(m) with m <= n sets the current length
+of v to m (but does not call any destructors or free any space).  Calling
+v.SetLength(m) with m > n will allocate space and initialize as necessary, but
+will leave the values of the already allocated elements unchanged (although
+their addresses may change).  If T has a user-defined default constructor, that
+is invoked.  Otherwise, the new memory locations are "default initialized".  In
+particular, this means that POD types may be uninitialized.
+
+v.MaxLength() is the largest value of n for which v.SetLength(n) was invoked,
+and is equal to the number of entries that have been initialized.
+v.SetMaxLength(n) will allocate space for and initialize up to n elements,
+without changing v.length().
+
+When v's destructor is called, all constructed elements will be destructed, and
+all space will be relinquished.
+
+v.allocated() is the number of elements which have been allocated,
+which may be more than the number elements initialized.
+Note that if n <= v.allocated(), then v.SetLength(n) is guaranteed
+not to cause any memory allocation or movement of objects.
+
+Space is managed using malloc, realloc, and free.  When a vector is grown, a
+bit more space may be allocated than was requested for efficiency reasons.
+
+Note that when a vector is grown, the objects in the vector may have moved,
+possibly creating dangling references to vector elements.  One has to be
+especially careful of this when using vectors passed as reference parameters
+that may alias one another.
+
+
+----------------------
+IMPLEMENTATION DETAILS
+----------------------
+
+A Vec<T> object is just a pointer to the first element of the array.  There is
+a control block immediately before the first element that keeps track of
+several parameters: 
+   len    -- the logical length of the array (returned by length())
+   init   -- the number of elements constructed (returned ny MaxLength())
+   alloc  -- the number of elements for which space has been allocated
+             (returned by allocated())
+   fixed  -- flag that indicates that the length is fixed 
+             (returned by fixed())
+
+Note that 0 <= len <= init <- alloc
+
+
+
+---------------
+SPECIALIZATIONS
+---------------
+
+NTL currently defines an optimized specialization Vec<GF2>.  There are a few
+quirks to be aware of.  See the documentation file for vec_GF2 for more
+details.
+
+
+---------------------
+RANGE-BASED FOR LOOPS
+---------------------
+
+NTL's vectors provide sufficient functionality to enable range-based for-loops
+(in C++11).  The safest ways to use this functionality are to write:
+
+   for (auto&& item : vec) { ... } // for read-only or read/write access
+
+or
+
+   for (T item : vec) { ... } // for access via a copy
+
+This is especially true if vec may be of type Vec<GF2>.  Again, see the
+documentation file for vec_GF2 for more details.
+
+
+--------------
+OTHER FEATURES
+--------------
+
+The i-th vector element (counting from 0) is accessed as v[i].  If the macro
+NTL_RANGE_CHECK is defined, code is emitted to test if 0 <= i < v.length().
+This check is not performed by default.
+
+For old-time FORTRAN programmers, the i-th vector element (counting from 1) is
+accessed as v(i).
+
+--------------------
+REALLOCATION DETAILS
+--------------------
+
+When a vector is resized and not enough space has been allocated, then a
+reallocation process takes place.  There are several strategies which can be
+used, which we list here from least to most efficient.
+
+
+COPY AND DESTROY STRATEGY:
+This is the same strategy used by the STL prior to C++11.  New memory is
+allocated, and each element of the vector is copied (using a copy constructor)
+to the new memory, and then all the elements in the old memory is destroyed
+(using a destructor).  While much safer than the Realloc Strategy, it can be a
+bit slower.
+
+MOVE STRATEGY:
+This is a strategy that is also used by the STL, assuming C++11.  New memory is
+allocated, and each element of the vector is moved (using a move constructor)
+to the new memory, and then all the elements in the old memory is destroyed
+(using a destructor).  This strategy is only viable if the underlying type has
+a "nothrow" move constructor.  Typically, it will be significantly faster than
+the Copy and Destroy Strategy.
+
+REALLOC STRATEGY:
+This strategy simply calls the realloc function, which may result in objects
+being copied bit-wise from one location in memory to another.  For most types
+of objects, even those with non-trivial constructors and destructors, this is
+perfectly safe, as most objects really don't care what address they are stored
+at.  As an example of where this doesn't work, STL string implementations using
+a "short string" optimization may consist of an object containing a pointer to
+a sub-object, which would be invalidated if the object were bit-wise moved from
+one location to another.  This strategy is the fastest of them all.
+
+CHOOSING A STRATEGY:
+In the implementation of Vec<T>, NTL will opt for the Realloc Strategy
+if one of the two conditions hold:
+   (i) T has a trivial copy constructor and a trivial destructor, or
+   (iii) T is a class that has been explicit declared "relocatable".
+(See below for details on how to declare that a class is relocatable.)
+Otherwise, NTL will use the Move Strategy if T has a nothrow move costructor.
+Otherwise, NTL will use the Copy Strategy if T has a copy constructor that is
+accessible (i.e., not private and not deleted).  Otherwise, no reallocation
+implementation is provided, and a runtime error will be raised if a
+reallocation is required (this provides maximum flexiblilty and also maximum
+backward compatibility with previous versions of NTL, even though sometimes a
+compile-time diagnostic would be preferable).
+
+
+DECLARING A CLASS RELOCATABLE:
+One can declare T to be relocatable by adding the following line of code
+immediately after the definition of class T:
+
+   NTL_DECLARE_RELOCATABLE((T*))
+
+Notice the double parentheses and the "*" --- these are unfortunately 
+necessary.  This macro expands as 
+
+   constexpr bool DeclareRelocatableType(T*) { return true; }
+
+Inside the class Vec<T>, this function is invoked with ((T*) 0) as the
+argument.  By declaring relocatability via a function definition in this way,
+the Vec<T> class will always find (via "Koenig lookup", or ADL) the declaration
+for T in the namespace in which T is defined (assuming you put the
+relocatability declaration there as well).
+
+You can also declare a template class to be relocatable, as in:
+
+   template<class X, class Y>
+   NTL_DECLARE_RELOCATABLE((T<X,Y>*))
+
+There is also a macro NTL_DECLARE_RELOCATABLE_WHEN, which leaves off the
+function body, if you want something other than { return true; }
+
+NTL also defines template functions:
+
+   template<class T>
+   constexpr bool DeclareRelocatableType(T*) 
+   { return ... ;  }
+
+where "..." is an expression that returns true if T is a simple type that is
+safe to relocate, as determined by C++11 type traits.  Such simple types
+include scalar types and simple classes with trivial copy constructor and
+destructor.
+
+NTL already declares as relocatable most if the fundamental types fot which it
+makes sense to do so.
+
+UNSAFE VECTOR MODE:
+The above describes the default behavior of NTL as of version 11.0.  Prior to
+version 11.0, the default behavior was to only use the Realloc Strategy, which
+is potentially unsafe.  You can revert to this old behavior by configuring
+NTL_SAFE_VECTORS=off.
+
+
+-------------------------
+COMPARISON TO STL VECTORS 
+-------------------------
+
+When the length of an NTL vector is reduced, no objects are destroyed.
+In contrast, when the length of an STL vector is reduced, objects are
+destroyed (effectively, maintaining the invariant len == init).
+
+Also, STL vectors never use anything like the Realloc Strategy.
+
+
+----------------------
+HISTORICAL PERSPECTIVE
+----------------------
+
+When I first started working on NTL around 1990, C++ was a much simpler
+language.  Among other things, there were no templates and no STL, so the Vec
+class started out (and remained, for many years) a set of macros (indeed, this
+approach was advocated in the first edition of Stroustrup's book).
+
+My thinking at that time was very much "C oriented".  The idea of resizing a
+vector without using realloc never occured to me, and all of the classes I
+wanted to put in vectors were relocatable.  Why would you ever bother making
+copies of vector elements and destroy the originals when you could just
+realloc?  It wasn't until many years later that I even realized this was
+somehow questionable practice.  Indeed, resizing via malloc is technically
+undefined behavior, but it's been working for me for over 25 years without
+problems.
+
+Furthermore, because of the poor performance of malloc in those days (which is
+much better now), I designed the Vec<ZZ_p> class (and a few others) to allocate
+the underlying ZZ's in blocks.  This not only reduces the number of calls to
+malloc, but it also gives better locality of reference.  Experiments in the
+last couple of years show that this is still benefit to doing this.
+
+With all of these design decisions baked into NTL's Vec class, transitioning to
+STL vectors would be problematic, and is unlikely to ever happen.  But as
+things have evolved, NTL Vec's offers many of the same convenience and safety
+features as STL vector's.
+
+
+\**************************************************************************/
+
+
+// EXCEPTIONS: all functions below do not throw any exceptions,
+//   except as noted
+
+template<class T>
+class Vec {  
+public:  
+
+   Vec();  // initially length 0
+
+   Vec(const Vec& a); 
+   // copy constructor;  uses the assignment operator of T
+   // for copying into locations that have already been initialized,
+   // and uses the copy constructor for T for initializing new locations.
+   
+   // EXCEPTIONS: may throw
+
+   Vec& operator=(const Vec& a);  
+   // assignment;  uses the assignment operator of T
+   // for copying into locations that have already been initialized,
+   // and uses the copy constructor for T for initializing new locations.
+
+   // EXCEPTIONS: weak ES (but if it throws, neither length nor MaxLength
+   //    will change, although some previously initialized elements
+   //    may have been assigned new values).
+
+
+   Vec(Vec&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+   // will revert to copy constructor if a is fixed
+
+   Vec& operator=(Vec&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+   // will revert to copy assignment if *this or a is fixed
+
+   // NOTE: If neither source nor destination are fixed, these operations will
+   // be fast pointer moves and no exceptions will be thrown.  If either are
+   // fixed (say, the row in a Mat<T>), these operations revert to copy
+   // operations, which may either throw an exception (if NTL_EXCEPTIONS is on)
+   // or abort the program (if NTL_EXCEPTIONS is off).
+
+   // NOTE: In a vector copy assignment x=a, all iterators, references,
+   // and pointers related to x may be invalidated by the assignment.
+   // In a vector move assignment, the same applies to a as well.
+
+   // BACKWARD COMPATIBILITY: after introducing of "move constructors" in NTL
+   // 10.4, there have been some reports of incompatibilties.  Some legacy NTL
+   // clients have been known to assume that x=a does not invalidate pointers
+   // into x, provided x.length() >= a.length() before the assignment.  This
+   // assumption is not valid, however, for a move assignment.  Because of this
+   // problem, as of NTL 11.0, move assignments have been disabled by default
+   // (this is controlled by the configuration flag NTL_DISABLE_MOVE_ASSIGN).
+   // This affects vectors and matrices,  as well as many other types (such as
+   // polynomials) that are implemented in terms of vectors.  Move assignment
+   // is not disabled.
+
+
+   ~Vec();  
+   // destructor: calls T's destructor for all initialized
+   // elements in the vector, and then frees the vector itself
+  
+   void SetLength(long n);  
+   // set current length to n, growing vector if necessary
+   // new objects are initialized using the default contructor for T
+
+   // EXCEPTIONS: strong ES (but the vector may have been
+   //    reallocated)
+  
+   void SetLength(long n, const T& a);  
+   // set current length to n, growing vector if necessary
+   // new objects are initialized using the copy contructor for T
+
+   // EXCEPTIONS: strong ES (but the vector may have been
+   //    reallocated)
+
+   template<class F>
+   void SetLengthAndApply(long n, F f);
+   // set current length to n, growing vector if necessary
+   // any new objects are initialized using defauly constructor
+   // for T, and after that, f is applied to each new object x
+   // as f(x).
+
+   // EXCEPTIONS: strong ES (but the vector may have been
+   //    reallocated)
+
+   long length() const;
+   // current length
+  
+   T& operator[](long i);
+   const T& operator[](long i) const;
+   // indexing operation, starting from 0.
+   // The first version is applied to non-const Vec<T>,
+   // and returns a non-const reference to a T, while the second version
+   // is applied to a const Vec<T> and returns a const reference to a T.
+
+   // EXCEPTIONS: may throw if range checking turned on, strong ES
+  
+   T& operator()(long i);
+   const T& operator()(long i) const;
+   // indexing operation, starting from 1
+   // The first version is applied to non-const Vec<T>,
+   // and returns a non-const reference to a T, while the second version
+   // is applied to a const Vec<T> and returns a const reference to a T.
+
+   // EXCEPTIONS: may throw if range checking turned on, strong ES
+  
+   T* elts();
+   const T* elts() const;
+   // returns address of first vector element (or 0 if no space has been
+   // allocated for this vector).  If a vector potentially has length 0, it is
+   // safer to write v.elts() instead of &v[0]: the latter is not well defined
+   // by the C++ standard (although this is likely an academic concern).
+   //
+   // The first version is applied to non-const Vec<T>, and returns a non-const
+   // pointer to a T, while the second version is applied to a const Vec<T> and
+   // returns a const reference to a T.
+
+   
+   void swap(Vec& y);
+   // swap with y (fast: just swaps pointers)
+
+   // EXCEPTIONS: throws if vectors are fixed and lengths do not match, strong ES
+
+   void move(Vec& y);
+   // move y into *this, killing y (fast: just moves pointers)
+
+   // EXCEPTIONS: strong ES, raises an error if 
+   // &y != this and either y or *this are fixed
+
+   void append(const T& a);
+   // append a to end of vector; uses the assignment operator of T
+   // for copying into locations that have already been initialized,
+   // and uses the copy constructor for T for initializing new locations.
+
+   // EXCEPTIONS: strong ES if initializing a new element (and in any 
+   //    case, if an exception throws, length and MaxLength remain 
+   //    unchanged).
+
+   void append(const Vec& w);
+   // append w to end of vector; uses the assignment operator of T
+   // for copying into locations that have already been initialized,
+   // and uses the copy constructor for T for initializing new locations.
+
+   // EXCEPTIONS: strong ES if initializing new elements (and in any 
+   //    case, if an exception throws, length and MaxLength remain 
+   //    unchanged).
+
+
+// Alternative access interface 
+
+   const T& get(long i) const; 
+   // v.get(i) returns v[i]
+ 
+   void put(long i, const T& a); 
+   // v.put(i, a) equivalent to v[i] = q
+
+
+
+// Some STL compatibility
+
+   typedef T value_type;
+   typedef value_type& reference;
+   typedef const value_type& const_reference;
+   typedef value_type *iterator;
+   typedef const value_type *const_iterator; 
+
+   T* data();
+   const T* data() const;
+   // v.data() same as v.elts()
+
+   T* begin();
+   const T* begin() const;
+   // v.begin() same as v.elts()
+
+   T* end();
+   const T* end() const;
+   // pointer to (one past) last element (or NULL)
+
+   T& at(long i);
+   const T& at(long i) const;
+   // indexing with range checking
+
+
+// the remaining member functions are a bit esoteric (skip on first
+// reading)
+
+   Vec(INIT_SIZE_TYPE, long n);
+   // Vec(INIT_SIZE, n) initializes vector with an intial length of n.
+   // new objects are initialized using the default contructor for T
+
+   // EXCEPTIONS: may throw
+
+   Vec(INIT_SIZE_TYPE, long n, const T& a);
+   // Vec(INIT_SIZE, n, a) initializes vector with an intial length of n.
+   // new objects are initialized using the copy contructor for T
+
+   // EXCEPTIONS: may throw
+
+   void kill(); 
+   // release space and set to length 0
+
+   void SetMaxLength(long n); 
+   // allocates space and initializes up to n elements. Does not change
+   // current length
+
+   // EXCEPTIONS: may throw, strong ES
+
+   void FixLength(long n);
+   // sets length to n and prohibits all future length changes.
+   // FixLength may only be invoked immediately after the default
+   // construction or kill.
+
+   // The kill operation is also subsequently prohibited, and swap is
+   // allowed on fixed length vectors of the same length.
+
+   // FixLength is provided mainly to implement Mat<T>, to enforce
+   // the restriction that all rows have the same length.
+
+   // EXCEPTIONS: may throw, strong ES
+
+   void FixAtCurrentLength();
+   // fixes the length at the cuurent length and prohibits
+   // all future length changes.  
+
+   // It is required that length() == MaxLength() when called.
+
+   // EXCEPTIONS: if length() != MaxLength() and error is raised;
+   // if length() == 0, a memory allocation error may be raised.
+   // Strong ES.
+
+   long fixed() const;
+   // test if length has been fixed by FixLength() or FixAtCurrentLength()
+
+   long MaxLength() const;
+   // maximum length, i.e., number of allocated and initialized elements
+
+   long allocated() const;
+   // the number of objects for which space has been allocated, but not
+   // necessarily initialized;  this may be larger than MaxLength().
+
+   T& RawGet(long i);
+   const T& RawGet(long i) const;
+   // indexing with no range checking
+
+   long position(const T& a) const;
+   // returns position of a in the vector, or -1 if it is not there.
+   // The search is conducted from position 0 to allocated()-1 the vector, 
+   // and an error is raised if the object is found at position MaxLength()
+   // or higher (in which case a references an uninitialized object).
+   // Note that if NTL_CLEAN_PTR flag is set, this routine takes
+   // linear time, and otherwise, it takes constant time.
+
+   // EXCEPTIONS: may throw (as indicated above)
+
+   long position1(const T& a) const;
+   // returns position of a in the vector, or -1 if it is not there.
+   // The search is conducted from position 0 to length()-1 of the vector.
+   // Note that if NTL_CLEAN_PTR flag is set, this routine takes
+   // linear time, and otherwise, it takes constant time.
+         
+};   
+
+
+/**************************************************************************\
+
+                       Some utility routines
+
+\**************************************************************************/
+
+   
+template<class T>
+void swap(Vec<T>& x, Vec<T>& y);
+// swaps x & y; same as x.swap(y)
+
+// EXCEPTIONS: same as for swap member function
+
+template<class T>
+void append(Vec<T>& v, const T& a); 
+// appends a to the end of v; same as v.append(a)
+
+// EXCEPTIONS: same as for append member function
+
+template<class T>
+void append(Vec<T>& v, const Vec<T>& w);
+// appends w to the end of v; same as v.append(w)
+
+// EXCEPTIONS: same as for append member function
+
+
+
+/**************************************************************************\
+
+                             Input/Output
+
+
+The I/O format for a vector v with n elements is:
+
+   [v[0] v[1] ... v[n-1]]
+
+Uses corresponding I/O operators for T
+
+\**************************************************************************/
+
+template<class T>
+istream& operator>>(istream&, Vec<T>&);  
+
+// EXCEPTIONS: may throw, weak ES
+
+template<class T>
+ostream& operator<<(ostream&, const Vec<T>&);  
+
+// EXCEPTIONS: may throw, weak ES
+
+
+
+/**************************************************************************\
+
+                              Equality Testing
+
+\**************************************************************************/
+
+
+template<class T>
+long operator==(const Vec<T>& a, const Vec<T>& b);  
+
+template<class T>
+long operator!=(const Vec<T>& a, const Vec<T>& b);
+
+
+/**************************************************************************\
+
+                  Customized Constructors and Destructors
+ 
+Esoteric: skip on first reading...also these interfaces are subject to change
+
+When new elements in a vector need to be constructed, one of the
+following routines is called:
+
+   void BlockConstruct(T* p, long n); 
+   // invokes T() to initialize p[i] for i = 0..n-1
+
+   void BlockConstructFromVec(T* p, long n, const T* q);
+   // invokes T(q[i]) to initialize p[i] for i = 0..n-1;
+   // q points to elements from a Vec<T>
+
+   void BlockConstructFromObj(T* p, long n, const T& q);
+   // invokes T(q) to initialize p[i] for i = 0..n-1
+
+
+When a vector is destroyed, the following routine is called:
+
+   void BlockDestroy(T* p, long n);
+   // invokes ~T() on p[i] for i = 0..n-1
+
+The default behavior of these routines may be modified by 
+overloading these functions with a custom implementation.
+
+EXCEPTIONS:
+In order to provide exception safe code, the Construct routines
+should provide strong ES; in particular, if any constructor
+throws, all newly constructed objects should be destroyed.
+Moreover, the BlockDestroy routine should not throw at all.
+
+
+In NTL, these routines are overridden for the ZZ_p and GF2E classes,
+so that many vector entries will be packed into contiguous storage
+locations.  This reduces the number of invocations of malloc, and
+increases locality of reference.
+
+
+
+\**************************************************************************/
+
