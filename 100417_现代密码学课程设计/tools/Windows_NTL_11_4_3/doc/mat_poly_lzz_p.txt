@@ -1,0 +1,21 @@
+
+/**************************************************************************\
+
+MODULE: mat_poly_zz_p
+
+SUMMARY:
+
+Routine for computing the characteristic polynomial of a matrix over zz_p.
+
+
+
+\**************************************************************************/
+
+
+#include "mat_zz_p.h"
+#include "zz_pX.h"
+
+void CharPoly(zz_pX& f, const mat_zz_p& M);
+// f = characteristic polynomial of M
+
+

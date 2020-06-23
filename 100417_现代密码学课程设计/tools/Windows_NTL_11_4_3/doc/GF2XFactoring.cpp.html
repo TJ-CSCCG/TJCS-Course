@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/GF2XFactoring.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Constant { color: #ff8c00; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: GF2XFactoring</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Routines are provided for factorization in F_2[X], as well as routines</span>
+<span class="Comment">for related problems such as testing irreducibility and constructing</span>
+<span class="Comment">irreducible polynomials of given degree.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/GF2X.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/pair_GF2X_long.h&gt;</span>
+
+<span class="Type">void</span> SquareFreeDecomp(vec_pair_GF2X_long&amp; u, <span class="Type">const</span> GF2X&amp; f);
+vec_pair_GF2X_long SquareFreeDecomp(<span class="Type">const</span> GF2X&amp; f);
+
+<span class="Comment">// Performs square-free decomposition.  f must be monic.  If f =</span>
+<span class="Comment">// prod_i g_i^i, then u is set to a list of pairs (g_i, i).  The list</span>
+<span class="Comment">// is is increasing order of i, with trivial terms (i.e., g_i = 1)</span>
+<span class="Comment">// deleted.</span>
+
+
+<span class="Type">void</span> DDF(vec_pair_GF2X_long&amp; factors, <span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_pair_GF2X_long DDF(<span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// This computes a distinct-degree factorization.  The input must be</span>
+<span class="Comment">// monic and square-free.  factors is set to a list of pairs (g, d),</span>
+<span class="Comment">// where g is the product of all irreducible factors of f of degree d.</span>
+<span class="Comment">// Only nontrivial pairs (i.e., g != 1) are included.</span>
+
+
+
+<span class="Type">void</span> EDF(vec_GF2X&amp; factors, <span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> d, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_GF2X EDF(<span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> d, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// Performs equal-degree factorization.  f is monic, square-free, and</span>
+<span class="Comment">// all irreducible factors have same degree.  d = degree of</span>
+<span class="Comment">// irreducible factors of f</span>
+
+<span class="Type">void</span> SFCanZass(vec_GF2X&amp; factors, <span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_GF2X SFCanZass(<span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+
+<span class="Comment">// Assumes f is monic and square-free.  returns list of factors of f.</span>
+
+
+<span class="Type">void</span> CanZass(vec_pair_GF2X_long&amp; factors, <span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_pair_GF2X_long CanZass(<span class="Type">const</span> GF2X&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// returns a list of factors, with multiplicities.  f must be monic.</span>
+<span class="Comment">// Calls SquareFreeDecomp and SFCanZass.</span>
+
+
+<span class="Type">void</span> mul(GF2X&amp; f, <span class="Type">const</span> vec_pair_GF2X_long&amp; v);
+GF2X mul(<span class="Type">const</span> vec_pair_GF2X_long&amp; v);
+
+<span class="Comment">// multiplies polynomials, with multiplicities</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                            Irreducible Polynomials</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> IterIrredTest(<span class="Type">const</span> GF2X&amp; f);
+
+<span class="Comment">// performs an iterative deterministic irreducibility test, based on</span>
+<span class="Comment">// DDF.  Fast on average (when f has a small factor).</span>
+
+<span class="Type">void</span> BuildSparseIrred(GF2X&amp; f, <span class="Type">long</span> n);
+GF2X BuildSparseIrred_GF2X(<span class="Type">long</span> n);
+
+<span class="Comment">// Builds a monic irreducible polynomial of degree n.</span>
+<span class="Comment">// If there is an irreducible trinomial X^n + X^k + 1,</span>
+<span class="Comment">// then the one with minimal k is chosen.</span>
+<span class="Comment">// Otherwise, if there is an irreducible pentanomial </span>
+<span class="Comment">// X^n + X^k3 + X^k2 + x^k1 + 1, then the one with minimal</span>
+<span class="Comment">// k3 is chosen (minimizing first k2 and then k1).</span>
+<span class="Comment">// Otherwise, if there is niether an irreducible trinomial</span>
+<span class="Comment">// or pentanomial, the routine result from BuildIrred (see below)</span>
+<span class="Comment">// is chosen---this is probably only of academic interest,</span>
+<span class="Comment">// since it a reasonable, but unproved, conjecture that they</span>
+<span class="Comment">// exist for every n &gt; 1.</span>
+
+<span class="Comment">// For n &lt;= 2048, the polynomial is constructed</span>
+<span class="Comment">// by table lookup in a pre-computed table.</span>
+
+<span class="Comment">// The GF2XModulus data structure and routines (and indirectly GF2E) </span>
+<span class="Comment">// are optimized to deal with the output from BuildSparseIrred.</span>
+
+<span class="Type">void</span> BuildIrred(GF2X&amp; f, <span class="Type">long</span> n);
+GF2X BuildIrred_GF2X(<span class="Type">long</span> n);
+
+<span class="Comment">// Build a monic irreducible poly of degree n.  The polynomial</span>
+<span class="Comment">// constructed is &quot;canonical&quot; in the sense that it is of the form</span>
+<span class="Comment">// f=X^n + g, where the bits of g are the those of the smallest</span>
+<span class="Comment">// non-negative integer that make f irreducible.  </span>
+
+<span class="Comment">// The GF2XModulus data structure and routines (and indirectly GF2E) </span>
+<span class="Comment">// are optimized to deal with the output from BuildIrred.</span>
+
+<span class="Comment">// Note that the output from BuildSparseIrred will generally yield</span>
+<span class="Comment">// a &quot;better&quot; representation (in terms of efficiency) for</span>
+<span class="Comment">// GF(2^n) than the output from BuildIrred.</span>
+
+
+
+<span class="Type">void</span> BuildRandomIrred(GF2X&amp; f, <span class="Type">const</span> GF2X&amp; g);
+GF2X BuildRandomIrred(<span class="Type">const</span> GF2X&amp; g);
+
+<span class="Comment">// g is a monic irreducible polynomial.  Constructs a random monic</span>
+<span class="Comment">// irreducible polynomial f of the same degree.</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

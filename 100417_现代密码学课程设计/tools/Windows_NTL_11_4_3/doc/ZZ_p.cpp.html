@@ -1,0 +1,454 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/ZZ_p.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: ZZ_p</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class ZZ_p is used to represent integers mod p.  The modulus p may</span>
+<span class="Comment">be any positive integer, not necessarily prime.  </span>
+
+<span class="Comment">Objects of the class ZZ_p are represented as a ZZ in the range 0..p-1.</span>
+
+<span class="Comment">An executing program maintains a &quot;current modulus&quot;, which is set to p using</span>
+<span class="Comment">ZZ_p::init(p).  The current modulus *must* be initialized before any operations</span>
+<span class="Comment">on ZZ_p's are performed.  The modulus may be changed, and a mechanism is provided</span>
+<span class="Comment">for saving and restoring a modulus (see classes ZZ_pPush and ZZ_pContext below).</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZVec.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/SmartPtr.h&gt;</span>
+
+<span class="Type">class</span> ZZ_p {
+<span class="Statement">public</span>:
+
+   ZZ_p(); <span class="Comment">// initialize to 0</span>
+
+   ZZ_p(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// copy constructor</span>
+   <span class="Type">explicit</span> ZZ_p(<span class="Type">long</span> a);  <span class="Comment">// promotion constructor</span>
+
+   ~ZZ_p(); <span class="Comment">// destructor</span>
+
+   ZZ_p&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// assignment</span>
+   ZZ_p&amp; <span class="Statement">operator</span>=(<span class="Type">long</span> a); <span class="Comment">// assignment</span>
+
+   ZZ_p(ZZ_p&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+   ZZ_p&amp; <span class="Statement">operator</span>=(ZZ_p&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+   <span class="Type">static</span> <span class="Type">void</span> init(<span class="Type">const</span> ZZ&amp; p);
+   <span class="Comment">// ZZ_p::init(p) sets the modulus to p (p &gt; 1)</span>
+
+   <span class="Type">static</span> <span class="Type">const</span> ZZ&amp; modulus();
+   <span class="Comment">// ZZ_p::modulus() yields read-only reference to the current</span>
+   <span class="Comment">// modulus</span>
+
+   <span class="Comment">// typedefs to aid in generic programming</span>
+   <span class="Type">typedef</span> ZZ rep_type;
+   <span class="Type">typedef</span> ZZ_pContext context_type;
+   <span class="Type">typedef</span> ZZ_pBak bak_type;
+   <span class="Type">typedef</span> ZZ_pPush push_type;
+   <span class="Type">typedef</span> ZZ_pX poly_type;
+};
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                      Access to representation</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">const</span> ZZ&amp; rep(<span class="Type">const</span> ZZ_p&amp; a);
+<span class="Comment">// read-only access to representation of a</span>
+
+<span class="Comment">/*</span><span class="Comment">***** Example: ********  </span>
+
+<span class="Comment">   ZZ x;</span>
+<span class="Comment">   ZZ_p a;</span>
+
+<span class="Comment">   x = rep(a);</span>
+
+<span class="Comment">************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+
+<span class="Comment">// PROMOTIONS: the comparison operators provide promotions</span>
+<span class="Comment">// from long to ZZ_p on (a, b)</span>
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> ZZ_p&amp; a);  <span class="Comment">// test for 0</span>
+<span class="Type">long</span> IsOne(<span class="Type">const</span> ZZ_p&amp; a);  <span class="Comment">// test for 1</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                    Addition </span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_p <span class="Statement">operator</span>+(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p <span class="Statement">operator</span>-(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p <span class="Statement">operator</span>-(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// unary -</span>
+
+ZZ_p&amp; <span class="Statement">operator</span>+=(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p&amp; <span class="Statement">operator</span>+=(ZZ_p&amp; x, <span class="Type">long</span> b);
+
+ZZ_p&amp; <span class="Statement">operator</span>-=(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p&amp; <span class="Statement">operator</span>-=(ZZ_p&amp; x, <span class="Type">long</span> b);
+
+ZZ_p&amp; <span class="Statement">operator</span>++(ZZ_p&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(ZZ_p&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+ZZ_p&amp; <span class="Statement">operator</span>--(ZZ_p&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(ZZ_p&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> add(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b); <span class="Comment">// x = a + b</span>
+<span class="Type">void</span> sub(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b); <span class="Comment">// x = a - b </span>
+<span class="Type">void</span> negate(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// x = -a</span>
+
+<span class="Comment">// PROMOTIONS: binary +, - and procedures add, sub provide promotions</span>
+<span class="Comment">// from long to ZZ_p on (a, b)</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Multiplication </span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_p <span class="Statement">operator</span>*(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+
+ZZ_p&amp; <span class="Statement">operator</span>*=(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p&amp; <span class="Statement">operator</span>*=(ZZ_p&amp; x, <span class="Type">long</span> b);
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> mul(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b); <span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> sqr(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// x = a^2</span>
+ZZ_p sqr(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// x = a^2</span>
+
+<span class="Comment">// PROMOTIONS: operator * and procedure mul provide promotions </span>
+<span class="Comment">// from long to ZZ_p on (a, b)</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Division</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_p <span class="Statement">operator</span>/(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+
+ZZ_p&amp; <span class="Statement">operator</span>/=(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_p&amp; <span class="Statement">operator</span>/=(ZZ_p&amp; x, <span class="Type">long</span> b);
+
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> div(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+<span class="Comment">// x = a/b.</span>
+
+<span class="Comment">// By default, if b is not invertible, an error is raised.  </span>
+<span class="Comment">// If exceptions are enabled, an InvModErrorObject is thrown</span>
+<span class="Comment">// (see documentation in the ZZ module); otherwise, the program</span>
+<span class="Comment">// aborts with an error message.</span>
+<span class="Comment">// For backward compatibility, one can define an error handler</span>
+<span class="Comment">// void H(const ZZ_p&amp; b), and setting ZZ_p::DivHandler = H.  Then if b</span>
+<span class="Comment">// != 0 and b is not invertible, the function H is invoked with b as</span>
+<span class="Comment">// its argument.  If the error handler function returns to its caller,</span>
+<span class="Comment">// error handling proceeds as described above.</span>
+
+<span class="Type">void</span> inv(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// x = 1/a</span>
+ZZ_p inv(<span class="Type">const</span> ZZ_p&amp; a);
+
+<span class="Comment">// Error handling is the same as above.</span>
+
+<span class="Comment">// PROMOTIONS: operator / and procedure div provide promotions</span>
+<span class="Comment">// from long to ZZ_p on (a, b)</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                            Exponentiation</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Type">void</span> power(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ&amp; e); <span class="Comment">// x = a^e (e may be negative)</span>
+ZZ_p power(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ&amp; e); <span class="Comment">// functional variants</span>
+
+<span class="Type">void</span> power(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">long</span> e);
+ZZ_p power(ZZ_p&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">long</span> e);
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Random Elements</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> random(ZZ_p&amp; x);
+ZZ_p random_ZZ_p();
+<span class="Comment">// x = random element in ZZ_p.  </span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                Input/Output</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> ZZ_p&amp; a);
+
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, ZZ_p&amp; x);
+<span class="Comment">// a ZZ is read and reduced mod p</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Modulus Switching </span>
+
+
+<span class="Comment">A class ZZ_pPush is provided for &quot;backing up&quot; the current modulus</span>
+<span class="Comment">and installing a new one.</span>
+
+<span class="Comment">Here is what you do to save the current modulus, temporarily</span>
+<span class="Comment">set it to p, and automatically restore it:</span>
+
+<span class="Comment">   { </span>
+<span class="Comment">      ZZ_pPush push(p); </span>
+
+<span class="Comment">      ...</span>
+
+<span class="Comment">   }</span>
+
+<span class="Comment">The constructor for push will save the current modulus, and install p as the</span>
+<span class="Comment">current modulus.  The destructor for push will restore the old modulus when the</span>
+<span class="Comment">scope enclosing it exits.  This is the so-called RAII (resource acquisition is</span>
+<span class="Comment">initialization) paradigm.</span>
+
+<span class="Comment">You could also do the following:</span>
+
+<span class="Comment">   {</span>
+<span class="Comment">      ZZ_pPush push; // just backup current modulus</span>
+
+<span class="Comment">        ...</span>
+
+<span class="Comment">      ZZ_p::init(p1); // install p1 </span>
+
+<span class="Comment">        ...</span>
+
+<span class="Comment">      ZZ_p::init(p2); // install p2</span>
+
+<span class="Comment">      // reinstall original modulus at close of scope</span>
+<span class="Comment">   }</span>
+
+<span class="Comment">      </span>
+<span class="Comment">The ZZ_pPush interface is good for implementing simple stack-like</span>
+<span class="Comment">modulus &quot;context switching&quot;.  For more general context switching,</span>
+<span class="Comment">see ZZ_pContext below.  There is also an older ZZ_pBak class</span>
+<span class="Comment">that may also be useful.</span>
+
+<span class="Comment">..........................................................................</span>
+
+<span class="Comment">It is critical that ZZ_p objects created under one ZZ_p modulus are not used in</span>
+<span class="Comment">any non-trivial way &quot;out of context&quot;, i.e., under a different (or undefined)</span>
+<span class="Comment">ZZ_p modulus.  However, for ease-of-use, some operations may be safely</span>
+<span class="Comment">performed out of context.  These safe operations include: the default and copy</span>
+<span class="Comment">constructor, the destructor, and the assignment operator.  In addition is is</span>
+<span class="Comment">generally safe to read any ZZ_p object out of context (i.e., printing it out, or</span>
+<span class="Comment">fetching its underlying representive using the rep() function).</span>
+
+<span class="Comment">Any unsafe uses out of context are not in general checked, and may </span>
+<span class="Comment">lead to unpredictable behavior.</span>
+
+
+<span class="Comment">NOTE: the implementation of Vec&lt;ZZ_p&gt; is specialized to manage memory more</span>
+<span class="Comment">efficiently than in the default implementation of Vec&lt;T&gt;.  Specifically,</span>
+<span class="Comment">contiguous elements in a Vec&lt;ZZ_p&gt; are allocated in a contiguous region of</span>
+<span class="Comment">memory.  This reduces the number of calls to the memory allocator, and --- more</span>
+<span class="Comment">significantly --- leads to greater locality of reference.  A consequence of</span>
+<span class="Comment">this implementation is that any calls to SetLength on a Vec&lt;ZZ_p&gt; object will</span>
+<span class="Comment">need to use information about the current modulus, and so such calls should</span>
+<span class="Comment">only be done &quot;in context&quot;.  That said, it is still safe to construct a</span>
+<span class="Comment">Vec&lt;ZZ_p&gt; using the default or copy contructor, and to assign or append one</span>
+<span class="Comment">Vec&lt;ZZ_p&gt; to another &quot;out of context&quot;.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Comment">// A convenient interface for common cases:</span>
+
+<span class="Type">class</span> ZZ_pPush {
+
+<span class="Statement">public</span>:
+ZZ_pPush();  <span class="Comment">// backup current modulus</span>
+<span class="Type">explicit</span> ZZ_pPush(<span class="Type">const</span> ZZ&amp; p);
+<span class="Type">explicit</span> ZZ_pPush(<span class="Type">const</span> ZZ_pContext&amp; context);
+  <span class="Comment">// backup current modulus and install the given one</span>
+
+<span class="Statement">private</span>:
+ZZ_pPush(<span class="Type">const</span> ZZ_pPush&amp;); <span class="Comment">// disabled</span>
+<span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pPush&amp;); <span class="Comment">// disabled</span>
+
+};
+
+
+
+<span class="Comment">// more general context switching:</span>
+<span class="Comment">// A ZZ_pContext object has a modulus q (possibly &quot;null&quot;)</span>
+
+<span class="Type">class</span> ZZ_pContext {
+
+
+<span class="Statement">public</span>:
+
+ZZ_pContext(); <span class="Comment">// q = &quot;null&quot;</span>
+
+<span class="Type">explicit</span> ZZ_pContext(<span class="Type">const</span> ZZ&amp; p);  <span class="Comment">// q = p</span>
+
+<span class="Type">void</span> save(); <span class="Comment">// q = CurrentModulus</span>
+<span class="Type">void</span> restore() <span class="Type">const</span>; <span class="Comment">// CurrentModulus = q</span>
+
+ZZ_pContext(<span class="Type">const</span> ZZ_pContext&amp;);  <span class="Comment">// copy</span>
+ZZ_pContext&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pContext&amp;); <span class="Comment">// assignment</span>
+~ZZ_pContext(); <span class="Comment">// destructor</span>
+
+
+};
+
+
+<span class="Comment">// An older interface:</span>
+<span class="Comment">// To describe this logic, think of a ZZ_pBak object</span>
+<span class="Comment">// of having two components: a modulus q (possibly &quot;null&quot;) and </span>
+<span class="Comment">// an &quot;auto-restore bit&quot; b.</span>
+
+<span class="Type">class</span> ZZ_pBak {
+<span class="Statement">public</span>:
+
+
+   ZZ_pBak();  <span class="Comment">// q = &quot;null&quot;, b = 0</span>
+
+   ~ZZ_pBak();  <span class="Comment">// if (b) CurrentModulus = q</span>
+
+   <span class="Type">void</span> save();  <span class="Comment">// q = CurrentModulus, b = 1 </span>
+   <span class="Type">void</span> restore();  <span class="Comment">// CurrentModulus = q, b = 0</span>
+
+
+<span class="Statement">private</span>:
+   ZZ_pBak(<span class="Type">const</span> ZZ_pBak&amp;);  <span class="Comment">// copy disabled</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pBak&amp;);  <span class="Comment">// assignment disabled</span>
+};
+
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Miscellany</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> clear(ZZ_p&amp; x); <span class="Comment">// x = 0</span>
+<span class="Type">void</span> set(ZZ_p&amp; x); <span class="Comment">// x = 1</span>
+
+<span class="Type">static</span> <span class="Type">long</span> ZZ_p::ModulusSize();
+<span class="Comment">//  ZZ_p::ModulusSize() returns ZZ_p::modulus().size()</span>
+
+<span class="Type">static</span> <span class="Type">const</span> ZZ_p&amp; ZZ_p::zero();
+<span class="Comment">// ZZ_p::zero() yields a read-only reference to zero</span>
+
+<span class="Type">void</span> swap(ZZ_p&amp; x, ZZ_p&amp; y);
+<span class="Comment">// swap x and y (done by &quot;pointer swapping&quot;, if possible).</span>
+
+<span class="Type">void</span> ZZ_p::swap(ZZ&amp; x);
+<span class="Comment">// swap member function</span>
+
+
+ZZ_p::ZZ_p(INIT_NO_ALLOC_TYPE);
+<span class="Comment">// special constructor: invoke as ZZ_p x(INIT_NO_ALLOC);</span>
+<span class="Comment">// initializes x to 0, but allocates no space (this is now the default)</span>
+
+ZZ_p::ZZ_p(INIT_ALLOC_TYPE);
+<span class="Comment">// special constructor: invoke as ZZ_p x(INIT_ALLOC);</span>
+<span class="Comment">// initializes x to 0, but allocates space</span>
+
+
+ZZ_p::allocate();
+<span class="Comment">// useful in conjunction with the INIT_NO_ALLLOC constructor:</span>
+<span class="Comment">// x.allocate() will pre-allocate space for x, using the</span>
+<span class="Comment">// current modulus</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

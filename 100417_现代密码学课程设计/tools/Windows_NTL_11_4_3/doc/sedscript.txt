@@ -1,0 +1,82 @@
+
+# This is a sed script to make most of the common syntactic
+# changes necessary to move from NTL 2.0 to 3.0.
+# If this file is in sedscript.txt (as it originally is)
+# the command
+#    sed -f sedscript.txt < old.c > new.c
+# will convert old.c to new.c with the necesary changes.
+#
+# Please note that this script is niether "sound" or "complete",
+# but should still be useful.
+
+# rename some classes
+s/BB/GF2X/g
+s/BB_p/GF2E/g
+s/GF2Vector/vec_GF2/g
+s/GF2Matrix/mat_GF2/g
+
+# rename some functions
+s/ZZ_pInit(/ZZ_p::init(/g
+s/zz_pInit(/zz_p::init(/g
+s/zz_pFFTInit(/zz_p::FFTInit(/
+s/GF2EInit(/GF2E::init(/g
+s/LowBits/trunc/g
+s/Long(/to_long(/g
+s/XDouble(/to_xdouble(/g
+s/Quad_float(/to_quad_float(/g
+s/trace(/TraceMod(/g
+s/norm(/NormMod(/g
+s/MinPoly(/MinPolyMod(/g
+s/IrredPoly(/IrredPolyMod(/g
+s/CharPoly(/CharPolyMod(/g
+
+# rename generic vector, pair, matrix macro instantations
+# these assume no embedded blanks
+s/vector_decl(\(.*\))/ntl_vector_decl(\1,vec_\1)/g
+s/vector_io_decl(\(.*\))/ntl_io_vector_decl(\1,vec_\1)/g
+s/vector_eq_decl(\(.*\))/ntl_eq_vector_decl(\1,vec_\1)/g
+#
+s/vector_impl(\(.*\))/ntl_vector_impl(\1,vec_\1)/g
+s/vector_impl_plain(\(.*\))/ntl_vector_impl_plain(\1,vec_\1)/g
+s/vector_io_impl(\(.*\))/ntl_io_vector_impl(\1,vec_\1)/g
+s/vector_eq_impl(\(.*\))/ntl_eq_vector_impl(\1,vec_\1)/g
+#
+s/matrix_decl(\(.*\))/ntl_matrix_decl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+s/matrix_io_decl(\(.*\))/ntl_io_matrix_decl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+s/matrix_eq_decl(\(.*\))/ntl_eq_matrix_decl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+#
+s/matrix_impl(\(.*\))/ntl_matrix_impl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+s/matrix_io_impl(\(.*\))/ntl_io_matrix_impl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+s/matrix_eq_impl(\(.*\))/ntl_eq_matrix_impl(\1,vec_\1,vec_vec_\1,mat_\1)/g
+#
+s/pair_decl(\(.*\),\(.*\))/ntl_pair_decl(\1,\2,pair_\1_\2)/g
+s/pair_io_decl(\(.*\),\(.*\))/ntl_pair_io_decl(\1,\2,pair_\1_\2)/g
+s/pair_eq_decl(\(.*\),\(.*\))/ntl_pair_eq_decl(\1,\2,pair_\1_\2)/g
+#
+s/pair_impl(\(.*\),\(.*\))/ntl_pair_impl(\1,\2,pair_\1_\2)/g
+s/pair_io_impl(\(.*\),\(.*\))/ntl_pair_io_impl(\1,\2,pair_\1_\2)/g
+s/pair_eq_impl(\(.*\),\(.*\))/ntl_pair_eq_impl(\1,\2,pair_\1_\2)/g
+
+# rename type names for the generic types
+# these allow embedded blanks
+s/pair *( *\([^,() ]*\) *, *\([^() ]*\) *)/pair_\1_\2/g
+s/vector *( *\([^() ]*\) *)/vec_\1/g
+s/matrix *( *\([^() ]*\) *)/mat_\1/g
+#
+# repeat to handle one nesting level
+#
+s/pair *( *\([^,() ]*\) *, *\([^() ]*\) *)/pair_\1_\2/g
+s/vector *( *\([^() ]*\) *)/vec_\1/g
+s/matrix *( *\([^() ]*\) *)/mat_\1/g
+#
+# repeat to handle two nesting levels
+#
+s/pair *( *\([^,() ]*\) *, *\([^() ]*\) *)/pair_\1_\2/g
+s/vector *( *\([^() ]*\) *)/vec_\1/g
+s/matrix *( *\([^() ]*\) *)/mat_\1/g
+
+# rename header files for generic types
+s/vector\.h/ntl_vector\.h/
+s/matrix\.h/ntl_matrix\.h/
+s/pair\.h/ntl_pair\.h/
+

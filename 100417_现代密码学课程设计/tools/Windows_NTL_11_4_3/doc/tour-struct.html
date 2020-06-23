@@ -1,0 +1,1396 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Programming Interface </title>
+</head>
+
+<center>
+<a href="tour-examples.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-modules.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Programming Interface 
+</p>
+</h1>
+
+<p> <hr> <p>
+
+In this section, we give a general overview of the 
+NTL's programming interface.
+The following section has links to detailed documentation on 
+each and every class and function.
+<p>
+<i>Note that only those classes and functions documented
+in these pages are a part of the "official API":
+all other interfaces are subject to change without notice.
+</i>
+
+<p>
+<p>
+<h2>
+Basic Ring Classes
+</h2>
+<p>
+
+The basic ring classes are:
+<ul>
+<li>
+<tt>ZZ</tt>: big integers
+<li>
+<tt>ZZ_p</tt>: big integers modulo <tt>p</tt>
+<li>
+<tt>zz_p</tt>: integers mod "single precision" <tt>p</tt>
+<li>
+<tt>GF2</tt>: integers mod 2
+<li>
+<tt>ZZX</tt>: univariate polynomials over <tt>ZZ</tt>
+<li>
+<tt>ZZ_pX</tt>: univariate polynomials over <tt>ZZ_p</tt>
+<li>
+<tt>zz_pX</tt>: univariate polynomials over <tt>zz_p</tt>
+<li>
+<tt>GF2X</tt>: polynomials over GF2
+<li>
+<tt>ZZ_pE</tt>: ring/field extension over ZZ_p
+<li>
+<tt>zz_pE</tt>: ring/field extension over zz_p
+<li>
+<tt>GF2E</tt>: ring/field extension over GF2
+<li>
+<tt>ZZ_pEX</tt>: univariate polynomials over <tt>ZZ_pE</tt>
+<li>
+<tt>zz_pEX</tt>: univariate polynomials over <tt>zz_pE</tt>
+<li>
+<tt>GF2EX</tt>: univariate polynomials over <tt>GF2E</tt>
+</ul>
+
+<p>
+All these classes all support basic
+arithmetic operators
+<pre>
+   +, -, (unary) -, +=, -=, ++, --, 
+   *, *=, /, /=, %, %=.
+</pre>
+
+<p>
+However, the operations 
+<pre>
+   %, %=
+</pre>
+only exist for integer and polynomial classes, and 
+do not exist
+for classes 
+<pre>
+  ZZ_p, zz_p, GF2, ZZ_pE, zz_pE, GF2E.
+</pre>
+
+<p>
+The standard equality operators (<tt>==</tt> and <tt>!=</tt>)
+are provided for each class.
+In addition, the class <tt>ZZ</tt>
+supports the usual inequality
+operators.
+
+<p>
+The integer and polynomial classes also support "shift operators"
+for left and right shifting.
+For polynomial classes, this means multiplication or division
+by a power of <tt>X</tt>.
+
+<p>
+<p>
+<h2>
+Floating Point Classes
+</h2>
+<p>
+
+In addition to the above ring classes, NTL also provides three
+different floating point classes: 
+<ul>
+<li>
+<tt>xdouble</tt>: "double precision" floating point with
+extended exponent range (for very large numbers);
+<li>
+<tt>quad_float</tt>: "quasi" quadruple-precision floating point;
+<li>
+<tt>RR</tt>: aribitrary precision floating point.
+</ul>
+
+
+<p>
+<p>
+<h2>
+Vectors and Matrices
+</h2>
+<p>
+
+There are also vectors and matrices over 
+<pre>
+   ZZ ZZ_p zz_p GF2 ZZ_pE zz_pE GF2E RR
+</pre>
+which support the usual arithmetic operations.
+
+<p>
+<p>
+<h2>
+Functional and Procedural forms
+</h2>
+<p>
+
+Generally, for any function defined by NTL, there is 
+a functional form, and a procedural form.
+For example:
+
+<!-- STARTPLAIN
+   ZZ x, a, n;
+   x = InvMod(a, n);  // functional form
+   InvMod(x, a, n);   // procedural form
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x, a, n;<br>
+&nbsp;&nbsp; x = InvMod(a, n);&nbsp;&nbsp;<font color="#0000ee"><i>// functional form</i></font><br>
+&nbsp;&nbsp; InvMod(x, a, n);&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// procedural form</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+This example illustrates the normal way these two forms differ
+syntactically.
+However, there are exceptions.
+
+First, if there is a operator that can play the role of the
+functional form, that is the notation used:
+
+<!-- STARTPLAIN
+   ZZ x, a, b;
+   x = a + b;    // functional form
+   add(x, a, b); // procedural form
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x, a, b;<br>
+&nbsp;&nbsp; x = a + b;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// functional form</i></font><br>
+&nbsp;&nbsp; add(x, a, b);&nbsp;<font color="#0000ee"><i>// procedural form</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+Second, if the functional form's name would be ambiguous,
+the return type is simply appended to its name:
+
+<!-- STARTPLAIN
+   ZZ_p x;
+   x = random_ZZ_p();  // functional form
+   random(x);          // procedural form
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ_p x;<br>
+&nbsp;&nbsp; x = random_ZZ_p();&nbsp;&nbsp;<font color="#0000ee"><i>// functional form</i></font><br>
+&nbsp;&nbsp; random(x);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// procedural form</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+Third, there are a number of conversion functions (see below), whose name
+in procedural form is <tt>conv</tt>, but whose name in 
+functional form is <tt>conv&lt;T&gt;</tt>, where <tt>T</tt> is the return type:
+
+<!-- STARTPLAIN
+   ZZ x;  
+   double a;
+
+   x = conv<ZZ>(a);  // functional form
+   conv(x, a);       // procedural form
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>double</b></font>&nbsp;a;<br>
+<br>
+&nbsp;&nbsp; x = conv&lt;ZZ&gt;(a);&nbsp;&nbsp;<font color="#0000ee"><i>// functional form</i></font><br>
+&nbsp;&nbsp; conv(x, a);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// procedural form</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+
+<p>
+The use of the procedural form may be more efficient,
+since it will generally avoid the creation of a temporary object
+to store its result.
+However, it is generally silly to get too worked up about
+such efficiencies, and the functional form is usually preferable
+because the resulting code is usually easier to understand.
+
+<p>
+The above rules governing procedural and functional forms apply
+to essentially all of the arithmetic classes supported by NTL,
+with the exception of
+<tt>xdouble</tt> and <tt>quad_float</tt>.
+These two classes only support the functional/operator notation
+for arithmetic operations (but do support both forms for conversion).
+
+
+
+
+<p>
+<p>
+<h2>
+Conversions and Promotions
+</h2>
+<p>
+
+As mentioned above, there are numerous explicit conversion routines,
+which come in both functional and procedural forms.
+A complete list of these can be found in 
+<a href="conversions.txt">conversions.txt</a>.
+This is the only place these are documented; they do not appear
+in the other ".txt" files.
+
+<p>
+It is worth mentioning here, however, that generic conversion operators
+are provided for vectors and matrices, which act component-wise.
+For example, since there is a conversion from <tt>ZZ</tt> to <tt>RR</tt>,
+there is automatically a conversion from 
+<tt>Vec&lt;ZZ&gt;</tt> to <tt>Vec&lt;RR&gt</tt>.
+
+
+
+
+
+<p>
+
+Even though there are no implicit conversions, users
+of NTL can still have most of their benefits.
+This is because all of the basic arithmetic operations 
+(in both their functional and procedural forms),
+comparison operators, and assignment are overloaded
+to get the effect of automatic "promotions".
+For example:
+
+<!-- STARTPLAIN
+   ZZ x, a;
+
+   x = a + 1;
+   if (x < 0) 
+      mul(x, 2, a);
+   else
+      x = -1;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x, a;<br>
+<br>
+&nbsp;&nbsp; x = a +&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(x &lt;&nbsp;<font color="#ff8c00">0</font>)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(x,&nbsp;<font color="#ff8c00">2</font>, a);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>else</b></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = -<font color="#ff8c00">1</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+
+These promotions are documented in the ".txt" files, 
+usually using a kind of "short hand" notation.
+For example:
+
+<!-- STARTPLAIN
+ZZ operator+(const ZZ& a, const ZZ& b);
+
+// PROMOTIONS: operator + promotes long to ZZ on (a, b).
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+ZZ operator+(<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; a,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; b);<br>
+<br>
+<font color="#0000ee"><i>// PROMOTIONS: operator + promotes long to ZZ on (a, b).</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+This means that in addition to the declared function, there
+are two other functions that are logically equivalent to the following:
+<!-- STARTPLAIN
+ZZ operator+(long a, const ZZ& b) { return ZZ(a) + b; }
+ZZ operator+(const ZZ& a, long b) { return a + ZZ(b); }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+ZZ operator+(<font color="#008b00"><b>long</b></font>&nbsp;a,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; b) {&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;ZZ(a) + b; }<br>
+ZZ operator+(<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; a,&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;b) {&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;a + ZZ(b); }<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+Note that this is not how NTL actually implements these functions.
+It is in generally more efficient to write
+<!-- STARTPLAIN
+   x = y + 2;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = y +&nbsp;<font color="#ff8c00">2</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+than it is to write
+<!-- STARTPLAIN
+   x = y + ZZ(2);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = y + ZZ(<font color="#ff8c00">2</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+The former notation avoids the creation and destruction
+of a temporary <tt>ZZ</tt>
+object to hold the value 2.
+
+<p>
+Also, don't have any inhibitions about writing tests like
+<!-- STARTPLAIN
+   if (x == 0) ...
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(x ==&nbsp;<font color="#ff8c00">0</font>) ...<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+and assignments like
+<!-- STARTPLAIN
+   x = 1; 
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">1</font>;&nbsp;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+These are all optimized, and  do not execute significaltly slower
+than the "lower level"  (and much less natural) 
+<!-- STARTPLAIN
+   if (IsZero(x)) ...
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(IsZero(x)) ...<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+and
+<!-- STARTPLAIN
+   set(x);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; set(x);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+Some types have even more promotions.
+For example, the type <tt>ZZ_pX</tt> has promotions
+from <tt>long</tt> and <tt>ZZ_p</tt>.
+Thus, the <tt>add</tt> function for <tt>ZZ_pX</tt> takes the following 
+argument types:
+<pre>
+   (ZZ_pX, ZZ_pX), (ZZ_pX, ZZ_p), (ZZ_pX, long), (ZZ_p, ZZ_pX), (long, ZZ_pX)
+</pre>
+Each of these functions effectively converts the argument to be promoted
+to a <tt>ZZ_pX</tt>.
+
+<p>
+Note that when promoting a pair of arguments, at least one
+of the arguments must be of the target type.
+
+<p>
+I have tried to be very consistent with these promotions so
+that one usually won't need to hunt through the documentation.
+For a given type, there is a natural, fixed set of types
+that promote to it.
+Here is the complete list:
+<!-- STARTPLAIN
+   destination  source
+   
+   xdouble      double
+   quad_float   double
+   RR           double
+   ZZ           long
+   ZZ_p         long
+   ZZ_pX        long, ZZ_p
+   zz_p         long
+   zz_pX        long, zz_p
+   ZZX          long, ZZ
+   GF2          long
+   GF2X         long, GF2
+   GF2E         long, GF2
+   GF2EX        long, GF2, GF2E
+   ZZ_pE        long, ZZ_p
+   ZZ_pEX       long, ZZ_p, ZZ_pE
+   zz_pE        long, zz_p
+   zz_pEX       long, zz_p, zz_pE
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; destination&nbsp;&nbsp;source<br>
+&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp; xdouble&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>double</b></font><br>
+&nbsp;&nbsp; quad_float&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>double</b></font><br>
+&nbsp;&nbsp; RR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>double</b></font><br>
+&nbsp;&nbsp; ZZ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font><br>
+&nbsp;&nbsp; ZZ_p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font><br>
+&nbsp;&nbsp; ZZ_pX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, ZZ_p<br>
+&nbsp;&nbsp; zz_p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font><br>
+&nbsp;&nbsp; zz_pX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, zz_p<br>
+&nbsp;&nbsp; ZZX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, ZZ<br>
+&nbsp;&nbsp; GF2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font><br>
+&nbsp;&nbsp; GF2X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, GF2<br>
+&nbsp;&nbsp; GF2E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, GF2<br>
+&nbsp;&nbsp; GF2EX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, GF2, GF2E<br>
+&nbsp;&nbsp; ZZ_pE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, ZZ_p<br>
+&nbsp;&nbsp; ZZ_pEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, ZZ_p, ZZ_pE<br>
+&nbsp;&nbsp; zz_pE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, zz_p<br>
+&nbsp;&nbsp; zz_pEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>, zz_p, zz_pE<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+All the promotions are documented, but here
+are a few general rules describing the available promotions:
+
+<ul>
+
+<li>
+All classes provide explicit constructors for promoted types.
+For example,
+<!-- STARTPLAIN
+   ZZ w = ZZ(1);
+   ZZ x(1);  // allowed
+   ZZ y{1};  // allowed in C++11
+   ZZ z = 1; // not allowed
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ w = ZZ(<font color="#ff8c00">1</font>);<br>
+&nbsp;&nbsp; ZZ x(<font color="#ff8c00">1</font>);&nbsp;&nbsp;<font color="#0000ee"><i>// allowed</i></font><br>
+&nbsp;&nbsp; ZZ y{<font color="#ff8c00">1</font>};&nbsp;&nbsp;<font color="#0000ee"><i>// allowed in C++11</i></font><br>
+&nbsp;&nbsp; ZZ z =&nbsp;<font color="#ff8c00">1</font>;&nbsp;<font color="#0000ee"><i>// not allowed</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<li>
+Promotions apply uniformly to both procedural and functional 
+forms, as well as to the corresponding assignment operator forms.
+E.g.,
+<!-- STARTPLAIN
+   x = x + 2;
+   add(x, x, 2);
+   x += 2;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = x +&nbsp;<font color="#ff8c00">2</font>;<br>
+&nbsp;&nbsp; add(x, x,&nbsp;<font color="#ff8c00">2</font>);<br>
+&nbsp;&nbsp; x +=&nbsp;<font color="#ff8c00">2</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<li>
+The addition, subtraction, multiplication, equality and comparison
+routines always promote both arguments.  E.g.,
+<!-- STARTPLAIN
+   x = 2 + y;
+   add(x, 2, y);
+   if (3 > x || y == 5) ...
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">2</font>&nbsp;+ y;<br>
+&nbsp;&nbsp; add(x,&nbsp;<font color="#ff8c00">2</font>, y);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(<font color="#ff8c00">3</font>&nbsp;&gt; x || y ==&nbsp;<font color="#ff8c00">5</font>) ...<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<li>
+The assignment operator always promotes the right-hand side.
+E.g.,
+<!-- STARTPLAIN
+   x = 2;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">2</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<li>
+For non-integer,  non-polynomial types, the division routine
+promotes both arguments.
+E.g.,
+<!-- STARTPLAIN
+   RR x, y, z;
+      ...
+   x = 1.0/y;
+   z = y/2.0;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; RR x, y, z;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">1.0</font>/y;<br>
+&nbsp;&nbsp; z = y/<font color="#ff8c00">2.0</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+For integer or polynomial types, the division routine
+promotes the denominator only. E.g.,
+<pre>
+   ZZ x, y;
+      ...
+   y = x/2;
+</pre>
+   
+
+<li>
+Matrix by scalar and vector by scalar multiplication promote the scalar.
+E.g.,
+<!-- STARTPLAIN
+   Vec<ZZ> v, w;
+      ...
+   v = w*2;
+   v = 2*w;
+   v *= 2;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; Vec&lt;ZZ&gt; v, w;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp; v = w*<font color="#ff8c00">2</font>;<br>
+&nbsp;&nbsp; v =&nbsp;<font color="#ff8c00">2</font>*w;<br>
+&nbsp;&nbsp; v *=&nbsp;<font color="#ff8c00">2</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+<li>
+The monomial constructors for polynomials
+and the corresponding <tt>SetCoeff</tt> routines 
+promote the coefficient argument.
+E.g.,
+<!-- STARTPLAIN
+   ZZX f;
+   f = ZZX(INIT_MONO, 3, 5);  // f == 5*X^3
+   SetCoeff(f, 0, 2);  // f == 5*x^3 + 2;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZX f;<br>
+&nbsp;&nbsp; f = ZZX(INIT_MONO,&nbsp;<font color="#ff8c00">3</font>,&nbsp;<font color="#ff8c00">5</font>);&nbsp;&nbsp;<font color="#0000ee"><i>// f == 5*X^3</i></font><br>
+&nbsp;&nbsp; SetCoeff(f,&nbsp;<font color="#ff8c00">0</font>,&nbsp;<font color="#ff8c00">2</font>);&nbsp;&nbsp;<font color="#0000ee"><i>// f == 5*x^3 + 2;</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<li>
+In module <tt>ZZ</tt>, the modular arithmetic routines, as well as 
+the bit-wise <i>and</i>, <i>or</i>, and <i>xor</i> routines promote their arguments.
+There are also several other routines in module <tt>ZZ</tt>
+that have both <tt>ZZ</tt> and <tt>long</tt> versions, e.g.,
+<tt>NumBits</tt>, <tt>bit</tt>, <tt>weight</tt>.
+Check the documentation in <a href="ZZ.cpp.html"><tt>ZZ.txt</tt></a> 
+for complete details.
+
+</ul>
+
+<p>
+
+
+<p>
+<p>
+<h3>
+Some Conversion and Promotion Technicalities 
+</h3>
+<p>
+
+<p>
+Usually, conversions and promotions are semantically equivalent.
+There are three exceptions, however.
+
+<p>
+One exception 
+is conversion of floating point <tt>double</tt> to
+<tt>ZZ</tt>.
+The safest way to do this is to apply an explicit conversion operator,
+and not to rely on promotions.
+For example, consider
+<!-- STARTPLAIN
+   ZZ a; double x;
+
+   a = a + x;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ a;&nbsp;<font color="#008b00"><b>double</b></font>&nbsp;x;<br>
+<br>
+&nbsp;&nbsp; a = a + x;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+This is equivialent to
+<!-- STARTPLAIN
+   a = a + long(x);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; a = a +&nbsp;<font color="#008b00"><b>long</b></font>(x);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+and to 
+<!-- STARTPLAIN
+   a = a + ZZ(x);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; a = a + ZZ(x);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+One could also use an explicit conversion function:
+<!-- STARTPLAIN
+   a = a + conv<ZZ>(x);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; a = a + conv&lt;ZZ&gt;(x);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+This last version guarantees that there is no loss of precision,
+and also guarantees that the floor of <tt>x</tt> is computed.
+With the first version, one may lose precision when <tt>x</tt>
+is converted to a <tt>long</tt>, and also the direction of truncation
+for negative numbers is implementation dependent
+(usually truncating towards zero, instead of computing the floor).
+<p>
+The second exception is conversion of <tt>unsigned int</tt>
+or <tt>unsigned long</tt> to <tt>ZZ</tt>.
+Again, the safest way to do this is with an explicit conversion operator.
+As above, if one relies on promotions, the unsigned integer
+will be first converted to a <i>signed</i> <tt>long</tt>, which is most
+likely not what was intended.
+<p>
+The third exception can occur
+on 64-bit machines when 
+converting a signed or unsigned <tt>long</tt> to one of NTL's 
+extended precision floating-point types (<tt>RR</tt> or <tt>quad_float</tt>).
+These types only provide promotions from <tt>double</tt>,
+and converting a <tt>long</tt> to a <tt>double</tt> on a 64-bit machine
+can lead to a loss of precision.
+Again, if one uses the appropriate NTL conversion routine,
+no loss of precision will occur.
+
+<p>
+
+Another pitfall too avoid is initialzing <tt>ZZ</tt>'s
+with integer constants that are too big.
+Consider the following:
+<!-- STARTPLAIN
+   ZZ x;
+   x = 1234567890123456789012;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x;<br>
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">1234567890123456789012</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+This integer constant is too big, and this overflow
+condition may or may not cause your compiler to give
+you a warning or an error.
+The easiest way to introduce such large constants into your
+program is as follows:
+<!-- STARTPLAIN
+   ZZ x;
+   x = conv<ZZ>("1234567890123456789012");
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x;<br>
+&nbsp;&nbsp; x = conv&lt;ZZ&gt;(<font color="#4a708b">&quot;1234567890123456789012&quot;</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Conversion functions are provided for converting <tt>C</tt> character strings
+to  the types <tt>ZZ</tt>, <tt>RR</tt>, <tt>quad_float</tt>, 
+and <tt>xdouble</tt>.
+
+<p>
+One should also be careful when converting to <tt>RR</tt>.
+All of these conversions round to the current working precision, which is
+usually, but not always, what one wants.
+
+<p>
+<p>
+<h2>
+Input and Output
+</h2>
+<p>
+NTL provides input and output operators for all
+types, using the usual conventions for input and output streams.
+If an input error occurs, the "fail bit" of the input stream
+is set, and the input variable remains unchanged.
+<p>
+Although conversions from <tt>C</tt>-style character strings
+to the types <tt>ZZ</tt>, <tt>xdouble</tt>, <tt>quad_float</tt>,
+and <tt>RR</tt> are provided, one can always read and write
+to <tt>C++</tt> character streams using the <tt>stringstream</tt>
+class from the standard library, in conjunction with the input
+and output operators provided by NTL.
+
+<p>
+<p>
+<h2>
+Aliasing
+</h2>
+<p>
+
+An important feature of NTL is that aliasing of input and output
+parameters is generally allowed.  For example, if you
+write <tt>mul(x, a, b)</tt>, then <tt>a</tt> or <tt>b</tt>
+may alias (have the same address as) <tt>x</tt>
+(or any object that <tt>x</tt> contains, e.g., scalar/vector
+or scalar/polynomial multiplication).
+
+<p>
+One exception to this rule:
+the generic conversions provided for vectors and
+matrices assume that their inputs do not alias their outputs.
+
+
+<p>
+<p>
+<h2>
+Constructors, Destructors, and Memory Management
+</h2>
+<p>
+
+NTL generally takes care of managing the space occupied by large,
+dynamically sized objects, like objects of class <tt>ZZ</tt> or any of
+NTL's dynamic vectors.
+However, it is helpful to understand a little of what is happening behind the scenes.
+
+<p>
+Almost all classes are implemented as a pointer, and the default constructor
+just sets this pointer to 0.
+Space is allocated for the object as needed, and when the object's
+destructor is called, the space is freed.
+
+<p>
+Copies are "deep" rather than "shallow".
+This means the data itself is copied, and not just a pointer to the data.
+If the destination object does not have enough space to hold the source data,
+then the space held by the destination object is "grown".
+This is done using the <tt>C</tt> routine <tt>realloc()</tt>.
+Note, however, that if the source object is smaller than the destination
+object, the space held by the destination object is retained.
+This strategy usually yields reasonable behaviour;
+however, one can take explicit control of the situation if necessary, since
+almost all NTL classes have a method <tt>kill()</tt>
+which frees all space held by the object, and sets its state to
+the default initial state (a value 0 or a zero-length vector).
+
+<p>
+The only exception to the above is the class
+<tt>ZZ_pContext</tt>, and the analogous classes for <tt>zz_p</tt>, 
+<tt>ZZ_pE</tt>, <tt>zz_pE</tt>, and <tt>GF2E</tt>.
+These objects are implemented as referenced-counted pointers,
+and copies are "shallow".
+
+<p> 
+While we are discussing initialization, there is one technical point
+worth mentioning.
+It is safe to declare global objects of any NTL type 
+as long as one uses only the default constructor.
+For example, the global declarations
+<!-- STARTPLAIN
+   ZZ global_integer;
+   Vec<ZZ_p> global_vector;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ global_integer;<br>
+&nbsp;&nbsp; Vec&lt;ZZ_p&gt; global_vector;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+should always work, since their initialization only involves
+setting a pointer to 0.
+However,
+one should avoid initializing global objects with
+non-default constructors, and should avoid doing anything that would lead to
+non-trivial computations with NTL objects
+prior to the beginning of the execution of routine <tt>main()</tt>.
+The reasons for this are quite esoteric and can only be appreciated
+by a true
+<tt>C++</tt> afficianado.
+Actually, most such initializations and computations probably will work,
+but it is somewhat platform dependant.
+
+<p>
+Normal people usually do none of these things, so all of this
+should not matter too much.
+There is, however, one possible exception to this.
+A programmer might want to have a global constant initialized like this:
+<!-- STARTPLAIN
+   const quad_float Pi = conv<quad_float>("3.1415926535897932384626433832795029");
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;quad_float Pi = conv&lt;quad_float&gt;(<font color="#4a708b">&quot;3.1415926535897932384626433832795029&quot;</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+While this probably will work fine on most platforms, 
+it may not be an entirely portable construction,
+since it will involve a non-trivial computation before
+execution of <tt>main()</tt> begins.
+A more portable strategy
+is to define a function returning a read-only
+reference:
+<!-- STARTPLAIN
+   const quad_float& Pi()
+   {
+      static quad_float pi = 
+         conv<quad_float>("3.1415926535897932384626433832795029");
+      return pi;
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;quad_float&amp; Pi()<br>
+&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>static</b></font>&nbsp;quad_float pi =&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conv&lt;quad_float&gt;(<font color="#4a708b">&quot;3.1415926535897932384626433832795029&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;pi;<br>
+&nbsp;&nbsp; }<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+and then call the function <tt>Pi()</tt> to get a read-only reference
+to this constant value:
+<!-- STARTPLAIN
+   area = Pi()*r*r;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; area = Pi()*r*r;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+The initialization will then take place the first time <tt>Pi()</tt>
+is called, which is presumably after <tt>main()</tt> starts,
+and so everything should work fine.
+This is a very simple and general strategy that most <tt>C++</tt>
+experts recommend using whenever the initialization of a non-global
+object requires non-trivial computation.
+
+
+
+<p>
+<p>
+<h2>
+Residue class rings and modulus switching
+</h2>
+<p>
+
+NTL provides a number of classes to represent residue class rings:
+<pre>
+   ZZ_p, zz_p, GF2, ZZ_pE, lzz_pE, GF2E.
+</pre>
+For each such class, except <tt>GF2</tt>, there is a global, current modulus.
+
+<p>
+We focus on the class <tt>ZZ_p</tt>, but similar comments apply to the other
+residue class types.
+For example, for <tt>ZZ_p</tt>, you can set the current modulus to <tt>p</tt>
+as follows:
+<!-- STARTPLAIN
+   ZZ_p::init(p);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ_p::init(p);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+The current modulus <i>must</i> be initialized before any operations
+on <tt>ZZ_p</tt>'s are performed.  The modulus may be changed, and a mechanism is provided
+for saving and restoring a modulus.
+
+<p>
+Here is what you do to save the current modulus, temporarily
+set it to p, and automatically restore it:
+
+<!-- STARTPLAIN
+   { 
+      ZZ_pPush push(p); 
+
+      ...
+
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; {&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZ_pPush push(p);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<br>
+&nbsp;&nbsp; }<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+The constructor for <tt>push</tt> will save the current modulus, and install <tt>p</tt> as the
+current modulus.  The destructor for <tt>push</tt> will restore the old modulus when the
+scope enclosing it exits.  This is the so-called RAII (resource acquisition is
+initialization) paradigm.
+
+<p>
+You could also do the following:
+
+<!-- STARTPLAIN
+   {
+      ZZ_pPush push; // just backup current modulus
+
+        ...
+
+      ZZ_p::init(p1); // install p1 
+
+        ...
+
+      ZZ_p::init(p2); // install p2
+
+      // reinstall original modulus at close of scope
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZ_pPush push; <font color="#0000ed"><i>// just backup current modulus</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZ_p::init(p1); <font color="#0000ed"><i>// install p1 </i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZ_p::init(p2); <font color="#0000ed"><i>// install p2</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ed"><i>// reinstall original modulus at close of scope</i></font><br>
+&nbsp;&nbsp; }<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+<b>Warning:</b> <tt>C++</tt> syntax can be rather unfriendly sometimes.
+When using RAII objects like <tt>ZZ_pPush</tt>, watch out for
+the following errors:
+<!-- STARTPLAIN
+   ZZ_pPush push();  // ERROR: local declaration of a function!!
+   ZZ_pPush(p);      // ERROR: temporary RAII-object created and 
+                     //        immediately destroyed!!
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; ZZ_pPush push();&nbsp;&nbsp;<font color="#0000ed"><i>// ERROR: local declaration of a function!!</i></font><br>
+&nbsp;&nbsp; ZZ_pPush(p);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ed"><i>// ERROR: temporary RAII-object created and </i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000ed"><i>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;immediately destroyed!!</i></font><br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Unfortunately, most compilers do not issue any warnings
+in these situations.
+I have fallen into both traps myself.
+      
+<p>
+The <tt>ZZ_pPush</tt> interface is good for implementing simple stack-like
+"context switching".  For more general context switching,
+use the class <tt>ZZ_pContext</tt>:
+<!-- STARTPLAIN
+   ZZ_p::init(p);     // set current modulus to p
+
+      ...
+
+   ZZ_pContext context;
+   context.save();    // save the current modulus p
+
+      ...
+
+   ZZ_p::init(q);     // set current modulus to q
+
+      ...
+   
+   context.restore(); // restore p as the current modulus
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+&nbsp;&nbsp; ZZ_p::init(p);&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000ed"><i>// set current modulus to p</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<br>
+&nbsp;&nbsp; ZZ_pContext context;<br>
+&nbsp;&nbsp; context.save();&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ed"><i>// save the current modulus p</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<br>
+&nbsp;&nbsp; ZZ_p::init(q);&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000ed"><i>// set current modulus to q</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp; <br>
+&nbsp;&nbsp; context.restore(); <font color="#0000ed"><i>// restore p as the current modulus</i></font><br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Note that <tt>ZZ_pContext</tt>'s are essentially "smart pointers",
+and they may be copied.
+Generally speaking, saving, restoring, and copying <tt>ZZ_pContext</tt>'s
+are very cheap operations.
+Likewise, saving and restoring contexts using <tt>ZZ_pPush</tt>
+objects are very cheap operations.
+
+
+<p>
+It is critical that <tt>ZZ_p</tt> objects created under one <tt>ZZ_p</tt> modulus are not used in
+any non-trivial way "out of context", i.e., under a different (or undefined)
+<tt>ZZ_p</tt> modulus.  However, for ease-of-use, some operations may be safely
+performed out of context.  These safe operations include: the default and copy
+constructor, the destructor, and the assignment operator.  In addition it is
+generally safe to read any <tt>ZZ_p</tt> object out of context (i.e., printing it out, or
+fetching its underlying representive using the rep() function).
+
+<p>
+Any unsafe uses out of context are not in general checked, and may 
+lead to unpredictable behavior.
+
+
+
+<p>
+The implementations of <tt>Vec&lt;ZZ_p&gt;</tt>, <tt>Vec&lt;GF2E&gt;</tt>, and <tt>Vec&lt;GF2&gt;</tt> 
+are specialized to manage memory more
+efficiently than in the default implementation of <tt>Vec&lt;T&gt;</tt>:
+<ul>
+<p><li>
+Contiguous elements in a <tt>Vec&lt;ZZ_p&gt;</tt> are allocated in a contiguous region of
+memory.  This reduces the number of calls to the memory allocator, and  
+leads to greater locality of reference.  A consequence of
+this implementation is that any calls to SetLength on a <tt>Vec&lt;ZZ_p&gt;</tt> object will
+need to use information about the current modulus, and so such calls should
+only be done "in context".  That said, it is still safe to construct a
+<tt>Vec&lt;ZZ_p&gt;</tt> using the default or copy contructor, and to assign or append one
+<tt>Vec&lt;ZZ_p&gt;</tt> to another "out of context".
+
+<p><li>
+The same strategy is used for <tt>Vec&lt;GF2E&gt;</tt>'s.
+
+<p><li>
+In any case, the above restrictions adhere to the general rules
+for safely using residue class ring objects "out of context".
+
+<p><li>
+<tt>Vec&lt;GF2&gt;</tt>'s are implemented by packing coefficients (which are just bits)
+into words.  A mechanism is provided to make indexing these vectors
+behave like normal vectors, via a class the mimics ordinary references
+to <tt>GF2</tt>'s.  
+</ul>
+
+<p>
+<p>
+<h2>
+C+11 Support
+</h2>
+<p>
+
+As of version 10.4, NTL supports a number of C++11 specific features.
+To enable this support, you must build NTL with <tt>NTL_STD_CXX11=on</tt>.
+This build flag is  automatically turned on by a number of other
+NTL features that require NTL support.
+
+<p>
+The most important of these is "move semantics".
+Most of the important classes are now equipped with
+"move" constructors and "move" assignment operators.
+Where possible, these are declared <tt>noexcept</tt>.
+NTL's <tt>Vec</tt> class and STL's <tt>vector</tt> class
+can take advantage of noexcept move constructors in certain
+situations.
+<a href="#efficiency">See below</a> 
+for more details regarding exceptions and move semantics.
+
+
+
+
+
+<p>
+<p>
+<h2>
+<a name="except">Error Handling and Exceptions</a>
+</h2>
+<p>
+Prior to version 8.0 of NTL, errors were dealt with in a simlple way:
+print an error message and abort.
+
+As of version 8.0, NTL provides error handling with exceptions.
+To use this feature, you will need to configure NTL with the
+<tt>NTL_EXCEPTIONS</tt> flag turned on.
+You will also need a <tt>C++11</tt> compiler.
+
+<p>
+The exceptions thrown by NTL are either a <tt>std::bad_alloc</tt>
+exception (in case of memory allocation error),
+or a class (defined in namespace NTL) 
+derived from <tt>std::runtime_error</tt>:
+<ul>
+<li> <tt>ErrorObject</tt> &#8594; <tt>std::runtime_error</tt>
+<ul> <li> base class  </ul>
+<li> <tt>LogicErrorObject</tt> &#8594; <tt>ErrorObject</tt>
+<ul> <li> used to indicate a logic error, such as incorrect
+          function parameters, index out of range, etc. </ul>
+<li> <tt>ArithmeticErrorObject</tt> &#8594; <tt>ErrorObject</tt>
+<ul> <li> used to indicate an arithmetic error, such as divide by zero </ul>
+<li> <tt>ResourceErrorObject</tt> &#8594; <tt>ErrorObject</tt>
+<ul> <li> used to indicate an overflow error (e.g., when a number cannot be stored as a <tt>long</tt>) </ul>
+<li> <tt>FileErrorObject</tt> &#8594; <tt>ErrorObject</tt>
+<ul> <li> used to indicate a problem opening or closing a file</ul>
+<li> <tt>InputErrorObject</tt> &#8594; <tt>ErrorObject</tt>
+<ul> <li> used to indicate a problem reading from a stream</ul>
+</ul>
+
+<p>
+All of these error objects override the <tt>what()</tt>
+method of <tt>std::exception</tt> with an appropriate
+error message.
+
+<p>
+There is also a special exception class <tt>InvModErrorObject</tt>,
+which is derived from <tt>ArithmeticErrorObject</tt>,
+and is thrown when a modular inverse computation over <tt>ZZ</tt> fails
+(either directly, or indirectly through <tt>PowerMod</tt>
+computation, or via an inverse computation in <tt>ZZ_p</tt>).
+The  <tt>InvModErrorObject</tt> provides two methods, 
+<tt>get_a()</tt> and <tt>get_n()</tt>, which provide read-only
+references to the offending objects <tt>a</tt> and <tt>n</tt>
+(so <tt>GCD(a, n) != 1</tt>).
+
+<p>
+The generic class <tt>ErrorObject</tt> is not thrown directly
+by any NTL routines, except for the legacy function <tt>Error</tt>,
+which is no longer called by any NTL routines.
+New functions 
+<pre>
+   MemoryError, LogicError, ArithmeticError, ResourceError, FileError, InputError
+</pre>
+are used to throw exceptions derived from <tt>ErrorObject</tt>.
+
+<p>
+<a name="efficiency">
+<b>Efficiency considerations:</b>
+</a>
+Because of a bunch of design decsions that were made long before
+<tt>C++11</tt> came along, most of the important NTL classes
+<i>do not</i> have <tt>noexcept</tt> move constructors <i>if</i> you enable
+exceptions in NTL, which can reduce performance somewhat.
+Therefore, if you do not really need to have NTL handle errors
+by throwing exceptions,  
+and you do want to maximize performance,
+you should <i>not</i> enable exceptions
+in NTL.
+But even with exceptions enabled, the performance penalty
+should not be terrible.
+
+
+<p>
+<b>Issues with GMP:</b>
+GMP itself (at least as of version 6.1.2) 
+provides only the very crude print-message-then-abort
+error handling.
+Note that NTL only uses low-level GMP routines (the <tt>mpn</tt>-level
+routines),
+and these routines should only abort if they cannot allocate space
+for temporary big integers within GMP itself.
+So this should only be an issue of you are working with some
+very large integers.
+The GMP developers are working on improving their error handling.
+When that happens, NTL will inherit these improvements.
+If you really need proper error handling, and are willing to pay
+a certain performance penalty, then you should configure
+and build NTL <i>without</i> GMP.
+
+<p>
+<b>Issues with gf2x:</b>
+Similar comments apply to NTL builds that use the <tt>gf2x</tt>
+library.
+
+
+<p>
+<p>
+<b>Exception safety:</b>
+I have tried to carefully document exception safety characterstics
+for just a few, critical, low-level classes: 
+vectors and matrices 
+(<a href="vector.cpp.html">vector.txt</a> and
+<a href="matrix.cpp.html">matrix.txt</a>),
+smart pointer classes (<a href="SmartPtr.cpp.html">SmartPtr.txt</a>),
+thread-safe lazy initialization classes
+(<a href="Lazy.cpp.html">Lazy.txt</a> and 
+<a href="LazyTable.cpp.html">LazyTable.txt</a>).
+Otherwise, it is only safe to assume that NTL functions
+provide a weak exception-safety guarantee:
+if an exception is thrown, the stack unwinding process will
+will not leak any resources and will leave all modified objects
+in a reasonable state: at least, such objects may be safely 
+destroyed, and may also be assigned to or reset; 
+however, they may not necessarily
+be safely used as inputs to other functions.
+When stronger exception safety is required, you can always 
+compute results into dynamically allocated objects
+pointed to by "smart pointers",
+and then move or swap these pointers into place after all computations
+have succeeded.
+<p>
+As NTL provides <tt>swap</tt> functions for all its major classes,
+and as <tt>swap</tt> functions have evolved to play a critical role
+in writing exception-safe code, they deserve a special mention here:
+<ul>
+<p><li> 
+For all classes except <tt>ZZ</tt>, <tt>ZZ_p</tt>, <tt>GF2X</tt>,
+<tt>GF2E</tt>, and <tt>Vec&lt;T&gt;</tt>, the swap function is guaranteed to not throw
+any exceptions.
+<p><li>
+For <tt>ZZ</tt> objects that are not elements of a <tt>ZZVec</tt>,
+<tt>ZZ_p</tt> objects that are not elements of a <tt>Vec&lt;ZZ_p&gt;</tt>,
+<tt>GF2X</tt> objects that are not elements of a <tt>GF2XVec</tt>,
+and
+<tt>GF2E</tt> objects that are not elements of a <tt>Vec&lt;GF2E&gt;</tt>,
+the swap function is guaranteed to not throw any exceptions.
+<p><li>
+For  <tt>Vec&lt;T&gt;</tt> objects whose length has not been fixed,
+the swap function is guaranteed to not throw any exceptions.
+<p><li>
+For the remaining cases, the swap function provides a strong exception-safety
+guarantee (the operation either succeeds, or throws and leaves data unchanged).
+</ul>
+These rules are unfortunatley a bit complicated, due to NTL's historical
+legacy, and to its special memory management of
+<tt>ZZVec</tt>,
+<tt>Vec&lt;ZZ_p&gt;</tt>,
+<tt>GF2XVec</tt>,
+and
+<tt>Vec&lt;GF2E&gt;</tt>
+types.
+
+
+
+
+
+
+<p>
+
+<center>
+<a href="tour-examples.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-modules.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+
+</body>
+</html>

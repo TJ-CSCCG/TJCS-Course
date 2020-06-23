@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/tools.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: tools</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Some useful tools that are used throughout NTL.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;cstdlib&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;cmath&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;cstring&gt;</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;utility&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;iostream&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;new&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;stdexcept&gt;</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/config.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/mach_desc.h&gt;</span>
+
+
+
+
+<span class="Type">double</span> GetTime();
+<span class="Comment">// returns number of seconds of CPU time used by this process.</span>
+
+<span class="Type">double</span> GetWallTime();
+<span class="Comment">// returns the &quot;wall clock&quot; time, measured since the beginning</span>
+<span class="Comment">// of some unspecified epoch.  This is useful for measuring the</span>
+<span class="Comment">// performance of multi-threaded code, since in this case,</span>
+<span class="Comment">// GetTime does not return very useful information in that case.</span>
+
+<span class="Type">void</span> PrintTime(ostream&amp; s, <span class="Type">double</span> t);
+<span class="Comment">// prints the time t (in seconds) to s in the format</span>
+<span class="Comment">//     ss  or  mm:ss  or  hh:mm:ss,</span>
+<span class="Comment">// where the value t is first rounded to the nearest integer.</span>
+
+
+<span class="Type">long</span> IsWhiteSpace(<span class="Type">long</span> c);
+<span class="Comment">// returns 1 if c is &quot;white space&quot; (as defined by isspace is the</span>
+<span class="Comment">// standard library...usually blanks, tabs, newlines), and 0 otherwise.</span>
+
+<span class="Type">long</span> SkipWhiteSpace(istream&amp; s);
+<span class="Comment">// skips white space (as defined by IsWhiteSpace).</span>
+<span class="Comment">// Return value is 0 if end-of-file is reached; otherwise,</span>
+<span class="Comment">// return value is 1.</span>
+
+
+<span class="Type">long</span> IsEOFChar(<span class="Type">long</span> c);
+<span class="Comment">// test if c == EOF</span>
+
+
+<span class="Type">long</span> CharToIntVal(<span class="Type">long</span> c);
+<span class="Comment">// returns the hexidecimal value of c if c is '0'..'9', 'A'..'F', or 'a'..'f';</span>
+<span class="Comment">// otherwise, the return value is -1.</span>
+
+<span class="Type">char</span> IntValToChar(<span class="Type">long</span> x);
+<span class="Comment">// returns the hexadecimal digit '0'..'9', 'a'..'f' representing x;</span>
+<span class="Comment">// an error is raised if x &lt; 0 or x &gt; 15.</span>
+
+<span class="Type">long</span> IsFinite(<span class="Type">double</span> *p);
+<span class="Comment">// Returns 1 if *p is a &quot;finite&quot; floating point number.</span>
+<span class="Comment">// A pointer is used to ensure that the number is in memory,</span>
+<span class="Comment">// which on some architectures (notably x86/Pentium) can make a difference.</span>
+
+<span class="Comment">// some min/max and swap routines:</span>
+
+<span class="Type">int</span> min(<span class="Type">int</span> a, <span class="Type">int</span> b);
+<span class="Type">int</span> max(<span class="Type">int</span> a, <span class="Type">int</span> b);
+
+<span class="Type">long</span> min(<span class="Type">long</span> a, <span class="Type">long</span> b);
+<span class="Type">long</span> max(<span class="Type">long</span> a, <span class="Type">long</span> b);
+
+<span class="Type">long</span> min(<span class="Type">int</span> a, <span class="Type">long</span> b);
+<span class="Type">long</span> max(<span class="Type">int</span> a, <span class="Type">long</span> b);
+
+<span class="Type">long</span> min(<span class="Type">long</span> a, <span class="Type">int</span> b);
+<span class="Type">long</span> max(<span class="Type">long</span> a, <span class="Type">int</span> b);
+
+<span class="Type">unsigned</span> <span class="Type">int</span> min(<span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">unsigned</span> <span class="Type">int</span> b);
+<span class="Type">unsigned</span> <span class="Type">int</span> max(<span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">unsigned</span> <span class="Type">int</span> b);
+
+<span class="Type">unsigned</span> <span class="Type">long</span> min(<span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">unsigned</span> <span class="Type">long</span> b);
+<span class="Type">unsigned</span> <span class="Type">long</span> max(<span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">unsigned</span> <span class="Type">long</span> b);
+
+<span class="Type">unsigned</span> <span class="Type">long</span> min(<span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">unsigned</span> <span class="Type">long</span> b);
+<span class="Type">unsigned</span> <span class="Type">long</span> max(<span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">unsigned</span> <span class="Type">long</span> b);
+
+<span class="Type">unsigned</span> <span class="Type">long</span> min(<span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">unsigned</span> <span class="Type">int</span> b);
+<span class="Type">unsigned</span> <span class="Type">long</span> max(<span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">unsigned</span> <span class="Type">int</span> b);
+
+
+<span class="Type">void</span> swap(<span class="Type">long</span>&amp; a, <span class="Type">long</span>&amp; b);
+<span class="Type">void</span> swap(<span class="Type">int</span>&amp; a, <span class="Type">int</span>&amp; b);
+
+
+<span class="Comment">// defined here are all the conversion routines among the types </span>
+<span class="Comment">// int, long, float, double.  See conversions.txt for complete details.</span>
+
+
+
+<span class="Comment">// The following platform-dependent macros are defined:</span>
+
+<span class="PreProc">#define NTL_BITS_PER_LONG      (...)  </span><span class="Comment">/*</span><span class="Comment"> bits in a long </span><span class="Comment">*/</span>
+<span class="PreProc">#define NTL_MAX_LONG           (...)  </span><span class="Comment">/*</span><span class="Comment"> max value of a long </span><span class="Comment">*/</span>
+<span class="PreProc">#define NTL_MIN_LONG           (...)  </span><span class="Comment">/*</span><span class="Comment"> min value of a long </span><span class="Comment">*/</span>
+
+<span class="PreProc">#define NTL_BITS_PER_INT       (...)  </span><span class="Comment">/*</span><span class="Comment"> bits in a int </span><span class="Comment">*/</span>
+<span class="PreProc">#define NTL_MAX_INT            (...)  </span><span class="Comment">/*</span><span class="Comment"> max value of a int </span><span class="Comment">*/</span>
+<span class="PreProc">#define NTL_MIN_INT            (...)  </span><span class="Comment">/*</span><span class="Comment"> min value of a int </span><span class="Comment">*/</span>
+
+<span class="PreProc">#define NTL_DOUBLE_PRECISION   (...)  </span><span class="Comment">/*</span><span class="Comment"> # of bits of precision in a double </span><span class="Comment">*/</span>
+<span class="PreProc">#define NTL_FDOUBLE_PRECISION  (...)  </span><span class="Comment">/*</span><span class="Comment"> the double value </span>
+<span class="Comment">                                        2^{NTL_DOUBLE_PRECISION-1} </span><span class="Comment">*/</span>
+
+<span class="PreProc">#define NTL_ARITH_RIGHT_SHIFT  (...)  </span><span class="Comment">/*</span><span class="Comment"> 1 if signed right-shift is</span>
+<span class="Comment">                                        arithmetic; 0 otherwise </span><span class="Comment">*/</span>
+
+<span class="PreProc">#define NTL_EXT_DOUBLE         (...)  </span><span class="Comment">/*</span><span class="Comment"> 1 if platform has &quot;extended&quot; doubles;</span>
+<span class="Comment">                                        0 otherwise </span><span class="Comment">*/</span>
+
+
+<span class="Comment">// ERROR HANDLING</span>
+
+<span class="Type">void</span> TerminalError(<span class="Type">const</span> <span class="Type">char</span> *s);
+<span class="Comment">// print an error message and call abort</span>
+
+<span class="Type">extern</span> <span class="Type">thread_local</span> <span class="Type">void</span> (*ErrorMsgCallback)(<span class="Type">const</span> <span class="Type">char</span> *);
+<span class="Type">extern</span> <span class="Type">thread_local</span> <span class="Type">void</span> (*ErrorCallback)();
+<span class="Comment">// Pointers (initially NULL) to callback functions.</span>
+<span class="Comment">// Upon encountering an unrecoverable error with an error</span>
+<span class="Comment">// message s, the following happens:</span>
+<span class="Comment">//</span>
+<span class="Comment">//    if (ErrorMsgCallback)</span>
+<span class="Comment">//       (*ErrorMsgCallback)(s);</span>
+<span class="Comment">//    else</span>
+<span class="Comment">//       cerr &lt;&lt; s &lt;&lt; &quot;\n&quot;;</span>
+<span class="Comment">// </span>
+<span class="Comment">//    if (ErrorCallback) (*ErrorCallback)();</span>
+<span class="Comment">//    abort();</span>
+<span class="Comment">//</span>
+<span class="Comment">// NOTE: if threads are enabled, these are actually thread_local variables.</span>
+
+
+
+<span class="Comment">// The following classes are defined even if exceptions are not</span>
+<span class="Comment">// enabled with NTL_EXCEPTIONS</span>
+
+<span class="Type">class</span> ErrorObject : <span class="Statement">public</span> runtime_error {
+<span class="Statement">public</span>:
+   ErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+<span class="Type">class</span> LogicErrorObject : <span class="Statement">public</span> ErrorObject {
+<span class="Statement">public</span>:
+   LogicErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+<span class="Type">class</span> ArithmeticErrorObject : <span class="Statement">public</span> ErrorObject {
+<span class="Statement">public</span>:
+   ArithmeticErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+<span class="Type">class</span> ResourceErrorObject : <span class="Statement">public</span> ErrorObject {
+<span class="Statement">public</span>:
+   ResourceErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+<span class="Type">class</span> FileErrorObject : <span class="Statement">public</span> ErrorObject {
+<span class="Statement">public</span>:
+   FileErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+<span class="Type">class</span> InputErrorObject : <span class="Statement">public</span> ErrorObject {
+<span class="Statement">public</span>:
+   InputErrorObject(<span class="Type">const</span> <span class="Type">char</span> *msg);
+};
+
+
+<span class="Comment">// The following functions throw the indicated exception if</span>
+<span class="Comment">// exceptions are enabled with NTL_EXCEPTIONS; otherwise,</span>
+<span class="Comment">// they simply invoke TerminalError.</span>
+
+<span class="Type">void</span> MemoryError();
+<span class="Comment">// throws bad_alloc</span>
+
+<span class="Type">void</span> Error(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws ErrorObject</span>
+
+<span class="Type">void</span> LogicError(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws LogicErrorObject</span>
+
+<span class="Type">void</span> ArithmeticError(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws ArithmeticErrorObject</span>
+
+<span class="Type">void</span> ResourceError(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws ResourceErrorObject</span>
+
+<span class="Type">void</span> FileError(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws FileErrorObject</span>
+
+<span class="Type">void</span> InputError(<span class="Type">const</span> <span class="Type">char</span> *msg);
+<span class="Comment">// throws InputErrorObject</span>
+
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

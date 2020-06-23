@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/matrix.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.PreProc { color: #1874cd; }
+.Constant { color: #ff8c00; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: matrix</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Matrix templates.</span>
+
+<span class="Comment">The declaration </span>
+
+<span class="Comment">   Mat&lt;T&gt; M;</span>
+
+<span class="Comment">creates a 0 x 0 matrix.  </span>
+
+<span class="Comment">We can make it have 10 rows and 20 columns like this:</span>
+
+<span class="Comment">   M.SetDims(10, 20);</span>
+
+<span class="Comment">A row can be accessed as M[i], indexing from 0, or as M(i), indexing from 1.</span>
+<span class="Comment">A matrix entry can be accessed as M[i][j], indexing from 0, or as</span>
+<span class="Comment">M(i, j), indexing from 1.</span>
+
+<span class="Comment">A matrix is represented as a Vec&lt; Vec&lt;T&gt; &gt;: a vector of rows, where</span>
+<span class="Comment">each row is a Vec&lt;T&gt;.  Any attempt to resize one of the rows so</span>
+<span class="Comment">as to create a non-rectangular matrix will result in a run-time </span>
+<span class="Comment">error.</span>
+
+<span class="Comment">The dimensions of an existing matrix may be changed.  If the number of</span>
+<span class="Comment">columns does not change, then the matrix is just &quot;resized&quot; like a vector,</span>
+<span class="Comment">and no information is lost.  Otherwise, if the number of columns changes,</span>
+<span class="Comment">the matrix is completely destroyed, and a new matrix is created</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// EXCEPTIONS: all functions below do not throw any exceptions,</span>
+<span class="Comment">//   except as noted</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> Mat {
+
+   <span class="Type">typedef</span> <span class="Type">typename</span> Vec&lt;T&gt;::value_type value_type;
+   <span class="Type">typedef</span> <span class="Type">typename</span> Vec&lt;T&gt;::reference reference;
+   <span class="Type">typedef</span> <span class="Type">typename</span> Vec&lt;T&gt;::const_reference const_reference;
+
+
+   Mat(); <span class="Comment">// initially 0 x 0</span>
+
+   Mat(<span class="Type">const</span> Mat&lt;T&gt;&amp; a);
+   <span class="Comment">// copy constructor</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw</span>
+
+
+   Mat&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> Mat&lt;T&gt;&amp; a);
+   <span class="Comment">// assignment</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw, weak ES (but dimensions of LHS</span>
+   <span class="Comment">//   will be either that of old LHS or RHS)</span>
+
+   ~Mat();
+   <span class="Comment">// destructor</span>
+
+   Mat(Mat&amp;&amp; other) <span class="Statement">noexcept</span>;
+<span class="PreProc">#ifndef NTL_DISABLE_MOVE_ASSIGN</span>
+   Mat&amp; <span class="Statement">operator</span>=(Mat&amp;&amp; other) <span class="Statement">noexcept</span>;
+<span class="PreProc">#endif</span>
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   Mat(INIT_SIZE_TYPE, <span class="Type">long</span> n, <span class="Type">long</span> m);
+   <span class="Comment">// Mat(INIT_SIZE, n, m) initializes an n x m matrix, invoking</span>
+   <span class="Comment">// the default constructor for T to initialize entries.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw</span>
+
+   <span class="Type">void</span> SetDims(<span class="Type">long</span> n, <span class="Type">long</span> m);
+   <span class="Comment">// M.SetDims(n, m) makes M have dimension n x m.  If the number of</span>
+   <span class="Comment">// columns (m) changes, previous storage is freed, and space for M</span>
+   <span class="Comment">// is reallocated and initialized; otherwise, more rows are</span>
+   <span class="Comment">// allocated as necessary (when number of rows increases), </span>
+   <span class="Comment">// excess rows are retained (when number of rows decreases),</span>
+   <span class="Comment">// and--importantly--the contents do not change.</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES (although underlying vector representation</span>
+   <span class="Comment">//    may be reallocated)</span>
+
+   <span class="Type">void</span> kill(); free storage <span class="Statement">and</span> make <span class="Constant">0</span> x <span class="Constant">0</span>
+
+   <span class="Type">long</span> NumRows() <span class="Type">const</span>;
+   <span class="Comment">// M.NumRows() returns the number of rows of M</span>
+
+   <span class="Type">long</span> NumCols() <span class="Type">const</span>;
+   <span class="Comment">// M.NumCols() returns the number of columns of M</span>
+
+   Vec&lt;T&gt;&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i);
+   <span class="Type">const</span> Vec&lt;T&gt;&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// access row i, initial index 0.  </span>
+   <span class="Comment">// Even if one has read/write access to a row, any attempt</span>
+   <span class="Comment">// to change its length will raise an error.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking is turned on</span>
+
+   Vec&lt;T&gt;&amp; <span class="Statement">operator</span>()(<span class="Type">long</span> i);
+   <span class="Type">const</span> Vec&lt;T&gt;&amp; <span class="Statement">operator</span>()(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// access row i, initial index 1. </span>
+   <span class="Comment">// Even if one has read/write access to a row, any attempt</span>
+   <span class="Comment">// to change its length will raise an error.</span>
+   <span class="Comment">// of this row will raise an error.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking is turned on</span>
+
+   reference <span class="Statement">operator</span>()(<span class="Type">long</span> i, <span class="Type">long</span> j);
+   const_reference <span class="Statement">operator</span>()(<span class="Type">long</span> i, <span class="Type">long</span> j) <span class="Type">const</span>;
+   <span class="Comment">// access element (i, j), both indices starting at 1</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking is turned on</span>
+
+   const_reference get(<span class="Type">long</span> i, <span class="Type">long</span> j) <span class="Type">const</span>;
+   <span class="Comment">// access element (i, j), both indices starting at 0</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking is turned on</span>
+
+   <span class="Type">void</span> put(<span class="Type">long</span> i, <span class="Type">long</span> j, <span class="Type">const</span> T&amp; a);
+   <span class="Comment">// same as M[i].put(j, a)</span>
+
+   <span class="Type">template</span> &lt;<span class="Type">class</span> U&gt;
+   <span class="Type">void</span> put(<span class="Type">long</span> i, <span class="Type">long</span> j, <span class="Type">const</span> U&amp; a);
+   <span class="Comment">// same as M[i].put(j, a)</span>
+
+   <span class="Type">long</span> position(<span class="Type">const</span> Vec&lt;T&gt;&amp; a) <span class="Type">const</span>;
+   <span class="Comment">// returns index of a in matrix, or -1 if not present;</span>
+   <span class="Comment">// equivalent to rep(*this).position(a).</span>
+
+   <span class="Type">long</span> position1(<span class="Type">const</span> Vec&lt;T&gt;&amp; a) <span class="Type">const</span>;
+   <span class="Comment">// returns index of a in matrix, or -1 if not present;</span>
+   <span class="Comment">// equivalent to rep(*this).position1(a).</span>
+
+   <span class="Type">long</span> alias(<span class="Type">const</span> Vec&lt;T&gt;&amp; a) <span class="Type">const</span>;
+   <span class="Comment">// returns 1 if a aliases a row of the matrix, and 0 otherwise.</span>
+
+   <span class="Type">void</span> swap(Mat&lt;T&gt;&amp; other);
+   <span class="Comment">// quick swap *this and other</span>
+
+   <span class="Type">void</span> move(Mat&lt;T&gt;&amp; other);
+   <span class="Comment">// quick move other to *this</span>
+
+};
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">const</span> Vec&lt; Vec&lt;T&gt; &gt;&amp; rep(<span class="Type">const</span> Mat&lt;T&gt;&amp; a);
+<span class="Comment">// read-only access to underlying representation</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">void</span> swap(Mat&lt;T&gt;&amp; X, Mat&lt;T&gt;&amp; Y);
+<span class="Comment">// quick swap of X and Y </span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">void</span> MakeMatrix(Mat&lt;T&gt;&amp; x, <span class="Type">const</span> vec_vec_T&amp; a);
+<span class="Comment">// copies a to x, checking that it is &quot;rectangular&quot;</span>
+
+<span class="Comment">// EXCEPTIONS: may thow, weak ES (but dimensions of x either</span>
+<span class="Comment">//    remain unchanged or are set to the new dimensions implied by a)</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                            Input/Output</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp;, Mat&lt;T&gt;&amp;);
+
+<span class="Comment">// EXCEPTIONS: may throw, weak ES</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp;, <span class="Type">const</span> Mat&lt;T&gt;&amp;);
+
+<span class="Comment">// EXCEPTIONS: may throw, weak ES</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Equality Testing</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> Mat&lt;T&gt;&amp; a, <span class="Type">const</span> Mat&lt;T&gt;&amp; b);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> Mat&lt;T&gt;&amp; a, <span class="Type">const</span> Mat&lt;T&gt;&amp; b);
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

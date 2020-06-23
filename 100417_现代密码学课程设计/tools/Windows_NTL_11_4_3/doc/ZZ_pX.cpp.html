@@ -1,0 +1,987 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/ZZ_pX.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: ZZ_pX</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class ZZ_pX implements polynomial arithmetic modulo p.</span>
+
+<span class="Comment">Polynomial arithmetic is implemented using the FFT, combined with the</span>
+<span class="Comment">Chinese Remainder Theorem.  A more detailed description of the</span>
+<span class="Comment">techniques used here can be found in [Shoup, J. Symbolic</span>
+<span class="Comment">Comp. 20:363-397, 1995].</span>
+
+<span class="Comment">Small degree polynomials are multiplied either with classical </span>
+<span class="Comment">or Karatsuba algorithms.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ_p.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/vec_ZZ_p.h&gt;</span>
+
+<span class="Type">class</span> ZZ_pX {
+<span class="Statement">public</span>:
+
+   ZZ_pX(); <span class="Comment">// initialize to 0</span>
+
+   ZZ_pX(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// copy constructor</span>
+   <span class="Type">explicit</span> ZZ_pX(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// promotion </span>
+   <span class="Type">explicit</span> ZZ_pX(<span class="Type">long</span> a); <span class="Comment">// promotion </span>
+
+   ZZ_pX&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// assignment</span>
+   ZZ_pX&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_p&amp; a); <span class="Comment">// assignment</span>
+   ZZ_pX&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> <span class="Type">long</span> a); <span class="Comment">// assignment</span>
+
+   ~ZZ_pX(); <span class="Comment">// destructor</span>
+
+   ZZ_pX(ZZ_pX&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+<span class="PreProc">#ifndef NTL_DISABLE_MOVE_ASSIGN</span>
+   ZZ_pX&amp; <span class="Statement">operator</span>=(ZZ_pX&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+<span class="PreProc">#endif</span>
+
+   ZZ_pX(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">const</span> ZZ_p&amp; c);
+   ZZ_pX(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">long</span> c);
+   <span class="Comment">// initialize to c*X^i, invoke as ZZ_pX(INIT_MONO, i, c)</span>
+
+   ZZ_pX(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">long</span> c);
+   <span class="Comment">// initialize to X^i, invoke as ZZ_pX(INIT_MONO, i)</span>
+
+
+   <span class="Comment">// typedefs to aid in generic programming</span>
+   <span class="Type">typedef</span> zz_p coeff_type;
+   <span class="Type">typedef</span> zz_pE residue_type;
+   <span class="Type">typedef</span> zz_pXModulus modulus_type;
+   <span class="Type">typedef</span> zz_pXMultiplier multiplier_type;
+   <span class="Type">typedef</span> fftRep fft_type;
+
+
+   <span class="Comment">// ...</span>
+
+
+};
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Accessing coefficients</span>
+
+<span class="Comment">The degree of a polynomial f is obtained as deg(f),</span>
+<span class="Comment">where the zero polynomial, by definition, has degree -1.</span>
+
+<span class="Comment">A polynomial f is represented as a coefficient vector.</span>
+<span class="Comment">Coefficients may be accesses in one of two ways.</span>
+
+<span class="Comment">The safe, high-level method is to call the function</span>
+<span class="Comment">coeff(f, i) to get the coefficient of X^i in the polynomial f,</span>
+<span class="Comment">and to call the function SetCoeff(f, i, a) to set the coefficient</span>
+<span class="Comment">of X^i in f to the scalar a.</span>
+
+<span class="Comment">One can also access the coefficients more directly via a lower level </span>
+<span class="Comment">interface.  The coefficient of X^i in f may be accessed using </span>
+<span class="Comment">subscript notation f[i].  In addition, one may write f.SetLength(n)</span>
+<span class="Comment">to set the length of the underlying coefficient vector to n,</span>
+<span class="Comment">and f.SetMaxLength(n) to allocate space for n coefficients,</span>
+<span class="Comment">without changing the coefficient vector itself.</span>
+
+<span class="Comment">After setting coefficients using this low-level interface,</span>
+<span class="Comment">one must ensure that leading zeros in the coefficient vector</span>
+<span class="Comment">are stripped afterwards by calling the function f.normalize().</span>
+
+<span class="Comment">NOTE: the coefficient vector of f may also be accessed directly</span>
+<span class="Comment">as f.rep; however, this is not recommended. Also, for a properly</span>
+<span class="Comment">normalized polynomial f, we have f.rep.length() == deg(f)+1,</span>
+<span class="Comment">and deg(f) &gt;= 0  =&gt;  f.rep[deg(f)] != 0.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Type">long</span> deg(<span class="Type">const</span> ZZ_pX&amp; a);  <span class="Comment">// return deg(a); deg(0) == -1.</span>
+
+<span class="Type">const</span> ZZ_p&amp; coeff(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> i);
+<span class="Comment">// returns the coefficient of X^i, or zero if i not in range</span>
+
+<span class="Type">const</span> ZZ_p&amp; LeadCoeff(<span class="Type">const</span> ZZ_pX&amp; a);
+<span class="Comment">// returns leading term of a, or zero if a == 0</span>
+
+<span class="Type">const</span> ZZ_p&amp; ConstTerm(<span class="Type">const</span> ZZ_pX&amp; a);
+<span class="Comment">// returns constant term of a, or zero if a == 0</span>
+
+<span class="Type">void</span> SetCoeff(ZZ_pX&amp; x, <span class="Type">long</span> i, <span class="Type">const</span> ZZ_p&amp; a);
+<span class="Type">void</span> SetCoeff(ZZ_pX&amp; x, <span class="Type">long</span> i, <span class="Type">long</span> a);
+<span class="Comment">// makes coefficient of X^i equal to a; error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetCoeff(ZZ_pX&amp; x, <span class="Type">long</span> i);
+<span class="Comment">// makes coefficient of X^i equal to 1;  error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetX(ZZ_pX&amp; x); <span class="Comment">// x is set to the monomial X</span>
+
+<span class="Type">long</span> IsX(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// test if x = X</span>
+
+
+
+
+ZZ_p&amp; ZZ_pX::<span class="Statement">operator</span>[](<span class="Type">long</span> i);
+<span class="Type">const</span> ZZ_p&amp; ZZ_pX::<span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+<span class="Comment">// indexing operators: f[i] is the coefficient of X^i ---</span>
+<span class="Comment">// i should satsify i &gt;= 0 and i &lt;= deg(f).</span>
+<span class="Comment">// No range checking (unless NTL_RANGE_CHECK is defined).</span>
+
+
+<span class="Type">void</span> ZZ_pX::SetLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetLength(n) sets the length of the inderlying coefficient</span>
+<span class="Comment">// vector to n --- after this call, indexing f[i] for i = 0..n-1</span>
+<span class="Comment">// is valid.</span>
+
+<span class="Type">void</span> ZZ_pX::normalize();
+<span class="Comment">// f.normalize() strips leading zeros from coefficient vector of f</span>
+
+<span class="Type">void</span> ZZ_pX::SetMaxLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetMaxLength(n) pre-allocate spaces for n coefficients.  The</span>
+<span class="Comment">// polynomial that f represents is unchanged.</span>
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+
+<span class="Comment">// PROMOTIONS: operators ==, != promote {long, ZZ_p} to ZZ_pX on (a, b).</span>
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// test for 0</span>
+<span class="Type">long</span> IsOne(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// test for 1</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                   Addition</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_pX <span class="Statement">operator</span>+(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_pX <span class="Statement">operator</span>-(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+
+ZZ_pX <span class="Statement">operator</span>-(<span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// unary -</span>
+
+ZZ_pX&amp; <span class="Statement">operator</span>+=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>+=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>+=(ZZ_pX&amp; x, <span class="Type">long</span> a);
+
+ZZ_pX&amp; <span class="Statement">operator</span>-=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>-=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>-=(ZZ_pX&amp; x, <span class="Type">long</span> a);
+
+ZZ_pX&amp; <span class="Statement">operator</span>++(ZZ_pX&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(ZZ_pX&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+ZZ_pX&amp; <span class="Statement">operator</span>--(ZZ_pX&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(ZZ_pX&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> add(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b); <span class="Comment">// x = a + b</span>
+<span class="Type">void</span> sub(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b); <span class="Comment">// x = a - b</span>
+<span class="Type">void</span> negate(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// x = -a</span>
+
+
+<span class="Comment">// PROMOTIONS: binary +, - and procedures add, sub promote</span>
+<span class="Comment">// {long, ZZ_p} to ZZ_pX on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Multiplication</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_pX <span class="Statement">operator</span>*(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+
+ZZ_pX&amp; <span class="Statement">operator</span>*=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>*=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; a);
+ZZ_pX&amp; <span class="Statement">operator</span>*=(ZZ_pX&amp; x, <span class="Type">long</span> a);
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> mul(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b); <span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> sqr(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// x = a^2</span>
+ZZ_pX sqr(<span class="Type">const</span> ZZ_pX&amp; a);
+
+<span class="Comment">// PROMOTIONS: operator * and procedure mul promote {long, ZZ_p} to ZZ_pX</span>
+<span class="Comment">// on (a, b).</span>
+
+<span class="Type">void</span> power(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> e);  <span class="Comment">// x = a^e (e &gt;= 0)</span>
+ZZ_pX power(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> e);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Shift Operations</span>
+
+<span class="Comment">LeftShift by n means multiplication by X^n</span>
+<span class="Comment">RightShift by n means division by X^n</span>
+
+<span class="Comment">A negative shift amount reverses the direction of the shift.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_pX <span class="Statement">operator</span>&lt;&lt;(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+ZZ_pX <span class="Statement">operator</span>&gt;&gt;(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+
+ZZ_pX&amp; <span class="Statement">operator</span>&lt;&lt;=(ZZ_pX&amp; x, <span class="Type">long</span> n);
+ZZ_pX&amp; <span class="Statement">operator</span>&gt;&gt;=(ZZ_pX&amp; x, <span class="Type">long</span> n);
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> LeftShift(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+ZZ_pX LeftShift(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> RightShift(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+ZZ_pX RightShift(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Division</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_pX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_pX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_pX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> b);
+
+
+ZZ_pX&amp; <span class="Statement">operator</span>/=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_pX&amp; <span class="Statement">operator</span>/=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; b);
+ZZ_pX&amp; <span class="Statement">operator</span>/=(ZZ_pX&amp; x, <span class="Type">long</span> b);
+
+ZZ_pX <span class="Statement">operator</span>%(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+
+ZZ_pX&amp; <span class="Statement">operator</span>%=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; b);
+
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> DivRem(ZZ_pX&amp; q, ZZ_pX&amp; r, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// q = a/b, r = a%b</span>
+
+<span class="Type">void</span> div(ZZ_pX&amp; q, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Type">void</span> div(ZZ_pX&amp; q, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_p&amp; b);
+<span class="Type">void</span> div(ZZ_pX&amp; q, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> b);
+<span class="Comment">// q = a/b</span>
+
+<span class="Type">void</span> rem(ZZ_pX&amp; r, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// r = a%b</span>
+
+<span class="Type">long</span> divide(ZZ_pX&amp; q, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// if b | a, sets q = a/b and returns 1; otherwise returns 0</span>
+
+<span class="Type">long</span> divide(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// if b | a, sets q = a/b and returns 1; otherwise returns 0</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                   GCD's</span>
+
+<span class="Comment">These routines are intended for use when p is prime.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> GCD(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_pX GCD(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// x = GCD(a, b),  x is always monic (or zero if a==b==0).</span>
+
+
+<span class="Type">void</span> XGCD(ZZ_pX&amp; d, ZZ_pX&amp; s, ZZ_pX&amp; t, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// d = gcd(a,b), a s + b t = d </span>
+
+
+<span class="Comment">// NOTE: A classical algorithm is used, switching over to a</span>
+<span class="Comment">// &quot;half-GCD&quot; algorithm for large degree</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Input/Output</span>
+
+<span class="Comment">I/O format:</span>
+
+<span class="Comment">   [a_0 a_1 ... a_n],</span>
+
+<span class="Comment">represents the polynomial a_0 + a_1*X + ... + a_n*X^n.</span>
+
+<span class="Comment">On output, all coefficients will be integers between 0 and p-1, and</span>
+<span class="Comment">a_n not zero (the zero polynomial is [ ]).  On input, the coefficients</span>
+<span class="Comment">are arbitrary integers which are reduced modulo p, and leading zeros</span>
+<span class="Comment">stripped.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, ZZ_pX&amp; x);
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> ZZ_pX&amp; a);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Some utility routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> diff(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a); <span class="Comment">// x = derivative of a</span>
+ZZ_pX diff(<span class="Type">const</span> ZZ_pX&amp; a);
+
+<span class="Type">void</span> MakeMonic(ZZ_pX&amp; x);
+<span class="Comment">// if x != 0 makes x into its monic associate; LeadCoeff(x) must be</span>
+<span class="Comment">// invertible in this case.</span>
+
+<span class="Type">void</span> reverse(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> hi);
+ZZ_pX reverse(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> hi);
+
+<span class="Type">void</span> reverse(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a);
+ZZ_pX reverse(<span class="Type">const</span> ZZ_pX&amp; a);
+
+<span class="Comment">// x = reverse of a[0]..a[hi] (hi &gt;= -1);</span>
+<span class="Comment">// hi defaults to deg(a) in second version</span>
+
+<span class="Type">void</span> VectorCopy(vec_ZZ_p&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+vec_ZZ_p VectorCopy(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = copy of coefficient vector of a of length exactly n.</span>
+<span class="Comment">// input is truncated or padded with zeroes as appropriate.</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Random Polynomials</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> random(ZZ_pX&amp; x, <span class="Type">long</span> n);
+ZZ_pX random_ZZ_pX(<span class="Type">long</span> n);
+<span class="Comment">// generate a random polynomial of degree &lt; n </span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                    Polynomial Evaluation and related problems</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> BuildFromRoots(ZZ_pX&amp; x, <span class="Type">const</span> vec_ZZ_p&amp; a);
+ZZ_pX BuildFromRoots(<span class="Type">const</span> vec_ZZ_p&amp; a);
+<span class="Comment">// computes the polynomial (X-a[0]) ... (X-a[n-1]), where n = a.length()</span>
+
+<span class="Type">void</span> eval(ZZ_p&amp; b, <span class="Type">const</span> ZZ_pX&amp; f, <span class="Type">const</span> ZZ_p&amp; a);
+ZZ_p eval(<span class="Type">const</span> ZZ_pX&amp; f, <span class="Type">const</span> ZZ_p&amp; a);
+<span class="Comment">// b = f(a)</span>
+
+<span class="Type">void</span> eval(vec_ZZ_p&amp; b, <span class="Type">const</span> ZZ_pX&amp; f, <span class="Type">const</span> vec_ZZ_p&amp; a);
+vec_ZZ_p eval(<span class="Type">const</span> ZZ_pX&amp; f, <span class="Type">const</span> vec_ZZ_p&amp; a);
+<span class="Comment">//  b.SetLength(a.length()).  b[i] = f(a[i]) for 0 &lt;= i &lt; a.length()</span>
+
+<span class="Type">void</span> interpolate(ZZ_pX&amp; f, <span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">const</span> vec_ZZ_p&amp; b);
+ZZ_pX interpolate(<span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">const</span> vec_ZZ_p&amp; b);
+<span class="Comment">// interpolates the polynomial f satisfying f(a[i]) = b[i].  p should</span>
+<span class="Comment">// be prime.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Arithmetic mod X^n</span>
+
+<span class="Comment">All routines require n &gt;= 0, otherwise an error is raised.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> trunc(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n); <span class="Comment">// x = a % X^n</span>
+ZZ_pX trunc(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> MulTrunc(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">long</span> n);
+ZZ_pX MulTrunc(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">long</span> n);
+<span class="Comment">// x = a * b % X^n</span>
+
+<span class="Type">void</span> SqrTrunc(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+ZZ_pX SqrTrunc(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a^2 % X^n</span>
+
+<span class="Type">void</span> InvTrunc(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+ZZ_pX InvTrunc(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// computes x = a^{-1} % X^m.  Must have ConstTerm(a) invertible.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                Modular Arithmetic (without pre-conditioning)</span>
+
+<span class="Comment">Arithmetic mod f.</span>
+
+<span class="Comment">All inputs and outputs are polynomials of degree less than deg(f), and</span>
+<span class="Comment">deg(f) &gt; 0.</span>
+
+<span class="Comment">NOTE: if you want to do many computations with a fixed f, use the</span>
+<span class="Comment">ZZ_pXModulus data structure and associated routines below for better</span>
+<span class="Comment">performance.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> MulMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_pX MulMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// x = (a * b) % f</span>
+
+<span class="Type">void</span> SqrMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_pX SqrMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// x = a^2 % f</span>
+
+<span class="Type">void</span> MulByXMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_pX MulByXMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// x = (a * X) mod f</span>
+<span class="Comment">// NOTE: thread boosting enabled only if x does not alias a</span>
+
+<span class="Type">void</span> InvMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_pX InvMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// x = a^{-1} % f, error is a is not invertible</span>
+
+<span class="Type">long</span> InvModStatus(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// if (a, f) = 1, returns 0 and sets x = a^{-1} % f; otherwise,</span>
+<span class="Comment">// returns 1 and sets x = (a, f)</span>
+
+
+<span class="Comment">// for modular exponentiation, see below</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     Modular Arithmetic with Pre-Conditioning</span>
+
+<span class="Comment">If you need to do a lot of arithmetic modulo a fixed f, build a</span>
+<span class="Comment">ZZ_pXModulus F for f.  This pre-computes information about f that</span>
+<span class="Comment">speeds up subsequent computations.</span>
+
+<span class="Comment">It is required that deg(f) &gt; 0 and that LeadCoeff(f) is invertible.</span>
+
+<span class="Comment">As an example, the following routine computes the product modulo f of a vector</span>
+<span class="Comment">of polynomials.</span>
+
+<span class="Comment">#include &lt;NTL/ZZ_pX.h&gt;</span>
+
+<span class="Comment">void product(ZZ_pX&amp; x, const vec_ZZ_pX&amp; v, const ZZ_pX&amp; f)</span>
+<span class="Comment">{</span>
+<span class="Comment">   ZZ_pXModulus F(f);</span>
+<span class="Comment">   ZZ_pX res;</span>
+<span class="Comment">   res = 1;</span>
+<span class="Comment">   long i;</span>
+<span class="Comment">   for (i = 0; i &lt; v.length(); i++)</span>
+<span class="Comment">      MulMod(res, res, v[i], F); </span>
+<span class="Comment">   x = res;</span>
+<span class="Comment">}</span>
+
+<span class="Comment">Note that automatic conversions are provided so that a ZZ_pX can</span>
+<span class="Comment">be used wherever a ZZ_pXModulus is required, and a ZZ_pXModulus</span>
+<span class="Comment">can be used wherever a ZZ_pX is required.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">class</span> ZZ_pXModulus {
+<span class="Statement">public</span>:
+   ZZ_pXModulus(); <span class="Comment">// initially in an unusable state</span>
+
+   ZZ_pXModulus(<span class="Type">const</span> ZZ_pXModulus&amp;);  <span class="Comment">// copy</span>
+
+   ZZ_pXModulus&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pXModulus&amp;); <span class="Comment">// assignment</span>
+
+   ~ZZ_pXModulus();
+
+   ZZ_pXModulus(<span class="Type">const</span> ZZ_pX&amp; f); <span class="Comment">// initialize with f, deg(f) &gt; 0</span>
+
+   <span class="Statement">operator</span> <span class="Type">const</span> ZZ_pX&amp; () <span class="Type">const</span>;
+   <span class="Comment">// read-only access to f, implicit conversion operator</span>
+
+   <span class="Type">const</span> ZZ_pX&amp; val() <span class="Type">const</span>;
+   <span class="Comment">// read-only access to f, explicit notation</span>
+
+};
+
+<span class="Type">void</span> build(ZZ_pXModulus&amp; F, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// pre-computes information about f and stores it in F.</span>
+<span class="Comment">// Note that the declaration ZZ_pXModulus F(f) is equivalent to</span>
+<span class="Comment">// ZZ_pXModulus F; build(F, f).</span>
+
+<span class="Comment">// In the following, f refers to the polynomial f supplied to the</span>
+<span class="Comment">// build routine, and n = deg(f).</span>
+
+<span class="Type">long</span> deg(<span class="Type">const</span> ZZ_pXModulus&amp; F);  <span class="Comment">// return n=deg(f)</span>
+
+<span class="Type">void</span> MulMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX MulMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// x = (a * b) % f; deg(a), deg(b) &lt; n</span>
+
+<span class="Type">void</span> SqrMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX SqrMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// x = a^2 % f; deg(a) &lt; n</span>
+
+<span class="Type">void</span> PowerMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX PowerMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Type">void</span> PowerMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX PowerMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">long</span> e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// x = a^e % f; deg(a) &lt; n (e may be negative)</span>
+
+<span class="Type">void</span> PowerXMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX PowerXMod(<span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Type">void</span> PowerXMod(ZZ_pX&amp; x, <span class="Type">long</span> e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX PowerXMod(<span class="Type">long</span> e, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// x = X^e % f (e may be negative)</span>
+
+<span class="Type">void</span> PowerXPlusAMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ&amp; e,
+                    <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+ZZ_pX PowerXPlusAMod(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">const</span> ZZ&amp; e,
+                           <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Type">void</span> PowerXPlusAMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_p&amp; a, <span class="Type">long</span> e,
+                    <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+ZZ_pX PowerXPlusAMod(<span class="Type">const</span> ZZ_p&amp; a, <span class="Type">long</span> e,
+                           <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// x = (X + a)^e % f (e may be negative)</span>
+
+
+<span class="Type">void</span> rem(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// x = a % f</span>
+
+<span class="Type">void</span> DivRem(ZZ_pX&amp; q, ZZ_pX&amp; r, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// q = a/f, r = a%f</span>
+
+<span class="Type">void</span> div(ZZ_pX&amp; q, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// q = a/f</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZ_pX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX <span class="Statement">operator</span>%(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+ZZ_pX&amp; <span class="Statement">operator</span>/=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX&amp; <span class="Statement">operator</span>%=(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+
+<span class="Comment">                                More Pre-Conditioning</span>
+
+<span class="Comment">If you need to compute a * b % f for a fixed b, but for many a's, it</span>
+<span class="Comment">is much more efficient to first build a ZZ_pXMultiplier B for b, and</span>
+<span class="Comment">then use the MulMod routine below.</span>
+
+<span class="Comment">Here is an example that multiplies each element of a vector by a fixed</span>
+<span class="Comment">polynomial modulo f.</span>
+
+<span class="Comment">#include &lt;NTL/ZZ_pX.h&gt;</span>
+
+<span class="Comment">void mul(vec_ZZ_pX&amp; v, const ZZ_pX&amp; b, const ZZ_pX&amp; f)</span>
+<span class="Comment">{</span>
+<span class="Comment">   ZZ_pXModulus F(f);</span>
+<span class="Comment">   ZZ_pXMultiplier B(b, F);</span>
+<span class="Comment">   long i;</span>
+<span class="Comment">   for (i = 0; i &lt; v.length(); i++)</span>
+<span class="Comment">      MulMod(v[i], v[i], B, F);</span>
+<span class="Comment">}</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">class</span> ZZ_pXMultiplier {
+<span class="Statement">public</span>:
+   ZZ_pXMultiplier(); <span class="Comment">// initially zero</span>
+
+   ZZ_pXMultiplier(<span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+      <span class="Comment">// initializes with b mod F, where deg(b) &lt; deg(F)</span>
+
+   ZZ_pXMultiplier(<span class="Type">const</span> ZZ_pXMultiplier&amp;);  <span class="Comment">// copy</span>
+
+   ZZ_pXMultiplier&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ_pXMultiplier&amp;);  <span class="Comment">// assignment</span>
+
+   ~ZZ_pXMultiplier();
+
+   <span class="Type">const</span> ZZ_pX&amp; val() <span class="Type">const</span>; <span class="Comment">// read-only access to b</span>
+
+};
+
+
+<span class="Type">void</span> build(ZZ_pXMultiplier&amp; B, <span class="Type">const</span> ZZ_pX&amp; b, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// pre-computes information about b and stores it in B; deg(b) &lt;</span>
+<span class="Comment">// deg(F)</span>
+
+<span class="Type">void</span> MulMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXMultiplier&amp; B,
+                                      <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// x = (a * b) % F; deg(a) &lt; deg(F)</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             vectors of ZZ_pX's</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">typedef</span> Vec&lt;ZZ_pX&gt; vec_ZZ_pX; <span class="Comment">// backward compatibility</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Modular Composition</span>
+
+<span class="Comment">Modular composition is the problem of computing g(h) mod f for</span>
+<span class="Comment">polynomials f, g, and h.</span>
+
+<span class="Comment">The algorithm employed is that of Brent &amp; Kung (Fast algorithms for</span>
+<span class="Comment">manipulating formal power series, JACM 25:581-595, 1978), which uses</span>
+<span class="Comment">O(n^{1/2}) modular polynomial multiplications, and O(n^2) scalar</span>
+<span class="Comment">operations.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> CompMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX CompMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pX&amp; h,
+                    <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// x = g(h) mod f; deg(h) &lt; n</span>
+
+<span class="Type">void</span> Comp2Mod(ZZ_pX&amp; x1, ZZ_pX&amp; x2, <span class="Type">const</span> ZZ_pX&amp; g1, <span class="Type">const</span> ZZ_pX&amp; g2,
+              <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// xi = gi(h) mod f (i=1,2); deg(h) &lt; n.</span>
+
+<span class="Type">void</span> Comp3Mod(ZZ_pX&amp; x1, ZZ_pX&amp; x2, ZZ_pX&amp; x3,
+              <span class="Type">const</span> ZZ_pX&amp; g1, <span class="Type">const</span> ZZ_pX&amp; g2, <span class="Type">const</span> ZZ_pX&amp; g3,
+              <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// xi = gi(h) mod f (i=1..3); deg(h) &lt; n.</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     Composition with Pre-Conditioning</span>
+
+<span class="Comment">If a single h is going to be used with many g's then you should build</span>
+<span class="Comment">a ZZ_pXArgument for h, and then use the compose routine below.  The</span>
+<span class="Comment">routine build computes and stores h, h^2, ..., h^m mod f.  After this</span>
+<span class="Comment">pre-computation, composing a polynomial of degree roughly n with h</span>
+<span class="Comment">takes n/m multiplies mod f, plus n^2 scalar multiplies.  Thus,</span>
+<span class="Comment">increasing m increases the space requirement and the pre-computation</span>
+<span class="Comment">time, but reduces the composition time.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">struct</span> ZZ_pXArgument {
+   vec_ZZ_pX H;
+};
+
+<span class="Type">void</span> build(ZZ_pXArgument&amp; H, <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+<span class="Comment">// Pre-Computes information about h.  m &gt; 0, deg(h) &lt; n.</span>
+
+<span class="Type">void</span> CompMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXArgument&amp; H,
+             <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+ZZ_pX CompMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXArgument&amp; H,
+                    <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Type">extern</span> <span class="Type">thread_local</span> <span class="Type">long</span> ZZ_pXArgBound;
+
+<span class="Comment">// Initially 0.  If this is set to a value greater than zero, then</span>
+<span class="Comment">// composition routines will allocate a table of no than about</span>
+<span class="Comment">// ZZ_pXArgBound KB.  Setting this value affects all compose routines</span>
+<span class="Comment">// and the power projection and minimal polynomial routines below, </span>
+<span class="Comment">// and indirectly affects many routines in ZZ_pXFactoring.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     power projection routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> project(ZZ_p&amp; x, <span class="Type">const</span> ZZ_pVector&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_p project(<span class="Type">const</span> ZZ_pVector&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// x = inner product of a with coefficient vector of b</span>
+
+
+<span class="Type">void</span> ProjectPowers(vec_ZZ_p&amp; x, <span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+vec_ZZ_p ProjectPowers(<span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// Computes the vector</span>
+
+<span class="Comment">//    project(a, 1), project(a, h), ..., project(a, h^{k-1} % f).  </span>
+
+<span class="Comment">// This operation is the &quot;transpose&quot; of the modular composition operation.</span>
+
+<span class="Type">void</span> ProjectPowers(vec_ZZ_p&amp; x, <span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> ZZ_pXArgument&amp; H, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+vec_ZZ_p ProjectPowers(<span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> ZZ_pXArgument&amp; H, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// same as above, but uses a pre-computed ZZ_pXArgument</span>
+
+
+<span class="Type">void</span> UpdateMap(vec_ZZ_p&amp; x, <span class="Type">const</span> vec_ZZ_p&amp; a,
+               <span class="Type">const</span> ZZ_pXMultiplier&amp; B, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+vec_ZZ_p UpdateMap(<span class="Type">const</span> vec_ZZ_p&amp; a,
+               <span class="Type">const</span> ZZ_pXMultiplier&amp; B, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// Computes the vector</span>
+
+<span class="Comment">//    project(a, b), project(a, (b*X)%f), ..., project(a, (b*X^{n-1})%f)</span>
+
+<span class="Comment">// Restriction: must have a.length() &lt;= deg(F).</span>
+<span class="Comment">// This is &quot;transposed&quot; MulMod by B.</span>
+<span class="Comment">// Input may have &quot;high order&quot; zeroes stripped.</span>
+<span class="Comment">// Output will always have high order zeroes stripped.</span>
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">        Faster Composition and Projection with Pre-Conditioning</span>
+
+<span class="Comment">A new, experimental version of composition with preconditioning.</span>
+<span class="Comment">This interface was introduced in NTL v10.3.0, and it should be </span>
+<span class="Comment">considered a preliminary interface and subject to change.</span>
+
+<span class="Comment">The class ZZ_pXNewArgument is similar to ZZ_pXArgument, but with</span>
+<span class="Comment">a different internal layout.  Copy constructor and assignment work.</span>
+
+<span class="Comment">Note that all NTL modular composition and power projection routines, </span>
+<span class="Comment">as well as other routines that use modular composition power projection </span>
+<span class="Comment">internally, now use this new class.</span>
+
+<span class="Comment">Note also that these routines do not pay any attention to the</span>
+<span class="Comment">ZZ_pXArgBound variable.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">class</span> ZZ_pXNewArgument {
+ <span class="Comment">// ...</span>
+};
+
+<span class="Type">void</span> build(ZZ_pXNewArgument&amp; H, <span class="Type">const</span> ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+<span class="Comment">// same functionality as the corresponding ZZ_pXArgument-based routine</span>
+
+<span class="Type">void</span> CompMod(ZZ_pX&amp; x, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXNewArgument&amp; H,
+             <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// same functionality as the corresponding ZZ_pXArgument-based routine</span>
+
+<span class="Type">void</span> ProjectPowers(vec_ZZ_p&amp; x, <span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> ZZ_pXNewArgument&amp; H, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+<span class="Comment">// same functionality as the corresponding ZZ_pXArgument-based routine</span>
+
+
+
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Minimum Polynomials</span>
+
+<span class="Comment">These routines should be used with prime p.</span>
+
+<span class="Comment">All of these routines implement the algorithm from [Shoup, J. Symbolic</span>
+<span class="Comment">Comp. 17:371-391, 1994] and [Shoup, J. Symbolic Comp. 20:363-397,</span>
+<span class="Comment">1995], based on transposed modular composition and the</span>
+<span class="Comment">Berlekamp/Massey algorithm.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> MinPolySeq(ZZ_pX&amp; h, <span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> m);
+ZZ_pX MinPolySeq(<span class="Type">const</span> vec_ZZ_p&amp; a, <span class="Type">long</span> m);
+<span class="Comment">// computes the minimum polynomial of a linealy generated sequence; m</span>
+<span class="Comment">// is a bound on the degree of the polynomial; required: a.length() &gt;=</span>
+<span class="Comment">// 2*m</span>
+
+<span class="Type">void</span> ProbMinPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+ZZ_pX ProbMinPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> ProbMinPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX ProbMinPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// computes the monic minimal polynomial if (g mod f).  m = a bound on</span>
+<span class="Comment">// the degree of the minimal polynomial; in the second version, this</span>
+<span class="Comment">// argument defaults to n.  The algorithm is probabilistic, always</span>
+<span class="Comment">// returns a divisor of the minimal polynomial, and returns a proper</span>
+<span class="Comment">// divisor with probability at most m/p.</span>
+
+<span class="Type">void</span> MinPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+ZZ_pX MinPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> MinPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX MinPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// same as above, but guarantees that result is correct</span>
+
+<span class="Type">void</span> IrredPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+ZZ_pX IrredPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> IrredPolyMod(ZZ_pX&amp; h, <span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_pX IrredPolyMod(<span class="Type">const</span> ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Comment">// same as above, but assumes that f is irreducible, or at least that</span>
+<span class="Comment">// the minimal poly of g is itself irreducible.  The algorithm is</span>
+<span class="Comment">// deterministic (and is always correct).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                   Traces, norms, resultants</span>
+
+<span class="Comment">These routines should be used with prime p.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> TraceMod(ZZ_p&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+ZZ_p TraceMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; F);
+
+<span class="Type">void</span> TraceMod(ZZ_p&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_p TraceMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pXModulus&amp; f);
+<span class="Comment">// x = Trace(a mod f); deg(a) &lt; deg(f)</span>
+
+
+<span class="Type">void</span> TraceVec(vec_ZZ_p&amp; S, <span class="Type">const</span> ZZ_pX&amp; f);
+vec_ZZ_p TraceVec(<span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// S[i] = Trace(X^i mod f), i = 0..deg(f)-1; 0 &lt; deg(f)</span>
+
+<span class="Comment">// The above trace routines implement the asymptotically fast trace</span>
+<span class="Comment">// algorithm from [von zur Gathen and Shoup, Computational Complexity,</span>
+<span class="Comment">// 1992].</span>
+
+<span class="Type">void</span> NormMod(ZZ_p&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_p NormMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// x = Norm(a mod f); 0 &lt; deg(f), deg(a) &lt; deg(f)</span>
+
+<span class="Type">void</span> resultant(ZZ_p&amp; x, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+ZZ_p resultant(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; b);
+<span class="Comment">// x = resultant(a, b)</span>
+
+<span class="Type">void</span> CharPolyMod(ZZ_pX&amp; g, <span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+ZZ_pX CharPolyMod(<span class="Type">const</span> ZZ_pX&amp; a, <span class="Type">const</span> ZZ_pX&amp; f);
+<span class="Comment">// g = charcteristic polynomial of (a mod f); 0 &lt; deg(f), deg(g) &lt;</span>
+<span class="Comment">// deg(f);  this routine works for arbitrary f;  if f is irreducible,</span>
+<span class="Comment">// it is faster to use the IrredPolyMod routine, and then exponentiate</span>
+<span class="Comment">// if necessary (since in this case the CharPoly is just a power of</span>
+<span class="Comment">// the IrredPoly).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                           Miscellany</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> clear(ZZ_pX&amp; x) <span class="Comment">// x = 0</span>
+<span class="Type">void</span> set(ZZ_pX&amp; x); <span class="Comment">// x = 1</span>
+
+<span class="Type">void</span> ZZ_pX::kill();
+<span class="Comment">// f.kill() sets f to 0 and frees all memory held by f; Equivalent to</span>
+<span class="Comment">// f.rep.kill().</span>
+
+ZZ_pX::ZZ_pX(INIT_SIZE_TYPE, <span class="Type">long</span> n);
+<span class="Comment">// ZZ_pX(INIT_SIZE, n) initializes to zero, but space is pre-allocated</span>
+<span class="Comment">// for n coefficients</span>
+
+<span class="Type">static</span> <span class="Type">const</span> ZZ_pX&amp; ZZ_pX::zero();
+<span class="Comment">// ZZ_pX::zero() is a read-only reference to 0</span>
+
+<span class="Type">void</span> swap(ZZ_pX&amp; x, ZZ_pX&amp; y);
+<span class="Comment">// swap x and y (via &quot;pointer swapping&quot;)</span>
+
+<span class="Type">void</span> ZZ_pX::swap(ZZ_pX&amp; x);
+<span class="Comment">// swap member function</span>
+
+
+ZZ_pX::ZZ_pX(<span class="Type">long</span> i, <span class="Type">const</span> ZZ_p&amp; c);
+ZZ_pX::ZZ_pX(<span class="Type">long</span> i, <span class="Type">long</span> c);
+<span class="Comment">// initialize to c*X^i, provided for backward compatibility</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

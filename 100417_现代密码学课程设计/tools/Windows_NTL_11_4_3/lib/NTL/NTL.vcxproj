@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{FB17C15F-757C-471F-BAD3-D37909C6E16E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>NTL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Aober\Desktop\疫期线上\code\WinNTL-11_4_3\include;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\BasicThreadPool.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ctools.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\FacVec.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\FFT.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\fileio.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GetPID.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GetTime.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2E.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2EX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2EXFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2X.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2X1.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2XFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\GF2XVec.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\G_LLL_FP.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\G_LLL_QP.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\G_LLL_RR.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\G_LLL_XD.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\HNF.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lip.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\LLL.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\LLL_FP.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\LLL_QP.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\LLL_RR.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\LLL_XD.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pEX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pEXFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pX1.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pXCharPoly.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\lzz_pXFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\MatPrime.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_GF2.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_GF2E.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_lzz_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_lzz_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_poly_lzz_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_poly_ZZ.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_poly_ZZ_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_RR.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_ZZ.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_ZZ_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\mat_ZZ_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\pd_FFT.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\quad_float.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\quad_float1.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\RR.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\thread.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\tools.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_GF2.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_GF2E.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_lzz_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_lzz_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_RR.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_ZZ.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_ZZ_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\vec_ZZ_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\WordVector.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\xdouble.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZVec.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZX1.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZXCharPoly.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZXFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_p.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pE.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pEX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pEXFactoring.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pX.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pX1.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pXCharPoly.cpp" />
+    <ClCompile Include="..\..\..\..\Desktop\疫期线上\code\WinNTL-11_4_3\src\ZZ_pXFactoring.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

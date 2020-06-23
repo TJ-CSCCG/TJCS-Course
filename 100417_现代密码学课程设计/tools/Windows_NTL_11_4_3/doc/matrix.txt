@@ -1,0 +1,197 @@
+
+/**************************************************************************\
+
+MODULE: matrix
+
+SUMMARY:
+
+Matrix templates.
+
+The declaration 
+
+   Mat<T> M;
+
+creates a 0 x 0 matrix.  
+
+We can make it have 10 rows and 20 columns like this:
+
+   M.SetDims(10, 20);
+
+A row can be accessed as M[i], indexing from 0, or as M(i), indexing from 1.
+A matrix entry can be accessed as M[i][j], indexing from 0, or as
+M(i, j), indexing from 1.
+
+A matrix is represented as a Vec< Vec<T> >: a vector of rows, where
+each row is a Vec<T>.  Any attempt to resize one of the rows so
+as to create a non-rectangular matrix will result in a run-time 
+error.
+
+The dimensions of an existing matrix may be changed.  If the number of
+columns does not change, then the matrix is just "resized" like a vector,
+and no information is lost.  Otherwise, if the number of columns changes,
+the matrix is completely destroyed, and a new matrix is created
+
+
+\**************************************************************************/
+
+
+// EXCEPTIONS: all functions below do not throw any exceptions,
+//   except as noted
+
+template<class T>
+class Mat {
+
+   typedef typename Vec<T>::value_type value_type;
+   typedef typename Vec<T>::reference reference;
+   typedef typename Vec<T>::const_reference const_reference;
+
+
+   Mat(); // initially 0 x 0
+
+   Mat(const Mat<T>& a);
+   // copy constructor
+
+   // EXCEPTIONS: may throw
+
+
+   Mat& operator=(const Mat<T>& a);
+   // assignment
+
+   // EXCEPTIONS: may throw, weak ES (but dimensions of LHS
+   //   will be either that of old LHS or RHS)
+
+   ~Mat();
+   // destructor
+
+   Mat(Mat&& other) noexcept;
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   Mat& operator=(Mat&& other) noexcept;
+#endif
+   // move semantics (C++11 only)
+
+   Mat(INIT_SIZE_TYPE, long n, long m); 
+   // Mat(INIT_SIZE, n, m) initializes an n x m matrix, invoking
+   // the default constructor for T to initialize entries.
+
+   // EXCEPTIONS: may throw
+
+   void SetDims(long n, long m); 
+   // M.SetDims(n, m) makes M have dimension n x m.  If the number of
+   // columns (m) changes, previous storage is freed, and space for M
+   // is reallocated and initialized; otherwise, more rows are
+   // allocated as necessary (when number of rows increases), 
+   // excess rows are retained (when number of rows decreases),
+   // and--importantly--the contents do not change.
+
+   // EXCEPTIONS: strong ES (although underlying vector representation
+   //    may be reallocated)
+
+   void kill(); free storage and make 0 x 0
+
+   long NumRows() const;
+   // M.NumRows() returns the number of rows of M
+
+   long NumCols() const;
+   // M.NumCols() returns the number of columns of M
+
+   Vec<T>& operator[](long i);
+   const Vec<T>& operator[](long i) const;
+   // access row i, initial index 0.  
+   // Even if one has read/write access to a row, any attempt
+   // to change its length will raise an error.
+
+   // EXCEPTIONS: may throw if range checking is turned on
+
+   Vec<T>& operator()(long i);
+   const Vec<T>& operator()(long i) const;
+   // access row i, initial index 1. 
+   // Even if one has read/write access to a row, any attempt
+   // to change its length will raise an error.
+   // of this row will raise an error.
+
+   // EXCEPTIONS: may throw if range checking is turned on
+
+   reference operator()(long i, long j);
+   const_reference operator()(long i, long j) const; 
+   // access element (i, j), both indices starting at 1
+
+   // EXCEPTIONS: may throw if range checking is turned on
+
+   const_reference get(long i, long j) const;
+   // access element (i, j), both indices starting at 0
+
+   // EXCEPTIONS: may throw if range checking is turned on
+
+   void put(long i, long j, const T& a);
+   // same as M[i].put(j, a)
+
+   template <class U>
+   void put(long i, long j, const U& a);
+   // same as M[i].put(j, a)
+
+   long position(const Vec<T>& a) const;
+   // returns index of a in matrix, or -1 if not present;
+   // equivalent to rep(*this).position(a).
+
+   long position1(const Vec<T>& a) const;
+   // returns index of a in matrix, or -1 if not present;
+   // equivalent to rep(*this).position1(a).
+
+   long alias(const Vec<T>& a) const;
+   // returns 1 if a aliases a row of the matrix, and 0 otherwise.
+
+   void swap(Mat<T>& other);
+   // quick swap *this and other
+
+   void move(Mat<T>& other);
+   // quick move other to *this
+
+};
+
+template<class T>
+const Vec< Vec<T> >& rep(const Mat<T>& a);
+// read-only access to underlying representation
+
+template<class T>
+void swap(Mat<T>& X, Mat<T>& Y);
+// quick swap of X and Y 
+
+template<class T>
+void MakeMatrix(Mat<T>& x, const vec_vec_T& a);
+// copies a to x, checking that it is "rectangular"
+
+// EXCEPTIONS: may thow, weak ES (but dimensions of x either
+//    remain unchanged or are set to the new dimensions implied by a)
+
+/**************************************************************************\
+
+                            Input/Output
+
+\**************************************************************************/
+
+
+template<class T>
+istream& operator>>(istream&, Mat<T>&);
+
+// EXCEPTIONS: may throw, weak ES
+
+template<class T>
+ostream& operator<<(ostream&, const Mat<T>&); 
+
+// EXCEPTIONS: may throw, weak ES
+
+
+/**************************************************************************\
+
+                              Equality Testing
+
+
+\**************************************************************************/
+
+
+template<class T>
+long operator==(const Mat<T>& a, const Mat<T>& b);
+
+template<class T>
+long operator!=(const Mat<T>& a, const Mat<T>& b);
+

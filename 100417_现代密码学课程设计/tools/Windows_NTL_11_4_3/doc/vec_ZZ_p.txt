@@ -1,0 +1,99 @@
+
+/**************************************************************************\
+
+MODULE: vec_ZZ_p
+
+SUMMARY:
+
+Provides vectors over ZZ_p, along with some related operations.
+
+\**************************************************************************/
+
+#include <NTL/ZZ_p.h>
+#include <NTL/vec_ZZ.h>
+#include <NTL/vector.h>
+
+
+typedef Vec<ZZ_p> vec_ZZ_p; // backward compatibility
+
+void mul(vec_ZZ_p& x, const vec_ZZ_p& a, const ZZ_p& b);
+void mul(vec_ZZ_p& x, const vec_ZZ_p& a, long b);
+
+void mul(vec_ZZ_p& x, const ZZ_p& a, const vec_ZZ_p& b);
+void mul(vec_ZZ_p& x, long a, const vec_ZZ_p& b);
+// x = a * b
+
+void add(vec_ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b);
+// x = a + b
+
+void sub(vec_ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b);
+// x = a - b
+
+void clear(vec_ZZ_p& x);
+// x = 0 (length unchanged)
+
+void negate(vec_ZZ_p& x, const vec_ZZ_p& a);
+// x = -a
+
+long IsZero(const vec_ZZ_p& a);
+// test if a is the zero vector
+
+
+void InnerProduct(ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b);
+// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(),
+// b.length())
+
+void InnerProduct(ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b,
+                  long offset);
+// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),
+// b.length()+offset)
+
+void VectorCopy(vec_ZZ_p& x, const vec_ZZ_p& a, long n);
+vec_ZZ_p VectorCopy(const vec_ZZ_p& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+void random(vec_ZZ_p& x, long n);  // x = random vector of length n
+vec_ZZ_p random_vec_ZZ_p(long n);
+
+
+
+
+// operator notation:
+
+vec_ZZ_p operator+(const vec_ZZ_p& a, const vec_ZZ_p& b);
+vec_ZZ_p operator-(const vec_ZZ_p& a, const vec_ZZ_p& b);
+
+vec_ZZ_p operator-(const vec_ZZ_p& a);
+
+
+// vector/scalar multiplication:
+
+vec_ZZ_p operator*(const vec_ZZ_p& a, const ZZ_p& b);
+vec_ZZ_p operator*(const vec_ZZ_p& a, long b);
+
+vec_ZZ_p operator*(const ZZ_p& a, const vec_ZZ_p& b);
+vec_ZZ_p operator*(long a, const vec_ZZ_p& b);
+
+// inner product:
+
+ZZ_p operator*(const vec_ZZ_p& a, const vec_ZZ_p& b);
+
+
+// assignment operator notation:
+
+vec_ZZ_p& operator+=(vec_ZZ_p& x, const vec_ZZ_p& a);
+vec_ZZ_p& operator-=(vec_ZZ_p& x, const vec_ZZ_p& a);
+
+vec_ZZ_p& operator*=(vec_ZZ_p& x, const ZZ_p& a);
+vec_ZZ_p& operator*=(vec_ZZ_p& x, long a);
+
+
+
+// Implementation note: the BlockConstruct routine has been customized
+// for ZZ_p so that when a vec_ZZ_p is grown, space for the needed
+// elements is allocated in one contiguous chunk.  This saves on calls to
+// malloc and free, and should also yield better locality of reference.
+// One connsequence of this is that swapping an element of a vec_ZZ_p
+// with another ZZ_p can not be implemented by pointer swap, and will in
+// this case be done by copy.

@@ -1,0 +1,726 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Big Integers </title>
+</head>
+
+
+<center>
+<img src="arrow1.gif" alt="[Previous]" align=bottom>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex2.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Big Integers
+</p>
+</h1>
+
+<p> <hr>  <p>
+
+The first example makes use of the class
+<tt>ZZ</tt>,
+which
+represents "big integers": signed, arbitrary length integers.
+This program reads two big integers <tt>a</tt> and <tt>b</tt>,
+and prints <tt>(a+1)*(b+1)</tt>.
+
+<!-- STARTPLAIN
+#include <NTL/ZZ.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   ZZ a, b, c; 
+
+   cin >> a; 
+   cin >> b; 
+   c = (a+1)*(b+1);
+   cout << c << "\n";
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZ a, b, c; <br>
+<br>
+&nbsp;&nbsp; cin &gt;&gt; a; <br>
+&nbsp;&nbsp; cin &gt;&gt; b; <br>
+&nbsp;&nbsp; c = (a+<font color="#ff8b00">1</font>)*(b+<font color="#ff8b00">1</font>);<br>
+&nbsp;&nbsp; cout &lt;&lt; c &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+This program declares three variables <tt>a</tt>, <tt>b</tt>,
+and <tt>c</tt> of type <tt>ZZ</tt>.
+The values <tt>a</tt> and <tt>b</tt> are read from standard input.
+The value <tt>c</tt> is then computed as <tt>(a+1)*(b+1)</tt>.
+Finally, the value of <tt>c</tt> is printed to the standard output.
+
+<p>
+Note that one can compute with <tt>ZZ</tt>s much as with ordinary
+<tt>int</tt>s, in that most of the standard arithmetic and
+assignment operators can be used in a direct and natural way.
+The <tt>C++</tt> compiler and the NTL library routines 
+automatically take care
+of all the bookkeeping involved
+with memory management and temporary objects.
+
+<p>
+Note that by default, all of NTL's components
+are in the namespace <tt>NTL</tt>;
+with the "using directive" 
+<pre>
+   using namespace NTL;
+</pre>
+in the above example, one can access
+these components directly.
+
+<p> <hr> <p>
+
+Here's a program that reads a list of integers from standard 
+input and prints the sum of their squares.
+
+<!-- STARTPLAIN
+#include <NTL/ZZ.h>
+
+
+using namespace std;
+using namespace NTL;
+
+
+int main()
+{
+   ZZ acc, val;
+
+   acc = 0;
+   while (cin >> val) 
+      acc += val*val;
+
+   cout << acc << "\n";
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ.h&gt;</font><br>
+<br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZ acc, val;<br>
+<br>
+&nbsp;&nbsp; acc = <font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>while</b></font>&nbsp;(cin &gt;&gt; val) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;acc += val*val;<br>
+<br>
+&nbsp;&nbsp; cout &lt;&lt; acc &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+Following the normal conventions for input operators,
+NTL's input operators will set the "fail bit" of the
+input stream if the input is missing or ill formed,
+and the condition in the <tt>while</tt> loop will detect this.
+
+
+
+
+<p>
+<hr>
+<p>
+
+Here's a simple modular exponentiation routine for computing
+<tt>a^e mod n</tt>.
+NTL already provides a more sophisticated one, though.
+
+<!-- STARTPLAIN
+ZZ PowerMod(const ZZ& a, const ZZ& e, const ZZ& n)
+{
+   if (e == 0) return ZZ(1);
+
+   long k = NumBits(e);
+
+   ZZ res;
+   res = 1;
+
+   for (long i = k-1; i >= 0; i~~) {
+      res = (res*res) % n;
+      if (bit(e, i) == 1) res = (res*a) % n;
+   }
+
+   if (e < 0)
+      return InvMod(res, n);
+   else
+      return res;
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+ZZ PowerMod(<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; a,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; e,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; n)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(e ==&nbsp;<font color="#ff8c00">0</font>)&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;ZZ(<font color="#ff8c00">1</font>);<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;k = NumBits(e);<br>
+<br>
+&nbsp;&nbsp; ZZ res;<br>
+&nbsp;&nbsp; res =&nbsp;<font color="#ff8c00">1</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = k-<font color="#ff8c00">1</font>; i &gt;=&nbsp;<font color="#ff8c00">0</font>; i--) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res = (res*res) % n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(bit(e, i) ==&nbsp;<font color="#ff8c00">1</font>) res = (res*a) % n;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(e &lt;&nbsp;<font color="#ff8c00">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;InvMod(res, n);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>else</b></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;res;<br>
+}<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+Note that as an alternative, we could implement the inner loop
+as follows:
+
+<!-- STARTPLAIN
+   res = SqrMod(res, n);
+   if (bit(e, i) == 1) res = MulMod(res, a, n);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; res = SqrMod(res, n);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(bit(e, i) ==&nbsp;<font color="#ff8c00">1</font>) res = MulMod(res, a, n);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+We could also write this as:
+
+<!-- STARTPLAIN
+   SqrMod(res, res, n);
+   if (bit(e, i) == 1) MulMod(res, res, a, n);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; SqrMod(res, res, n);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(bit(e, i) ==&nbsp;<font color="#ff8c00">1</font>) MulMod(res, res, a, n);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+This illustrates an important point about NTL's programming interface.
+For every function in NTL, there is a procedural version that
+stores its result in its first argument.
+The reason for using the procedural variant is efficieny:
+on every iteration through the above loop, the functional form
+of <tt>SqrMod</tt> will cause a temporary <tt>ZZ</tt> object to
+be created and destroyed, whereas the procedural version 
+will not create any temporaries.
+Where performance is critical, the procedural version
+is to be preferred.
+Although it is usually silly to get too worked up about performance,
+it may be reasonable to argue that modular exponentiation
+is an important enough routine that it should be as fast as possible.
+
+<p>
+
+Note that when the functional version of a function
+can be naturally named with an operator, this is done.
+So for example, NTL provides a 3-argument <tt>mul</tt> routine
+for <tt>ZZ</tt> multiplication, and a functional version
+whose name is <tt>operator *</tt>, and not <tt>mul</tt>.
+
+<p>
+
+While we are taking about temporaries, consider the first version
+of the inner loop.
+Execution of the statement
+<!-- STARTPLAIN
+   res = (res*res) % n;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; res = (res*res) % n;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+will result in the creation of two temporary objects,
+one for the product, and one for the result of the mod operation,
+whose value is copied into <tt>res</tt>.
+Of course, the compiler automatically generates the code for
+cleaning up temporaries and other local objects at the right time.
+The programmer does not have to worry about this.
+
+
+<p> <hr> <p>
+
+This example is a bit more interesting.
+The following program prompts the user for an input,
+and applies a simple probabilistic primality test.
+Note that NTL already provides a slightly more sophisticated
+primality test.
+
+<!-- STARTPLAIN
+#include <NTL/ZZ.h>
+
+using namespace std;
+using namespace NTL;
+
+long witness(const ZZ& n, const ZZ& x)
+{
+   ZZ m, y, z;
+   long j, k;
+
+   if (x == 0) return 0;
+
+   // compute m, k such that n-1 = 2^k * m, m odd:
+
+   k = 1;
+   m = n/2;
+   while (m % 2 == 0) {
+      k++;
+      m /= 2;
+   }
+
+   z = PowerMod(x, m, n); // z = x^m % n
+   if (z == 1) return 0;
+
+   j = 0;
+   do {
+      y = z;
+      z = (y*y) % n; 
+      j++;
+   } while (j < k && z != 1);
+
+   return z != 1 || y != n-1;
+}
+
+
+long PrimeTest(const ZZ& n, long t)
+{
+   if (n <= 1) return 0;
+
+   // first, perform trial division by primes up to 2000
+
+   PrimeSeq s;  // a class for quickly generating primes in sequence
+   long p;
+
+   p = s.next();  // first prime is always 2
+   while (p && p < 2000) {
+      if ((n % p) == 0) return (n == p);
+      p = s.next();  
+   }
+
+   // second, perform t Miller-Rabin tests
+
+   ZZ x;
+   long i;
+
+   for (i = 0; i < t; i++) {
+      x = RandomBnd(n); // random number between 0 and n-1
+
+      if (witness(n, x)) 
+         return 0;
+   }
+
+   return 1;
+}
+
+int main()
+{
+   ZZ n;
+
+   cout << "n: ";
+   cin >> n;
+
+   if (PrimeTest(n, 10))
+      cout << n << " is probably prime\n";
+   else
+      cout << n << " is composite\n";
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+<font color="#1874cd">#include&nbsp;</font><font color="#4a708b">&lt;NTL/ZZ.h&gt;</font><br>
+<br>
+<font color="#b03060"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b03060"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>long</b></font>&nbsp;witness(<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; n,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; x)<br>
+{<br>
+&nbsp;&nbsp; ZZ m, y, z;<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;j, k;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(x ==&nbsp;<font color="#ff8c00">0</font>)&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;<font color="#ff8c00">0</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// compute m, k such that n-1 = 2^k * m, m odd:</i></font><br>
+<br>
+&nbsp;&nbsp; k =&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp; m = n/<font color="#ff8c00">2</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>while</b></font>&nbsp;(m %&nbsp;<font color="#ff8c00">2</font>&nbsp;==&nbsp;<font color="#ff8c00">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m /=&nbsp;<font color="#ff8c00">2</font>;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; z = PowerMod(x, m, n);&nbsp;<font color="#0000ee"><i>// z = x^m % n</i></font><br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(z ==&nbsp;<font color="#ff8c00">1</font>)&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;<font color="#ff8c00">0</font>;<br>
+<br>
+&nbsp;&nbsp; j =&nbsp;<font color="#ff8c00">0</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>do</b></font>&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = z;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z = (y*y) % n;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j++;<br>
+&nbsp;&nbsp; }&nbsp;<font color="#b03060"><b>while</b></font>&nbsp;(j &lt; k &amp;&amp; z !=&nbsp;<font color="#ff8c00">1</font>);<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;z !=&nbsp;<font color="#ff8c00">1</font>&nbsp;|| y != n-<font color="#ff8c00">1</font>;<br>
+}<br>
+<br>
+<br>
+<font color="#008b00"><b>long</b></font>&nbsp;PrimeTest(<font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; n,&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;t)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(n &lt;=&nbsp;<font color="#ff8c00">1</font>)&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;<font color="#ff8c00">0</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// first, perform trial division by primes up to 2000</i></font><br>
+<br>
+&nbsp;&nbsp; PrimeSeq s;&nbsp;&nbsp;<font color="#0000ee"><i>// a class for quickly generating primes in sequence</i></font><br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;p;<br>
+<br>
+&nbsp;&nbsp; p = s.next();&nbsp;&nbsp;<font color="#0000ee"><i>// first prime is always 2</i></font><br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>while</b></font>&nbsp;(p &amp;&amp; p &lt;&nbsp;<font color="#ff8c00">2000</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;((n % p) ==&nbsp;<font color="#ff8c00">0</font>)&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;(n == p);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p = s.next();&nbsp;&nbsp;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// second, perform t Miller-Rabin tests</i></font><br>
+<br>
+&nbsp;&nbsp; ZZ x;<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>for</b></font>&nbsp;(i =&nbsp;<font color="#ff8c00">0</font>; i &lt; t; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = RandomBnd(n);&nbsp;<font color="#0000ee"><i>// random number between 0 and n-1</i></font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(witness(n, x))&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;<font color="#ff8c00">0</font>;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;<font color="#ff8c00">1</font>;<br>
+}<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZ n;<br>
+<br>
+&nbsp;&nbsp; cout &lt;&lt;&nbsp;<font color="#4a708b">&quot;n: &quot;</font>;<br>
+&nbsp;&nbsp; cin &gt;&gt; n;<br>
+<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>if</b></font>&nbsp;(PrimeTest(n,&nbsp;<font color="#ff8c00">10</font>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; n &lt;&lt;&nbsp;<font color="#4a708b">&quot; is probably prime</font><font color="#8a2be2">\n</font><font color="#4a708b">&quot;</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>else</b></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; n &lt;&lt;&nbsp;<font color="#4a708b">&quot; is composite</font><font color="#8a2be2">\n</font><font color="#4a708b">&quot;</font>;<br>
+}<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+Note that in NTL, there are typically a number of ways to
+compute the same thing.
+For example, consider the computation of <tt>m</tt> and <tt>k</tt>
+in function <tt>witness</tt>.
+We could have written it thusly:
+
+<!-- STARTPLAIN
+   k = 1;
+   m = n >> 1;
+   while (!IsOdd(m)) {
+      k++;
+      m >>= 1;
+   }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; k =&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp; m = n &gt;&gt;&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>while</b></font>&nbsp;(!IsOdd(m)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m &gt;&gt;=&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp; }<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+It turns out that this is actually not significantly more 
+efficient than the original version, because the implementation
+optimizes multiplication and division by 2.
+
+<p>
+
+The following is more efficient:
+
+<!-- STARTPLAIN
+   k = 1;
+   while (bit(n, k) == 0) k++;
+   m = n >> k;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; k =&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>while</b></font>&nbsp;(bit(n, k) ==&nbsp;<font color="#ff8c00">0</font>) k++;<br>
+&nbsp;&nbsp; m = n &gt;&gt; k;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+As it happens, there is a built-in NTL routine that does just what we want:
+
+<!-- STARTPLAIN
+   m = n-1;
+   k = MakeOdd(m);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; m = n-<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp; k = MakeOdd(m);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+
+<p> <hr> <p>
+
+Having seen a number of examples involving <tt>ZZ</tt>s,
+let's look at the <tt>ZZ</tt> interface in a bit more detail.
+
+<p>
+
+<b>
+Constructors, assignment, and conversions
+</b>
+
+<p>
+
+When you declare an object of type <tt>ZZ</tt>, 
+the default constructor initializes to the value <tt>0</tt>.
+As we have already seen, there is an assignment operator that
+allows one to copy the value of one <tt>ZZ</tt> to another.
+Note that these copies (like almost all copies in NTL) are "deep",
+i.e., the actual data is copied, and not just a pointer.
+Of course, if the amount of space allocated by the destination
+of the assignment is insufficient to hold the value of the source,
+space is automatically re-allocated.
+
+<p>
+One can also assign a value of type <tt>long</tt> to a <tt>ZZ</tt>:
+<!-- STARTPLAIN
+   ZZ x;
+   x = 1;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x;<br>
+&nbsp;&nbsp; x =&nbsp;<font color="#ff8c00">1</font>;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+Note that one cannot write
+<!-- STARTPLAIN
+   ZZ x = 1;  // error
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x =&nbsp;<font color="#ff8c00">1</font>;&nbsp;&nbsp;<font color="#0000ee"><i>// error</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+to initialize a <tt>ZZ</tt>.
+Instead, one could write
+<!-- STARTPLAIN
+   ZZ x = ZZ(1);
+   ZZ y(1);
+   ZZ z{1}; // C++11 only
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x = ZZ(<font color="#ff8c00">1</font>);<br>
+&nbsp;&nbsp; ZZ y(<font color="#ff8c00">1</font>);<br>
+&nbsp;&nbsp; ZZ z{<font color="#ff8c00">1</font>};&nbsp;<font color="#0000ee"><i>// C++11 only</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+using the constructor that allows one to <i>explicitly</i>
+construct a <tt>ZZ</tt> from a <tt>long</tt>.
+
+<p>
+Alternatively, one could write this as:
+<!-- STARTPLAIN
+   ZZ x = conv<ZZ>(1);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x = conv&lt;ZZ&gt;(<font color="#ff8c00">1</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+This is an example of one of NTL's conversion routines.
+For very large constants, one can write:
+<!-- STARTPLAIN
+   ZZ x = conv<ZZ>("99999999999999999999");
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x = conv&lt;ZZ&gt;(<font color="#4a708b">&quot;99999999999999999999&quot;</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+These examples illustrate conversion routines in their 
+functional forms.
+Conversion routines are also available in procedural form:
+<!-- STARTPLAIN
+   ZZ x;
+   conv(x, 1);
+   conv(x, "99999999999999999999");
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ x;<br>
+&nbsp;&nbsp; conv(x,&nbsp;<font color="#ff8c00">1</font>);<br>
+&nbsp;&nbsp; conv(x,&nbsp;<font color="#4a708b">&quot;99999999999999999999&quot;</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+<b>
+Functionality
+</b>
+<p>
+
+All of the basic arithmetic operators are supported,
+including comparison, arithmetic, shift, and bit-wise logical operations.
+One can mix <tt>ZZ</tt>s and <tt>long</tt>s in any expresion in
+a natural way.
+NTL does not support implicit type conversion;
+rather, for basic operations, it simply overloads the operators
+or functions in a way to achieve a kind of "promotion logic":
+if one input is a <tt>ZZ</tt> and the other is a <tt>long</tt>
+(or something that implicitly converts to a <tt>long</tt>, like 
+an <tt>int</tt>), the <tt>long</tt> input is effectively converted
+to a <tt>ZZ</tt>.
+Moreover, wherever possible, the implementation does this 
+as efficiently as possible, and usually avoids the creation
+of a temporary <tt>ZZ</tt>.
+
+<p>
+There are also procedural versions for all the basic arithmetic
+operations:
+<pre>
+   add, sub, negate, mul, sqr, div, rem, DivRem, 
+   LeftShift, RightShift,
+   bit_and, bit_or, bit_xor
+</pre>
+
+<p>
+There are many other routines.
+Here is a brief summary:
+<ul>
+<li>
+<tt>GCD</tt> -- computes greatest common divisor of two integers
+<li>
+<tt>XGCD</tt> -- extended Euclidean algorithm
+<li>
+<tt>AddMod</tt>, <tt>SubMod</tt>, <tt>NegateMod</tt>, 
+<tt>MulMod</tt>, <tt>SqrMod</tt>, <tt>InvMod</tt>,
+<tt>PowerMod</tt> -- routines for modular arithmetic,
+including inversion and exponentiation
+<li>
+<tt>NumBits</tt> -- length of binary representation
+<li>
+<tt>bit</tt> -- extract a bit
+<li>
+<tt>ZZFromBytes</tt>, <tt>BytesFromZZ</tt> -- 
+convert between octet strings and <tt>ZZ</tt>s
+<li>
+<tt>RandomBnd</tt>, <tt>RandomBits</tt>, <tt>RandomLen</tt> --
+routines for generating pseudo-random numbers
+<li>
+<tt>GenPrime</tt>, <tt>ProbPrime</tt> -- routines for generating primes
+and testing primality
+<li>
+<tt>power</tt> -- (non-modular) exponentiation
+<li>
+<tt>SqrRoot</tt> -- integer part of square root
+<li>
+<tt>Jacobi</tt>, <tt>SqrRootMod</tt> -- Jacobi symbol and modular
+square root
+</ul>
+
+<p>
+Most of these functions also have pure <tt>long</tt> versions as 
+well, and as usual, there are both functional and procedural
+variants.
+
+<p>
+There are other functions as well.
+See <a href="ZZ.cpp.html"><tt>ZZ.txt</tt></a> for complete details.
+Also see <a href="tools.cpp.html"><tt>tools.txt</tt></a> for some basic
+services provided by NTL.
+
+
+<p>
+<center>
+<img src="arrow1.gif" alt="[Previous]" align=bottom>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex2.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

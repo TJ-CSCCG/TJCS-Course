@@ -1,0 +1,725 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Modular Arithmetic </title>
+</head>
+
+<center>
+<a href="tour-ex3.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex5.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Modular Arithmetic
+</p>
+</h1>
+
+<p> <hr> <p>
+
+
+NTL also supports modular integer arithmetic.
+The class <tt>ZZ_p</tt>
+represents the integers mod <tt>p</tt>.
+Despite the notation, <tt>p</tt> need not in general be prime,
+except in situations where this is mathematically required.
+The classes <tt>Vec&lt;ZZ_p&gt;</tt> (a.k.a., <tt>vec_ZZ_p</tt>), 
+<tt>Mat&lt;ZZ_p&gt;</tt> (a.k.a., <tt>mat_ZZ_p</tt>),
+and <tt>ZZ_pX</tt> represent vectors, matrices, and polynomials
+mod <tt>p</tt>, and work much the same way as the corresponding
+classes for <tt>ZZ</tt>.
+
+<p>
+Here is a program that reads a prime number <tt>p</tt>,
+and a polynomial <tt>f</tt> modulo <tt>p</tt>, and factors it.
+
+<!-- STARTPLAIN
+#include <NTL/ZZ_pXFactoring.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   ZZ p;
+   cin >> p;
+   ZZ_p::init(p);
+
+   ZZ_pX f;
+   cin >> f;
+
+   Vec< Pair< ZZ_pX, long > > factors;
+
+   CanZass(factors, f);  // calls "Cantor/Zassenhaus" algorithm
+
+   cout << factors << "\n";
+    
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_pXFactoring.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZ p;<br>
+&nbsp;&nbsp; cin &gt;&gt; p;<br>
+&nbsp;&nbsp; ZZ_p::init(p);<br>
+<br>
+&nbsp;&nbsp; ZZ_pX f;<br>
+&nbsp;&nbsp; cin &gt;&gt; f;<br>
+<br>
+&nbsp;&nbsp; Vec&lt; Pair&lt; ZZ_pX, <font color="#008b00"><b>long</b></font>&nbsp;&gt; &gt; factors;<br>
+<br>
+&nbsp;&nbsp; CanZass(factors, f);&nbsp;&nbsp;<font color="#0000ed"><i>// calls &quot;Cantor/Zassenhaus&quot; algorithm</i></font><br>
+<br>
+&nbsp;&nbsp; cout &lt;&lt; factors &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+As a program is running, NTL keeps track of a "current modulus"
+for the class <tt>ZZ_p</tt>, which can be initialized or changed
+using <tt>ZZ_p::init</tt>.
+This must be done before any variables are declared or
+computations are done that depend on this modulus.
+
+<p>
+Please note that for efficiency reasons,
+NTL does not make any attempt to ensure that
+variables declared under one modulus are not used
+under a different one.
+If that happens, the behavior of a program 
+is completely unpredictable.
+
+
+<p> <hr> <p>
+
+Here are two more examples that illustrate the <tt>ZZ_p</tt>-related 
+classes.
+The first is a vector addition routine (already supplied by NTL):
+
+<!-- STARTPLAIN
+#include <NTL/ZZ_p.h>
+
+using namespace std;
+using namespace NTL;
+
+void add(Vec<ZZ_p>& x, const Vec<ZZ_p>& a, const Vec<ZZ_p>& b)
+{
+   long n = a.length();
+   if (b.length() != n) Error("vector add: dimension mismatch");
+
+   x.SetLength(n);
+   long i;
+   for (i = 0; i < n; i++)
+      add(x[i], a[i], b[i]);
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_p.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>void</b></font>&nbsp;add(Vec&lt;ZZ_p&gt;&amp; x, <font color="#008b00"><b>const</b></font>&nbsp;Vec&lt;ZZ_p&gt;&amp; a, <font color="#008b00"><b>const</b></font>&nbsp;Vec&lt;ZZ_p&gt;&amp; b)<br>
+{<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;n = a.length();<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(b.length() != n) Error(<font color="#4a6f8b">&quot;vector add: dimension mismatch&quot;</font>);<br>
+<br>
+&nbsp;&nbsp; x.SetLength(n);<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(i = <font color="#ff8b00">0</font>; i &lt; n; i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add(x[i], a[i], b[i]);<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+
+The second example is an inner product routine (also supplied by NTL):
+
+<!-- STARTPLAIN
+#include <NTL/ZZ_p.h>
+
+using namespace std;
+using namespace NTL;
+
+void InnerProduct(ZZ_p& x, const Vec<ZZ_p>& a, const Vec<ZZ_p>& b)
+{
+   long n = min(a.length(), b.length());
+   long i;
+   ZZ accum, t;
+
+   accum = 0;
+   for (i = 0; i < n; i++) {
+      mul(t, rep(a[i]), rep(b[i]));
+      add(accum, accum, t);
+   }
+
+   conv(x, accum);
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_p.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>void</b></font>&nbsp;InnerProduct(ZZ_p&amp; x, <font color="#008b00"><b>const</b></font>&nbsp;Vec&lt;ZZ_p&gt;&amp; a, <font color="#008b00"><b>const</b></font>&nbsp;Vec&lt;ZZ_p&gt;&amp; b)<br>
+{<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;n = min(a.length(), b.length());<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+&nbsp;&nbsp; ZZ accum, t;<br>
+<br>
+&nbsp;&nbsp; accum = <font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(i = <font color="#ff8b00">0</font>; i &lt; n; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(t, rep(a[i]), rep(b[i]));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add(accum, accum, t);<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; conv(x, accum);<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+This second example illustrates two things.
+First, it illustrates the use of function <tt>rep</tt> which
+returns a read-only reference to the representation of a <tt>ZZ_p</tt>
+as a <tt>ZZ</tt> between <tt>0</tt> and <tt>p-1</tt>.
+Second, it illustrates a useful algorithmic technique,
+whereby one computes over <tt>ZZ</tt>, reducing mod <tt>p</tt>
+only when necessary.
+This reduces the number of divisions that need to be performed significantly,
+leading to much faster execution.
+
+
+<p>
+The class <tt>ZZ_p</tt> supports all the basic arithmetic
+operations in both operator and procedural form.
+All of the basic operations support a "promotion logic",
+promoting <tt>long</tt> to <tt>ZZ_p</tt>.
+
+<p>
+Note that the class <tt>ZZ_p</tt> is mainly useful only
+when you want to work with vectors, matrices, or polynomials 
+mod <tt>p</tt>.
+If you just want to do some simple modular arithemtic,
+it is probably easier to just work with <tt>ZZ</tt>'s directly.
+This is especially true if you want to work with many different
+moduli:  modulus switching is supported, but it is a bit awkward.
+
+<p>
+The class <tt>ZZ_pX</tt> supports all the basic arithmetic
+operations in both operator and procedural form.
+All of the basic operations support a "promotion logic",
+promoting both <tt>long</tt> and <tt>ZZ_p</tt> to <tt>ZZ_pX</tt>.
+
+<p>
+See <a href="ZZ_p.cpp.html"><tt>ZZ_p.txt</tt></a> for details on <tt>ZZ_p</tt>;
+see <a href="ZZ_pX.cpp.html"><tt>ZZ_pX.txt</tt></a> for details on <tt>ZZ_pX</tt>;
+see <a href="ZZ_pXFactoring.cpp.html"><tt>ZZ_pXFactoring.txt</tt></a> for details on 
+the routines for factoring polynomials over <tt>ZZ_p</tt>;
+see <a href="vec_ZZ_p.cpp.html"><tt>vec_ZZ_p.txt</tt></a> for details 
+on mathematical operations on  <tt>Vec&lt;ZZ_p&gt;</tt>'s;
+see <a href="mat_ZZ_p.cpp.html"><tt>mat_ZZ_p.txt</tt></a> for details on 
+mathematical operations on <tt>Mat&lt;ZZ_p&gt;</tt>'s.
+
+<p> <hr> <p>
+
+There is a mechanism for saving and restoring a modulus,
+which the following example illustrates.
+This routine takes as input an integer polynomial
+and a prime, and tests if the polynomial is irreducible modulo
+the prime.
+
+<!-- STARTPLAIN
+#include <NTL/ZZX.h>
+#include <NTL/ZZ_pXFactoring.h>
+
+using namespace std;
+using namespace NTL;
+
+long IrredTestMod(const ZZX& f, const ZZ& p)
+{
+   ZZ_pPush push(p); // save current modulus and install p
+                     // as current modulus
+
+   return DetIrredTest(conv<ZZ_pX>(f));
+
+   // old modulus is restored automatically when push is destroyed
+   // upon return
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZX.h&gt;</font><br>
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_pXFactoring.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>long</b></font>&nbsp;IrredTestMod(<font color="#008b00"><b>const</b></font>&nbsp;ZZX&amp; f, <font color="#008b00"><b>const</b></font>&nbsp;ZZ&amp; p)<br>
+{<br>
+&nbsp;&nbsp; ZZ_pPush push(p); <font color="#0000ed"><i>// save current modulus and install p</i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000ed"><i>// as current modulus</i></font><br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>return</b></font>&nbsp;DetIrredTest(conv&lt;ZZ_pX&gt;(f));<br>
+<br>
+&nbsp;&nbsp; <font color="#0000ed"><i>// old modulus is restored automatically when push is destroyed</i></font><br>
+&nbsp;&nbsp; <font color="#0000ed"><i>// upon return</i></font><br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+The modulus switching mechanism is actually quite a bit
+more general and flexible than this example illustrates.
+
+<p> 
+Note the use of the conversion function 
+<tt>conv&lt;ZZ_pX&gt;</tt>.
+We could also have used the equivalent procedural form:
+<!-- STARTPLAIN
+   ZZ_pX f1;
+   conv(f1, f);
+   return DetIrredTest(f1);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ_pX f1;<br>
+&nbsp;&nbsp; conv(f1, f);<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;DetIrredTest(f1);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+<p> <hr> <p>
+
+Suppose in the above example that <tt>p</tt> is known in advance
+to be a small, single-precision  prime.
+In this case, NTL provides a class <tt>zz_p</tt>, that
+acts just like <tt>ZZ_p</tt>,
+along with corresponding classes <tt>Vec&lt;zz_p&gt;</tt>,
+<tt>Mat&lt;zz_p&gt;</tt>, and <tt>zz_pX</tt>.
+The interfaces to all of the routines are generally identical
+to those for <tt>ZZ_p</tt>.
+However, the routines are much more efficient, in both time and space.
+
+<p>
+For small primes, the routine in the previous example could be coded
+as follows.
+
+
+<!-- STARTPLAIN
+#include <NTL/ZZX.h>
+#include <NTL/lzz_pXFactoring.h>
+
+using namespace std;
+using namespace NTL;
+
+long IrredTestMod(const ZZX& f, long p)
+{
+   zz_pPush push(p);
+   return DetIrredTest(conv<zz_pX>(f));
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZX.h&gt;</font><br>
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/lzz_pXFactoring.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>long</b></font>&nbsp;IrredTestMod(<font color="#008b00"><b>const</b></font>&nbsp;ZZX&amp; f, <font color="#008b00"><b>long</b></font>&nbsp;p)<br>
+{<br>
+&nbsp;&nbsp; zz_pPush push(p);<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>return</b></font>&nbsp;DetIrredTest(conv&lt;zz_pX&gt;(f));<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p> <hr> <p>
+
+The following is a routine (essentially the same as implemented in NTL)
+for computing the GCD of polynomials with integer coefficients.
+It uses a "modular" approach:  the GCDs are computed modulo small
+primes, and the results are combined using the Chinese Remainder Theorem (CRT).
+The small primes are specially chosen "FFT primes", which are of
+a special form that allows for particular fast polynomial arithmetic.
+
+<!-- STARTPLAIN
+#include <NTL/ZZX.h>
+
+using namespace std;
+using namespace NTL;
+
+void GCD(ZZX& d, const ZZX& a, const ZZX& b)
+{
+   if (a == 0) {
+      d = b;
+      if (LeadCoeff(d) < 0) negate(d, d);
+      return;
+   }
+
+   if (b == 0) {
+      d = a;
+      if (LeadCoeff(d) < 0) negate(d, d);
+      return;
+   }
+
+   ZZ c1, c2, c;
+   ZZX f1, f2;
+
+   content(c1, a);
+   divide(f1, a, c1);
+
+   content(c2, b);
+   divide(f2, b, c2);
+
+   GCD(c, c1, c2);
+
+   ZZ ld;
+   GCD(ld, LeadCoeff(f1), LeadCoeff(f2));
+
+   ZZX g, res;
+
+   ZZ prod;
+
+   zz_pPush push; // save current modulus, restore upon return
+
+   long FirstTime = 1;
+
+   long i;
+   for (i = 0; ;i++) {
+      zz_p::FFTInit(i);
+      long p = zz_p::modulus();
+
+      if (divide(LeadCoeff(f1), p) || divide(LeadCoeff(f2), p)) continue;
+
+      zz_pX G, F1, F2;
+      zz_p  LD;
+
+      conv(F1, f1);
+      conv(F2, f2);
+      conv(LD, ld);
+
+      GCD(G, F1, F2);
+      mul(G, G, LD);
+
+
+      if (deg(G) == 0) { 
+         res = 1;
+         break;
+      }
+
+      if (FirstTime || deg(G) < deg(g)) {
+         prod = 1;
+         g = 0;
+         FirstTime = 0;
+      }
+      else if (deg(G) > deg(g)) {
+         continue;
+      }
+
+      if (!CRT(g, prod, G)) {
+         PrimitivePart(res, g);
+         if (divide(f1, res) && divide(f2, res))
+            break;
+      }
+
+   }
+
+   mul(d, res, c);
+   if (LeadCoeff(d) < 0) negate(d, d);
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZX.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>void</b></font>&nbsp;GCD(ZZX&amp; d, <font color="#008b00"><b>const</b></font>&nbsp;ZZX&amp; a, <font color="#008b00"><b>const</b></font>&nbsp;ZZX&amp; b)<br>
+{<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(a == <font color="#ff8b00">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(LeadCoeff(d) &lt; <font color="#ff8b00">0</font>) negate(d, d);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>return</b></font>;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(b == <font color="#ff8b00">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = a;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(LeadCoeff(d) &lt; <font color="#ff8b00">0</font>) negate(d, d);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>return</b></font>;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; ZZ c1, c2, c;<br>
+&nbsp;&nbsp; ZZX f1, f2;<br>
+<br>
+&nbsp;&nbsp; content(c1, a);<br>
+&nbsp;&nbsp; divide(f1, a, c1);<br>
+<br>
+&nbsp;&nbsp; content(c2, b);<br>
+&nbsp;&nbsp; divide(f2, b, c2);<br>
+<br>
+&nbsp;&nbsp; GCD(c, c1, c2);<br>
+<br>
+&nbsp;&nbsp; ZZ ld;<br>
+&nbsp;&nbsp; GCD(ld, LeadCoeff(f1), LeadCoeff(f2));<br>
+<br>
+&nbsp;&nbsp; ZZX g, res;<br>
+<br>
+&nbsp;&nbsp; ZZ prod;<br>
+<br>
+&nbsp;&nbsp; zz_pPush push; <font color="#0000ed"><i>// save current modulus, restore upon return</i></font><br>
+<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;FirstTime = <font color="#ff8b00">1</font>;<br>
+<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(i = <font color="#ff8b00">0</font>; ;i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zz_p::FFTInit(i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;p = zz_p::modulus();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(divide(LeadCoeff(f1), p) || divide(LeadCoeff(f2), p)) <font color="#b02f60"><b>continue</b></font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zz_pX G, F1, F2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zz_p&nbsp;&nbsp;LD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conv(F1, f1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conv(F2, f2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conv(LD, ld);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GCD(G, F1, F2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(G, G, LD);<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(deg(G) == <font color="#ff8b00">0</font>) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; res = <font color="#ff8b00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>break</b></font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(FirstTime || deg(G) &lt; deg(g)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prod = <font color="#ff8b00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g = <font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FirstTime = <font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>else</b></font>&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(deg(G) &gt; deg(g)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>continue</b></font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>if</b></font>&nbsp;(!CRT(g, prod, G)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PrimitivePart(res, g);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(divide(f1, res) &amp;&amp; divide(f2, res))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>break</b></font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; mul(d, res, c);<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(LeadCoeff(d) &lt; <font color="#ff8b00">0</font>) negate(d, d);<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+<p>
+See <a href="lzz_p.cpp.html"><tt>lzz_p.txt</tt></a> for details on <tt>zz_p</tt>;
+see <a href="lzz_pX.cpp.html"><tt>lzz_pX.txt</tt></a> for details on <tt>zz_pX</tt>;
+see <a href="lzz_pXFactoring.cpp.html"><tt>lzz_pXFactoring.txt</tt></a> for details on 
+the routines for factoring polynomials over <tt>zz_p</tt>;
+see <a href="vec_lzz_p.cpp.html"><tt>vec_lzz_p.txt</tt></a> for details on <tt>vec_zz_p</tt>;
+see <a href="mat_lzz_p.cpp.html"><tt>mat_lzz_p.txt</tt></a> for details on <tt>mat_zz_p</tt>.
+
+
+<p> <hr> <p>
+
+NTL provides a number of "residue class" types with a dynamic modulus
+stored as a global variable: the types <tt>ZZ_p</tt> and <tt>zz_p</tt>,
+discussed above, as well as the types <tt>ZZ_pE</tt>, <tt>zz_pE</tt>,
+and <tt>GF2E</tt>, discussed later.
+
+<p>
+Some caution must be used so that a variable constructed under
+one modulus is not used "out of context", when a different modulus, or perhaps
+no modulus, is installed as the current modulus.
+While arithmetic operations should certainly be avoided,
+NTL does take care to allow for certain operations to be safely
+performed "out of context". 
+These operations include default and copy constructors, as well as assignment.
+
+
+<p> <hr> <p>
+
+Arithmetic mod 2 is such an important special case that NTL
+provides a class <tt>GF2</tt>, that
+acts just like <tt>ZZ_p</tt> when <tt>p == 2</tt>,
+along with corresponding classes <tt>Vec&lt;GF2&gt;</tt>,
+<tt>Mat&lt;GF2&gt;</tt>, and <tt>GF2X</tt>.
+The interfaces to all of the routines are generally identical
+to those for <tt>ZZ_p</tt>.
+However, the routines are much more efficient, in both time and space.
+
+Note that  <tt>Vec&lt;GF2&gt;</tt> is an explicit specialization
+of the template class <tt>Vec&lt;T&gt;</tt>, with a special
+implementation that packs the coefficients into the bits
+of a machine word.
+You need to include the header file <tt>&lt;NTL/vec_GF2.h&gt;</tt>
+to use the class <tt>Vec&lt;GF2&gt;</tt>.
+
+<p>
+
+This example illustrates the <tt>GF2X</tt> and <tt>Mat&lt;GF2&gt;</tt>
+classes with a simple routine to test if a polynomial over GF(2)
+is irreducible using linear algebra.
+NTL's built-in irreducibility test is to be preferred, however.
+
+<!-- STARTPLAIN
+#include <NTL/GF2X.h>
+#include <NTL/mat_GF2.h>
+
+using namespace std;
+using namespace NTL;
+
+long MatIrredTest(const GF2X& f)
+{
+   long n = deg(f);
+
+   if (n <= 0) return 0;
+   if (n == 1) return 1;
+
+   if (GCD(f, diff(f)) != 1) return 0;
+
+   Mat<GF2> M;
+
+   M.SetDims(n, n);
+
+   GF2X x_squared = GF2X(INIT_MONO, 2);
+
+   GF2X g;
+   g = 1;
+
+   for (long i = 0; i < n; i++) {
+      VectorCopy(M[i], g, n);
+      M[i][i] += 1;
+      g = (g * x_squared) % f;
+   }
+
+   long rank = gauss(M);
+
+   if (rank == n-1)
+      return 1;
+   else
+      return 0;
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/GF2X.h&gt;</font><br>
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/mat_GF2.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>long</b></font>&nbsp;MatIrredTest(<font color="#008b00"><b>const</b></font>&nbsp;GF2X&amp; f)<br>
+{<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;n = deg(f);<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(n &lt;= <font color="#ff8b00">0</font>) <font color="#b02f60"><b>return</b></font>&nbsp;<font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(n == <font color="#ff8b00">1</font>) <font color="#b02f60"><b>return</b></font>&nbsp;<font color="#ff8b00">1</font>;<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(GCD(f, diff(f)) != <font color="#ff8b00">1</font>) <font color="#b02f60"><b>return</b></font>&nbsp;<font color="#ff8b00">0</font>;<br>
+<br>
+&nbsp;&nbsp; Mat&lt;GF2&gt; M;<br>
+<br>
+&nbsp;&nbsp; M.SetDims(n, n);<br>
+<br>
+&nbsp;&nbsp; GF2X x_squared = GF2X(INIT_MONO, <font color="#ff8b00">2</font>);<br>
+<br>
+&nbsp;&nbsp; GF2X g;<br>
+&nbsp;&nbsp; g = <font color="#ff8b00">1</font>;<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = <font color="#ff8b00">0</font>; i &lt; n; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VectorCopy(M[i], g, n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M[i][i] += <font color="#ff8b00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = (g * x_squared) % f;<br>
+&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp; <font color="#008b00"><b>long</b></font>&nbsp;rank = gauss(M);<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(rank == n-<font color="#ff8b00">1</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>return</b></font>&nbsp;<font color="#ff8b00">1</font>;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>else</b></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>return</b></font>&nbsp;<font color="#ff8b00">0</font>;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+Note that the statement 
+<!-- STARTPLAIN
+   g = (g * x_squared) % f;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; g = (g * x_squared) % f;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+could be replace d by the more efficient code sequence
+<!-- STARTPLAIN
+   MulByXMod(g, g, f);
+   MulByXMod(g, g, f);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; MulByXMod(g, g, f);<br>
+&nbsp;&nbsp; MulByXMod(g, g, f);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+but this would not significantly impact the overall
+running time, since it is the Gaussian elimination that 
+dominates the running time.
+
+<p>
+See <a href="GF2.cpp.html"><tt>GF2.txt</tt></a> for details on <tt>GF2</tt>;
+see <a href="GF2X.cpp.html"><tt>GF2X.txt</tt></a> for details on <tt>GF2X</tt>;
+see <a href="GF2XFactoring.cpp.html"><tt>GF2XFactoring.txt</tt></a> for details on 
+the routines for factoring polynomials over <tt>GF2</tt>;
+see <a href="vec_GF2.cpp.html"><tt>vec_GF2.txt</tt></a> for details on <tt>vec_GF2</tt>;
+see <a href="mat_GF2.cpp.html"><tt>mat_GF2.txt</tt></a> for details on <tt>mat_GF2</tt>.
+
+<p>
+
+<center>
+<a href="tour-ex3.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex5.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

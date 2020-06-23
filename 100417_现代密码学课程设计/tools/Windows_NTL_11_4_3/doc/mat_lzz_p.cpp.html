@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/mat_lzz_p.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+.Boolean { color: #cd0000; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: mat_zz_p</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Defines the class mat_zz_p.</span>
+<span class="Comment">Note that the modulus p need not be a prime, except as indicated below.</span>
+
+<span class="Comment">IMPLEMENTATION NOTES: </span>
+
+<span class="Comment">Starting with NTL version 9.7.0 (and 9.7.1), many of the routines here have</span>
+<span class="Comment">been optimized to take better advantage of specific hardware features available</span>
+<span class="Comment">on 64-bit Intel CPU's.  Currently, the mul, inv, determinant, solve, gauss,</span>
+<span class="Comment">kernel, and image routines are fastest for p up to 23-bits long (assuming the</span>
+<span class="Comment">CPU supports AVX instructions).  After that, performance degrades in three</span>
+<span class="Comment">stages: stage 1: up to 28-bits; stage 2: up to 31-bits; stage 3: 32-bits and</span>
+<span class="Comment">up. </span>
+
+<span class="Comment">For primes up to 23-bits, AVX floating point instructions are used.  After</span>
+<span class="Comment">that, ordinary integer arithmetic is used.  In a future version, I may exploit</span>
+<span class="Comment">AVX2 integer instructions to get better stage 2 performance.  And in the more</span>
+<span class="Comment">distant future, AVX512 instructions will be used, when they become available.</span>
+
+<span class="Comment">On older Intel machines, or non-Intel machines that have &quot;long long&quot; support,</span>
+<span class="Comment">one still gets optimizations corresponding to the three stages above.  On</span>
+<span class="Comment">32-bit machines, one still gets three stages, just with smaller crossover</span>
+<span class="Comment">points.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/matrix.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&quot;vec_vec_zz_p.h&quot;</span>
+
+
+<span class="Type">typedef</span> Mat&lt;zz_p&gt; mat_zz_p; <span class="Comment">// backward compatibility</span>
+
+<span class="Type">void</span> add(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Comment">// X = A + B</span>
+
+<span class="Type">void</span> sub(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Comment">// X = A - B</span>
+
+<span class="Type">void</span> mul(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Comment">// X = A * B</span>
+
+<span class="Type">void</span> mul(vec_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// x = A * b</span>
+
+<span class="Type">void</span> mul(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Comment">// x = a * B</span>
+
+<span class="Type">void</span> mul(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, zz_p b);
+<span class="Type">void</span> mul(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> b);
+<span class="Comment">// X = A * b</span>
+
+<span class="Type">void</span> mul(mat_zz_p&amp; X, zz_p a, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Type">void</span> mul(mat_zz_p&amp; X, <span class="Type">long</span> a, <span class="Type">const</span> mat_zz_p&amp; B);
+<span class="Comment">// X = a * B</span>
+
+
+<span class="Type">void</span> transpose(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+mat_zz_p transpose(<span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// X = transpose of A</span>
+
+
+<span class="Type">void</span> determinant(zz_p&amp; d, <span class="Type">const</span> mat_zz_p&amp; A);
+zz_p determinant(<span class="Type">const</span> mat_zz_p&amp; a);
+<span class="Comment">// d = determinant(A)</span>
+
+<span class="Type">void</span> solve(zz_p&amp; d, vec_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).</span>
+<span class="Comment">// If d != 0, solves x*A = b (so x and b are treated as a row vectors).</span>
+
+<span class="Type">void</span> solve(zz_p&amp; d, <span class="Type">const</span> mat_zz_p&amp; A, vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).</span>
+<span class="Comment">// If d != 0, solves A*x = b (so x and b are treated as a column vectors).</span>
+
+<span class="Type">void</span> inv(zz_p&amp; d, mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// A is an n x n matrix.  Computes d = determinant(A).  If d != 0,</span>
+<span class="Comment">// computes X = A^{-1}.</span>
+
+
+<span class="Type">void</span> inv(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+mat_zz_p inv(<span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// X = A^{-1}; error is raised if A is  singular</span>
+
+<span class="Type">void</span> power(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> ZZ&amp; e);
+mat_zz_p power(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> ZZ&amp; e);
+<span class="Type">void</span> power(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> e);
+mat_zz_p power(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> e);
+<span class="Comment">// X = A^e; e may be negative (in which case A must be nonsingular).</span>
+
+<span class="Comment">// NOTE: the routines determinant, solve, inv, and power (with negative</span>
+<span class="Comment">// exponent) all require that the modulus p is prime: during elimination, if a</span>
+<span class="Comment">// non-zero pivot element does not have an inverse, and error is raised.  The</span>
+<span class="Comment">// following &quot;relaxed&quot; versions of these routines will also work with prime</span>
+<span class="Comment">// powers, if the optional parameter relax is true (which is the default).</span>
+<span class="Comment">// However, note that in these relaxed routines, if a computed determinant</span>
+<span class="Comment">// value is zero, this may not be the true determinant: all that you can assume</span>
+<span class="Comment">// is that the true determinant is not invertible mod p. If the parameter</span>
+<span class="Comment">// relax==false, then these routines behave identically to their &quot;unrelaxed&quot;</span>
+<span class="Comment">// counterparts.</span>
+
+<span class="Type">void</span> relaxed_determinant(zz_p&amp; d, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+zz_p relaxed_determinant(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_solve(zz_p&amp; d, vec_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> vec_zz_p&amp; b, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_solve(zz_p&amp; d, <span class="Type">const</span> mat_zz_p&amp; A, vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; b, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_inv(zz_p&amp; d, mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_inv(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+mat_zz_p relaxed_inv(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_power(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> ZZ&amp; e, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+mat_zz_p relaxed_power(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">const</span> ZZ&amp; e, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+<span class="Type">void</span> relaxed_power(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> e, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+mat_zz_p relaxed_power(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> e, <span class="Type">bool</span> relax=<span class="Boolean">true</span>);
+
+
+<span class="Type">void</span> sqr(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+mat_zz_p sqr(<span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// X = A*A   </span>
+
+<span class="Type">void</span> ident(mat_zz_p&amp; X, <span class="Type">long</span> n);
+mat_zz_p ident_mat_zz_p(<span class="Type">long</span> n);
+<span class="Comment">// X = n x n identity matrix</span>
+
+<span class="Type">long</span> IsIdent(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> n);
+<span class="Comment">// test if A is the n x n identity matrix</span>
+
+<span class="Type">void</span> diag(mat_zz_p&amp; X, <span class="Type">long</span> n, zz_p d);
+mat_zz_p diag(<span class="Type">long</span> n, zz_p d);
+<span class="Comment">// X = n x n diagonal matrix with d on diagonal</span>
+
+<span class="Type">long</span> IsDiag(<span class="Type">const</span> mat_zz_p&amp; A, <span class="Type">long</span> n, zz_p d);
+<span class="Comment">// test if X is an  n x n diagonal matrix with d on diagonal</span>
+
+
+<span class="Type">void</span> random(mat_zz_p&amp; x, <span class="Type">long</span> n, <span class="Type">long</span> m);  <span class="Comment">// x = random n x m matrix</span>
+mat_zz_p random_mat_zz_p(<span class="Type">long</span> n, <span class="Type">long</span> m);
+
+
+
+<span class="Type">long</span> gauss(mat_zz_p&amp; M);
+<span class="Type">long</span> gauss(mat_zz_p&amp; M, <span class="Type">long</span> w);
+<span class="Comment">// Performs unitary row operations so as to bring M into row echelon</span>
+<span class="Comment">// form.  If the optional argument w is supplied, stops when first w</span>
+<span class="Comment">// columns are in echelon form.  The return value is the rank (or the</span>
+<span class="Comment">// rank of the first w columns).</span>
+
+<span class="Type">void</span> image(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// The rows of X are computed as basis of A's row space.  X is is row</span>
+<span class="Comment">// echelon form</span>
+
+<span class="Type">void</span> kernel(mat_zz_p&amp; X, <span class="Type">const</span> mat_zz_p&amp; A);
+<span class="Comment">// Computes a basis for the kernel of the map x -&gt; x*A. where x is a</span>
+<span class="Comment">// row vector.</span>
+
+<span class="Comment">// NOTE: the gauss, image, and kernel routines all require that</span>
+<span class="Comment">// the modulus p is prime. </span>
+
+
+
+<span class="Comment">// miscellaneous:</span>
+
+<span class="Type">void</span> clear(mat_zz_p&amp; a);
+<span class="Comment">// x = 0 (dimension unchanged)</span>
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> mat_zz_p&amp; a);
+<span class="Comment">// test if a is the zero matrix (any dimension)</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+mat_zz_p <span class="Statement">operator</span>+(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">const</span> mat_zz_p&amp; b);
+mat_zz_p <span class="Statement">operator</span>-(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">const</span> mat_zz_p&amp; b);
+mat_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">const</span> mat_zz_p&amp; b);
+
+mat_zz_p <span class="Statement">operator</span>-(<span class="Type">const</span> mat_zz_p&amp; a);
+
+
+<span class="Comment">// matrix/scalar multiplication:</span>
+
+mat_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> mat_zz_p&amp; a, zz_p b);
+mat_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">long</span> b);
+
+mat_zz_p <span class="Statement">operator</span>*(zz_p a, <span class="Type">const</span> mat_zz_p&amp; b);
+mat_zz_p <span class="Statement">operator</span>*(<span class="Type">long</span> a, <span class="Type">const</span> mat_zz_p&amp; b);
+
+
+<span class="Comment">// matrix/vector multiplication:</span>
+
+vec_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> mat_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+
+vec_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> mat_zz_p&amp; b);
+
+
+<span class="Comment">// assignment operator notation:</span>
+
+mat_zz_p&amp; <span class="Statement">operator</span>+=(mat_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; a);
+mat_zz_p&amp; <span class="Statement">operator</span>-=(mat_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; a);
+mat_zz_p&amp; <span class="Statement">operator</span>*=(mat_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; a);
+
+mat_zz_p&amp; <span class="Statement">operator</span>*=(mat_zz_p&amp; x, zz_p a);
+mat_zz_p&amp; <span class="Statement">operator</span>*=(mat_zz_p&amp; x, <span class="Type">long</span> a);
+
+vec_zz_p&amp; <span class="Statement">operator</span>*=(vec_zz_p&amp; x, <span class="Type">const</span> mat_zz_p&amp; a);
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

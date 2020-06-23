@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/Lazy.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">**************************************************************************</span>
+
+
+<span class="Comment">Lazy&lt;T&gt;: template class for lazy initialization of objects whose</span>
+<span class="Comment">values do not change after initialization.</span>
+<span class="Comment">In a multi-threaded environment, this makes use of &quot;double checked locking&quot;</span>
+<span class="Comment">for an efficient, thread-safe solution.</span>
+
+<span class="Comment">Usage:</span>
+
+<span class="Comment">   Lazy&lt;T&gt; obj; // declaration of the lazy object</span>
+
+<span class="Comment">    ...</span>
+
+<span class="Comment">   do {</span>
+<span class="Comment">      Lazy&lt;T&gt;::Builder builder(obj);</span>
+<span class="Comment">      if (!builder()) break; // if we are not building, the break out</span>
+
+<span class="Comment">      UniquePtr&lt;T&gt; p;  // create a pointer </span>
+
+<span class="Comment">         ...</span>
+
+<span class="Comment">      builder.move(p); // move p into the object to complete the initialization</span>
+<span class="Comment">                       // We can then complete the initialization process.</span>
+<span class="Comment">   } while(0);  // When this scope closes, the object is fully initialized.</span>
+<span class="Comment">                // subsequent attempts to build the object will yield</span>
+<span class="Comment">                // !builder.built()</span>
+
+
+<span class="Comment">   T objCopy = *obj;   // *obj returns a read-only reference</span>
+<span class="Comment">                       // one can also use -&gt; operator</span>
+
+<span class="Comment">It is important to follow this recipe carefully.  In particular,</span>
+<span class="Comment">the builder must be enclosed in a scope, as it's destructor</span>
+<span class="Comment">plays a crucial role in finalizing the initialization.</span>
+
+<span class="Comment">NOTE: if p is null in builder.move(p), the object is still considered</span>
+<span class="Comment">built.</span>
+
+<span class="Comment">***************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span> P=DefaultDeleterPolicy&gt;
+<span class="Type">class</span> Lazy {
+<span class="Statement">public</span>:
+   Lazy();
+
+   Lazy(<span class="Type">const</span> Lazy&amp;);
+   Lazy&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> Lazy&amp;);
+   <span class="Comment">// deep copies using T's copy constructor</span>
+   <span class="Comment">// EXCEPTIONS: may throw (but provides strong ES guarantee)</span>
+
+   <span class="Type">const</span> T&amp; <span class="Statement">operator</span>*()  <span class="Type">const</span>;     <span class="Comment">// pointer access</span>
+   <span class="Type">const</span> T* <span class="Statement">operator</span>-&gt;() <span class="Type">const</span>;
+   <span class="Type">const</span> T* get() <span class="Type">const</span>;
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows test against 0</span>
+
+   ~Lazy();
+
+   kill();  <span class="Comment">// destroy and reset</span>
+
+   <span class="Type">bool</span> built() <span class="Type">const</span>; <span class="Comment">// test if already built</span>
+
+   <span class="Type">class</span> Builder {
+      Builder(<span class="Type">const</span> Lazy&amp;);
+     ~Builder()
+
+      <span class="Type">bool</span> <span class="Statement">operator</span>()() <span class="Type">const</span>; <span class="Comment">// test if we are building</span>
+
+      <span class="Type">void</span> move(UniquePtr&lt;T,P&gt;&amp;);
+      <span class="Comment">// EXCEPTIONS: may throw an exception if the move is not allowed</span>
+      <span class="Comment">// (i.e., not building or already moved).</span>
+      <span class="Comment">// Provides strong ES guarantee. </span>
+   };
+};
+
+
+<span class="Comment">// EXCEPTIONS: except where noted, no exceptions are thrown</span>
+
+<span class="Comment">// NOTE: For more on double-checked locking, see</span>
+<span class="Comment">// <a href="http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/">http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/</a></span>
+
+<span class="Comment">// NOTE: when compiled with the NTL_THREADS option, the Lazy</span>
+<span class="Comment">// class may contain data members from the standard library</span>
+<span class="Comment">// that may not satisfy the requirements of the Vec class</span>
+<span class="Comment">// (i.e., relocatability).  One can wrap it in a pointer </span>
+<span class="Comment">// class (e.g., CopiedPtr) to deal with this.</span>
+
+<span class="Comment">// NOTE: The optional parameter P is used as in the specification</span>
+<span class="Comment">// of the UniquePtr class.  The default should work fine in </span>
+<span class="Comment">// most cases.  It was introduced mainly to allow for the PIMPL</span>
+<span class="Comment">// paradigm.</span>
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

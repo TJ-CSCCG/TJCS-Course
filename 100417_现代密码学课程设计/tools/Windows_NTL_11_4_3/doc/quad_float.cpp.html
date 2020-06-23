@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/quad_float.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: quad_float</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class quad_float is used to represent quadruple precision numbers.</span>
+<span class="Comment">Thus, with standard IEEE floating point, you should get the equivalent</span>
+<span class="Comment">of about 106 bits of precision (but actually just a bit less).</span>
+
+<span class="Comment">The interface allows you to treat quad_floats more or less as if they were</span>
+<span class="Comment">&quot;ordinary&quot; floating point types.</span>
+
+<span class="Comment">See below for more implementation details.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+
+
+<span class="Type">class</span> quad_float {
+<span class="Statement">public</span>:
+
+quad_float(); <span class="Comment">// = 0</span>
+
+quad_float(<span class="Type">const</span> quad_float&amp; a);  <span class="Comment">// copy constructor</span>
+
+<span class="Type">explicit</span> quad_float(<span class="Type">double</span> a);  <span class="Comment">// promotion constructor</span>
+
+
+quad_float&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> quad_float&amp; a);  <span class="Comment">// assignment operator</span>
+quad_float&amp; <span class="Statement">operator</span>=(<span class="Type">double</span> a);
+
+~quad_float();
+
+
+<span class="Type">static</span> <span class="Type">void</span> SetOutputPrecision(<span class="Type">long</span> p);
+<span class="Comment">// This sets the number of decimal digits to be output.  Default is</span>
+<span class="Comment">// 10.</span>
+
+
+<span class="Type">static</span> <span class="Type">long</span> OutputPrecision();
+<span class="Comment">// returns current output precision.</span>
+
+
+};
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Arithmetic Operations</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+quad_float <span class="Statement">operator</span> +(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float <span class="Statement">operator</span> -(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float <span class="Statement">operator</span> *(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float <span class="Statement">operator</span> /(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+
+
+<span class="Comment">// PROMOTIONS: operators +, -, *, / promote double to quad_float</span>
+<span class="Comment">// on (x, y).</span>
+
+quad_float <span class="Statement">operator</span> -(<span class="Type">const</span> quad_float&amp; x);
+
+quad_float&amp; <span class="Statement">operator</span> += (quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float&amp; <span class="Statement">operator</span> += (quad_float&amp; x, <span class="Type">double</span> y);
+
+quad_float&amp; <span class="Statement">operator</span> -= (quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float&amp; <span class="Statement">operator</span> -= (quad_float&amp; x, <span class="Type">double</span> y);
+
+quad_float&amp; <span class="Statement">operator</span> *= (quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float&amp; <span class="Statement">operator</span> *= (quad_float&amp; x, <span class="Type">double</span> y);
+
+quad_float&amp; <span class="Statement">operator</span> /= (quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+quad_float&amp; <span class="Statement">operator</span> /= (quad_float&amp; x, <span class="Type">double</span> y);
+
+quad_float&amp; <span class="Statement">operator</span>++(quad_float&amp; a); <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(quad_float&amp; a, <span class="Type">int</span>); <span class="Comment">// postfix</span>
+
+quad_float&amp; <span class="Statement">operator</span>--(quad_float&amp; a); <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(quad_float&amp; a, <span class="Type">int</span>); <span class="Comment">// postfix</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">long</span> <span class="Statement">operator</span>&gt; (<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+<span class="Type">long</span> <span class="Statement">operator</span>&gt;=(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+<span class="Type">long</span> <span class="Statement">operator</span>&lt; (<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+<span class="Type">long</span> <span class="Statement">operator</span>&lt;=(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y);
+
+<span class="Type">long</span> sign(<span class="Type">const</span> quad_float&amp; x);  <span class="Comment">// sign of x, -1, 0, +1</span>
+<span class="Type">long</span> compare(<span class="Type">const</span> quad_float&amp; x, <span class="Type">const</span> quad_float&amp; y); <span class="Comment">// sign of x - y</span>
+
+<span class="Comment">// PROMOTIONS: operators &gt;, ..., != and function compare</span>
+<span class="Comment">// promote double to quad_float on (x, y).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Input/Output</span>
+<span class="Comment">Input Syntax:</span>
+
+<span class="Comment">&lt;number&gt;: [ &quot;-&quot; ] &lt;unsigned-number&gt;</span>
+<span class="Comment">&lt;unsigned-number&gt;: &lt;dotted-number&gt; [ &lt;e-part&gt; ] | &lt;e-part&gt;</span>
+<span class="Comment">&lt;dotted-number&gt;: &lt;digits&gt; | &lt;digits&gt; &quot;.&quot; &lt;digits&gt; | &quot;.&quot; &lt;digits&gt; | &lt;digits&gt; &quot;.&quot;</span>
+<span class="Comment">&lt;digits&gt;: &lt;digit&gt; &lt;digits&gt; | &lt;digit&gt;</span>
+<span class="Comment">&lt;digit&gt;: &quot;0&quot; | ... | &quot;9&quot;</span>
+<span class="Comment">&lt;e-part&gt;: ( &quot;E&quot; | &quot;e&quot; ) [ &quot;+&quot; | &quot;-&quot; ] &lt;digits&gt;</span>
+
+<span class="Comment">Examples of valid input:</span>
+
+<span class="Comment">17 1.5 0.5 .5  5.  -.5 e10 e-10 e+10 1.5e10 .5e10 .5E10</span>
+
+<span class="Comment">Note that the number of decimal digits of precision that are used</span>
+<span class="Comment">for output can be set to any number p &gt;= 1 by calling</span>
+<span class="Comment">the routine quad_float::SetOutputPrecision(p).  </span>
+<span class="Comment">The default value of p is 10.</span>
+<span class="Comment">The current value of p is returned by a call to quad_float::OutputPrecision().</span>
+
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+istream&amp; <span class="Statement">operator</span> &gt;&gt; (istream&amp; s, quad_float&amp; x);
+ostream&amp; <span class="Statement">operator</span> &lt;&lt; (ostream&amp; s, <span class="Type">const</span> quad_float&amp; x);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Miscellaneous</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+quad_float sqrt(<span class="Type">const</span> quad_float&amp; x);
+quad_float floor(<span class="Type">const</span> quad_float&amp; x);
+quad_float ceil(<span class="Type">const</span> quad_float&amp; x);
+quad_float trunc(<span class="Type">const</span> quad_float&amp; x);
+quad_float fabs(<span class="Type">const</span> quad_float&amp; x);
+quad_float exp(<span class="Type">const</span> quad_float&amp; x);
+quad_float log(<span class="Type">const</span> quad_float&amp; x);
+
+
+<span class="Type">void</span> power(quad_float&amp; x, <span class="Type">const</span> quad_float&amp; a, <span class="Type">long</span> e); <span class="Comment">// x = a^e</span>
+quad_float power(<span class="Type">const</span> quad_float&amp; a, <span class="Type">long</span> e);
+
+<span class="Type">void</span> power2(quad_float&amp; x, <span class="Type">long</span> e); <span class="Comment">// x = 2^e</span>
+quad_float power2_quad_float(<span class="Type">long</span> e);
+
+quad_float ldexp(<span class="Type">const</span> quad_float&amp; x, <span class="Type">long</span> e);  <span class="Comment">// return x*2^e</span>
+
+<span class="Type">long</span> IsFinite(quad_float *x); <span class="Comment">// checks if x is &quot;finite&quot;   </span>
+                              <span class="Comment">// pointer is used for compatability with</span>
+                              <span class="Comment">// IsFinite(double*)</span>
+
+
+<span class="Type">void</span> random(quad_float&amp; x);
+quad_float random_quad_float();
+<span class="Comment">// generate a random quad_float x with 0 &lt;= x &lt;= 1</span>
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">**********************************************************************\</span>
+
+<span class="Comment">IMPLEMENTATION DETAILS</span>
+
+<span class="Comment">A quad_float x is represented as a pair of doubles, x.hi and x.lo,</span>
+<span class="Comment">such that the number represented by x is x.hi + x.lo, where</span>
+
+<span class="Comment">   |x.lo| &lt;= 0.5*ulp(x.hi),  (*)</span>
+
+<span class="Comment">and ulp(y) means &quot;unit in the last place of y&quot;.  </span>
+
+<span class="Comment">For the software to work correctly, IEEE Standard Arithmetic is sufficient.  </span>
+<span class="Comment">However, there are a couple subtle points (see below).</span>
+
+<span class="Comment">This is a rather weird representation;  although it gives one</span>
+<span class="Comment">essentially twice the precision of an ordinary double, it is</span>
+<span class="Comment">not really the equivalent of quadratic precision (despite the name).</span>
+<span class="Comment">For example, the number 1 + 2^{-200} can be represented exactly as</span>
+<span class="Comment">a quad_float.  Also, there is no real notion of &quot;machine precision&quot;.</span>
+
+<span class="Comment">Note that overflow/underflow for quad_floats does not follow any particularly</span>
+<span class="Comment">useful rules, even if the underlying floating point arithmetic is IEEE</span>
+<span class="Comment">compliant.  Generally, when an overflow/underflow occurs, the resulting value</span>
+<span class="Comment">is unpredicatble, although typically when overflow occurs in computing a value</span>
+<span class="Comment">x, the result is non-finite (i.e., IsFinite(&amp;x) == 0).  Note, however, that</span>
+<span class="Comment">some care is taken to ensure that the ZZ to quad_float conversion routine</span>
+<span class="Comment">produces a non-finite value upon overflow.</span>
+
+
+
+<span class="Comment">THE EXTENDED PRECISION PROBLEM</span>
+
+<span class="Comment">Some machines may compute intermediate floating point results in an extended</span>
+<span class="Comment">double precision format.  The only machines I know that do this are old</span>
+<span class="Comment">(pre-SSE) x86 machines that rely on the x87 coprocessor instruction set, so</span>
+<span class="Comment">this is mainly of historical interest these days.  On these old machines,</span>
+<span class="Comment">intermediate results are stored in the 80-bit x87 floating point registers.</span>
+<span class="Comment">These registers have 53 or 64 bits of precision---this can be set at run-time</span>
+<span class="Comment">by modifying the cpu &quot;control word&quot; (either in assembly or through special</span>
+<span class="Comment">compiler intrinsics).  If the preicsion is set to 64 bits, the quad_float</span>
+<span class="Comment">routines will produce incorrect results.</span>
+
+
+<span class="Comment">The best way to fix this problem is to set the precsion of the x87 registers to</span>
+<span class="Comment">53 at the beginning of program execution and to leave it.  This is what Windows</span>
+<span class="Comment">with MSVC++ does.  On Linux with gcc (and other compilers), however, this is</span>
+<span class="Comment">not the case: the precision of the registers is set to 64 bits.</span>
+
+<span class="Comment">To fix this problem, the build process for NTL automatically checks for</span>
+<span class="Comment">extended double preceision, and if detected, arranges for the quad_float</span>
+<span class="Comment">routines to locally set the precision to 53 bits on entry and back to 64 bits</span>
+<span class="Comment">on exit.  This only works with GCC and GCC-compatible compilers (including</span>
+<span class="Comment">CLANG and ICC) that support GCC's inline assembly syntax.  The configuration</span>
+<span class="Comment">flags  NTL_FIX_X86 or NTL_NO_FIX_X86 can be set to override NTL's default</span>
+<span class="Comment">behavior (but I've never really seen a need to use them).</span>
+
+<span class="Comment">If all else fails, NTL will revert to a strategy of  forcing all intermediate</span>
+<span class="Comment">floating point results into memory.  This is not an ideal fix, since it is not</span>
+<span class="Comment">fully equivalent to 53-bit precision (because of double rounding), but it works</span>
+<span class="Comment">(although to be honest, I've never seen a full proof of correctness in this</span>
+<span class="Comment">case).  NTL's quad_float code does this by storing intermediate results in</span>
+<span class="Comment">local variables declared to be 'volatile'.  This is the solution to the problem</span>
+<span class="Comment">that NTL uses if it detects the problem and can't fix it using the control word</span>
+<span class="Comment">hack mentioned above.  In fact, I've never seen a platform where this strategy</span>
+<span class="Comment">is required.</span>
+
+<span class="Comment">To reiterate: this is all mainly of historical interest, as the x87 coprocessor</span>
+<span class="Comment">is pretty much not used any more.</span>
+
+
+<span class="Comment">THE FMA PROBLEM</span>
+
+<span class="Comment">Some CPUs come equipped with a fused-multiply-add (FMA) instruction, which</span>
+<span class="Comment">computes x + a*b with just a single rounding.  While this generally is faster</span>
+<span class="Comment">and more precise than performing this using two instructions and two roundings,</span>
+<span class="Comment">FMA instructions can break the logic of quad_float.  </span>
+
+<span class="Comment">To mitigate this problem, NTL's configuration script will attempt to detect the</span>
+<span class="Comment">existence of FMA's, and if detected, to supress them using a compiler flag.</span>
+<span class="Comment">Right now, NTL's configuration script only attempts to fix this problem for the</span>
+<span class="Comment">GCC, CLANG, and ICC compilers.  GCC,  this is done with the flag</span>
+<span class="Comment">-ffp-contract=off (or the flag -mno-fused-madd, which is obsolete in new</span>
+<span class="Comment">versions of GCC).  On CLANG, this is also done with the flag -ffp-contract=off,</span>
+<span class="Comment">although by default, CLANG will not emit FMA's, so this should not be</span>
+<span class="Comment">necessary.  On ICC, this is done by the fp_contract(off) pragma.  This is</span>
+<span class="Comment">accomplished by passing information through the make variable NOCONTRACT, which</span>
+<span class="Comment">is only used in the compilation of quad_float.cpp.</span>
+
+
+
+<span class="Comment">THE FLOATING POINT REASSOCIATION PROBLEM</span>
+
+<span class="Comment">The C++ standard says that compilers must issue instructions that respect the</span>
+<span class="Comment">grouping of floating point operations.  So the compiler is not allowed to</span>
+<span class="Comment">compile (a+b)+c as a+(b+c).  Most compilers repect this rule by default, but</span>
+<span class="Comment">some do not (such as Intel's ICC compiler).  The logic of quad_float relies</span>
+<span class="Comment">crucially on this rule.</span>
+
+<span class="Comment">In fact, NTL attempts to ensure that all of its source files get compiled with</span>
+<span class="Comment">this rule in force.  To this end, if the configuration script detects an ICC</span>
+<span class="Comment">compiler, it will pass the &quot;-fp-model precise&quot; flag through to the compiler</span>
+<span class="Comment">(via the CXXAUTOFLAGS make variable) when compiling *all* source files (not</span>
+<span class="Comment">just quad_float.cpp).</span>
+
+
+<span class="Comment">BACKGROUND INFO</span>
+
+<span class="Comment">The code NTL uses algorithms designed by Knuth, Kahan, Dekker, and</span>
+<span class="Comment">Linnainmaa.  The original transcription to C++ was done by Douglas</span>
+<span class="Comment">Priest.  Enhancements and bug fixes were done by Keith Briggs ---</span>
+<span class="Comment">see <a href="http://keithbriggs.info/doubledouble.html">http://keithbriggs.info/doubledouble.html</a>.  The NTL version is a</span>
+<span class="Comment">stripped down version of Briggs' code, with some bug fixes and</span>
+<span class="Comment">portability improvements.  </span>
+
+<span class="Comment">Here is a brief annotated bibliography (compiled by Priest) of papers </span>
+<span class="Comment">dealing with DP and similar techniques, arranged chronologically.</span>
+
+
+<span class="Comment">Kahan, W., Further Remarks on Reducing Truncation Errors,</span>
+<span class="Comment">  {\it Comm.\ ACM\/} {\bf 8} (1965), 40.</span>
+
+<span class="Comment">M{\o}ller, O., Quasi Double Precision in Floating-Point Addition,</span>
+<span class="Comment">  {\it BIT\/} {\bf 5} (1965), 37--50.</span>
+
+<span class="Comment">  The two papers that first presented the idea of recovering the</span>
+<span class="Comment">  roundoff of a sum.</span>
+
+<span class="Comment">Dekker, T., A Floating-Point Technique for Extending the Available</span>
+<span class="Comment">  Precision, {\it Numer.\ Math.} {\bf 18} (1971), 224--242.</span>
+
+<span class="Comment">  The classic reference for DP algorithms for sum, product, quotient,</span>
+<span class="Comment">  and square root.</span>
+
+<span class="Comment">Pichat, M., Correction d'une Somme en Arithmetique \`a Virgule</span>
+<span class="Comment">  Flottante, {\it Numer.\ Math.} {\bf 19} (1972), 400--406.</span>
+
+<span class="Comment">  An iterative algorithm for computing a protracted sum to working</span>
+<span class="Comment">  precision by repeatedly applying the sum-and-roundoff method.</span>
+
+<span class="Comment">Linnainmaa, S., Analysis of Some Known Methods of Improving the Accuracy</span>
+<span class="Comment">  of Floating-Point Sums, {\it BIT\/} {\bf 14} (1974), 167--202.</span>
+
+<span class="Comment">  Comparison of Kahan and M{\o}ller algorithms with variations given</span>
+<span class="Comment">  by Knuth.</span>
+
+<span class="Comment">Bohlender, G., Floating-Point Computation of Functions with Maximum</span>
+<span class="Comment">  Accuracy, {\it IEEE Trans.\ Comput.} {\bf C-26} (1977), 621--632.</span>
+
+<span class="Comment">  Extended the analysis of Pichat's algorithm to compute a multi-word</span>
+<span class="Comment">  representation of the exact sum of n working precision numbers.</span>
+<span class="Comment">  This is the algorithm Kahan has called &quot;distillation&quot;.</span>
+
+<span class="Comment">Linnainmaa, S., Software for Doubled-Precision Floating-Point Computations,</span>
+<span class="Comment">  {\it ACM Trans.\ Math.\ Soft.} {\bf 7} (1981), 272--283.</span>
+
+<span class="Comment">  Generalized the hypotheses of Dekker and showed how to take advantage</span>
+<span class="Comment">  of extended precision where available.</span>
+
+<span class="Comment">Leuprecht, H., and W.~Oberaigner, Parallel Algorithms for the Rounding-Exact</span>
+<span class="Comment">  Summation of Floating-Point Numbers, {\it Computing} {\bf 28} (1982), 89--104.</span>
+
+<span class="Comment">  Variations of distillation appropriate for parallel and vector</span>
+<span class="Comment">  architectures.</span>
+
+<span class="Comment">Kahan, W., Paradoxes in Concepts of Accuracy, lecture notes from Joint</span>
+<span class="Comment">  Seminar on Issues and Directions in Scientific Computation, Berkeley, 1989.</span>
+
+<span class="Comment">  Gives the more accurate DP sum I've shown above, discusses some</span>
+<span class="Comment">  examples.</span>
+
+<span class="Comment">Priest, D., Algorithms for Arbitrary Precision Floating Point Arithmetic,</span>
+<span class="Comment">  in P.~Kornerup and D.~Matula, Eds., {\it Proc.\ 10th Symposium on Com-</span>
+<span class="Comment">  puter Arithmetic}, IEEE Computer Society Press, Los Alamitos, Calif., 1991.</span>
+
+<span class="Comment">  Extends from DP to arbitrary precision; gives portable algorithms and</span>
+<span class="Comment">  general proofs.</span>
+
+<span class="Comment">Sorensen, D., and P.~Tang, On the Orthogonality of Eigenvectors Computed</span>
+<span class="Comment">  by Divide-and-Conquer Techniques, {\it SIAM J.\ Num.\ Anal.} {\bf 28}</span>
+<span class="Comment">  (1991), 1752--1775.</span>
+
+<span class="Comment">  Uses some DP arithmetic to retain orthogonality of eigenvectors</span>
+<span class="Comment">  computed by a parallel divide-and-conquer scheme.</span>
+
+<span class="Comment">Priest, D., On Properties of Floating Point Arithmetics: Numerical Stability</span>
+<span class="Comment">  and the Cost of Accurate Computations, Ph.D. dissertation, University</span>
+<span class="Comment">  of California at Berkeley, 1992.</span>
+
+<span class="Comment">  More examples, organizes proofs in terms of common properties of fp</span>
+<span class="Comment">  addition/subtraction, gives other summation algorithms.</span>
+
+<span class="Comment">Another relevant paper: </span>
+
+<span class="Comment">X. S. Li, et al.</span>
+<span class="Comment">Design, implementation, and testing of extended and mixed </span>
+<span class="Comment">precision BLAS.  ACM Trans. Math. Soft., 28:152-205, 2002.</span>
+
+
+
+<span class="Comment">\**********************************************************************</span><span class="Comment">*/</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

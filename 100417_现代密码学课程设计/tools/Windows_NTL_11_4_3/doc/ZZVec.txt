@@ -1,0 +1,75 @@
+
+/**************************************************************************\
+
+MODULE: ZZVec
+
+SUMMARY:
+
+The class ZZVec implements vectors of fixed-length ZZ's.  You can
+allocate a vector of ZZ's of a specified length, where the maximum
+size of each ZZ is also specified.  The size is measured in terms
+of the number of limbs.
+
+These parameters can be specified either with a constructor 
+or with SetSize.  It is an error to try to re-size a vector of non-zero length,
+or store a ZZ that doesn't fit.  The space can be released with "kill", 
+and then you are free to call SetSize again.  
+
+If you want more flexible---but less efficient---vectors, use vec_ZZ.
+
+\**************************************************************************/
+
+#include <NTL/ZZ.h>
+
+
+class ZZVec {
+public:
+   ZZVec();
+
+   ZZVec& operator=(const ZZVec&); 
+   // first kill()'s destination (unless source and destination are
+   // identical)
+
+   ZZVec(const ZZVec&); 
+
+   ~ZZVec();
+
+   ZZVec(ZZVec&& other) noexcept;
+   ZZVec& operator=(ZZVec&& other) noexcept;
+   // move semantics (C++11 only)
+
+   ZZVec(long n, long d);
+   // sets length to n and max size of each element to d
+
+   void SetSize(long n, long d);
+   // sets length to n and max size of each element to d
+
+   long length() const;
+   // length of vector
+
+   long BaseSize() const;
+   // max size of each element
+
+   void kill();
+   // release space
+
+
+   ZZ* elts();
+   const ZZ* elts() const;
+   // pointer to first element
+
+   ZZ& operator[](long i);
+   const ZZ& operator[](long i) const;
+   // indexing operator; starts at 0; no range checking
+
+   swap(ZZVec& x);
+   // swap with x by swapping pointers
+
+   void move(ZZVec& other);
+   // quick move other to *this
+};
+
+
+void swap(ZZVec& x, ZZVec& y);
+// swaps x and y by swapping pointers
+
