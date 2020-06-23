@@ -1,0 +1,77 @@
+/**************************************************************************\
+
+MODULE: pair
+
+SUMMARY:
+
+Pair templates.
+
+The decalaration 
+
+   Pair<S,T> p;
+
+creates a pair object using the default constructors for S and T.  The
+member p.a is the first component (of type S) and the member p.b is
+the second component (of type T).
+
+
+\**************************************************************************/
+
+
+
+#include <NTL/tools.h>
+
+template<class S, class T>
+class Pair {  
+public:  
+   S a;  
+   T b;  
+  
+   Pair(); 
+   // default constructor...invokes default constructors for S and T
+
+   Pair(const S& x, const T& y);  // initialize with (x, y)
+
+   ~Pair(); 
+   // destructor...invokes destructors for S and T
+
+   // defaut copy and move constructors and assignment 
+};  
+  
+template<class S, class T>
+Pair<S,T> cons(const S& x, const T& y); 
+// returns Pair<S,T>(x, y)
+
+
+/**************************************************************************\
+
+                             Input/Output
+
+The I/O format for a Pair is
+
+   [a b]
+
+\**************************************************************************/
+
+
+template<class S, class T>
+istream& operator>>(istream&, Pair<S,T>&);  
+
+template<class S, class T>
+ostream& operator<<(ostream&, const Pair<S,T>&);  
+
+
+/**************************************************************************\
+
+                              Equality Testing
+
+\**************************************************************************/
+
+
+template<class S, class T>
+long operator==(const Pair<S,T>& x, const Pair<S,T>& y);
+
+template<class S, class T>
+long operator!=(const Pair<S,T>& x, const Pair<S,T>& y); 
+
+

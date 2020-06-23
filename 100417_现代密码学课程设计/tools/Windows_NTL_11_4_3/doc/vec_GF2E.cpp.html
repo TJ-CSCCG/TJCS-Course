@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/vec_GF2E.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: vec_GF2E</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Provides vectors over GF2E, along with some related operations.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/GF2E.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/vector.h&gt;</span>
+
+
+<span class="Type">typedef</span> Vec&lt;GF2E&gt; vec_GF2E; <span class="Comment">// backward compatibility</span>
+
+<span class="Type">void</span> mul(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> GF2E&amp; b);
+<span class="Type">void</span> mul(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, GF2 b);
+<span class="Type">void</span> mul(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">long</span> b);
+
+<span class="Type">void</span> mul(vec_GF2E&amp; x, <span class="Type">const</span> GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Type">void</span> mul(vec_GF2E&amp; x, GF2 a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Type">void</span> mul(vec_GF2E&amp; x, <span class="Type">long</span> a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> add(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Comment">// x = a + b</span>
+
+<span class="Type">void</span> sub(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Comment">// x = a - b = x + a</span>
+
+<span class="Type">void</span> negate(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a);
+<span class="Comment">// x = - a = a</span>
+
+<span class="Type">void</span> clear(vec_GF2E&amp; x);
+<span class="Comment">// x = 0 (length unchanged)</span>
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> vec_GF2E&amp; a);
+<span class="Comment">// test if a is the zero vector</span>
+
+
+
+<span class="Type">void</span> InnerProduct(GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+<span class="Comment">// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(), b.length())</span>
+
+<span class="Type">void</span> InnerProduct(GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b,
+                  <span class="Type">long</span> offset);
+<span class="Comment">// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),</span>
+<span class="Comment">// b.length()+offset)</span>
+
+<span class="Type">void</span> VectorCopy(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">long</span> n);
+vec_GF2E VectorCopy(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a copy of a of length exactly n.</span>
+<span class="Comment">// The input is truncated or padded with zeroes, as necessary.</span>
+
+<span class="Type">void</span> random(vec_GF2E&amp; x, <span class="Type">long</span> n);  <span class="Comment">// x = random vector of length n</span>
+vec_GF2E random_vec_GF2E(<span class="Type">long</span> n);
+
+
+<span class="Comment">// operator notation:</span>
+
+vec_GF2E
+<span class="Statement">operator</span>+(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+
+vec_GF2E
+<span class="Statement">operator</span>-(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+
+vec_GF2E <span class="Statement">operator</span>-(<span class="Type">const</span> vec_GF2E&amp; a);
+
+
+<span class="Comment">// vector/scalar multiplication:</span>
+
+vec_GF2E <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> GF2E&amp; b);
+vec_GF2E <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2E&amp; a, GF2 b);
+vec_GF2E <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">long</span> b);
+
+vec_GF2E <span class="Statement">operator</span>*(<span class="Type">const</span> GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+vec_GF2E <span class="Statement">operator</span>*(GF2 a, <span class="Type">const</span> vec_GF2E&amp; b);
+vec_GF2E <span class="Statement">operator</span>*(<span class="Type">long</span> a, <span class="Type">const</span> vec_GF2E&amp; b);
+
+<span class="Comment">// inner product:</span>
+
+GF2E <span class="Statement">operator</span>*(<span class="Type">const</span> vec_GF2E&amp; a, <span class="Type">const</span> vec_GF2E&amp; b);
+
+
+<span class="Comment">// assignment operator notation:</span>
+
+vec_GF2E&amp; <span class="Statement">operator</span>+=(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a);
+vec_GF2E&amp; <span class="Statement">operator</span>-=(vec_GF2E&amp; x, <span class="Type">const</span> vec_GF2E&amp; a);
+
+vec_GF2E&amp; <span class="Statement">operator</span>*=(vec_GF2E&amp; x, <span class="Type">const</span> GF2E&amp; a);
+vec_GF2E&amp; <span class="Statement">operator</span>*=(vec_GF2E&amp; x, GF2 a);
+vec_GF2E&amp; <span class="Statement">operator</span>*=(vec_GF2E&amp; x, <span class="Type">long</span> a);
+
+
+
+<span class="Comment">// Implementation note: the BlockConstruct routine has been customized</span>
+<span class="Comment">// for GF2E so that when a vec_GF2E is grown, space for the needed</span>
+<span class="Comment">// elements is allocated in one contiguous chunk.  This saves on calls to</span>
+<span class="Comment">// malloc and free, and should also yield better locality of reference.</span>
+<span class="Comment">// One consequence of this is that swapping an element of a vec_GF2E</span>
+<span class="Comment">// with another GF2E can not be implemented by pointer swap, and will in</span>
+<span class="Comment">// this case be done by copy.</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

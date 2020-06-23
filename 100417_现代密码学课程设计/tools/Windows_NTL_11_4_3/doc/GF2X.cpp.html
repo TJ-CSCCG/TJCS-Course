@@ -1,0 +1,860 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/GF2X.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: GF2X</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class GF2X implements polynomial arithmetic modulo 2.</span>
+
+<span class="Comment">Polynomial arithmetic is implemented using a combination of classical</span>
+<span class="Comment">routines and Karatsuba.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/GF2.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/vec_GF2.h&gt;</span>
+
+<span class="Type">class</span> GF2X {
+<span class="Statement">public</span>:
+
+   GF2X(); <span class="Comment">// initial value 0</span>
+
+   GF2X(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// copy</span>
+   <span class="Type">explicit</span> GF2X(<span class="Type">long</span> a); <span class="Comment">// promotion</span>
+   <span class="Type">explicit</span> GF2X(GF2 a); <span class="Comment">// promotion</span>
+
+   GF2X&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// assignment</span>
+   GF2X&amp; <span class="Statement">operator</span>=(GF2 a);
+   GF2X&amp; <span class="Statement">operator</span>=(<span class="Type">long</span> a);
+
+   ~GF2X(); <span class="Comment">// destructor</span>
+
+   GF2X(GF2X&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+<span class="PreProc">#ifndef NTL_DISABLE_MOVE_ASSIGN</span>
+   GF2X&amp; <span class="Statement">operator</span>=(GF2X&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+<span class="PreProc">#endif</span>
+
+   GF2X(INIT_MONO_TYPE, <span class="Type">long</span> i, GF2 c);
+   GF2X(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">long</span> c);
+   <span class="Comment">// initialize to c*X^i, invoke as GF2X(INIT_MONO, i, c)</span>
+
+   GF2X(INIT_MONO_TYPE, <span class="Type">long</span> i);
+   <span class="Comment">// initialize to c*X^i, invoke as GF2X(INIT_MONO, i)</span>
+
+   <span class="Comment">// typedefs to aid in generic programming</span>
+   <span class="Type">typedef</span> GF2 coeff_type;
+   <span class="Type">typedef</span> GF2E residue_type;
+   <span class="Type">typedef</span> GF2XModulus modulus_type;
+
+
+   <span class="Comment">// ...</span>
+
+};
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Accessing coefficients</span>
+
+<span class="Comment">The degree of a polynomial f is obtained as deg(f),</span>
+<span class="Comment">where the zero polynomial, by definition, has degree -1.</span>
+
+<span class="Comment">A polynomial f is represented as a coefficient vector.</span>
+<span class="Comment">Coefficients may be accesses in one of two ways.</span>
+
+<span class="Comment">The safe, high-level method is to call the function</span>
+<span class="Comment">coeff(f, i) to get the coefficient of X^i in the polynomial f,</span>
+<span class="Comment">and to call the function SetCoeff(f, i, a) to set the coefficient</span>
+<span class="Comment">of X^i in f to the scalar a.</span>
+
+<span class="Comment">One can also access the coefficients more directly via a lower level </span>
+<span class="Comment">interface.  The coefficient of X^i in f may be accessed using </span>
+<span class="Comment">subscript notation f[i].  In addition, one may write f.SetLength(n)</span>
+<span class="Comment">to set the length of the underlying coefficient vector to n,</span>
+<span class="Comment">and f.SetMaxLength(n) to allocate space for n coefficients,</span>
+<span class="Comment">without changing the coefficient vector itself.</span>
+
+<span class="Comment">After setting coefficients using this low-level interface,</span>
+<span class="Comment">one must ensure that leading zeros in the coefficient vector</span>
+<span class="Comment">are stripped afterwards by calling the function f.normalize().</span>
+
+<span class="Comment">NOTE: unlike other polynomial classes, the coefficient vector</span>
+<span class="Comment">for GF2X has a special representation, packing coefficients into </span>
+<span class="Comment">words.  This has two consequences.  First, when using the indexing</span>
+<span class="Comment">notation on a non-const polynomial f, the return type is ref_GF2,</span>
+<span class="Comment">rather than GF2&amp;.  For the most part, a ref_GF2 may be used like</span>
+<span class="Comment">a GF2&amp; --- see GF2.txt for more details.  Second, when applying </span>
+<span class="Comment">f.SetLength(n) to a polynomial f, this essentially has the effect</span>
+<span class="Comment">of zeroing out the coefficients of X^i for i &gt;= n.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> deg(<span class="Type">const</span> GF2X&amp; a);  <span class="Comment">// return deg(a); deg(0) == -1.</span>
+
+<span class="Type">const</span> GF2 coeff(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> i);
+<span class="Comment">// returns the coefficient of X^i, or zero if i not in range</span>
+
+<span class="Type">const</span> GF2 LeadCoeff(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// returns leading term of a, or zero if a == 0</span>
+
+<span class="Type">const</span> GF2 ConstTerm(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// returns constant term of a, or zero if a == 0</span>
+
+<span class="Type">void</span> SetCoeff(GF2X&amp; x, <span class="Type">long</span> i, GF2 a);
+<span class="Type">void</span> SetCoeff(GF2X&amp; x, <span class="Type">long</span> i, <span class="Type">long</span> a);
+<span class="Comment">// makes coefficient of X^i equal to a; error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetCoeff(GF2X&amp; x, <span class="Type">long</span> i);
+<span class="Comment">// makes coefficient of X^i equal to 1;  error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetX(GF2X&amp; x); <span class="Comment">// x is set to the monomial X</span>
+
+<span class="Type">long</span> IsX(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// test if x = X</span>
+
+
+
+
+ref_GF2 GF2X::<span class="Statement">operator</span>[](<span class="Type">long</span> i);
+<span class="Type">const</span> GF2 GF2X::<span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+<span class="Comment">// indexing operators: f[i] is the coefficient of X^i ---</span>
+<span class="Comment">// i should satsify i &gt;= 0 and i &lt;= deg(f)</span>
+
+<span class="Type">void</span> GF2X::SetLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetLength(n) sets the length of the inderlying coefficient</span>
+<span class="Comment">// vector to n --- after this call, indexing f[i] for i = 0..n-1</span>
+<span class="Comment">// is valid.</span>
+
+<span class="Type">void</span> GF2X::normalize();
+<span class="Comment">// f.normalize() strips leading zeros from coefficient vector of f</span>
+
+<span class="Type">void</span> GF2X::SetMaxLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetMaxLength(n) pre-allocate spaces for n coefficients.  The</span>
+<span class="Comment">// polynomial that f represents is unchanged.</span>
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// test for 0</span>
+<span class="Type">long</span> IsOne(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// test for 1</span>
+
+<span class="Comment">// PROMOTIONS: operators ==, != promote {long, GF2} to GF2X on (a, b)</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                   Addition</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+GF2X <span class="Statement">operator</span>+(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+GF2X <span class="Statement">operator</span>-(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+
+GF2X <span class="Statement">operator</span>-(<span class="Type">const</span> GF2X&amp; a); <span class="Comment">// unary -</span>
+
+GF2X&amp; <span class="Statement">operator</span>+=(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X&amp; <span class="Statement">operator</span>+=(GF2X&amp; x, GF2 a);
+GF2X&amp; <span class="Statement">operator</span>+=(GF2X&amp; x, <span class="Type">long</span> a);
+
+GF2X&amp; <span class="Statement">operator</span>-=(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X&amp; <span class="Statement">operator</span>-=(GF2X&amp; x, GF2 a);
+GF2X&amp; <span class="Statement">operator</span>-=(GF2X&amp; x, <span class="Type">long</span> a);
+
+GF2X&amp; <span class="Statement">operator</span>++(GF2X&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(GF2X&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+GF2X&amp; <span class="Statement">operator</span>--(GF2X&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(GF2X&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> add(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b); <span class="Comment">// x = a + b</span>
+<span class="Type">void</span> sub(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b); <span class="Comment">// x = a - b</span>
+<span class="Type">void</span> negate(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a); <span class="Comment">// x = -a</span>
+
+<span class="Comment">// PROMOTIONS: binary +, - and procedures add, sub promote {long, GF2}</span>
+<span class="Comment">// to GF2X on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Multiplication</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+GF2X <span class="Statement">operator</span>*(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+
+GF2X&amp; <span class="Statement">operator</span>*=(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X&amp; <span class="Statement">operator</span>*=(GF2X&amp; x, GF2 a);
+GF2X&amp; <span class="Statement">operator</span>*=(GF2X&amp; x, <span class="Type">long</span> a);
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> mul(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b); <span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> sqr(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a); <span class="Comment">// x = a^2</span>
+GF2X sqr(<span class="Type">const</span> GF2X&amp; a);
+
+<span class="Comment">// PROMOTIONS: operator * and procedure mul promote {long, GF2} to GF2X</span>
+<span class="Comment">// on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Shift Operations</span>
+
+<span class="Comment">LeftShift by n means multiplication by X^n</span>
+<span class="Comment">RightShift by n means division by X^n</span>
+
+<span class="Comment">A negative shift amount reverses the direction of the shift.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+GF2X <span class="Statement">operator</span>&lt;&lt;(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+GF2X <span class="Statement">operator</span>&gt;&gt;(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+
+GF2X&amp; <span class="Statement">operator</span>&lt;&lt;=(GF2X&amp; x, <span class="Type">long</span> n);
+GF2X&amp; <span class="Statement">operator</span>&gt;&gt;=(GF2X&amp; x, <span class="Type">long</span> n);
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> LeftShift(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+GF2X LeftShift(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> RightShift(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+GF2X RightShift(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> MulByX(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X MulByX(<span class="Type">const</span> GF2X&amp; a);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Division</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+GF2X <span class="Statement">operator</span>/(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+GF2X <span class="Statement">operator</span>%(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+
+GF2X&amp; <span class="Statement">operator</span>/=(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X&amp; <span class="Statement">operator</span>/=(GF2X&amp; x, GF2 a);
+GF2X&amp; <span class="Statement">operator</span>/=(GF2X&amp; x, <span class="Type">long</span> a);
+
+GF2X&amp; <span class="Statement">operator</span>%=(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; b);
+
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> DivRem(GF2X&amp; q, GF2X&amp; r, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// q = a/b, r = a%b</span>
+
+<span class="Type">void</span> div(GF2X&amp; q, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// q = a/b</span>
+
+<span class="Type">void</span> rem(GF2X&amp; r, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// r = a%b</span>
+
+<span class="Type">long</span> divide(GF2X&amp; q, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// if b | a, sets q = a/b and returns 1; otherwise returns 0</span>
+
+<span class="Type">long</span> divide(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// if b | a, sets q = a/b and returns 1; otherwise returns 0</span>
+
+<span class="Comment">// PROMOTIONS: operator / and procedure div promote {long, GF2} to GF2X</span>
+<span class="Comment">// on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                   GCD's</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> GCD(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+GF2X GCD(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// x = GCD(a, b) (zero if a==b==0).</span>
+
+
+<span class="Type">void</span> XGCD(GF2X&amp; d, GF2X&amp; s, GF2X&amp; t, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// d = gcd(a,b), a s + b t = d </span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Input/Output</span>
+
+<span class="Comment">I/O format:</span>
+
+<span class="Comment">   [a_0 a_1 ... a_n],</span>
+
+<span class="Comment">represents the polynomial a_0 + a_1*X + ... + a_n*X^n.</span>
+
+<span class="Comment">On output, all coefficients will be 0 or 1, and</span>
+<span class="Comment">a_n not zero (the zero polynomial is [ ]).  On input, the coefficients</span>
+<span class="Comment">may be arbitrary integers which are reduced modulo 2, and leading zeros</span>
+<span class="Comment">stripped.</span>
+
+<span class="Comment">There is also a more compact hex I/O format.  To output in this</span>
+<span class="Comment">format, set GF2X::HexOutput to a nonzero value.  On input, if the first</span>
+<span class="Comment">non-blank character read is 'x' or 'X', then a hex format is assumed.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, GF2X&amp; x);
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> GF2X&amp; a);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Some utility routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> diff(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X diff(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// x = derivative of a</span>
+
+
+<span class="Type">void</span> reverse(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> hi);
+GF2X reverse(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> hi);
+
+<span class="Type">void</span> reverse(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a);
+GF2X reverse(<span class="Type">const</span> GF2X&amp; a);
+
+<span class="Comment">// x = reverse of a[0]..a[hi] (hi &gt;= -1);</span>
+<span class="Comment">// hi defaults to deg(a) in second version</span>
+
+
+<span class="Type">void</span> VectorCopy(vec_GF2&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+vec_GF2 VectorCopy(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = copy of coefficient vector of a of length exactly n.</span>
+<span class="Comment">// input is truncated or padded with zeroes as appropriate.</span>
+
+<span class="Comment">// Note that there is also a conversion routine from GF2X to vec_GF2</span>
+<span class="Comment">// that makes the length of the vector match the number of coefficients</span>
+<span class="Comment">// of the polynomial.</span>
+
+<span class="Type">long</span> weight(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// returns the # of nonzero coefficients in a</span>
+
+<span class="Type">void</span> GF2XFromBytes(GF2X&amp; x, <span class="Type">const</span> <span class="Type">unsigned</span> <span class="Type">char</span> *p, <span class="Type">long</span> n);
+GF2X GF2XFromBytes(<span class="Type">const</span> <span class="Type">unsigned</span> <span class="Type">char</span> *p, <span class="Type">long</span> n);
+<span class="Comment">// conversion from byte vector to polynomial.</span>
+<span class="Comment">// x = sum(p[i]*X^(8*i), i = 0..n-1), where the bits of p[i] are interpretted</span>
+<span class="Comment">// as a polynomial in the natural way (i.e., p[i] = 1 is interpretted as 1,</span>
+<span class="Comment">// p[i] = 2 is interpretted as X, p[i] = 3 is interpretted as X+1, etc.).</span>
+<span class="Comment">// In the unusual event that characters are wider than 8 bits,</span>
+<span class="Comment">// only the low-order 8 bits of p[i] are used.</span>
+
+<span class="Type">void</span> BytesFromGF2X(<span class="Type">unsigned</span> <span class="Type">char</span> *p, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// conversion from polynomial to byte vector.</span>
+<span class="Comment">// p[0..n-1] are computed so that </span>
+<span class="Comment">//     a = sum(p[i]*X^(8*i), i = 0..n-1) mod X^(8*n),</span>
+<span class="Comment">// where the values p[i] are interpretted as polynomials as in GF2XFromBytes</span>
+<span class="Comment">// above.</span>
+
+<span class="Type">long</span> NumBits(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// returns number of bits of a, i.e., deg(a) + 1.</span>
+
+<span class="Type">long</span> NumBytes(<span class="Type">const</span> GF2X&amp; a);
+<span class="Comment">// returns number of bytes of a, i.e., floor((NumBits(a)+7)/8)</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Random Polynomials</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> random(GF2X&amp; x, <span class="Type">long</span> n);
+GF2X random_GF2X(<span class="Type">long</span> n);
+<span class="Comment">// x = random polynomial of degree &lt; n </span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Arithmetic mod X^n</span>
+
+<span class="Comment">Required: n &gt;= 0; otherwise, an error is raised.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> trunc(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n); <span class="Comment">// x = a % X^n</span>
+GF2X trunc(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> MulTrunc(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">long</span> n);
+GF2X MulTrunc(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">long</span> n);
+<span class="Comment">// x = a * b % X^n</span>
+
+<span class="Type">void</span> SqrTrunc(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+GF2X SqrTrunc(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a^2 % X^n</span>
+
+<span class="Type">void</span> InvTrunc(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+GF2X InvTrunc(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// computes x = a^{-1} % X^n.  Must have ConstTerm(a) invertible.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                Modular Arithmetic (without pre-conditioning)</span>
+
+<span class="Comment">Arithmetic mod f.</span>
+
+<span class="Comment">All inputs and outputs are polynomials of degree less than deg(f), and</span>
+<span class="Comment">deg(f) &gt; 0.</span>
+
+<span class="Comment">NOTE: if you want to do many computations with a fixed f, use the</span>
+<span class="Comment">GF2XModulus data structure and associated routines below for better</span>
+<span class="Comment">performance.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> MulMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">const</span> GF2X&amp; f);
+GF2X MulMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// x = (a * b) % f</span>
+
+<span class="Type">void</span> SqrMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+GF2X SqrMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// x = a^2 % f</span>
+
+<span class="Type">void</span> MulByXMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+GF2X MulByXMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// x = (a * X) mod f</span>
+
+<span class="Type">void</span> InvMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+GF2X InvMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// x = a^{-1} % f, error is a is not invertible</span>
+
+<span class="Type">long</span> InvModStatus(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// if (a, f) = 1, returns 0 and sets x = a^{-1} % f; otherwise,</span>
+<span class="Comment">// returns 1 and sets x = (a, f)</span>
+
+
+<span class="Comment">// for modular exponentiation, see below</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     Modular Arithmetic with Pre-Conditioning</span>
+
+<span class="Comment">If you need to do a lot of arithmetic modulo a fixed f, build</span>
+<span class="Comment">GF2XModulus F for f.  This pre-computes information about f that</span>
+<span class="Comment">speeds up subsequent computations.</span>
+
+<span class="Comment">As an example, the following routine computes the product modulo f of a vector</span>
+<span class="Comment">of polynomials.</span>
+
+<span class="Comment">#include &lt;NTL/GF2X.h&gt;</span>
+
+<span class="Comment">void product(GF2X&amp; x, const vec_GF2X&amp; v, const GF2X&amp; f)</span>
+<span class="Comment">{</span>
+<span class="Comment">   GF2XModulus F(f);</span>
+<span class="Comment">   GF2X res;</span>
+<span class="Comment">   res = 1;</span>
+<span class="Comment">   long i;</span>
+<span class="Comment">   for (i = 0; i &lt; v.length(); i++)</span>
+<span class="Comment">      MulMod(res, res, v[i], F); </span>
+<span class="Comment">   x = res;</span>
+<span class="Comment">}</span>
+
+
+<span class="Comment">Note that automatic conversions are provided so that a GF2X can</span>
+<span class="Comment">be used wherever a GF2XModulus is required, and a GF2XModulus</span>
+<span class="Comment">can be used wherever a GF2X is required.</span>
+
+<span class="Comment">The GF2XModulus routines optimize several important special cases:</span>
+
+<span class="Comment">  - f = X^n + X^k + 1, where k &lt;= min((n+1)/2, n-NTL_BITS_PER_LONG)</span>
+
+<span class="Comment">  - f = X^n + X^{k_3} + X^{k_2} + X^{k_1} + 1,</span>
+<span class="Comment">      where k_3 &lt;= min((n+1)/2, n-NTL_BITS_PER_LONG)</span>
+
+<span class="Comment">  - f = X^n + g, where deg(g) is small</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">class</span> GF2XModulus {
+<span class="Statement">public</span>:
+   GF2XModulus(); <span class="Comment">// initially in an unusable state</span>
+   ~GF2XModulus();
+
+   GF2XModulus(<span class="Type">const</span> GF2XModulus&amp;);  <span class="Comment">// copy</span>
+
+   GF2XModulus&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> GF2XModulus&amp;);   <span class="Comment">// assignment</span>
+
+   GF2XModulus(<span class="Type">const</span> GF2X&amp; f); <span class="Comment">// initialize with f, deg(f) &gt; 0</span>
+
+   <span class="Statement">operator</span> <span class="Type">const</span> GF2X&amp; () <span class="Type">const</span>;
+   <span class="Comment">// read-only access to f, implicit conversion operator</span>
+
+   <span class="Type">const</span> GF2X&amp; val() <span class="Type">const</span>;
+   <span class="Comment">// read-only access to f, explicit notation</span>
+
+   <span class="Type">long</span> WordLength() <span class="Type">const</span>;
+   <span class="Comment">// returns word-length of resisues</span>
+};
+
+<span class="Type">void</span> build(GF2XModulus&amp; F, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// pre-computes information about f and stores it in F; deg(f) &gt; 0.</span>
+<span class="Comment">// Note that the declaration GF2XModulus F(f) is equivalent to</span>
+<span class="Comment">// GF2XModulus F; build(F, f).</span>
+
+<span class="Comment">// In the following, f refers to the polynomial f supplied to the</span>
+<span class="Comment">// build routine, and n = deg(f).</span>
+
+<span class="Type">long</span> deg(<span class="Type">const</span> GF2XModulus&amp; F);  <span class="Comment">// return deg(f)</span>
+
+<span class="Type">void</span> MulMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X MulMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; b, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// x = (a * b) % f; deg(a), deg(b) &lt; n</span>
+
+<span class="Type">void</span> SqrMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X SqrMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// x = a^2 % f; deg(a) &lt; n</span>
+
+<span class="Type">void</span> MulByXMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X MulByXMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// x = (a * X) mod F</span>
+
+<span class="Type">void</span> PowerMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X PowerMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Type">void</span> PowerMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> e, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X PowerMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">long</span> e, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// x = a^e % f; deg(a) &lt; n (e may be negative)</span>
+
+<span class="Type">void</span> PowerXMod(GF2X&amp; x, <span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X PowerXMod(<span class="Type">const</span> ZZ&amp; e, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Type">void</span> PowerXMod(GF2X&amp; x, <span class="Type">long</span> e, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X PowerXMod(<span class="Type">long</span> e, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// x = X^e % f (e may be negative)</span>
+
+
+<span class="Type">void</span> rem(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// x = a % f</span>
+
+<span class="Type">void</span> DivRem(GF2X&amp; q, GF2X&amp; r, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// q = a/f, r = a%f</span>
+
+<span class="Type">void</span> div(GF2X&amp; q, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// q = a/f</span>
+
+<span class="Comment">// operator notation:</span>
+
+GF2X <span class="Statement">operator</span>/(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X <span class="Statement">operator</span>%(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+
+GF2X&amp; <span class="Statement">operator</span>/=(GF2X&amp; x, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X&amp; <span class="Statement">operator</span>%=(GF2X&amp; x, <span class="Type">const</span> GF2XModulus&amp; F);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             vectors of GF2X's</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">typedef</span> Vec&lt;GF2X&gt; vec_GF2X; <span class="Comment">// backward compatibility</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Modular Composition</span>
+
+<span class="Comment">Modular composition is the problem of computing g(h) mod f for</span>
+<span class="Comment">polynomials f, g, and h.</span>
+
+<span class="Comment">The algorithm employed is that of Brent &amp; Kung (Fast algorithms for</span>
+<span class="Comment">manipulating formal power series, JACM 25:581-595, 1978), which uses</span>
+<span class="Comment">O(n^{1/2}) modular polynomial multiplications, and O(n^2) scalar</span>
+<span class="Comment">operations.</span>
+
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> CompMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X CompMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// x = g(h) mod f; deg(h) &lt; n</span>
+
+<span class="Type">void</span> Comp2Mod(GF2X&amp; x1, GF2X&amp; x2, <span class="Type">const</span> GF2X&amp; g1, <span class="Type">const</span> GF2X&amp; g2,
+              <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// xi = gi(h) mod f (i=1,2), deg(h) &lt; n.</span>
+
+<span class="Type">void</span> CompMod3(GF2X&amp; x1, GF2X&amp; x2, GF2X&amp; x3,
+              <span class="Type">const</span> GF2X&amp; g1, <span class="Type">const</span> GF2X&amp; g2, <span class="Type">const</span> GF2X&amp; g3,
+              <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+<span class="Comment">// xi = gi(h) mod f (i=1..3), deg(h) &lt; n</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     Composition with Pre-Conditioning</span>
+
+<span class="Comment">If a single h is going to be used with many g's then you should build</span>
+<span class="Comment">a GF2XArgument for h, and then use the compose routine below.  The</span>
+<span class="Comment">routine build computes and stores h, h^2, ..., h^m mod f.  After this</span>
+<span class="Comment">pre-computation, composing a polynomial of degree roughly n with h</span>
+<span class="Comment">takes n/m multiplies mod f, plus n^2 scalar multiplies.  Thus,</span>
+<span class="Comment">increasing m increases the space requirement and the pre-computation</span>
+<span class="Comment">time, but reduces the composition time.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">struct</span> GF2XArgument {
+   vec_GF2X H;
+};
+
+<span class="Type">void</span> build(GF2XArgument&amp; H, <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+<span class="Comment">// Pre-Computes information about h.  m &gt; 0, deg(h) &lt; n</span>
+
+<span class="Type">void</span> CompMod(GF2X&amp; x, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XArgument&amp; H,
+             <span class="Type">const</span> GF2XModulus&amp; F);
+
+GF2X CompMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XArgument&amp; H,
+             <span class="Type">const</span> GF2XModulus&amp; F);
+
+
+<span class="Type">extern</span> <span class="Type">thread_local</span> <span class="Type">long</span> GF2XArgBound;
+
+<span class="Comment">// Initially 0.  If this is set to a value greater than zero, then</span>
+<span class="Comment">// composition routines will allocate a table of no than about</span>
+<span class="Comment">// GF2XArgBound KB.  Setting this value affects all compose routines</span>
+<span class="Comment">// and the power projection and minimal polynomial routines below, </span>
+<span class="Comment">// and indirectly affects many routines in GF2XFactoring.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                     Power Projection routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> project(GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> GF2X&amp; b);
+GF2 project(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> GF2X&amp; b);
+<span class="Comment">// x = inner product of a with coefficient vector of b</span>
+
+
+<span class="Type">void</span> ProjectPowers(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+
+vec_GF2 ProjectPowers(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> GF2X&amp; h, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// Computes the vector </span>
+
+<span class="Comment">//   (project(a, 1), project(a, h), ..., project(a, h^{k-1} % f).  </span>
+
+<span class="Comment">// Restriction: must have a.length &lt;= deg(F) and deg(h) &lt; deg(F).</span>
+<span class="Comment">// This operation is really the &quot;transpose&quot; of the modular composition </span>
+<span class="Comment">// operation.</span>
+
+<span class="Type">void</span> ProjectPowers(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> GF2XArgument&amp; H, <span class="Type">const</span> GF2XModulus&amp; F);
+
+vec_GF2 ProjectPowers(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> k,
+                   <span class="Type">const</span> GF2XArgument&amp; H, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// same as above, but uses a pre-computed GF2XArgument</span>
+
+
+<span class="Comment">// lower-level routines for transposed modular multiplication:</span>
+
+<span class="Type">class</span> GF2XTransMultiplier { <span class="Comment">/*</span><span class="Comment"> ... </span><span class="Comment">*/</span> };
+
+<span class="Type">void</span> build(GF2XTransMultiplier&amp; B, <span class="Type">const</span> GF2X&amp; b, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// build a GF2XTransMultiplier to use in the following routine:</span>
+
+<span class="Type">void</span> UpdateMap(vec_GF2&amp; x, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> GF2XTransMultiplier&amp; B,
+         <span class="Type">const</span> GF2XModulus&amp; F);
+
+vec_GF2 UpdateMap(<span class="Type">const</span> vec_GF2&amp; a, <span class="Type">const</span> GF2XTransMultiplier&amp; B,
+         <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// Computes the vector</span>
+
+<span class="Comment">//   project(a, b), project(a, (b*X)%f), ..., project(a, (b*X^{n-1})%f)</span>
+
+<span class="Comment">// Restriction: must have a.length() &lt;= deg(F) and deg(b) &lt; deg(F).</span>
+<span class="Comment">// This is really the transpose of modular multiplication.</span>
+<span class="Comment">// Input may have &quot;high order&quot; zeroes stripped.</span>
+<span class="Comment">// Output always has high order zeroes stripped.</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Minimum Polynomials</span>
+
+<span class="Comment">All of these routines implement the algorithm from [Shoup, J. Symbolic</span>
+<span class="Comment">Comp. 17:371-391, 1994] and [Shoup, J. Symbolic Comp. 20:363-397,</span>
+<span class="Comment">1995], based on transposed modular composition and the</span>
+<span class="Comment">Berlekamp/Massey algorithm.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> MinPolySeq(GF2X&amp; h, <span class="Type">const</span> vec_GF2&amp; a, <span class="Type">long</span> m);
+<span class="Comment">// computes the minimum polynomial of a linealy generated sequence; m</span>
+<span class="Comment">// is a bound on the degree of the polynomial; required: a.length() &gt;=</span>
+<span class="Comment">// 2*m</span>
+
+<span class="Type">void</span> ProbMinPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+GF2X ProbMinPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> ProbMinPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X ProbMinPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// computes the monic minimal polynomial if (g mod f).  m = a bound on</span>
+<span class="Comment">// the degree of the minimal polynomial; in the second version, this</span>
+<span class="Comment">// argument defaults to n.  The algorithm is probabilistic; it always</span>
+<span class="Comment">// returns a divisor of the minimal polynomial, possibly a proper divisor.</span>
+
+<span class="Type">void</span> MinPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+GF2X MinPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> MinPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X MinPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// same as above, but guarantees that result is correct</span>
+
+<span class="Type">void</span> IrredPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+GF2X IrredPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F, <span class="Type">long</span> m);
+
+<span class="Type">void</span> IrredPolyMod(GF2X&amp; h, <span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2X IrredPolyMod(<span class="Type">const</span> GF2X&amp; g, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Comment">// same as above, but assumes that F is irreducible, or at least that</span>
+<span class="Comment">// the minimal poly of g is itself irreducible.  The algorithm is</span>
+<span class="Comment">// deterministic (and is always correct).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                Traces</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> TraceMod(GF2&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+GF2 TraceMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2XModulus&amp; F);
+
+<span class="Type">void</span> TraceMod(GF2&amp; x, <span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+GF2 TraceMod(<span class="Type">const</span> GF2X&amp; a, <span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// x = Trace(a mod f); deg(a) &lt; deg(f)</span>
+
+
+<span class="Type">void</span> TraceVec(vec_GF2&amp; S, <span class="Type">const</span> GF2X&amp; f);
+vec_GF2 TraceVec(<span class="Type">const</span> GF2X&amp; f);
+<span class="Comment">// S[i] = Trace(X^i mod f), i = 0..deg(f)-1; 0 &lt; deg(f)</span>
+
+<span class="Comment">// The above routines implement the asymptotically fast trace</span>
+<span class="Comment">// algorithm from [von zur Gathen and Shoup, Computational Complexity,</span>
+<span class="Comment">// 1992].</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                           Miscellany</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> clear(GF2X&amp; x) <span class="Comment">// x = 0</span>
+<span class="Type">void</span> set(GF2X&amp; x); <span class="Comment">// x = 1</span>
+
+
+<span class="Type">void</span> GF2X::kill();
+<span class="Comment">// f.kill() sets f to 0 and frees all memory held by f.  </span>
+
+GF2X::GF2X(INIT_SIZE_TYPE, <span class="Type">long</span> n);
+<span class="Comment">// GF2X(INIT_SIZE, n) initializes to zero, but space is pre-allocated</span>
+<span class="Comment">// for n coefficients</span>
+
+<span class="Type">static</span> <span class="Type">const</span> GF2X&amp; zero();
+<span class="Comment">// GF2X::zero() is a read-only reference to 0</span>
+
+<span class="Type">void</span> GF2X::swap(GF2X&amp; x);
+<span class="Type">void</span> swap(GF2X&amp; x, GF2X&amp; y);
+<span class="Comment">// swap (via &quot;pointer swapping&quot; -- if possible)</span>
+
+GF2X::GF2X(<span class="Type">long</span> i, GF2 c);
+GF2X::GF2X(<span class="Type">long</span> i, <span class="Type">long</span> c);
+<span class="Comment">// initialize to c*X^i, provided for backward compatibility</span>
+
+<span class="Comment">// SIZE INVARIANT: for any f in GF2X, deg(f)+1 &lt; 2^(NTL_BITS_PER_LONG-4).</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

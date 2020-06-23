@@ -1,0 +1,205 @@
+
+
+/**************************************************************************\
+
+MODULE: xdouble 
+
+SUMMARY:
+
+The class xdouble is used to represent floating point numbers with the
+same precision as a 'double', but with extended exponent range
+(offering a few more bits than that of a 'long' for the exponent).
+
+The programming interface for xdoubles is almost identical to that of
+ordinary doubles.
+
+
+\**************************************************************************/
+
+#include <NTL/ZZ.h>
+
+
+class xdouble {
+
+public:
+
+xdouble(); // = 0
+
+xdouble(const xdouble& a);  // copy constructor
+
+explicit xdouble(double a);  // promotion constructor
+
+xdouble& operator=(const xdouble& a);  // assignment operator
+xdouble& operator=(double a);
+
+~xdouble();
+
+
+double mantissa() const;  // read-only access to mantissa
+long exponent() const;  // read-only access to exponenent
+
+
+
+static void SetOutputPrecision(long p);
+// This sets the number of decimal digits to be output.  Default is
+// 10.
+
+static long OutputPrecision();
+// returns current output precision.
+
+};
+
+
+
+/**************************************************************************\
+
+                             Arithmetic Operations
+
+The following are the standard arithmetic operators, whose meaning should 
+be clear.
+
+\**************************************************************************/
+
+
+xdouble operator+(const xdouble& a, const xdouble& b);
+xdouble operator-(const xdouble& a, const xdouble& b);
+xdouble operator*(const xdouble& a, const xdouble& b);
+xdouble operator/(const xdouble& a, const xdouble& b);
+
+// PROMOTIONS: +, -, *, / promote double to xdouble on (a, b).
+
+xdouble operator-(const xdouble& a);
+
+xdouble& operator+=(xdouble& a, const xdouble& b);
+xdouble& operator+=(xdouble& a, double b);
+
+xdouble& operator-=(xdouble& a, const xdouble& b);
+xdouble& operator-=(xdouble& a, double b);
+
+xdouble& operator*=(xdouble& a, const xdouble& b);
+xdouble& operator*=(xdouble& a, double b);
+
+xdouble& operator/=(xdouble& a, const xdouble& b);
+xdouble& operator/=(xdouble& a, xdouble b);
+
+xdouble& operator++(xdouble& a); // prefix
+void operator++(xdouble& a, int); // postfix
+
+xdouble& operator--(xdouble& a); // prefix
+void operator--(xdouble& a, int); // postfix
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+long sign(const xdouble& a);
+// returns sign (+1, -1, 0) of a
+
+long compare(const xdouble& a, const xdouble& b); 
+// returns sign of a - b
+
+long operator==(const xdouble& a, const xdouble& b);
+long operator!=(const xdouble& a, const xdouble& b);
+long operator<=(const xdouble& a, const xdouble& b);
+long operator>=(const xdouble& a, const xdouble& b);
+long operator <(const xdouble& a, const xdouble& b);
+long operator >(const xdouble& a, const xdouble& b);
+
+// PROMOTIONS: compare and operators ==, ..., > promote double to xdouble
+// on (a, b).
+
+
+
+/**************************************************************************\
+
+                               Input/Output
+Input Syntax:
+
+<number>: [ "-" ] <unsigned-number>
+<unsigned-number>: <dotted-number> [ <e-part> ] | <e-part>
+<dotted-number>: <digits> | <digits> "." <digits> | "." <digits> | <digits> "."
+<digits>: <digit> <digits> | <digit>
+<digit>: "0" | ... | "9"
+<e-part>: ( "E" | "e" ) [ "+" | "-" ] <digits>
+
+Examples of valid input:
+
+17 1.5 0.5 .5  5.  -.5 e10 e-10 e+10 1.5e10 .5e10 .5E10
+
+Note that the number of decimal digits of precision that are used
+for output can be set to any number p >= 1 by calling
+the routine xdouble::SetOutputPrecision(p).  
+The default value of p is 10.
+The current value of p is returned by a call to xdouble::OutputPrecision().
+
+\**************************************************************************/
+
+
+
+ostream& operator<<(ostream& s, const xdouble& a);
+
+istream& operator>>(istream& s, xdouble& x);
+
+
+/**************************************************************************\
+
+                                  Miscellaneous
+
+\**************************************************************************/
+
+
+
+xdouble trunc(const xdouble& a);  // returns integer obtained by truncating
+xdouble floor(const xdouble& a);  // returns greatest integer <= a
+xdouble ceil(const xdouble& a);   // returns smallest integer >= a
+xdouble fabs(const xdouble& a);   // returns |a|
+xdouble sqrt(const xdouble& a);   // returns a^{1/2}; error is raised if a < 0
+
+double log(const xdouble& a);  // returns log(a) (note return val is double!)
+xdouble xexp(double a);        // returns exp(a) (note argument is double!)
+xdouble exp(const double& a);  // equivalent to xexp(to_double(a))
+
+
+void power(xdouble& z, const xdouble& a, const ZZ& e);
+xdouble power(const xdouble& a, const ZZ& e);
+
+void power(xdouble& z, const xdouble& a, long e);
+xdouble power(const xdouble& a, long e);
+// z = a^e, e may be negative
+
+void power2(xdouble& z, long e);
+xdouble power2_xdouble(long e);
+// z = 2^e, e may be negative
+
+void MulAdd(xdouble& z, const xdouble& a, const xdouble& b, const xdouble& c);
+xdouble MulAdd(const xdouble& a, const xdouble& b, const xdouble& c);
+// z = a + b*c, but faster
+
+void MulSub(xdouble& z, const xdouble& a, const xdouble& b, const xdouble& c);
+xdouble MulSub(const xdouble& a, const xdouble& b, const xdouble& c);
+// z = a - b*c, but faster
+
+
+/**************************************************************************\
+
+Implementation details:
+
+An xdouble is represented as a mantissa/exponent pair (x, e), where x
+is a double and e is a long.  The real number represented by (x, e) is
+x * NTL_XD_BOUND^e, where
+
+  NTL_XD_BOUND = NTL_XD_HBOUND^2, and
+  NTL_XD_HBOUND = 2^{(max(NTL_DOUBLE_PRECISION,NTL_BITS_PER_LONG)+4)}.
+
+Also, the mantissa x satisfies 1/NTL_XD_HBOUND <= |x| <= NTL_XD_HBOUND, except
+that the number 0 is always represented as (0, 0).  
+Both NTL_XD_BOUND and NTL_XD_HBOUND are macros defined in <NTL/xdouble.h>.
+
+SIZE INVARIANT: |e| < 2^(NTL_BITS_PER_LONG-4).
+
+\**************************************************************************/
+

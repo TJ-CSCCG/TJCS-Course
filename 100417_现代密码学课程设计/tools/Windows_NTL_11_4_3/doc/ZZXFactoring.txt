@@ -1,0 +1,171 @@
+
+/*****************************************************************************\
+
+MODULE: ZZXFactoring
+
+SUMMARY:
+
+Routines are provided for factoring in ZZX.
+
+See IMPLEMENTATION DETAILS below for a discussion of the algorithms used,
+and of the flags available for selecting among these algorithms.
+
+\*****************************************************************************/
+
+#include <NTL/ZZX.h>
+#include <NTL/pair_ZZX_long.h>
+
+void SquareFreeDecomp(vec_pair_ZZX_long& u, const ZZX& f);
+const vector(pair_ZZX_long SquareFreeDecomp(const ZZX& f);
+
+// input is primitive, with positive leading coefficient.  Performs
+// square-free decomposition.  If f = prod_i g_i^i, then u is set to a
+// lest of pairs (g_i, i).  The list is is increasing order of i, with
+// trivial terms (i.e., g_i = 1) deleted.
+
+
+void MultiLift(vec_ZZX& A, const vec_zz_pX& a, const ZZX& f, long e,
+               long verbose=0);
+
+// Using current value p of zz_p::modulus(), this lifts the
+// square-free factorization a mod p of f to a factorization A mod p^e
+// of f.  It is required that f and all the polynomials in a are
+// monic.
+
+
+
+void SFFactor(vec_ZZX& factors, const ZZX& f, long verbose=0, long bnd=0);
+vec_ZZX SFFactor(const ZZX& f, long verbose=0, long bnd=0);
+
+// input f is primitive and square-free, with positive leading
+// coefficient.  bnd, if not zero, indicates that f divides a
+// polynomial h whose Euclidean norm is bounded by 2^{bnd} in absolute
+// value.  This uses the routine SFCanZass in zz_pXFactoring and then
+// performs a MultiLift, followed by a brute-force search for the
+// factors.  
+
+// A number of heuristics are used to speed up the factor-search step.
+// See "implementation details" below.
+
+
+void factor(ZZ& c,
+            vec_pair_ZZX_long& factors,
+            const ZZX& f,
+            long verbose=0,
+            long bnd=0);
+
+// input f is is an arbitrary polynomial.  c is the content of f, and
+// factors is the facrorization of its primitive part.  bnd is as in
+// SFFactor.  The routine calls SquareFreeDecomp and SFFactor.
+
+void mul(ZZX& x, const vec_pair_ZZX_long& a);
+ZZX mul(const vec_pair_ZZX_long& a);
+// multiplies polynomials, with multiplcities.
+
+
+
+
+/*****************************************************************************\
+
+IMPLEMENTATION DETAILS
+
+To factor a polynomial, first its content is extracted, and it is
+made squarefree.  This is typically very fast.
+
+Second, a simple hack is performed: if the polynomial is of the
+form g(x^l), then an attempt is made to factor g(k^m),
+for divisors m of l, which can in some cases greatly simplify
+the factorization task.
+You can turn this "power hack" on/off by setting the following variable
+to 1/0:
+
+   extern thread_local long ZZXFac_PowerHack;  // initial value = 1
+
+
+Third, the polynomial is factored modulo several
+small primes, and one small prime p is selected as the "best".
+You can choose the number of small primes that you want to use
+by setting the following variable:
+
+   extern thread_local long ZZXFac_InitNumPrimes;  // initial value = 7
+
+Fourth, The factorization mod p is "lifted" to a factorization mod p^k
+for a sufficiently large k.  This is done via quadratic Hensel
+lifting.  Despite "folk wisdom" to the contrary, this is much
+more efficient than linear Hensel lifting, especially since NTL
+has very fast polynomial arithmetic.
+
+After the "lifting phase" comes the "factor recombination phase".
+The factorization mod p^k may be "finer" than the true factorization
+over the integers, hence we have to "combine" subsets of modular factors
+and test if these are factors over the integers.
+
+There are two basic strategies:  the "Zassenhaus" method
+and the "van Hoeij" method.
+
+The van Hoeij method:
+
+The van Hoeij method is fairly new, but it is so much better than
+the older, Zassenhaus method, that it is now the default.
+For a description of the method, go to Mark van Hoeij's home page:
+
+   http://www.openmath.org/~hoeij/
+
+The van Hoeij method is not really a specific algorithm, but a general
+algorithmic approach: many parameters and strategies have to be selected
+to obtain a specific algorithm, and it is a challenge to
+make all of these choices so that the resulting algorithm works
+fairly well on all input polynomials.
+
+Set the following variable to 1 to enable the van Hoeij method,
+and to 0 to revert to the Zassenhaus method:
+
+   extern thread_local long ZZXFac_van_Hoeij; // initial value = 1
+
+Note that the "power hack" is still on by default when using van Hoeij's
+method, but we have arranged things so that the "power hack" strategy 
+is abandoned if it appears to be too much a waste of time.
+Unlike with the Zassenhaus method, using the "power hack" method with
+van Hoeij can sometimes be a huge waste of time if one is not careful.
+
+
+
+The Zassenhaus method:
+
+The Zassenhaus method is essentially a brute-force search, but with
+a lot of fancy "pruning" techniques, as described in the paper
+[J. Abbott, V. Shoup, P. Zimmermann, "Factoring in Z[x]: the searching phase",
+ISSAC 2000].
+
+These heuristics are fairly effective, and allow one to easily deal
+with up to around 30-40 modular factors, which is *much* more
+than other Zassenhaus-based factorizers can deal with; however, after this, 
+the exponential behavior of the algorithm really starts to dominate.
+
+The behaviour of these heuristics can be fine tuned by
+setting the following global variables:
+
+   extern thread_local long ZZXFac_MaxNumPrimes;  // initial value = 50
+   // During the factor recombination phase, if not much progress
+   // is being made, occasionally more "local" information is 
+   // collected by factoring f modulo another prime.
+   // This "local" information is used to rule out degrees 
+   // of potential factors during recombination.
+   // This value bounds the total number of primes modulo which f 
+   // is factored.
+
+   extern thread_local long ZZXFac_MaxPrune;  // initial value = 10
+   // A kind of "meet in the middle" strategy is used
+   // to prune the search space during recombination.
+   // For many (but not all) polynomials, this can greatly
+   // reduce the running time.
+   // When it does work, there is a time-space tradeoff:
+   // If t = ZZXFac_MaxPrune, the running time will be reduced by a factor near
+   // 2^t, but the table will take (at most) t*2^(t-1) bytes of storage.
+   // Note that ZZXFac_MaxPrune is treated as an upper bound on t---the
+   // factoring algorithm may decide to use a smaller value of t for
+   // a number of reasons.
+
+
+
+\*****************************************************************************/

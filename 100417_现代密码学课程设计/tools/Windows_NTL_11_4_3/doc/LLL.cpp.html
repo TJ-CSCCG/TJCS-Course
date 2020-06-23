@@ -1,0 +1,467 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/LLL.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Constant { color: #ff8c00; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: LLL</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Routines are provided for lattice basis reduction, including both</span>
+<span class="Comment">exact-aritmetic variants (slow but sure) and floating-point variants</span>
+<span class="Comment">(fast but only approximate).</span>
+
+<span class="Comment">For an introduction to the basics of LLL reduction, see</span>
+<span class="Comment">[H. Cohen, A Course in Computational Algebraic Number Theory, Springer, 1993].</span>
+
+<span class="Comment">The LLL algorithm was introduced in [A. K. Lenstra, H. W. Lenstra, and</span>
+<span class="Comment">L. Lovasz, Math. Ann. 261 (1982), 515-534].</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/mat_ZZ.h&gt;</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                         Exact Arithmetic Variants</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+<span class="Type">long</span> LLL(ZZ&amp; det2, mat_ZZ&amp; B, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+<span class="Type">long</span> LLL(ZZ&amp; det2, mat_ZZ&amp; B, mat_ZZ&amp; U, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+
+<span class="Type">long</span> LLL(ZZ&amp; det2, mat_ZZ&amp; B, <span class="Type">long</span> a, <span class="Type">long</span> b, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+<span class="Type">long</span> LLL(ZZ&amp; det2, mat_ZZ&amp; B, mat_ZZ&amp; U, <span class="Type">long</span> a, <span class="Type">long</span> b, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+
+
+<span class="Comment">// performs LLL reduction.</span>
+
+<span class="Comment">// B is an m x n matrix, viewed as m rows of n-vectors.  m may be less</span>
+<span class="Comment">// than, equal to, or greater than n, and the rows need not be</span>
+<span class="Comment">// linearly independent.  B is transformed into an LLL-reduced basis,</span>
+<span class="Comment">// and the return value is the rank r of B.  The first m-r rows of B</span>
+<span class="Comment">// are zero.  </span>
+
+<span class="Comment">// More specifically, elementary row transformations are performed on</span>
+<span class="Comment">// B so that the non-zero rows of new-B form an LLL-reduced basis</span>
+<span class="Comment">// for the lattice spanned by the rows of old-B.</span>
+<span class="Comment">// The default reduction parameter is delta=3/4, which means</span>
+<span class="Comment">// that the squared length of the first non-zero basis vector</span>
+<span class="Comment">// is no more than 2^{r-1} times that of the shortest vector in</span>
+<span class="Comment">// the lattice.</span>
+
+<span class="Comment">// det2 is calculated as the *square* of the determinant</span>
+<span class="Comment">// of the lattice---note that sqrt(det2) is in general an integer</span>
+<span class="Comment">// only when r = n.</span>
+
+<span class="Comment">// In the second version, U is set to the transformation matrix, so</span>
+<span class="Comment">// that U is a unimodular m x m matrix with U * old-B = new-B.</span>
+<span class="Comment">// Note that the first m-r rows of U form a basis (as a lattice)</span>
+<span class="Comment">// for the kernel of old-B. </span>
+
+<span class="Comment">// The third and fourth versions allow an arbitrary reduction</span>
+<span class="Comment">// parameter delta=a/b, where 1/4 &lt; a/b &lt;= 1, where a and b are positive</span>
+<span class="Comment">// integers.</span>
+<span class="Comment">// For a basis reduced with parameter delta, the squared length</span>
+<span class="Comment">// of the first non-zero basis vector is no more than </span>
+<span class="Comment">// 1/(delta-1/4)^{r-1} times that of the shortest vector in the</span>
+<span class="Comment">// lattice (see, e.g., the article by Schnorr and Euchner mentioned below).</span>
+
+<span class="Comment">// The algorithm employed here is essentially the one in Cohen's book.</span>
+
+
+<span class="Comment">// Some variations:</span>
+
+<span class="Type">long</span> LLL_plus(vec_ZZ&amp; D, mat_ZZ&amp; B, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+<span class="Type">long</span> LLL_plus(vec_ZZ&amp; D, mat_ZZ&amp; B, mat_ZZ&amp; U, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+
+<span class="Type">long</span> LLL_plus(vec_ZZ&amp; D, mat_ZZ&amp; B, <span class="Type">long</span> a, <span class="Type">long</span> b, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+<span class="Type">long</span> LLL_plus(vec_ZZ&amp; D, mat_ZZ&amp; B, mat_ZZ&amp; U, <span class="Type">long</span> a, <span class="Type">long</span> b,
+              <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+
+<span class="Comment">// These are variations that return a bit more information about the</span>
+<span class="Comment">// reduced basis.  If r is the rank of B, then D is a vector of length</span>
+<span class="Comment">// r+1, such that D[0] = 1, and for i = 1..r, D[i]/D[i-1] is equal to</span>
+<span class="Comment">// the square of the length of the i-th vector of the Gram-Schmidt basis</span>
+<span class="Comment">// corresponding to the (non-zero) rows of the LLL reduced basis B.</span>
+<span class="Comment">// In particular, D[r] is equal to the value det2 computed by the</span>
+<span class="Comment">// plain LLL routines.</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                      Computing Images and Kernels</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">long</span> image(ZZ&amp; det2, mat_ZZ&amp; B, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+<span class="Type">long</span> image(ZZ&amp; det2, mat_ZZ&amp; B, mat_ZZ&amp; U, <span class="Type">long</span> verbose = <span class="Constant">0</span>);
+
+<span class="Comment">// This computes the image of B using a &quot;cheap&quot; version of the LLL:</span>
+<span class="Comment">// it performs the usual &quot;size reduction&quot;, but it only swaps</span>
+<span class="Comment">// vectors when linear dependencies are found.</span>
+<span class="Comment">// I haven't seen this described in the literature, but it works </span>
+<span class="Comment">// fairly well in practice, and can also easily be shown</span>
+<span class="Comment">// to run in a reasonable amount of time with reasonably bounded</span>
+<span class="Comment">// numbers.</span>
+
+<span class="Comment">// As in the above LLL routines, the return value is the rank r of B, and the</span>
+<span class="Comment">// first m-r rows will be zero.  U is a unimodular m x m matrix with </span>
+<span class="Comment">// U * old-B = new-B.  det2 has the same meaning as above.</span>
+
+<span class="Comment">// Note that the first m-r rows of U form a basis (as a lattice)</span>
+<span class="Comment">// for the kernel of old-B. </span>
+<span class="Comment">// This is a reasonably practical algorithm for computing kernels.</span>
+<span class="Comment">// One can also apply image() to the kernel to get somewhat</span>
+<span class="Comment">// shorter basis vectors for the kernels (there are no linear</span>
+<span class="Comment">// dependencies, but the size reduction may anyway help).</span>
+<span class="Comment">// For even shorter kernel basis vectors, on can apply</span>
+<span class="Comment">// LLL(). </span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                    Finding a vector in a lattice </span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> LatticeSolve(vec_ZZ&amp; x, <span class="Type">const</span> mat_ZZ&amp; A, <span class="Type">const</span> vec_ZZ&amp; y, <span class="Type">long</span> reduce=<span class="Constant">0</span>);
+
+<span class="Comment">// This tests if for given A and y, there exists x such that x*A = y;</span>
+<span class="Comment">// if so, x is set to a solution, and the value 1 is returned;</span>
+<span class="Comment">// otherwise, x is left unchanged, and the value 0 is returned.</span>
+
+<span class="Comment">// The optional parameter reduce controls the 'quality' of the</span>
+<span class="Comment">// solution vector;  if the rows of A are linearly dependent, </span>
+<span class="Comment">// there are many solutions, if there are any at all.</span>
+<span class="Comment">// The value of reduce controls the amount of effort that goes</span>
+<span class="Comment">// into finding a 'short' solution vector x.</span>
+
+<span class="Comment">//    reduce = 0: No particular effort is made to find a short solution.</span>
+
+<span class="Comment">//    reduce = 1: A simple 'size reduction' algorithm is run on kernel(A);</span>
+<span class="Comment">//                this is fast, and may yield somewhat shorter</span>
+<span class="Comment">//                solutions than the default, but not necessarily</span>
+<span class="Comment">//                very close at all to optimal.</span>
+
+<span class="Comment">//    reduce = 2: the LLL algorithm is run on kernel(A);</span>
+<span class="Comment">//                this may be significantly slower than the other options,</span>
+<span class="Comment">//                but yields solutions that are provably close to optimal.</span>
+<span class="Comment">//                More precisely, if kernel(A) has rank k,</span>
+<span class="Comment">//                then the squared length of the obtained solution</span>
+<span class="Comment">//                is no more than max(1, 2^(k-2)) times that of </span>
+<span class="Comment">//                the optimal solution.  This makes use of slight</span>
+<span class="Comment">//                variation of Babai's approximately nearest vector algorithm.</span>
+
+<span class="Comment">// Of course, if the the rows of A are linearly independent, then</span>
+<span class="Comment">// the value of reduce is irrelevant: the solution, if it exists,</span>
+<span class="Comment">// is unique.</span>
+
+<span class="Comment">// Note that regardless of the value of reduce, the algorithm</span>
+<span class="Comment">// runs in polynomial time, and hence the bit-length of the solution</span>
+<span class="Comment">// vector is bounded by a polynomial in the bit-length of the inputs.</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                   Floating Point Variants</span>
+
+<span class="Comment">There are a number of floating point LLL variants available:</span>
+<span class="Comment">you can choose the precision, the orthogonalization strategy,</span>
+<span class="Comment">and the reduction condition.</span>
+
+<span class="Comment">The wide variety of choices may seem a bit bewildering.</span>
+<span class="Comment">See below the discussion &quot;How to choose?&quot;.</span>
+
+<span class="Comment">*** Precision:</span>
+
+<span class="Comment">  FP -- double</span>
+<span class="Comment">  QP -- quad_float (quasi quadruple precision)</span>
+<span class="Comment">        this is useful when roundoff errors can cause problems</span>
+<span class="Comment">  XD -- xdouble (extended exponent doubles)</span>
+<span class="Comment">        this is useful when numbers get too big</span>
+<span class="Comment">  RR -- RR (arbitrary precision floating point)</span>
+<span class="Comment">        this is useful for large precision and magnitudes</span>
+
+<span class="Comment">  Generally speaking, the choice FP will be the fastest,</span>
+<span class="Comment">  but may be prone to roundoff errors and/or overflow.</span>
+<span class="Comment">  </span>
+
+<span class="Comment">*** Orthogonalization Strategy: </span>
+
+<span class="Comment">  -- Classical Gramm-Schmidt Orthogonalization.</span>
+<span class="Comment">     This choice uses classical methods for computing</span>
+<span class="Comment">     the Gramm-Schmidt othogonalization.</span>
+<span class="Comment">     It is fast but prone to stability problems.</span>
+<span class="Comment">     This strategy was first proposed by Schnorr and Euchner</span>
+<span class="Comment">     [C. P. Schnorr and M. Euchner, Proc. Fundamentals of Computation Theory, </span>
+<span class="Comment">     LNCS 529, pp. 68-85, 1991].  </span>
+<span class="Comment">     The version implemented here is substantially different, improving</span>
+<span class="Comment">     both stability and performance.</span>
+
+<span class="Comment">  -- Givens Orthogonalization.</span>
+<span class="Comment">     This is a bit slower, but generally much more stable,</span>
+<span class="Comment">     and is really the preferred orthogonalization strategy.</span>
+<span class="Comment">     For a nice description of this, see Chapter 5 of  </span>
+<span class="Comment">     [G. Golub and C. van Loan, Matrix Computations, 3rd edition,</span>
+<span class="Comment">     Johns Hopkins Univ. Press, 1996].</span>
+
+
+<span class="Comment">*** Reduction Condition:</span>
+
+<span class="Comment">  -- LLL: the classical LLL reduction condition.</span>
+
+<span class="Comment">  -- BKZ: Block Korkin-Zolotarev reduction.</span>
+<span class="Comment">     This is slower, but yields a higher-quality basis,</span>
+<span class="Comment">     i.e., one with shorter vectors.</span>
+<span class="Comment">     See the Schnorr-Euchner paper for a description of this.</span>
+<span class="Comment">     This basically generalizes the LLL reduction condition</span>
+<span class="Comment">     from blocks of size 2 to blocks of larger size.</span>
+
+
+<span class="Comment">************* Calling Syntax for LLL routines ***************</span>
+
+<span class="Comment">long </span>
+<span class="Comment">[G_]LLL_{FP,QP,XD,RR} (mat_ZZ&amp; B, [ mat_ZZ&amp; U, ] double delta = 0.99, </span>
+<span class="Comment">                       long deep = 0, LLLCheckFct check = 0, long verbose = 0);</span>
+
+<span class="Comment">* The [ ... ] notation indicates something optional,</span>
+<span class="Comment">  and the { ... } indicates something that is chosen from</span>
+<span class="Comment">  among several alternatives.</span>
+
+<span class="Comment">* The return value is the rank of B (but see below if check != 0).</span>
+
+<span class="Comment">* The optional prefix G_ indicates that Givens rotations are to be used;</span>
+<span class="Comment">  otherwise, classical Gramm-Schmidt is used.</span>
+
+<span class="Comment">* The choice FP, QP, XD, RR determines the precision used.</span>
+
+<span class="Comment">* If the optional parameter U is given, then U is computed</span>
+<span class="Comment">  as the transition matrix:</span>
+
+<span class="Comment">     U * old_B = new_B</span>
+
+<span class="Comment">* The optional argument &quot;delta&quot; is the reduction parameter, and may</span>
+<span class="Comment">  be set so that 0.50 &lt;= delta &lt; 1.  Setting it close to 1 yields</span>
+<span class="Comment">  shorter vectors, and also improves the stability, but increases the</span>
+<span class="Comment">  running time.  Recommended value: delta = 0.99.</span>
+
+<span class="Comment">* The optional parameter &quot;deep&quot; can be set to any positive integer,</span>
+<span class="Comment">  which allows &quot;deep insertions&quot; of row k into row i, provided i &lt;=</span>
+<span class="Comment">  deep or k-i &lt;= deep.  Larger values of deep will usually yield</span>
+<span class="Comment">  shorter vectors, but the running increases exponentially.  </span>
+
+<span class="Comment">  NOTE: use of &quot;deep&quot; is obsolete, and has been &quot;deprecated&quot;.</span>
+<span class="Comment">  It is recommended to use BKZ_FP to achieve higher-quality reductions.</span>
+<span class="Comment">  Moreover, the Givens versions do not support &quot;deep&quot;, and setting</span>
+<span class="Comment">  deep != 0 will raise an error in this case.</span>
+
+<span class="Comment">* The optional parameter &quot;check&quot; is a function that is invoked after</span>
+<span class="Comment">  each size reduction with the current row as an argument.  If this</span>
+<span class="Comment">  function returns a non-zero value, the LLL procedure is immediately</span>
+<span class="Comment">  terminated.  Note that it is possible that some linear dependencies</span>
+<span class="Comment">  remain undiscovered, so that the calculated rank value is in fact</span>
+<span class="Comment">  too large.  In any case, zero rows discovered by the algorithm</span>
+<span class="Comment">  will be placed at the beginning, as usual.</span>
+
+<span class="Comment">  The check argument (if not zero) should be a routine taking</span>
+<span class="Comment">  a const vec_ZZ&amp; as an argument and return value of type long.</span>
+<span class="Comment">  LLLCheckFct is defined via a typedef as:</span>
+
+<span class="Comment">     typedef long (*LLLCheckFct)(const vec_ZZ&amp;);</span>
+
+<span class="Comment">  See the file subset.cpp for an example of the use of this feature.</span>
+
+<span class="Comment">* The optional parameter &quot;verbose&quot; can be set to see all kinds of fun</span>
+<span class="Comment">  things printed while the routine is executing.  A status report is</span>
+<span class="Comment">  printed every once in a while, and the current basis is optionally</span>
+<span class="Comment">  dumped to a file.  The behavior can be controlled with these global</span>
+<span class="Comment">  variables:</span>
+
+<span class="Comment">     extern thread_local char *LLLDumpFile;  </span>
+<span class="Comment">     // file to dump basis, 0 =&gt; no dump; </span>
+<span class="Comment">     // initially 0</span>
+
+<span class="Comment">     extern thread_local double LLLStatusInterval; </span>
+<span class="Comment">     // seconds between status reports </span>
+<span class="Comment">     // initially 900s = 15min</span>
+
+<span class="Comment"> </span>
+<span class="Comment">************* Calling Syntax for BKZ routines ***************</span>
+
+<span class="Comment">long </span>
+<span class="Comment">[G_]BKZ_{FP,QP,QP1,XD,RR} (mat_ZZ&amp; B, [ mat_ZZ&amp; U, ] double delta=0.99,</span>
+<span class="Comment">                          long BlockSize=10, long prune=0, </span>
+<span class="Comment">                          LLLCheckFct check = 0, long verbose = 0);</span>
+
+<span class="Comment">These functions are equivalent to the LLL routines above,</span>
+<span class="Comment">except that Block Korkin-Zolotarev reduction is applied.</span>
+<span class="Comment">We describe here only the differences in the calling syntax.</span>
+
+<span class="Comment">* The optional parameter &quot;BlockSize&quot; specifies the size of the blocks</span>
+<span class="Comment">  in the reduction.  High values yield shorter vectors, but the</span>
+<span class="Comment">  running time increases exponentially with BlockSize.</span>
+<span class="Comment">  BlockSize should be between 2 and the number of rows of B.</span>
+
+<span class="Comment">* The optional parameter &quot;prune&quot; can be set to any positive number to</span>
+<span class="Comment">  invoke the Volume Heuristic from [Schnorr and Horner, Eurocrypt</span>
+<span class="Comment">  '95].  This can significantly reduce the running time, and hence</span>
+<span class="Comment">  allow much bigger block size, but the quality of the reduction is</span>
+<span class="Comment">  of course not as good in general.  Higher values of prune mean</span>
+<span class="Comment">  better quality, and slower running time.  </span>
+<span class="Comment">  When prune == 0, pruning is disabled.</span>
+<span class="Comment">  Recommended usage: for BlockSize &gt;= 30, set 10 &lt;= prune &lt;= 15.</span>
+
+<span class="Comment">* The QP1 variant uses quad_float precision to compute Gramm-Schmidt,</span>
+<span class="Comment">  but uses double precision in the search phase of the block reduction</span>
+<span class="Comment">  algorithm.  This seems adequate for most purposes, and is faster</span>
+<span class="Comment">  than QP, which uses quad_float precision uniformly throughout.</span>
+
+
+<span class="Comment">******************** How to choose? *********************</span>
+
+<span class="Comment">I think it is safe to say that nobody really understands</span>
+<span class="Comment">how the LLL algorithm works.  The theoretical analyses are a long way</span>
+<span class="Comment">from describing what &quot;really&quot; happens in practice.  Choosing the best</span>
+<span class="Comment">variant for a certain application ultimately is a matter of trial</span>
+<span class="Comment">and error.</span>
+
+<span class="Comment">The first thing to try is LLL_FP.</span>
+<span class="Comment">It is the fastest of the routines, and is adequate for many applications.</span>
+
+<span class="Comment">If there are precision problems, you will most likely get</span>
+<span class="Comment">a warning message, something like &quot;warning--relaxing reduction&quot;.</span>
+<span class="Comment">If there are overflow problems, you should get an error message</span>
+<span class="Comment">saying that the numbers are too big.</span>
+
+<span class="Comment">If either of these happens, the next thing to try is G_LLL_FP,</span>
+<span class="Comment">which uses the somewhat slower, but more stable, Givens rotations.</span>
+<span class="Comment">This approach also has the nice property that the numbers remain</span>
+<span class="Comment">smaller, so there is less chance of an overflow.</span>
+
+<span class="Comment">If you are still having precision problems with G_LLL_FP,</span>
+<span class="Comment">try LLL_QP or G_LLL_QP, which uses quadratic precision.</span>
+
+<span class="Comment">If you are still having overflow problems, try LLL_XD or G_LLL_XD.</span>
+
+<span class="Comment">I haven't yet come across a case where one *really* needs the</span>
+<span class="Comment">extra precision available in the RR variants.</span>
+
+<span class="Comment">All of the above discussion applies to the BKZ variants as well.</span>
+<span class="Comment">In addition, if you have a matrix with really big entries, you might try </span>
+<span class="Comment">using G_LLL_FP or LLL_XD first to reduce the sizes of the numbers,</span>
+<span class="Comment">before running one of the BKZ variants.</span>
+
+<span class="Comment">Also, one shouldn't rule out using the &quot;all integer&quot; LLL routines.</span>
+<span class="Comment">For some highly structured matrices, this is not necessarily</span>
+<span class="Comment">much worse than some of the floating point versions, and can</span>
+<span class="Comment">under certain circumstances even be better.</span>
+
+
+<span class="Comment">******************** Implementation notes *********************</span>
+
+<span class="Comment">For all the floating point variants, I use a &quot;relaxed&quot; size reduction</span>
+<span class="Comment">condition.  Normally in LLL one makes all |\mu_{i,j}| &lt;= 1/2.</span>
+<span class="Comment">However, this can easily lead to infinite loops in floating point arithemetic.</span>
+<span class="Comment">So I use the condition |\mu_{i,j}| &lt;= 1/2 + fudge, where fudge is </span>
+<span class="Comment">a very small number.  Even with this, one can fall into an infinite loop.</span>
+<span class="Comment">To handle this situation, I added some logic that detects, at quite low cost,</span>
+<span class="Comment">when an infinite loop has been entered.  When that happens, fudge</span>
+<span class="Comment">is replaced by fudge*2, and a warning message &quot;relaxing reduction condition&quot;</span>
+<span class="Comment">is printed.   We may do this relaxation several times.</span>
+<span class="Comment">If fudge gets too big, we give up and abort, except that </span>
+<span class="Comment">LLL_FP and BKZ_FP make one last attempt to recover:  they try to compute the</span>
+<span class="Comment">Gramm-Schmidt coefficients using RR and continue.  As described above,</span>
+<span class="Comment">if you run into these problems, which you'll see in the error/warning</span>
+<span class="Comment">messages, it is more effective to use the QP and/or Givens variants.</span>
+
+<span class="Comment">For the Gramm-Schmidt orthogonalization, lots of &quot;bookeeping&quot; is done</span>
+<span class="Comment">to avoid computing the same thing twice.</span>
+
+<span class="Comment">For the Givens orthogonalization, we cannot do so many bookeeping tricks.</span>
+<span class="Comment">Instead, we &quot;cache&quot; a certain amount of information, which</span>
+<span class="Comment">allows us to avoid computing certain things over and over again.</span>
+
+<span class="Comment">There are many other hacks and tricks to speed things up even further.</span>
+<span class="Comment">For example, if the matrix elements are small enough to fit in</span>
+<span class="Comment">double precision floating point, the algorithms avoid almost</span>
+<span class="Comment">all big integer arithmetic.  This is done in a dynamic, on-line</span>
+<span class="Comment">fashion, so even if the numbers start out big, whenever they</span>
+<span class="Comment">get small, we automatically switch to floating point arithmetic.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                         Other Stuff</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Type">void</span> ComputeGS(<span class="Type">const</span> mat_ZZ&amp; B, mat_RR&amp; mu, vec_RR&amp; c);
+
+<span class="Comment">// Computes Gramm-Schmidt data for B.  Assumes B is an m x n matrix of</span>
+<span class="Comment">// rank m.  Let if { B^*(i) } is the othogonal basis, then c(i) =</span>
+<span class="Comment">// |B^*(i)|^2, and B^*(i) = B(i) - \sum_{j=1}^{i-1} mu(i,j) B^*(j).</span>
+
+<span class="Type">void</span> NearVector(vec_ZZ&amp; w, <span class="Type">const</span> mat_ZZ&amp; B, <span class="Type">const</span> vec_ZZ&amp; a);
+
+<span class="Comment">// Computes a vector w that is an approximation to the closest vector</span>
+<span class="Comment">// in the lattice spanned by B to a, using the &quot;closest plane&quot;</span>
+<span class="Comment">// algorithm from [Babai, Combinatorica 6:1-13, 1986].  B must be a</span>
+<span class="Comment">// square matrix, and it is assumed that B is already LLL or BKZ</span>
+<span class="Comment">// reduced (the better the reduction the better the approximation).</span>
+<span class="Comment">// Note that arithmetic in RR is used with the current value of</span>
+<span class="Comment">// RR::precision().</span>
+
+<span class="Comment">// NOTE: Both of these routines use classical Gramm-Schmidt</span>
+<span class="Comment">// orthogonalization.</span>
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

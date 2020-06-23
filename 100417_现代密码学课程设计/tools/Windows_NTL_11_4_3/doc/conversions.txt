@@ -1,0 +1,186 @@
+CONVERSIONS
+
+notation:
+
+   typedef unsigned int  uint;
+   typedef unsigned long ulong;
+
+
+destination: source
+
+
+int:         int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+             GF2, zz_p, ZZ_p
+
+long:        int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+             GF2, zz_p, ZZ_p
+
+uint:        int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+             GF2, zz_p, ZZ_p
+
+ulong:       int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+             GF2, zz_p, ZZ_p
+
+ZZ:          int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR 
+             GF2, zz_p, ZZ_p
+
+float:       int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+
+double:      int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+
+xdouble:     int, long, uint, ulong, ZZ, float, double, xdouble, RR
+
+quad_float:  int, long, uint, ulong, ZZ, float, double, quad_float, RR
+
+RR:          int, long, uint, ulong, ZZ, float, double, xdouble, quad_float, RR
+
+
+ZZ_p:        long, ZZ, ZZ_p
+
+ZZ_pX:       long, ZZ, ZZ_p; ZZX, ZZ_pX; ZZ_pE; vec_ZZ_p 
+
+zz_p:        long, ZZ, zz_p
+
+zz_pX:       long, ZZ, zz_p; ZZX, zz_pX; zz_pE; vec_zz_p
+
+ZZX:         long, ZZ; ZZX, GF2X, zz_pX, ZZ_pX; vec_ZZ 
+
+GF2:         long, ZZ, GF2
+
+GF2X:        long, ZZ, GF2; ZZX, GF2X; GF2E; vec_GF2
+
+GF2E:        long, ZZ, GF2, GF2E; GF2X
+
+GF2EX:       long, ZZ, GF2, GF2E; ZZX, GF2X, GF2EX; vec_GF2E
+
+ZZ_pE:       long, ZZ, ZZ_p, ZZ_pE; ZZ_pX
+
+ZZ_pEX:      long, ZZ, ZZ_p, ZZ_pE; ZZX, ZZ_pX, ZZ_pEX; vec_ZZ_pE
+
+zz_pE:       long, ZZ, zz_p, zz_pE; zz_pX
+
+zz_pEX:      long, ZZ, zz_p, zz_pE; ZZX, zz_pX, zz_pEX; vec_zz_pE
+
+vec_ZZ:      ZZX
+vec_ZZ_p:    ZZ_pX
+vec_zz_p:    zz_pX
+vec_GF2:     GF2X
+vec_ZZ_pE:   ZZ_pEX
+vec_zz_pE:   zz_pEX
+vec_GF2E:    GF2EX
+
+
+********** NOTES ***********
+
+nomenclature:
+
+  - integral types: int, long, uint, ulong, ZZ
+  - bounded integral types: int, long, uint, ulong
+  - floating point types: float, double, xdouble, quad_float, RR
+
+
+ [1] All conversion operators come in procedural or functional
+     form.  To convert  a  of type S to  x  of type T, you can write
+        conv(x, a);
+     or
+        x = conv<T>(a);
+
+     E.g., conv<int>(a), conv<ZZ>(a), conv< Vec<ZZ_p> >, etc.
+
+     The notation conv<T>(a) was introduced in NTL v6.  Prior to
+     this, the notation to_T(a) was used.  For backard compatibility,
+     the various "to_T" functions have been retained; however, their
+     use is dicouraged.  Also note that new conversions have been 
+     added in v6 for which there is no corresponding "to_T" function:
+     for these, one must use the new "conv<T>" notation.
+
+     Note that conv<T> is implemented as a template function:
+
+        template<class T, class S> T conv(const S& a) 
+        { T x; conv(x, a); return x; }
+
+     Thus, the call conv<T>(a) always resolves to the procedure call
+     conv(x, a).  Modern C++ compilers do a pretty good job implementing
+     the "named return value optimization", so this should not create too
+     any unnecessary temporary objects.
+
+ [2] In addition to the conversions listed, there is a generic conversion
+     from a C-strings (i.e., const char *) to any type T, which is
+     implemented using templates using the input operator >> for type T.
+     So, for example, you can write
+        ZZ x = conv<ZZ>("99999999999999999999999");
+        Vec<ZZ> v;
+        conv(v, "[1 2 3]");
+     If the input fails, the conversion operation will raise an error.
+
+ [3] In addition to the conversions listed, for generic vector types, 
+     a template conversion operator is provided:
+
+        template<class T, class S> 
+        void conv(Vec<T>& x, const Vec<S>& a) {
+           long n = a.length();
+           x.SetLength(n);
+           for (long i = 0; i < n; i++)
+              conv(x[i], a[i]);
+        }
+
+     This provides component-wise conversion.  This, if there is a conversion
+     provided from S to T, then there is automatically a conversion provided
+     from Vec<S> to Vec<T>.
+
+     Note that because of the simple implementation, this input a is not
+     allowed to alias any components of the output x.  However, a and x could 
+     be the same.
+
+     Similarly, for generic matrix types Mat<T>, a template conversion 
+     operator provides component-wise conversion.  Again, the input may not
+     alias the output.
+
+ [4] All conversions from an integral type to a bounded integral type
+     compute the result modulo 2^n, where n is the number of bits of the 
+     destination type:  no overflow occurs.
+ 
+ [5] All floating point to signed integral conversions compute the floor
+     function *exactly*, unless the destination type is int or long
+     and overflow occurs, in which case the result is undefined.
+     An exception: converting an RR x to int or long will always
+     yield floor(x) modulo 2^n, where n is the number of bits
+     in the destination type. 
+
+ [6] Conversions from floating point to unsigned int and unsigned long 
+     are done via conversions to signed long: if the conversion to long
+     overflows, the result is undefined; otherwise, the result
+     is computed modulo 2^n, where n is the number of bits in
+     the destination type.
+ 
+ [7] The ZZ to double conversion routine is very precise:
+     the result is the nearest double, breaking ties using the 
+     "round to even" rule.  Overflow results in +/- Infinity.
+     All this assumes the underlying floating point adheres to
+     the IEEE standard.
+ 
+ [8] All conversions to RR round to the current working precision:
+     even converting an RR to an RR.
+
+ 
+ [9] All conversions from long or ZZ to one of the "mod p" types
+        ZZ_p, ZZ_pX, ZZ_pE, ZZ_pEX,
+        zz_p, zz_pX, zz_pE, zz_pEX,
+        GF2, GF2X, GF2E, GF2EX
+     yield the the residue class modulo p (or 2).
+ 
+[10] All polynomial-to-polynomial conversions apply coefficient-wise
+     conversion.  Note that as a rule, if a conversion S to T
+     is provided, then there is a corresponding conversion from
+     the polynomial ring S[X] to the polynomial ring T[X].
+
+[11] All polynomial/vector conversions simply copy from/to the coefficient
+     vector of the polynomial.
+ 
+[12] The GF2X/ZZ_pX/zz_pX to GF2E/ZZ_pE/zz_pE conversions reduce
+     the given polynomial modulo the current modulus; the reverse
+     conversions yield the standard representative (smallest degree polynomial).
+
+[13] Conversions from GF2, zz_p or ZZ_p to any integral type yeld 
+     the standard representative (least non-negative) of the given residue class.
+ 

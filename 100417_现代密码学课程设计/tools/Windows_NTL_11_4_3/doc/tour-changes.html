@@ -1,0 +1,4007 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Summary of Changes  </title>
+</head>
+
+<center>
+<a href="tour-roadmap.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ack.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Summary of Changes 
+</p>
+</h1>
+
+<p><hr><p>
+<h3>
+2020.01.04: Changes between NTL 11.4.2 and 11.4.3
+</h3>
+
+<ul>
+<li>
+Fixed bug in build logic that prevented compilation
+when not using <tt>gf2x</tt> library.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2019.12.31: Changes between NTL 11.4.1 and 11.4.2
+</h3>
+
+<ul>
+<li>
+Fixed <tt>gf2x</tt> library usage so that it now works with <tt>gf2x-1.3</tt>.
+<li>
+Fixed a bug in <tt>FFT.cpp</tt> that could be triggered
+when compiling in some legacy modes.
+<li>
+Added <tt>KarMul</tt> and <tt>KarSqr</tt> for <tt>ZZ_pX</tt> 
+(declared in <tt>ZZX.h</tt> and implemented
+in <tt>ZZX.cpp</tt>).
+These are <i>not</i> a part of the documented interface.
+<li>
+A few other minor internal modifications.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2019.10.08: Changes between NTL 11.4.0 and 11.4.1
+</h3>
+
+<ul>
+<li>
+Fixed bug in new <tt>NTL_EXEC_DIVIDE</tt> that 
+could manifest itself when <tt>NTL_THREAD_BOOST=off</tt>.
+Existing code that does not explicitly use this feature
+should not be affected by this bug.
+<li>
+Fixed some namespace visibility issues in the TLS hack macros.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2019.09.24: Changes between NTL 11.3.4 and 11.4.0
+</h3>
+
+<ul>
+<li>
+The Schoenhage-Strassen FFT for both <tt>ZZ_pX</tt>
+and <tt>ZZX</tt> is now fully "thread boosted".
+Here is a snapshot of performance, based on 
+multiplying two polynomials of degree less than 8000
+with 8000-bit coefficients.
+For <tt>ZZ_pX</tt>:
+<pre>
+    # threads   time (ms)   effectiveness
+    1           606   
+    2           310         97%
+    4           168         90%
+    8           103         74%
+</pre>
+For <tt>ZZX</tt>:
+<pre>
+    # threads   time (ms)   effectiveness
+    1           461 
+    2           247         93%
+    4           144         80%
+    8            96         60%
+</pre>
+
+<p> <li>
+Introduced new tools for applying thread pools to divide and conquer 
+algorithms.
+See <tt>NTL_EXEC_DIVIDE</tt> in 
+<a href="BasicThreadPool.cpp.html">BasicThreadPool.txt</a>.
+
+<li>
+Fixed a few other minor issues.
+
+</ul>
+
+
+
+<p><hr><p>
+<h3>
+2019.09.07: Changes between NTL 11.3.3 and 11.3.4
+</h3>
+
+<ul>
+<li>
+Changed NTL's build system so that if <tt>NTL_THREADS=on</tt>
+(which is the default) and <tt>SHARED=on</tt> 
+(which is not the default), NTL's makefile will now pass
+<tt>-lpthread</tt> to <tt>libtool</tt> when it builds the library.
+On most platforms, this should allow users to forgo passing 
+the <tt>-pthread</tt> option to their compiler when linking.
+
+<li>
+Made the build system's check of correct multithreading behavior
+a bit more robust.
+</ul>
+
+<p><hr><p>
+<h3>
+2019.09.02: Changes between NTL 11.3.2 and 11.3.3
+</h3>
+
+<ul>
+<li>
+Changed "TLS hack" implementation to use fewer pthread keys
+(I did not realize these were a "scarce resource").
+
+<li>
+Implemented <tt>xdouble</tt> to <tt>double</tt> conversion to be more
+efficient for exponents of large magnitude.
+
+<li>
+Changed some internal interfaces (for <tt>FFTRoundUp</tt>) to
+be simpler and (in rare circumstances) to yield somewhat
+more efficient code.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2018.11.15: Changes between NTL 11.3.1 and 11.3.2
+</h3>
+
+<ul>
+<li>
+Fixed a somewhat embarrassing performance issue
+in the <tt>PowerMod</tt> function for the <tt>ZZ</tt> class
+(which also impacts the prime testing and generation functions).
+When using GMP, NTL will now call GMP's <tt>mpz_powm</tt>
+function.
+Although GMP does have an <tt>mpn_pown</tt> function,
+it is not documented, and so cannot be used by NTL.
+This means that NTL is now using some <tt>mpz</tt>-level
+functionality, in addition to <tt>mpn</tt>-level functionality.
+<ul>
+<li>
+This leads to a significant speedup (sometimes 2-3x), 
+especially for numbers
+with a small number of limbs.
+<li>
+Thanks to Niek Bouman for helping to sort this out.
+</ul>
+</ul>
+
+<p><hr><p>
+<h3>
+2018.10.20: Changes between NTL 11.3.0 and 11.3.1
+</h3>
+
+<ul>
+<li>
+Fixed a bug that effected <tt>image</tt>, <tt>kernel</tt>,
+and <tt>gauss</tt> routines for <tt>Mat&lt;zz_p&gt;</tt>.
+These routines did not behave correctly when the
+input matrix was zero.
+Also improved the <tt>mat_lzz_pTest</tt> program. 
+</ul>
+
+
+<p><hr><p>
+<h3>
+2018.08.17: Changes between NTL 11.2.1 and 11.3.0
+</h3>
+
+<ul>
+<li>
+<b>Implemented an AVX-based small-prime FFT</b> (which works with
+both AVX2 and AVX512)
+<ul>
+<li>
+This can give a 2-3x speedup for the FFT.
+<li>
+However, it is not enabled by default, because it reduces
+that small-prime size bound from 60 bits to 50 bits,
+and may slow down certain computations.
+<li>
+The reasons for this unfortunate slowdown are that some CRT-based computations
+may slow down because of the smaller prime size, and because
+Intel CPUs may slow themselves down when executing AVX 
+instructions.
+<li>
+To enable this feature, configure with <tt>NTL_ENABLE_AVX_FFT=on</tt>.
+<li>
+Here are some running times on a Skylake Xeon machine
+(<tt>Intel(R) Xeon(R) Gold 6132 CPU @ 2.60GHz</tt>).
+For various values of <i>n</i>,
+we measure the time to compute <i>a<sup>e</sup>&nbsp;</i>mod<i>&nbsp;f</i>,
+where <i>f</i> is a random monic polynomial of degree <i>n</i>
+over <i>Z<sub>17</sub></i>,
+<i>a</i> is a random polynomial of degree less than <i>n</i>,
+and <i>e=2<sup>n</sup>-1</i>.
+<pre>
+   n           1024    2048    4096    8192   16384
+   non-AVX    0.171   0.741   3.192  14.348  60.812
+   AVX512     0.089   0.372   1.648   7.740  35.588
+</pre>
+</ul>
+
+<p>
+<li>
+<b>Implemented AVX512 instruction sequences</b>
+<ul>
+<li>
+This affects <tt>Mat&lt;zz_p&gt;</tt> arithmetic and the small-prime FFT.
+<li>
+Becuause AVX512 instructions can in certain situations
+lead to slower computations (because of CPU "throttling"),
+this feature can be disabled by configuring with
+<tt>NTL_AVOID_AVX512=on</tt>.
+</ul>
+
+<p>
+<li>
+<b>Performance tuned <tt>GF2EX</tt> arithmetic</b>
+<ul>
+<li>
+Tuned crossovers for various algorithms.
+</ul>
+
+<p>
+<li>
+<b>Implemented asymptotocially fast GCD and XGCD for 
+<tt>GF2EX</tt>, <tt>zz_pEX</tt>, and <tt>ZZ_pEX</tt></b>
+<ul>
+<li>
+Some work may still need to be done to fine tune
+the crossovers, but they should be pretty good as is.
+<li>
+Many thanks to 
+<a href="http://personales.unican.es/taberalf/">Luis Felipe Tabera Alonso</a> for porting the code,
+as well as testing and tuning it.
+</ul>
+
+<p>
+<li>
+<b>Other small changes</b>
+<ul>
+<li>
+Restructured <tt>quad_float</tt> implemenation to isolate better
+the parts that are dependent on correct FP rounding.
+<li>
+Standardized vector growth rate to 1.5 via the function <tt>_ntl_vec_grow</tt>.
+<li>
+Got rid of most uses of <tt>__restrict</tt> in <tt>mat_lzz_p.cpp</tt>,
+some of which were technically UB.
+<li>
+Got rid of some uses of <tt>#warning</tt>, which are not portable.
+</ul>
+
+</ul>
+
+<p><hr><p>
+<h3>
+2018.07.15: Changes between NTL 11.2.0 and 11.2.1
+</h3>
+
+<ul>
+<li>
+Fixed an embarrassing bug, introduced in NTL 11.2.0, 
+in which <tt>add(ZZ,ZZ,long)</tt>
+and <tt>sub(ZZ,ZZ,long)</tt> would give incorrect result
+if third argument was zero.
+<li>
+Fixed incorrect libtool version number in NTL 11.2.0.
+</ul>
+
+<p><hr><p>
+<h3>
+2018.07.07: Changes between NTL 11.1.0 and 11.2.0
+</h3>
+
+<ul>
+<li>
+<b>Complete re-write of the
+Schoenhage-Strassen FFT for <tt>ZZX</tt> arithmetic.</b>
+
+<ul>
+<li>
+Implementation of "truncated" FFT 
+<li>
+Implementaion of "sqrt 2" trick
+<li>
+More efficient implementation of low-level butterfly operations
+<li>
+Here is some timing data comparing <tt>ZZX</tt> multiplication times
+of NTL 11.0 and 11.2.
+The entries are the ratio of the  11.0-time over the 11.2-time (so
+the bigger the number, the bigger the improvement).
+The rows are labeled by the bit-length <i>k</i> of the coefficient,
+the column by the degree bound <i>n</i>.
+Unlabeled columns represent degree bounds half-way between the labeled
+ones.
+
+
+<p>
+
+<img src="zmulrat.jpg" border="0" style="display: block; width: 60%; height: auto;">
+
+<p>
+<li>
+For multiplication in <tt>ZZX</tt>, NTL and 
+<a href="http://www.flintlib.org">FLINT</a>
+now have comparable performance across a wide range
+of parameter sizes, with NTL being 2x faster for some parameters,
+and FLITNt being 1.5x faster in others.
+Here is a chart showing the ratio of FLINT time
+over NTL time (so the bigger the number, the faster NTL is relative to FLINT)
+<p>
+
+<img src="flintrat.jpg" border="0" style="display: block; width: 60%; height: auto;">
+
+<p>
+<li>
+See also this report on 
+<a href="http://www.shoup.net/ntl/benchmarks.pdf">NTL vs FLINT</a>
+for detailed benchmarks that compare the performance NTL and FLINT
+on a number of operations and parameter settings.
+
+<li>
+Future plans for NTL's Schoenhage-Strassen code:
+<ul>
+<li>
+Implement something like Bailey's 4-step variant
+(which should yield better cache behavior)
+<li>
+Thread boosting (built on top of the 4-step variant)
+</ul>
+</ul>
+
+<li>
+Some fine tuning of the new small-prime 
+truncated-FFT implementation introduced in version 11.0.
+<li>
+Fixed obscure bug in new small-prime FFT code: this only affects
+users who call low-level, undocumented FFT routines 
+on transforms of size 2, so it is unlikely to have affected
+any real code.
+
+<li>
+Performance improvements to <tt>ZZ+long</tt> and <tt>ZZ-long</tt>
+routines (and by extension <tt>ZZ+=long</tt>, <tt>ZZ-=long</tt>, 
+<tt>ZZ++</tt>, and <tt>ZZ--</tt>)
+
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2018.06.07: Changes between NTL 11.0.0 and 11.1.0
+</h3>
+
+<ul>
+<li>
+<b>Complete re-write of the low-level "small-prime" FFT (a.k.a., NTT).</b>
+
+<ul>
+<li> This implements a "truncated" FFT, which can speed up
+polynomial multiplication by a factor of two, and which 
+mainly eliminates "jumps" in the running time at powers of two.
+The new FFT routines are in fact a bit faster even at powers of two.
+
+<li> Some low-level interfaces have changed, but these are 
+all <i>undocumented</i>, so should not cause
+any problems for clients that don't inappropriately 
+use such interfaces.
+
+
+<li>
+Here is some timing data comparing the new (truncated) FFT to 
+the old (plain) FFT. <i>x</i>-axis is degree bound, 
+<i>y</i>-axis is time (in seconds), shown on a log/log scale.
+This is the time to multiply two polynomials modulo
+a single-precision "FFT" prime (60 bits).
+
+<p>
+
+<img src="TFT-time.jpg"  border="0" style="display: block; width: 40%; height: auto;">
+
+</ul>
+
+<p>
+<li>
+<b>Improved performance of ZZ mul and sqr on small inputs</b>
+<ul>
+<li>mul speedup: 1 limb: 2.5x; 2 limbs: 1.4x; 3 limbs: 1.3x.
+<li>NTL now makes explicit calls to <tt>mpn_sqr</tt> and 
+requires GMP version 5.0 or later.
+</ul>
+
+<p>
+<li>
+<b>Other changes:</b>
+<ul>
+<li>
+Changed header files to make Windows installation more reliable,
+especially for IDE's like Code Blocks
+
+<li>
+Added documentation for the <tt>GCD</tt> routine in the <tt>ZZ</tt> module
+
+<li>
+Fixed a bit of UB in the <tt>lip.h</tt> interface  (<tt>_ntl_gbigint_body</tt>)
+</ul>
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2018.04.07: Changes between NTL 10.5.0 and 11.0.0
+</h3>
+
+<ul>
+<li>
+<b>Updated the configuration script:</b>
+<ul>
+<li>
+It does some basic auto-detection of the compiler, default language
+standard, and hardware platform.
+<li>
+Using compiler information, it sets compiler flags
+affecting floating point more intelligently.
+Note also that the configuration and build scripts ensure
+that floating point closely adheres to the IEEE standard,
+and that the compiler does not perform any re-association.
+<li>
+Using the default language standard information, it sets 
+the flags affecting language standards  more intelligently.
+<li>
+Using the hardware platform information, 
+it sets the TUNE flag more intelligently
+(in particular, on x86 platforms, the defaults should work just fine).
+<li>
+One now has to run <tt>./configure</tt> to generate 
+a make file,
+as the distribution no longer includes a default make file.
+<li>
+Running <tt>make clobber</tt> is no longer of much use,
+as the make file will call it automatically if you re-configure.
+<li>
+There is now a flag <tt>NTL_TLS_HACK</tt> that is automatically set
+by the configuration script.
+This flag controls how TLS (thread local storage) is implemented:
+either using pthread routines with <tt>__thread</tt> 
+or using only <tt>thread_local</tt>.
+This flag replaces the <tt>NTL_DISABLE_TLS_HACK</tt>
+and <tt>NTL_ENABLE_TLS_HACK</tt> flags, which had to be set manually.
+<li>
+Added a flag <tt>NTL_DISABLE_MOVE_ASSIGN</tt>, 
+which is on by default,
+and which prevents move assignment operators for
+<tt>Vec&lt;T&gt;</tt> and
+<tt>Mat&lt;T&gt;</tt>. 
+This disables move assignment
+for many other classes, including all of the polynomial classes.
+Move assignment can break backward compatibility, as it may
+invalidate pointers into the destination vector.
+Move constructors are not affected.
+
+<li>
+Added a flag <tt>NTL_DISABLE_MOVE</tt>, which is off by default.
+This disables <i>all</i> move constructors and assignment operators.
+It is doubtful that this will ever be needed, 
+except for really weird client code.
+
+<li>
+Added a check in the the build script to ensure that a thread-safe version of
+the <tt>gf2x</tt> library is used (if necessary).
+
+</ul>
+
+<p>
+<li>
+<b>Updated some default configuration values:</b>
+<ul>
+<li>
+Made <tt>NTL_STD_CXX11=on</tt> the default.
+<li>
+Made <tt>NTL_THREADS=on</tt> and <tt>NTL_THREAD_BOOST=on</tt>
+the default.
+So now, by default, NTL is thread safe and exploits
+multiple cores to speed up many operations,
+when possible.
+To get these speedups, you just have to call <tt>SetNumThreads</tt>.
+See <a href="BasicThreadPool.cpp.html">BasicThreadPool.txt</a>
+for more details on thread boosting.
+<li>
+Made <tt>NTL_SAFE_VECTORS=on</tt> the default.
+This makes the use of NTL's vectors much safer,
+since they do not (by default) rely on 
+the "relocatability" of the component type.
+This mode of operation has also been modified from
+previous versions so that it is more backward
+compatible (in particular, if the component 
+type does not have a usable copy or move constructor,
+it can still work without compile-time errors).
+See <a href="vector.cpp.html">vector.txt</a>
+for more details.
+
+<ul>
+<li>
+All of the above new default settings require <tt>C++11</tt> features.
+The configuration script will include additional compiler flags,
+such as <tt>-std=c++11</tt>,
+to ensure that these features are available.
+In addition, the <tt>NTL_THREADS=on</tt> and <tt>NTL_THREAD_BOOST=on</tt>
+settings generally require that the <tt>-pthread</tt>
+flag be passed to the compiler (at least on for GCC and GCC-like 
+compilers).
+This means that to compile programs using NTL,
+you may have to pass the flags  <tt>-std=c++11</tt>
+and  <tt>-pthread</tt> to your compiler (although,
+GCC version 6 and later do not require the  <tt>-std=c++11</tt>,
+since the default is <tt>C++14</tt> for these compilers).
+
+<li>
+If you really want to revert to the old default settings,
+run <tt>./configure</tt> with
+<pre>
+   NTL_STD_CXX11=off NTL_THREADS=off NTL_SAFE_VECTORS=off
+</pre>
+</ul>
+
+<li>
+Made <tt>NTL_CLEAN_PTR=on</tt> the default.
+This has no significant impact on performance,
+and avoids undefined behavior.
+
+<li>
+Made <tt>NTL_NO_INIT_TRANS=on</tt> the default. 
+This means that functions returning class objects
+now rely exclusively on the "named return value optimization".
+Many years ago, one could not rely on this optimization,
+but nowadays, this optimization is essentially universal.
+
+</ul>
+
+<p>
+<li>
+<b>Performance improvements:</b>
+<ul>
+<li>
+Thread boosted all cubic-time operations in 
+<tt>mat_ZZ_pE</tt>,
+<tt>mat_lzz_pE</tt>, 
+and
+<tt>mat_GF2E</tt>. 
+This includes:
+matrix multiplication, inversion, determinant,
+kernel, image, and solving linear systems.
+
+<li>
+Thread boosted <tt>RandomPrime</tt>, <tt>GenPrime</tt>,
+and <tt>GenGermainPrime</tt>.
+Care has been taken so that
+on a given platform,
+you will always get the same prime if you run the algorithm
+with the same <tt>RandomStream</tt>. In particular, even though
+these routines are thread boosted, their behavior is independent
+of the number of available threads and any indeterminacy
+arising from concurrent computation.
+Also, care has been taken to ensure that the new algorithms
+are no slower than the old ones in a single-threaded environment.
+
+</ul>
+
+<p>
+<li>
+<b>New functionality:</b>
+<ul>
+<li>
+Added a new function <tt>GetWallTime</tt>.
+See <a href="tools.cpp.html">tools.txt</a> for details.
+<li>
+Added a new function <tt>VectorRandomWord</tt>.
+See <a href="ZZ.cpp.html">ZZ.txt</a> for details.
+<li>
+Added support for true variadic templates in various smart pointer
+routines.
+See <a href="SmartPtr.cpp.html">SmartPtr.txt</a> for details.
+</ul>
+
+<p>
+<li>
+<b>Fixes and improvements to the Windows distribution:</b>
+<ul>
+<li>
+The Windows distribution has the new default settings as described above.
+In particular, the new distribution is thread safe
+and thread boosted by default.
+<li>
+The distribution has been fixed so that certain linker errors
+no longer arise.
+<li>
+If the compiler is <tt>MSVC++</tt>, use of a <tt>long long</tt> type is
+enabled in certain settings for better performance.
+<li>
+Some basic testing was done using <tt>MSVC++</tt> 2017 to ensure
+that the library works with the new default settings.
+</ul>
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2017.07.07: Changes between NTL 10.4.0 and 10.5.0
+</h3>
+
+<ul>
+<li>
+Added uniform conversions from <tt>char*</tt> and <tt>const char*</tt>,
+which use whatever stream input operator <tt>&gt;&gt;</tt> applies.
+<ul>
+<li>
+For example, you can write <tt>conv(x, "...")</tt>
+or <tt>x = conv&lt;T&gt;("...")</tt>
+for <tt>x</tt> of any type <tt>T</tt>.
+<li>
+The code is written using templates in such a way
+that a second argument of <tt>0</tt> or <tt>nullptr</tt>
+will not match. 
+
+<li>
+See <a href="conversions.txt">conversions.txt</a> for details.
+</ul>
+
+<li>
+Changed behavior of matrix input: non rectctanglar matrices
+set the fail bit on the stream, rather than raising an error
+
+<li>
+Fixed a benign error on make check.
+
+</ul>
+
+<p><hr><p>
+<h3>
+2017.06.19: Changes between NTL 10.3.0 and 10.4.0
+</h3>
+
+<ul>
+<li>
+<b>Faster linear algebra over <tt>ZZ_p</tt>.</b>
+Rewrote <tt>mat_ZZ_p</tt> routines 
+<tt>inv</tt>, <tt>solve</tt>, <tt>determinant</tt>, 
+<tt>gauss</tt>, and <tt>kernel</tt>
+to be thread boosted (and <tt>inv</tt> was more extensvely rewritten,
+so it's a bit faster even without multi-threading.
+<ul>
+<li> 
+I would still like to write reductions to matrix multiplication
+for many of these routines.
+</ul>
+
+<p>
+<li>
+<b>Faster pseudo-random number generation.</b>
+Made the pseudo-random number generator (based on "Salsa20")
+faster on machines that support SSE3, and even faster
+on machines that support AVX2 (speedup with AVX2 is about 4.6x).
+<ul>
+<li>
+Hardware support is automatically detected at build time.
+<li>
+I had to downgrade the exception guarantees 
+for <tt>RandomStream</tt> methods 
+from "nothrow" to "strong ES".
+</ul>
+
+<p>
+<li>
+<b>C++11 support / "move" semantics.</b>
+Added configuration flags <tt>NTL_STD_CXX11</tt> and 
+<tt>NTL_STD_CXX14</tt>.
+<ul>
+<li>
+Setting these flags will allow NTL to exploit certain language
+features guaranteed by the standard.
+<li>
+The <tt>NTL_STD_CXX11</tt> will automatically be set
+by setting other configuration flags that require <tt>C++11</tt>
+support.
+<li>
+If the <tt>NTL_STD_CXX11</tt> flag is set, then NTL will declare
+"move" constructors and assigment operators for most of the
+major NTL classes.
+to the extent possible, these are declared "noexcept".
+<ul>
+<small>
+<li>
+NOTE: by <i>not</i> enabling exceptions with <tt>NTL_EXCEPTIONS=on</tt>,
+you get more "noexcept" move constructors, which can yield
+better performance.
+</small>
+</ul>
+</ul>
+
+<p>
+<li>
+<b>Safe vector mode.</b>
+Added a new "safe vector" mode, which is enabled with
+<tt>NTL_SAFE_VECTORS=on</tt>.
+In this mode,
+NTL relaxes the "relocatability"
+requirement for NTL vector types. 
+While this flag is currently "off" by default,
+I expect that at some point in the next
+couple of years, it will be "on" by default.  
+<ul>
+<li>
+More details available <a href="vector.cpp.html">here</a>.
+<li>
+This feature requires <tt>C++11</tt>.
+</ul>
+
+<p>
+<li>
+<b>Iterators and support for "range based for loops".</b>
+Added a "proxy iterator" to the <tt>Vec&lt;GF2&gt;</tt> class.
+With this, now all the  <tt>Vec&lt;T&gt;</tt> classes
+have iterators, which means that you can use the <tt>C++11</tt>
+syntax for "range based for loops".
+The safest way to write these for loops in general is as:
+<pre>
+  for (auto&amp;&amp; item : vec) { ... }
+</pre>
+
+<p>
+<li>
+<b>Convenience routines for random vectors and matrices.</b>
+<ul>
+<li>
+Added convenience routines <tt>random(vec, n)</tt> to build
+a random vector <tt>vec</tt> of length <tt>n</tt>.
+Available for vectors over 
+<tt>GF2</tt>,
+<tt>GF2E</tt>,
+<tt>zz_p</tt>,
+<tt>zz_pE</tt>,
+<tt>ZZ_p</tt>,
+and
+<tt>ZZ_pE</tt>.
+
+<li>
+Added convenience routines <tt>random(mat, n, m)</tt> to build
+a random <tt>n</tt>-by-</tt>m</tt> matrix <tt>mat</tt>.
+Available for matrices over 
+<tt>GF2</tt>,
+<tt>GF2E</tt>,
+<tt>zz_p</tt>,
+<tt>zz_pE</tt>,
+<tt>ZZ_p</tt>,
+and
+<tt>ZZ_pE</tt>.
+</ul>
+
+
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2016.11.18: Changes between NTL 10.2.0 and 10.3.0
+</h3>
+
+<ul>
+<li>
+Implementation of a multi-modular strategy for
+matrix multiplication over <tt>ZZ_p</tt>.
+Here are some benchmarks that compare the new strategy 
+to the old (naive) one.
+Here, we consider <i>n</i>-by-<i>n</i> matrices
+modulo an <i>n</i>-bit prime.
+<ul>
+<li>
+<i>n</i>=128, speedup=6.8x
+<li>
+<i>n</i>=256, speedup=8.6x
+<li>
+<i>n</i>=512, speedup=9.3x
+<li>
+<i>n</i>=1024, speedup=18x
+<li>
+<i>n</i>=2048, speedup=37x
+</ul>
+
+<p>
+
+I also compared NTL's new <tt>mat_ZZ_p</tt> multiplication
+to FLINT's <tt>fmpz_mat</tt>
+multiplication. 
+The latter also uses a multi-modular strategy.
+For <i>n</i>=128,256,512,1024 as above, NTL's code is between
+2.7 and 3.1 times faster than FLINT's
+(and we did not count the time it would take to reduce
+the entries mod <i>p</i> for the FLINT code).
+
+<p>
+Part of this may be due to the AVX-enhanced small-prime matrix
+multiplication code used by NTL,
+and part may be due to better CRT code.
+
+<p>
+<li>
+I also instrumented both the plain and multi-modular 
+matrix multiplication for <tt>ZZ_p</tt> so that they are both "thread boosted"
+(i.e., will automatcally exploit multiple cores when possible).
+
+<p>
+<li>
+As an initial application of this faster matrix multiplication,
+I implemented a new version of Brent/Kung modular composition for <tt>ZZ_pX</tt>, 
+which is now between 2 and 5 times faster than the old one
+(depending on parameters).
+This is done with a new class called <tt>ZZ_pXNewArgument</tt>,
+which supersedes <tt>ZZ_pXArgument</tt> (retained for compatibility).
+This also makes the <tt>CanZass</tt> factoring algorithm
+for <tt>ZZ_pX</tt> faster (sometimes by a factor of almost 2, depending
+on parameters).
+It also makes <tt>CanZass</tt> more memory intensive
+(but while the overall memory usage increases,
+the memory access pattern is fairly cache friendly).
+
+<p>
+<li>
+I would like to see if this faster matrix multiplication
+can be used to get faster linear algebra (determinants, inverses,
+more general Gaussian elimination) via reduction to matrix multiplication.
+If anyone wants to volunteer to work on this, please let me know.
+Presumably, the FLINT <tt>nmod_mat</tt> code could be repurposed
+for this.
+I won't have time to work on this for a few months, but would be
+glad to discuss ideas with anyone who wanted to do the work.
+Note that the "plain" versions of these routines also need
+some work.
+
+<p>
+<li>
+I also added <tt>move</tt> methods to the <tt>Vec</tt> and <tt>Mat</tt>
+classes, and made a slight tweak to the <tt>Lazy</tt> class.
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2016.11.10: Changes between NTL 10.1.0 and 10.2.0
+</h3>
+
+<ul>
+<li>
+Added "thread boosting" to the <tt>ZZX</tt>
+multiplication routine.
+This can significantly increase performance on
+multicore machines (you must configure with <tt>NTL_THREAD_BOOST=on</tt>
+and call <tt>SetNumThreads</tt>).
+
+<li>
+Marginally improved performance and crossovers for 
+<tt>mat_zz_p</tt> multipliplication.
+
+<li>
+Marginally improved performance for
+<tt>mat_ZZ_p</tt> multipliplication (but much bigger 
+improvements hopefully coming soon).
+
+<li>
+Retired the <tt>zz_pXAltArgument</tt> class,
+which was used for modular composition in <tt>zz_pX</tt>.
+While this has been in  in the documented interface
+for a few months,
+it was flagged as being provisional and subject to 
+change.
+Well, it is being changed: it is being eliminated.
+
+<li>
+In place of <tt>zz_pXAltArgument</tt>, 
+I've added a class <tt>zz_pXNewArgument</tt>.
+For the time being, this will also be provisional and
+subject to change.
+With this class, all the code complexity for improved
+performance of modular composition is relegated to
+<tt>mat_zz_p</tt> multiplication.
+Also, all modular composition in <tt>zz_pX</tt> in NTL 
+goes through this new class.
+The old <tt>zz_pXArgument</tt> remains just for backward compatibility.
+
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.10.14: Changes between NTL 10.0.0 and 10.1.0
+</h3>
+
+<ul>
+<li><b>Better building</b>
+
+<ul>
+<li>
+Thanks to the encouragement and guidance of the Sage
+developers, I've made some improvements to the 
+build process 
+(this applies only to the Unix distribution -- Windows users
+still have to keep on pointing and clicking).
+
+<li>
+The build process now configures <tt>libtool</tt>
+on the fly, rather than relying on an existing <tt>libtool</tt>
+program.
+This should make builing dynamic libraries easier.
+Also added a configuration variable <tt>LIBTOOL_LINK_FLAGS</tt>,
+mainly to help with Cygwin builds.
+
+<li>
+Added a <tt>TUNE</tt> switch to the configure script.
+<ul>
+<li>
+<tt>TUNE=auto</tt> (the default) runs the performance-tuning wizard
+(as before).
+<li>
+<tt>TUNE=x86</tt> skips the wizard and sets all performance-related
+flags so that they are geared towards (a not too old) <tt>x86</tt>
+machine.
+<li>
+<tt>TUNE=generic</tt> skips the wizard and sets all performance-related
+flags so that they should not be too bad on any fairly modern machine
+(PowerPC, ARM).
+</ul>
+Additional tuning values may be set in the future.
+The source files have also been adjusted to accomodate this feature:
+if a performance option requires some hardware/software feature
+that is not available, the performance option is quietly ignored. 
+
+<li>
+Fixed the makefile so that recursive invocations
+call <tt>$(MAKE)</tt> rather than <tt>make</tt>.
+
+<li>
+With these improvements, then on the 32-core Haswell server I've
+been using lately, if I type
+<pre>
+   % configure TUNE=x86
+   % make -j20
+</pre>
+then the whole business of configuring and building NTL
+takes less than a minute <tt>:-)</tt>.
+
+
+<li>
+There are a number of other small improvements to the
+build process. 
+
+<li>
+<a href="tour-unix.html">[See here]</a> for more details
+(this documentation is now hopefully more informative as well).
+
+</ul>
+
+<p>
+<li><b>Vec tweaks</b>
+<ul>
+<li>
+Made some small tweaks to the <tt>Vec</tt> class.
+<li>
+The copy constructor for <tt>Vec&lt;T&gt;</tt>
+no longer requires an assgnment operator for <tt>T</tt>.
+<li>
+Started laying the groundwork for a possible future implementation
+that would do something about about the "relocatabilty" requirement
+for vector element types.
+In theory, this is a very thorny issue, and the current implementation
+is somewhat dangerous.
+In practice, this implementation has served its purpose quite
+well for about 25 years.
+Still, it would be nice to tighten things up a bit,
+without affecting performance.
+<p>
+It would be great to discuss these issues
+with any <tt>C++</tt> experts out there! 
+</ul>
+
+
+</ul>
+
+
+
+<p><hr><p>
+<h3>
+2016.10.08: Changes between NTL 9.11.0 and 10.0.0
+</h3>
+
+<ul>
+<li> <b>New License: LGPLv2.1+</b>
+
+<ul>
+<li>
+With the permission of all relevant contributors,
+NTL is now licensed under 
+LGPLv2.1+ (the Lesser GNU Public License version 2.1 or later).
+
+<li>
+Previously, NTL was licensed under the GPL.
+This new, less restrictive licensing should hopefully increase the 
+impact of NTL.
+</ul>
+
+<p>
+<li> <b>Long integer package restructing</b>
+
+<ul>
+<li>
+I've restructured the long integer package so that the 
+GMP and "classical LIP" modules share much of the same
+code base.
+
+<li>
+This greatly reduces the amount of redundant code,
+which will make maintenance easier moving forward.
+
+<li>
+As a bonus, the classical LIP module is simpler,
+faster, and (finally) thread safe. 
+
+<li>
+As another bonus, the GMP module now is much closer to
+being compatible with "non-empty nails".
+Although it has not been tested in that mode as of yet,
+it may eventually be helpful in the future if I want to replace some
+GMP code with code that exploits AVX-512 IFMA instructions.
+
+<li>
+As a part of this transition, "make check" now includes
+much more extensive "unit testing" of the long integer package.
+
+<li>
+Despite the drastic changes "under the hood",
+this restructuring should not affect at all any 
+NTL client code that relies only on the documented interface,
+including even the ancient legacy interfaces pre-dating NTLv5a
+from 2000.
+</ul>
+
+<p>
+<li> <b>File name restructuring</b>
+
+<ul>
+<li>
+I've renamed all the ".c" files to ".cpp" files in the Unix distribution.
+This seems to be more in line with common practice,
+and should make it easier to work with
+compilers and other software development tools.
+
+
+
+
+</ul>
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.08.22: Changes between NTL 9.10.0 and 9.11.0
+</h3>
+
+<ul>
+<li>
+Improved the effectiveness of the new, faster 
+<tt>ZZ</tt> to <tt>zz_p</tt> conversion
+
+<li>
+Added new routines <tt>VectorConv</tt> 
+for faster bulk conversion from <tt>ZZ</tt> and <tt>long</tt>
+to <tt>zz_p</tt>
+(see <a href="lzz_p.cpp.html">lzz_p.txt</a>)
+<ul>
+<li>
+There are some hidden interfaces which could be more generally useful,
+and I may add these to the documented interface at some point.
+</ul>
+
+<li>
+Added new routines <tt>VectorRandomBnd</tt>
+(see <a href="ZZ.cpp.html">ZZ.txt</a>)
+and <tt>VectorRandom</tt>
+(see <a href="lzz_p.cpp.html">lzz_p.txt</a>)
+for faster bulk random number generation
+<ul>
+<li>
+Again, there are some hidden interfaces which could be more generally useful,
+and I may add these to the documented interface at some point.
+</ul>
+
+
+
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2016.06.21: Changes between NTL 9.9.1 and 9.10.0
+</h3>
+
+<ul>
+<li>
+Fixed a problem in the <i>aligned array</i> logic
+that prevented compilation on MinGW on Windows.
+
+<li>
+Conversions from <tt>ZZ</tt> to <tt>zz_p</tt>
+are now faster, thanks to preconditioning.
+Among other things,
+the CRT-based <tt>ZZX</tt> multiplication code is also
+a bit faster as a result.
+
+<li>
+The <tt>BasicThreadPool</tt> class 
+ now guarantees that 
+  <tt>exec_range</tt> assigns the current thread
+  <tt>first=0</tt>, and <tt>exec_index</tt> assigns
+  the current thread <tt>index=0</tt>.
+This makes it easy for a thread to tell whether of not
+it is the current thread, which can be convienient for
+some applications.
+
+<li>
+Fine tuned the interface for <tt>SmartPtr</tt>
+and <tt>UniquePtr</tt> a bit, including the ability 
+to attach an explicit <i>deleter policy</i>, which
+(among other things) makes it easier to implement the
+PIMPL pattern using these classes.
+Unfortunately, some of these changes introduced some
+minor backward incompatibilities (but I doubt anyone
+will even notice).
+
+<li>
+Introduced a new class <tt>CopiedPtr</tt>, 
+which has a similar interface to <tt>UniquePtr</tt>,
+but which allows copy and assignment.
+This class is meant to replace the <tt>OptionalVal</tt>
+class, whose use is now discouraged.
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.06.02: Changes between NTL 9.9.0 and 9.9.1
+</h3>
+
+<ul>
+<li>
+Fixed a bug in <tt>NTL_EXEC_INDEX</tt> (actually, in 
+<tt>BasicThreadPool::relaxed_exec_index</tt>)
+that would cause an error to be incorrectly raised in some
+situations
+<li>
+Fine tuned some crossover points
+</ul>
+
+<p><hr><p>
+<h3>
+2016.05.30: Changes between NTL 9.8.1 and 9.9.0
+</h3>
+
+<ul>
+<li>
+Added 
+examples on how to use documentation on NTL's thread pools
+and parallel for loops:
+<a href="tour-ex7.html">see here</a>
+<li>
+The build procedure now puts files <tt>config_log.h</tt>
+and <tt>wizard_log.h</tt>
+in NTL's include directory.
+These files contain comments that document what choices were
+made during the build process,
+including the <tt>CXXAUTOFLAGS</tt> value.
+<li>
+Added <tt>elts()</tt> method to <tt>UniqueArray</tt> and <tt>AlignedArray</tt>
+   (for compatibility with <tt>Vec</tt> class)
+
+<li>
+Added <tt>get()</tt> and <tt>release()</tt> methods to <tt>OptionalVal</tt>
+
+<li>
+Made constructors for <tt>PartitionInfo</tt> and <tt>BasicThreadPool</tt> 
+<i>explicit</i>
+
+<li>
+Cleaned up some pointer issues in <tt>mat_lzz_p.c</tt> (mainly academic)
+
+<li>
+Definition of <tt>NTL_TLS_LOCAL_INIT</tt> ensures that var names
+   a local reference, regardless of the implementation
+
+<li>
+Allow <tt>p.move(q)</tt>, where <tt>p</tt> is <tt>a UniquePtr&lt;T&gt;</tt>, 
+<tt>q</tt> is a <tt>UniquePtr&lt;Y&gt;</tt>,
+  and <tt>Y*</tt> converts to <tt>T*</tt>.
+
+<li>
+Introduced <tt>PreconditionedRemainder</tt> class
+for faster reduction of a <tt>ZZ</tt> modulo a fixed long.
+This is intended to make Chinese Remaindering type computations faster
+<ul>
+<li>
+for the time being,
+this is an undocumented feature which may be modified or removed
+in a future release
+</ul>
+
+<li>
+Introduced <tt>ll_type</tt> and related routines which perform
+a restricted set of operations on a long-long-like type.
+It can be implemented via inline asm, and is a cleaner
+interface and sometimes faster.
+On x86-64/gcc platforms, the assembly code version is
+used and gives a modest speed boost.
+For all other platforms (including x86-64 with clang or icc),
+the assembly code is not used.
+I should really dynamically enable the assembly via the performance
+tuning wizard, but I don't do this yet.
+To explicitly disable the assembly code, 
+configure with <tt>NTL_DISABLE_LL_ASM=on</tt>.
+<ul>
+<li>
+for the time being,
+this is an undocumented feature which may be modified or removed
+in a future release
+</ul>
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.04.29: Changes between NTL 9.8.0 and 9.8.1
+</h3>
+
+<ul>
+<li>
+Fixed an annoying issue that could cause a unnecessary
+ambiguities in client code when compiling with <tt>NTL_EXCEPTIONS=on</tt>
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.04.26: Changes between NTL 9.7.1 and 9.8.0
+</h3>
+
+<ul>
+<p> <li>
+<b>Thread safety for the masses!</b>
+
+<ul>
+<li>
+Previous versions of NTL required full <tt>C++11</tt>
+compliance to achieve thread safety 
+<li>
+Unfortunately, many platforms (notably, Mac OSX)
+do not provide the necessary 
+features - in particular, they do not provide full, correct support
+for "thread local storage" (TLS)
+<li>
+This new release (by default) will apply a "TLS hack" 
+that works around this limitation (at least for 
+gcc and gcc-compatible compilers such as clang and icc)
+<ul>
+<li>
+With this "hack", it is only required that gcc's 
+more widely available <tt>__thread</tt>
+storage specifier be implemented, rather than the less widely available
+<tt>thread_local</tt> specifier (and it also makes direct use
+of the <tt>pthread</tt> library)
+<li>
+You can explicitly disable the hack by configuring NTL
+with <tt>NTL_DISABLE_TLS_HACK=on</tt>
+</ul>
+<li>
+This "hack"  has been successfully 
+tested on Linux with gcc 4.8.5 
+and on Mac OSX 10.10 and 10.11 with clang
+<ul>
+<li>
+It should work with any gcc 4.8.x or higher
+<li>
+Many thanks to Justin Walker for pushing this issue and 
+helping with the Mac OSX testing
+</ul>
+</ul>
+
+<li><p>
+Fixed a "pseudo" bug in the test script: <tt>BitMatTest</tt>
+in <tt> make check</tt> was reporting "failure", but this was
+a bug in <tt>BitMatTest</tt>, not in NTL itself.
+
+<li>
+Fixed a real bug in the <tt>ReleaseThreadPool</tt>
+function (although NTL internally does not use this function,
+so only client code that called it directly would be affected).
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2016.04.20: Changes between NTL 9.7.0 and 9.7.1
+</h3>
+
+<ul>
+
+<li>
+Extended the performance improvements in 
+<a href="mat_lzz_p.cpp.html">mat_lzz_p</a>
+to include the <tt>gauss</tt>, <tt>kernel</tt>,
+and <tt>image</tt> routines
+
+<li>
+Generally improved
+performance for all of the <a href="mat_lzz_p.cpp.html">mat_lzz_p</a>,
+including an implementation of Strassen for matrix multiplication.
+
+<li>
+Added the matrix/column vector <tt>solve</tt> routines
+to all other matrix classes (for consistency).
+
+<p>
+<li>
+Fixed a compile-time bug that occured on certain platforms
+(mainly Windows).
+
+<li>
+Made some of the steps in <tt>configure</tt> and <tt>make</tt>
+a bit more quiet (look at <tt>.log</tt> files for outputs).
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.03.12: Changes between NTL 9.6.4 and 9.7.0
+</h3>
+
+<ul>
+
+
+
+<p>
+<li>
+Changes to <a href="mat_lzz_p.cpp.html">mat_lzz_p</a> module:
+<ul>
+<li>
+Improved performance of <tt>mul</tt>, <tt>inv</tt>, <tt>solve</tt>, 
+and <tt>determinant</tt> routines:
+<ul>
+<li>
+more cache friendly
+<li>
+thread boosted
+<li>
+for small p (up to 23 bits), exploits
+AVX and FMA instructions (when available)
+<li>
+depending on many things,
+the new code can be anywhere between
+1.5x and 70x (!) times faster than the old code 
+(part of that speedup up can be attributed to just how
+awful some of the old code was, rather than
+how brilliant the new code is)
+<li>
+on the SandyBridge and Haswell machines I was able to test,
+the new code is comparable in speed
+to 
+<a href=" https://linbox-team.github.io/fflas-ffpack/">FFLAS/FFPACK</a>
+</ul>
+<li>
+Added "relaxed" versions of <tt>inv</tt>, <tt>solve</tt>, and 
+<tt>determinant</tt>,
+which also now work for prime powers, not just primes
+<li>
+Added a new variant of <tt>solve</tt> routine to solve <tt>A*x = b</tt> 
+for column vectors
+</ul>
+
+<p>
+<li>Changes to <a href="BasicThreadPool.cpp.html">BasicThreadPool</a>
+module:
+<ul>
+<li>
+Added <tt>NTL_EXEC_RANGE</tt> and other functionality which makes writing
+"parallel for loops" simple (very similar to OpenMP), 
+and the same source code will work regardless of whether
+threads or thread boosting is enabled.
+
+<li>
+Backward incompatibilities:
+<ul>
+<li>
+<tt>NTLThreadPool</tt> is no longer directly accessible:
+new access functions are provided
+<li>
+Got rid of method <tt>SplitProblems</tt>, and made a more general/abstract
+class <tt>PartitionInfo</tt>
+</ul>
+</ul>
+
+
+<p>
+<li>
+Miscellaneous:
+<ul>
+<li>
+Improved crossover points for <tt>GF2X</tt> division
+
+<li>
+Made access to thread local variables used in NTL faster 
+by using GCC's <tt>__thread</tt> in place of <tt>thread_local</tt>,
+wherever possible
+
+<li>
+Improved performance of <tt>vec_long</tt> to <tt>vec_zz_p</tt> conversion 
+
+<li>
+Made AVX and FMA detection more robust, requiring LP64 
+
+<li>
+Added <tt>InvModStatus</tt> for <tt>long</tt>'s
+
+<li>
+Bumped <tt>FILE_THRESH</tt> to 1e12
+</ul>
+</ul>
+
+<p><hr><p>
+<h3>
+2016.01.30: Changes between NTL 9.6.3 and 9.6.4
+</h3>
+
+<ul>
+<li>
+Streamlined some of the installation scripts,
+so now the "heurstic selection of compiler flags"
+and the "nonstandard feature testing" procedures are more structured
+so as to be easier to extend in the future -- it is beginning to
+act more like a sort of "autoconf".
+<li>
+Fixed a couple of "buglets" in the header files.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2016.01.26: Changes between NTL 9.6.2 and 9.6.3
+</h3>
+
+<ul>
+<li>
+Some changes to the installation procedure:
+<ul>
+<li>
+For the Unix distribution, <tt>NTL_GMP_LIP</tt> is now
+<i>on</i> by default, which means that by default, NTL will use
+GMP.
+<li>
+By default, the configuration script will attempt a
+"native'' build by passing <tt>-march=native</tt>
+as a compiler flag.
+Most modern compilers support this, but the configuration script will
+check to make sure.
+<li>
+The <tt>NTL_PCLMUL</tt> flag (which enables the use of
+Intel's PCLMUL instruction) is now automagically set by the
+Wizard script.
+<li>
+The build script automatically checks for availability of Intel
+<tt>AVX</tt> intrinsics, which may be used to better
+optimize certain code.
+</ul>
+<li>
+A new modular composition implemention for <tt>zz_pX</tt>.
+This makes modular composition up to 3x faster, depending 
+on several factors.
+
+<li>
+Improved performance for polynomial factoring over <tt>zz_pX</tt>
+using <tt>CanZass</tt>,
+using the improved modular composition routine (above)
+and better choice of baby step / giant step parameters.
+This leads to a 1.1x to 1.8x speedup, depending on several factors.
+
+<li>
+Improved robustness of <tt>quad_float</tt> implementation:
+it should now work correctly on platforms that are too
+liberal in their use of FMA instructions.
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2015.11.13: Changes between NTL 9.6.1 and 9.6.2
+</h3>
+
+<ul>
+<li>
+More small tweaks and a new configuration variable:
+<pre>
+NTL_MAXIMIZE_SP_NBITS=off
+
+# Allows for 62-bit single-precision moduli on 64-bit platforms.
+# By default, such moduli are restricted to 60 bits, which
+# usually gives *slightly* better performance across a range of
+# of parameters.
+</pre>
+
+</ul>
+
+<p><hr><p>
+<h3>
+2015.11.13: Changes between NTL 9.6.0 and 9.6.1
+</h3>
+
+<ul>
+<li>
+Streamlined some awkard code in <tt>g_lip_impl.h</tt>. 
+<li>
+Made <tt>QuickTest</tt> a bit quicker.
+<li>
+Fixed some documentation/packaging problems.
+</ul>
+
+<p><hr><p>
+<h3>
+2015.11.10: Changes between NTL 9.5.0 and 9.6.0
+</h3>
+
+<ul>
+<li>
+More performance tuning for <tt>ZZ_pX</tt> arithmetic.
+
+<li>
+Added configuration variable <tt>CXXAUTOFLAGS</tt>,
+which is dynamically (and heuristically) set by the configuration
+script.
+This way, <tt>CXXFLAGS</tt> is not modified by the script.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2015.10.20: Changes between NTL 9.4.0 and 9.5.0
+</h3>
+
+<ul>
+<li>
+Added a new <i>thread boosting</i> feature.
+With this feature, certain code within NTL will use available
+threads to speed up certain computations on a multicore
+machine.
+This feature is enabled by setting <tt>NTL_THREAD_BOOST=on</tt>
+during configuration.
+See <a href="BasicThreadPool.cpp.html">BasicThreadPool.txt</a>
+for more information.
+
+<p>
+This feature is a work in progress.
+Currently, basic <tt>ZZ_pX</tt> arithmetic has been thread boosted.
+More code will be boosted later.
+
+<li>
+A bit more perfomance tuning for <tt>ZZ_pX</tt> arithmetic,
+and better crossovers for <tt>ZZX</tt> multiplcation.
+
+</ul>
+
+<p><hr><p>
+<h3>
+2015.9.22: Changes between NTL 9.3.0 and 9.4.0
+</h3>
+
+<ul>
+<li>
+Performance tuning: <tt>ZZ_pX</tt> and <tt>zz_pX</tt> keep
+getting faster
+
+<li>
+Upgrade to pseudo-random number generation:
+I replaced the underlying PRG with Chacha20 (replacing RC4)
+and the underlying key-derivation function with a function
+based on HMAC-SHA256 (replacing an MD5-based function).
+The new routines are faster and more secure.
+<p>
+I also expanded the PRG interface a bit: 
+<a href="ZZ.cpp.html#prg">see here</a> for details.
+
+<li>
+Bug fixes: fixed a (mostly dormant) bug in the <tt>ZZFromBytes</tt>
+routine (triggered only when <tt>n==0</tt>).
+
+<li>
+Added documentation for classes <tt>RRPush</tt> and
+<tt>RROutputPush</tt>:
+<a href="RR.cpp.html#push">see here</a> for details.
+
+</ul>
+
+
+
+
+<p><hr><p>
+<h3>
+2015.7.9: Changes between NTL 9.2.0 and 9.3.0
+</h3>
+
+<ul>
+<li>
+Fixed a compilation error that arose with <tt>NTL_LEGACY_SP_MULMOD=on</tt>.
+
+<li>
+Added a new call back routine <tt>ErrorMsgCallback</tt>.
+See <a href="tools.cpp.html">tools.txt</a>.
+This is mainly to help with NTL integration withing SAGE.
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2015.5.23: Changes between NTL 9.1.1 and 9.2.0
+</h3>
+
+<ul>
+<li>
+Completed the transition away from floating-point arithmetic
+for the implementation of single-precision modular arithmetic.
+The current implementation should allow 60-bit moduli on
+64-bit platforms that support a 128-bit extended integer
+type (this is the case for current gcc, clang, and icc 
+compilers). 
+
+<p>
+One can still revert to the "classical" (pre-9.0) implementation
+using double-precision arithmetic (which imposes a 50-bit limit),
+or to the "long double" implementation introduced in v9.0 (60-bit limit).
+
+<p>
+Note that one must compile NTL with GMP to get any of these improvements.
+It would have perhaps been better to use GMP's <tt>longlong.h</tt>
+facility instead of relying on compiler support for extended
+integer types.
+However, at the moment, it is a bit inconvenient to use <tt>longlong.h</tt>
+as a freestanding header file.
+This might change in the future.
+
+<p>
+For details, see <a href="ZZ.cpp.html#modarith">here</a>,
+including the comments entitled "Compatibility notes".
+
+<p>
+<i>Programming notes:</i> <tt>MulMod(a, b, n)</tt> is equivalent to
+<tt>mulmod_t ninv = PrepMulMod(n);</tt> <tt>MulMod(a, b, n, ninv)</tt>.
+Compared to the older, floating-point implementation, the 
+relative cost of computing <tt>ninv</tt> is higher in the new regime.
+In a loop where <tt>n</tt> is invariant, the compiler should
+"hoist" the computation of <tt>ninv</tt>, so it is only done once.
+However, it is usually better to precompute and store <tt>ninv</tt>,
+and use the second form of <tt>MulMod</tt>, with <tt>ninv</tt> passed
+as a parameter (NTL does this internally quite consistently).
+The performance of <tt>MulMod(a, b, n, ninv)</tt> is somewhat faster
+in the new implementation.
+Where possible, one should use <tt>MulModPrecon</tt>, which is faster still
+(useful in situations where both <tt>n</tt> and <tt>b</tt> are invariant).
+
+
+
+<p>
+<li>
+A number of general performance improvements.
+
+
+
+</ul>
+
+<p><hr><p>
+<h3>
+2015.5.16:
+Changes between NTL 9.1.0 and 9.1.1
+</h3>
+
+<ul>
+<li>
+Fixed a bug introduced in 9.1.0 that prevented conversions
+between <tt>Vec&lt;GF2&gt;</tt> and <tt>Vec&lt;T&gt;</tt>.
+</ul>
+
+<p><hr><p>
+<h3>
+2015.5.2:
+Changes between NTL 9.0.2 and 9.1.0
+</h3>
+
+<ul>
+<li>
+Added a new configuration switch to enable 
+the <tt>PCLMUL</tt> instruction on x86 machines.
+This can speed up <tt>GF2X</tt> arithmetic significantly
+(by a factor of 4).
+This is enabled by configuring with <tt>NTL_PCLMUL=on</tt>
+(and the configuration 
+script automatically checks if it actually works on your platform).
+<p>
+Note that this is an alternative to building NTL against the <tt>gf2x</tt>
+library (the latter is currently not thread or exception safe).
+<p>
+
+
+<li>
+Performance improvements to <tt>zz_pX</tt> and <tt>Vec&lt;zz_p&gt;</tt>.
+<p>
+
+<li>
+Performance improvements to <tt>ZZX</tt>:
+implemented asymptotically fast CRT code
+for <tt>HomMul</tt> and  more cache-friendly logic.
+This routine is used for polynomials whose degree is
+significantly larger than the bit-length of its coefficients.
+This should make NTL's <tt>ZZX</tt> multiplication faster
+across a broader range of parameters,
+and at least be within a (hopefully not-too-large) constant factor
+of optimal.
+<p>
+
+<li>
+Some internal cleaning on the small-prime FFT code.
+I've made David Harvey's lazy butterfly routine without
+precomputed tables more competitive with the large-table
+variant, 
+so now that large tables
+are used for a smaller range of parameters (this should reduce
+the overall memory footprint).
+<p>
+
+<li>
+Laid the groundwork for some future changes;
+namely, to allow 60-bit
+modular arithmetic without relying on the esoteric x87 fmul
+instruction.
+This should be coming soon (probably v9.2).
+<p>
+
+
+</ul>
+
+
+
+<p><hr><p>
+<h3>
+2015.3.29:
+Changes between NTL 9.0.1 and 9.0.2
+</h3>
+
+<ul>
+<li>
+Made a small change to single-precison <tt>MulMod</tt>
+that enables slightly better compiler optimizations
+(compiler can "hoist" the computation of <tt>1/n</tt>
+out of a loop, so the variant with extra <tt>mulmod_t</tt>
+arg becomes somewhat less essential).
+</ul>
+
+
+
+
+<p><hr><p>
+<h3>
+2015.3.27:
+Changes between NTL 9.0.0 and 9.0.1
+</h3>
+
+<ul>
+<li>
+Fixed a small bug that prevented compilation a certain platforms.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2015.3.27:
+Changes between NTL 8.1.2 and 9.0.0
+</h3>
+
+<ul>
+<li>
+With much trepidation, I have introduced a (hopefully minor)
+backward incompatibility into NTL.  
+
+The interface to the single-precision modular arithmetic 
+routines has been modified slightly.
+This interface change allows for more flexible and more
+efficient implementation of these routines,
+which play a crucial role at many levels in NTL.
+<p>
+Basically, these changes to the interface abstract away
+some implementation details that arguably should never been there
+in the first place.
+By coding to the new interface, NTL clients will be able to 
+benefit from
+the current and future improvements.
+<p>
+In particular, on 64-bit x86/GCC platforms, single precision
+moduli can now be up to <i>60 bits</i>, rather than <i>50 bits</i>.
+While some operations may in fact be a little slower, the most important
+ones (like <tt>MulModPrecon</tt>) should not be.
+Using larger moduli speeds up a number of things, like <tt>ZZ_pX</tt>
+arithmetic, as fewer primes need to be used in Chinese Remaindering steps.
+Other applications benefit from larger moduli as well.
+
+<p>
+It is expected that most NTL clients will not be affected at all.
+Moreover, any code that needs to be updated will be detected
+by the compiler, and the updates should be simple and mechanical.
+There is also a configuration flag that will enable the legacy
+interface (although this is not recommended practice).
+
+<p>
+For details, <a href="ZZ.cpp.html#modarith">see here</a>,
+including the comments entitled "Compatibility notes".
+
+<p>
+<li>
+Other changes:
+<ul>
+<li>
+Previous versions of NTL relied (at least by default) on some
+<i>undefined behavior</i> regarding integer arithemtic
+(namely, that in a few key code sequences, signed integer
+overflow just "wraps around").
+All of this undefined behavior has been replaced by 
+(much more desirable) <i>implementation-defined behavior</i>
+(namely, that conversion from unsigned to signed works as expected).
+As in the past, the <tt>NTL_CLEAN_INT</tt> can be used to 
+avoid all of these issues (but with the new code, this should
+truly be academic).
+For details, look <a href="tour-impl.html">here</a>.
+<li>
+By request, added a function <tt>xdouble exp(const xdouble&amp; x)</tt>,
+which is equivalent to <tt>xexp(to_double(x))</tt>.
+For details, look <a href="xdouble.cpp.html">here</a>.
+</ul>
+</ul>
+
+
+
+
+
+
+
+<p><hr><p>
+<h3>
+2015.1.31:
+Changes between NTL 8.1.1 and 8.1.2
+</h3>
+
+<ul>
+<li>
+Corrected a bug that could affect the <tt>log</tt>
+function in a multi-threaded execution.
+</ul>
+
+
+
+<p><hr><p>
+<h3>
+2015.1.30:
+Changes between NTL 8.1 and 8.1.1
+</h3>
+
+<ul>
+<li>
+Corrected a syntax error in <tt>SmartPtr.h</tt>,
+which most compilers don't seem to complain about, but some
+do.
+<p>
+<li>
+Added <tt>--tag=CXX</tt> to the some lines
+in the <tt>makefile</tt> to keep <tt>libtool</tt> happy.
+</ul>
+
+
+<p><hr><p>
+<h3>
+2015.1.9:
+Changes between NTL 8.0 and 8.1
+</h3>
+
+<ul>
+<li>
+Corrected an oversight in the matrix template class.
+With this new version, one may safely copy and assign
+objects of type <tt>Mat&lt;ZZ_p&gt;</tt>
+and <tt>Mat&lt;GF2E&gt;</tt> out of context (i.e.,
+under a different or undefined modulus).
+More generally, the copy constructor for <tt>Mat&lt;T&gt;</tt>
+now relies only on the copy constructor for <tt>Vec&lt;T&gt;</tt>
+and the assignment operator for <tt>Mat&lt;T&gt;</tt>
+relies only on the assignment operator and copy constructor
+for <tt>Vec&lt;T&gt;</tt>.
+<p>
+The goal since v6.2 has been to allow all modular types (<tt>ZZ_p</tt>, etc.)
+and all types derived from them (vectors, polynomials, matrices, etc.)
+to be safely copy constructed and assigned out of context.
+Hopefully, this goal has now been reached.
+
+</ul>
+
+
+<p><hr><p>
+<h3>
+2014.12.24:
+Changes between NTL 7.0.2 and 8.0
+</h3>
+
+<ul>
+
+<p><li> <b> Exceptions! </b>
+<p> This is another major milestone for NTL, and hence the big
+version number bump (this will be the last of these big bumps
+for a while).
+
+<p>
+Prior to this version, error handling consisted of "abort with an error message".
+To enable exceptions in NTL, configure with <tt>NTL_EXCEPTIONS=on</tt>.
+You will also need a <tt>C++11</tt> compiler for this to work properly
+(and if you don't enable exceptions, any old <tt>C++98</tt> compiler will
+work, as always).
+
+<p>
+With exceptions enabled, errors are reported by throwing an appropriate
+exception.
+Of course, this was the easy part.
+The hard part was making NTL's code <i>exception safe</i>,
+which (among other things) means that no resources (i.e., memory)
+are leaked when an exception is thrown.
+This required a very painful top-to-bottom scrub of the whole library.
+
+<p>
+Despite major changes to the code base and many internal
+interfaces, the external (i.e., documented) interfaces remain
+completely unchanged.
+
+<p>
+More details are available <a href="tour-struct.html#except">here.</a>
+
+<p><li>
+Improved performance of <tt>ZZ_pX</tt> arithmetic for both classic
+and GMP-based long integer packages.
+
+<p><li>
+Made copy constructor and assignment operators
+for <tt>fftRep</tt> and <tt>FFTRep</tt> safe "out of context",
+which extends to the classes <tt>zz_pXModulus</tt> and <tt>ZZ_pXModulus</tt>.
+
+<p><li>
+Made mechanism for establishing "unique ID's" (used for temporary
+file name generation and default pseudo-random number seeds) 
+more robust.
+
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2014.12.15:
+Changes between NTL 7.0.1 and 7.0.2
+</h3>
+
+<ul>
+<p><li>
+Fixed bug introduced in v7.0 affecting <tt>RR</tt> and <tt>quad_float</tt> input routines,
+which would leave the <tt>RR</tt> precision variable in an incorrect state.
+<p><li>
+Fixed a bug introduced in the v6.2 that affected the append routines
+for <tt>ZZ_p</tt> and <tt>GF2E</tt>, which would lead to incorrect memory allocation
+(which, if triggered, should just have led to an error message and abort, rather than 
+incorrect results).
+This bug also affected the new <tt>Vec</tt> constructor introduced in v7.0
+(and again, only for <tt>ZZ_p</tt> and <tt>GF2E</tt>).
+
+</ul>
+
+
+<p> <hr> <p>
+<h3>
+2014.11.14:
+Changes between NTL 7.0.0 and 7.0.1
+</h3>
+
+<ul>
+<li>
+Fixed critical bug in new bit-reverse-copy routine.
+Large degree polynomial multiplication code was buggy
+in v7.0.
+Now it's fixed and properly tested.
+</ul>
+
+<p> <hr> <p>
+<h3>
+2014.11.8:
+Changes between NTL 6.2.1 and 7.0
+</h3>
+
+<ul>
+
+<p> <li> <b>Thread safety!</b>
+<p>
+
+This is a major milestone for NTL (and hence a bump in the
+major version number).
+However, to actually use it, you will need a "bleeding edge"
+<tt>C++</tt> that supports <tt>C++11</tt> concurrency features.
+Most importantly, the <tt>C++11</tt> storage class <tt>thread_local</tt>
+needs to be fully and correctly implemented.
+Some compilers claim to support it, but are very buggy to the point of
+being useless.
+All I can say is, as of right now, I have been able to
+successfully build and test a multi-threaded NTL program
+using GCC 4.9.2 on a Red Hat Linux distribution.
+I don't think any pre-4.9.x version of GCC will work.
+And unfortunatly, I don't think any compiler (GCC or CLANG) 
+on any current Mac will work, but I haven't been able to directly
+test this.
+<p>
+As time goes on, I expect <tt>C++</tt> compilers will provide the
+necessary support.
+In the meantime, you can try it out and see if it works for you.
+Configure with the <tt>NTL_THREADS</tt> flag turned on and see 
+what happens.
+The test program <tt>ThreadTest</tt> that runs as the last step
+of <tt>make check</tt> will let you know if it works.
+If not, you can try building GCC 4.9.2 yourself.
+It is actually not that hard!
+
+<p>
+See the <a href="tour-impl.html">portability and implementation section</a>
+for more information.
+In any case, if threads don't work for you, just don't use them.
+Everything still works as before using almost any compiler.
+
+<p><li>
+I changed the stream input behavior to conform to wider
+<tt>C++</tt> practice (and with an eye towards am exception safe future).
+Previously, if an attempt to read an NTL object failed, the
+good old <tt>Error</tt> function was called, printing an error message,
+and aborting your program.
+Now, NTL just quietly sets the ``fail bit'' of the stream.
+The second example <a href="tour-ex1.html">here</a> illustrates this.
+Hopefully, this change will not cause too many problems,
+but if it does, configure NTL with the <tt>NTL_LEGACY_INPUT_ERROR</tt>
+flag on to get the old behavior back.
+
+<p><li>
+To further simplify future development, I've dropped support
+for legacy <tt>C++</tt> standard header files.
+That is, NTL always uses <tt>&lt;iostream&gt;</tt>
+rather than <tt>&lt;iostream.h&gt;</tt>.
+This shouldn't be a problem for anyone by now, as these
+lagacy header files have been gone from standard <tt>C++</tt>
+since 1998.
+Also, by default, NTL components are still wrapped in the <tt>NTL</tt>
+namespace, but for backward compatibility, you can still put 
+them in the global namespace by configuring NTL
+with the <tt>NTL_LEGACY_NO_NAMESPACE</tt> flag.
+
+
+
+<p><li>
+Implemented a cache-friendy "bit reverse copy" routine for doing
+FFT's.  This is the COBRA algorithm from Cater and Gatlin, "Towards an
+optimal bit-reversal permutation algorithm", FOCS 1998.
+This does seem to help a bit.
+Getting rid of "bit reverse copy" would be even better,
+but this would take more work and break a number of interfaces.
+
+<p><li>
+Made some minor improvements to <tt>ZZX</tt> multiplication routines
+to get better locality of reference.
+Improvement is nominal.
+
+<p><li>
+Fixed a small issue in the left-shift <tt>ZZ</tt> routine:
+it was allocating one word more than necessary in some cases.
+
+
+<p> <li>
+Added new <tt>Vec</tt> constructor, so
+<!-- STARTPLAIN
+   T a;
+   Vec<T> v(INIT_SIZE, n, a);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; T a;<br>
+&nbsp;&nbsp; Vec&lt;T&gt; v(INIT_SIZE, n, a);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+is equivalent to
+<!-- STARTPLAIN
+   T a;
+   Vec<T> v;
+   v.SetLength(n, a);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; T a;<br>
+&nbsp;&nbsp; Vec&lt;T&gt; v;<br>
+&nbsp;&nbsp; v.SetLength(n, a);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+In both cases, the copy constructor for <tt>T</tt>
+is used.
+
+<p><li>
+I've added some more documentation about what I plan on
+doing with NTL in the future, as well as a "wish list"
+of what I hope others might contribute.
+See the <a href="tour-roadmap.html">roadmap section</a> for 
+more details.
+</ul>
+
+
+<p> <hr> <p>
+<h3>
+2014.8.26: Changes between NTL 6.2 and 6.2.1
+</h3>
+
+<ul>
+<li>
+Fixed syntax problem in <tt>NTL/vector.h</tt>
+</ul>
+
+<p> <hr> <p>
+<h3>
+2014.8.21: Changes between NTL 6.1 and 6.2
+</h3>
+
+<ul>
+
+<p>
+<li>
+I added <i>explicit</i> constructors corresponding to promotions.
+For example:
+<!-- STARTPLAIN
+   ZZ w = ZZ(1); // legal
+   ZZ w(1);      // legal
+   ZZ w{1};      // legal in C++11
+   ZZ w = 1;     // not legal
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ZZ w = ZZ(<font color="#ff8c00">1</font>);&nbsp;<font color="#0000ee"><i>// legal</i></font><br>
+&nbsp;&nbsp; ZZ w(<font color="#ff8c00">1</font>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// legal</i></font><br>
+&nbsp;&nbsp; ZZ w{<font color="#ff8c00">1</font>};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// legal in C++11</i></font><br>
+&nbsp;&nbsp; ZZ w =&nbsp;<font color="#ff8c00">1</font>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ee"><i>// not legal</i></font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+<p>
+Also added new names for the "monomial constructors", e.g.,
+<tt>ZZX(INIT_MONO, i, c)</tt> is now preferred to <tt>ZZX(i, c)</tt>,
+although the old constructors are still there.
+There are also new constructors like <tt>ZZX(INIT_MONO, i)</tt>
+for making monic monomials.
+
+<p>
+<li>
+An subtle but important change is that now objects from
+classes that represent residue class rings with a
+dynamically installed modulus, i.e.,
+<pre>
+   ZZ_p, zz_p, ZZ_pE, lzz_pE, GF2E,
+</pre>
+may now be used a bit more flexibly.
+
+<p>
+It is critical that such objects created under one modulus are not used in
+any non-trivial way "out of context", i.e., under a different (or undefined)
+modulus.  However, for ease-of-use, some operations may be safely
+performed out of context.  These safe operations now include: the default and copy
+constructor, the destructor, and the assignment operator.  In addition it is
+generally safe to read any object out of context (i.e., printing it out, or
+fetching its underlying representive using the rep() function).
+(In the past, it was generally unsafe to use the the default and copy constructors
+out of context, which also prevented vectors and polynomials
+of such objects from being copied out of context.)
+
+<p>
+The implementations of <tt>Vec&lt;ZZ_p&gt;</tt> and <tt>Vec&lt;GF2E&gt;</tt>
+are still specialized to manage memory more
+efficiently than in the default implementation of <tt>Vec&lt;T&gt;</tt>.  
+Contiguous elements in such an array are allocated in a contiguous region of
+memory.  This reduces the number of calls to the memory allocator, and  
+leads to greater locality of reference.  
+A consequence of
+this implementation is that any calls to <tt>SetLength</tt> on such a vector will
+need to use information about the current modulus, and so such calls should
+only be done "in context".  That said, it is still safe to construct a
+such a vector using the default or copy contructor, and to assign or append one
+to another "out of context".
+
+<p>
+<li>
+For the classes <tt>ZZ_p</tt>, <tt>ZZ_pE</tt>, <tt>zz_pE</tt>,
+and <tt>GF2E</tt>, added explicit "allocation" and "no allocation" contructors
+(invoked with <tt>INIT_ALLOC</tt> and <tt>INIT_NO_ALLOC</tt>) and special member function
+<tt>allocate()</tt>.  This allows one to explicitly determine exactly when
+space for such objects is allocated.
+By default, no space is allocated (this is different from prior versions of NTL),
+except for <tt>ZZ_p</tt>'s that are a part of a <tt>Vec&lt;ZZ_p&gt;</tt>
+and <tt>GF2E</tt>'s that are a part of a <tt>Vec&lt;GF2E&gt;</tt>
+
+
+<p>
+<li>
+Added new classes <tt>ZZ_pPush</tt>, <tt>ZZ_pEPush</tt>, 
+<tt>zz_pPush</tt>, <tt>zz_pEPush</tt>, <tt>GF2EPush</tt>.
+These allow one to conveniently backup and optionally install
+a new modulus in one step:
+<!-- STARTPLAIN
+   { ZZ_pPush push(p); ... }
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; { ZZ_pPush push(p); ... }<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+will save the current modulus and install <tt>p</tt> as the
+new modulus; when the destructor for <tt>push</tt> is invoked,
+the old modulus will be re-installed.
+
+
+<p>
+<li>
+Made the one-arg constructors for all the  various "context" classes
+(e.g., <tt>ZZ_pContext</tt>) <i>explicit</i>.
+
+
+<p>
+<li>
+As a general aid to generic programming, I've added a
+bunch of typedef's using consistent naming conventions
+to all of the main arithmetic classes.
+E.g., <tt>ZZ_p::poly_type</tt> is a typedef for <tt>ZZ_pX</tt>.
+There are a whole bunch of these.
+See the documentation for the individual classes for details.
+
+<p>
+<li>
+Got rid of a few esoteric compilation modes:
+<ul>
+<li>
+All files are now <tt>C++</tt> files, and should be compiled
+using a <tt>C++</tt> compiler. In older versions, some files
+could be compiled either as <tt>C</tt> or <tt>C++</tt>.
+
+<li>
+The flag <tt>NTL_GMP_HACK</tt> is no longer supported.
+GMP may still be used using the <tt>NTL_GMP_LIP</tt> flag,
+which is still highly recommended for high-performance applcations.
+
+<li>
+The flags <tt>NTL_SINGLE_MUL</tt> and <tt>NTL_FAST_INT_MUL</tt>
+are no longer recognized.
+These were really outdated and esoteric.
+</ul>
+
+<p>
+<li>
+I have started working towards making NTL thread safe.
+It is not as difficult as I thought it would be, but it is still
+a work in progress.
+So far I have identified all global variables, and either got
+rid of them, or tagged them as "thread local".
+So, although there are still some global variables, they will
+all eventually be "thread local".
+In particular, things like the current <tt>ZZ_p</tt> modulus
+will be a thread-local global variable.
+
+
+<p>
+There are a few remaining trouble spots I've tagged:
+these mostly involve lazy initialization of tables;
+I have a plan for making this code thread safe using
+nearly lock-free coding techniques.
+
+<p>
+I will hopefully get this done within the next 6-12 months.
+One thing that is slowing me down is the lack of availibility
+of <tt>C++11</tt> features that I need to do some of this,
+but it will come.
+
+<p>
+The main reason for getting rid of the esoteric compilation modes
+mentioned above is to make it easier to do this thread-safety work.
+
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2014.03.13: Changes between NTL 6.0 and 6.1
+</h3>
+
+<ul>
+<li>
+Added support for "user defined" FFT primes for <tt>zz_p</tt>.
+See the functions
+<!-- STARTPLAIN
+   static void zz_p::UserFFTInit(long p);
+   zz_pContext::zz_pContext(INIT_USER_FFT_TYPE, long p);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>static</b></font>&nbsp;<font color="#008b00"><b>void</b></font>&nbsp;zz_p::UserFFTInit(<font color="#008b00"><b>long</b></font>&nbsp;p);<br>
+&nbsp;&nbsp; zz_pContext::zz_pContext(INIT_USER_FFT_TYPE,&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;p);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+in the <tt>lzz_p</tt> module.
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2013.02.15: Changes between NTL 5.5.2 and 6.0
+</h3>
+
+<ul>
+<li>
+Replaced the old template-like macros for vectors, matrices,
+and pairs with true template classes: <tt>Vec&lt;T&gt;</tt>,
+<tt>Mat&lt;T&gt;</tt>, and <tt>Pair&lt;S,T&gt;</tt>.
+
+<p>
+For backwards compatibilty, all the names that were used
+in previous versions (e.g., <tt>vec_ZZ_p</tt>, <tt>mat_ZZ_p</tt>)
+have been replaced with appropriate typedefs.
+
+<p>
+For many years, I resisted the temptation of using templates,
+because compiler support was very inconsistent.
+But that no longer seems to be the case.
+
+<p>
+This change, while rather sweeping, should create very few,
+if any, incompatibilities with existing software.
+The biggest issue would be for software that uses the
+old template-like macros: such macro invocations can simply be
+replaced with appropriate typedefs.
+
+<p>
+<li>
+Made the conversion interface more complete and uniform.
+Also, using template notation, one can and should now write
+<tt>conv&lt;ZZ&gt;(a)</tt> instead of <tt>to_ZZ(a)</tt>
+(for backward compatibility, all the old names <tt>to_XXX</tt>
+are still there, but many new conversions are not available
+under these old names).
+
+
+<p>
+There are many new conversions provided.
+Moreover, whenever there is a conversion from a ring <i>R</i>
+to a ring <i>S</i>, there is a corresponding, coefficiet-wise
+conversion from the polynomial ring <i>R[X]</i> to the
+polynomial ring <i>S[X]</i>.
+
+<p>
+In addition, using the template mechanism, there are
+generic conversions for vectors and matrices.
+For example, if there is a conversion from <tt>S</tt> to <tt>T</tt>,
+then there is automatically a corresponding component-wise
+conversion from <tt>Vec&lt;S&gt;</tt> to <tt>Vec&lt;T&gt;</tt>.
+
+
+<p>
+<li>
+Introduced a more general mechanism for accessing <tt>GF2</tt>'s
+in packed structures via indexing (see the class 
+<tt>ref_GF2</tt> in the <tt>GF2</tt> module).
+
+<p>
+<li>
+Employed ideas from David Harvey to make the single-precision 
+FFT faster (about twice as fast in many cases).
+This speeds up many higher-level operations.
+See: Faster arithmetic for number-theoretic transforms.
+<i>J. Symb. Comp. 60</i> (2014) 113-119.
+
+
+<p>
+<li>
+Fixed all known bugs.
+
+
+</ul>
+
+
+
+<p> <hr> <p>
+<h3>
+2009.08.14: Changes between NTL 5.5.1 and 5.5.2
+</h3>
+
+<ul>
+<li>
+New routines <tt>MulAddTo</tt> and <tt>MulSubFrom</tt>
+for computing <tt>x += a*b</tt> and <tt>x -= a*b</tt>,
+where <tt>x</tt> and <tt>a</tt> are <tt>ZZ</tt>'s and
+<tt>b</tt> is a <tt>ZZ</tt> or a <tt>long</tt>.
+In the case where <tt>b</tt> is a <tt>long</tt>,
+this may be much faster than writing 
+<tt>mul(t, a, b); add(x, x, t)</tt>.
+See <a href="ZZ.cpp.html">ZZ.txt</a> for details.
+
+These new routines are used in a number of places in
+NTL to get faster algorithms (for example, the <tt>LLL</tt> routine).
+
+<li>
+Fixed a relatively benign indexing bug in <tt>GF2EX</tt>
+discovered by Berend-Benjamin Tams using the <tt>valgrind</tt> tool.
+
+
+
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2009.05.05: Changes between NTL 5.5 and 5.5.1
+</h3>
+
+<ul>
+<li> If using GMP (via either <tt>NTL_GMP_LIP</tt>
+or <tt>NTL_GMP_HACK</tt>), then the new version (4.3.0) of
+GMP implements the <tt>XGCD</tt> functionality differently,
+so that the coefficients do not always agree with those returned by
+the classical extended Euclidean algorithm.
+This version of NTL corrects the coefficients, so that the
+"classical" coefficients are always produced, regardless
+of GMP's implementation. 
+This version of NTL also works
+around a bug in GMP 4.3.0's <tt>XGCD</tt> code
+(although that bug should be fixed in GMP 4.3.1).
+
+<li>
+The <tt>configure</tt> script has been slightly modified:
+there is a new configuration variable <tt>DEF_PREFIX</tt>,
+whose value can be used to set <tt>PREFIX</tt>, <tt>GMP_PREFIX</tt>,
+and <tt>GF2X_PREFIX</tt> in one stroke.
+Also, the (somewhat esoteric) <tt>configure</tt> variables
+<tt>GMP_LIBDIR</tt>, <tt>GMP_INCDIR</tt>,
+<tt>GF2X_LIBDIR</tt>, and <tt>GF2X_INCDIR</tt>
+have slightly different meanings now.
+
+</ul>
+</h3>
+
+<p> <hr> <p>
+<h3>
+2009.04.08: Changes between NTL 5.4.2 and 5.5
+</h3>
+
+<ul>
+<li>
+Added the ability to generate a <i>shared</i> library
+(with help from Tim Abbott). <a href="tour-unix.html#shared">Details.</a>
+
+<li>
+Fixed some standardization issues
+(with help from Tim Abbot):
+default location of installed documentation files now conforms
+to standards; use of <tt>EOF</tt> now conforms to standards.
+
+<li>
+Added a callback mechanism to NTL's error reporting function.
+See <tt>ErrorCallback</tt> in <a href="tools.cpp.html">tools.txt</a>.
+
+<li>
+Added support for the <tt>gf2x</tt> library for speeding up
+arithmetic in <tt>GF2X</tt> (with help from Emmanuel Thom&eacute;).
+<a href="tour-gf2x.html">Details.</a>
+
+<li>
+In conjuction with the above, I also changed the
+<tt>GF2X</tt> so that it works better with very large polynomials:
+large blocks of memory are released, recursive HalfGCD algorithms
+are used for large polynomials.
+
+
+<li>
+Fixed a bug in <tt>void TraceMod(zz_p&amp; x, const zz_pX&amp; a, const zz_pXModulus&amp; F)</tt> (reported by Luca De Feo).
+
+<li>
+Fixed a performance issue in various versions of <tt>SetCoeff</tt>
+(reported by Luca De Feo).
+
+<li>
+Fixed the declaration of  <tt>mat_zz_p transpose(const mat_zz_p&amp; a)</tt>
+(reported by Benoit Lacelle).
+</ul>
+
+
+<p> <hr> <p>
+<h3>
+2008.03.05: Changes between NTL 5.4.1 and 5.4.2
+</h3>
+
+<ul>
+<li>
+Fixed a bug in the <tt>sub(ZZ_pEX, ZZ_pE, ZZ_pEX)</tt>
+and  <tt>sub(zz_pEX, zz_pE, zz_pEX)</tt> routines (reported by Charanjit Jutla).
+Under certain circumstances, these could outout wrong answers.
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2007.05.09: Changes between NTL 5.4 and 5.4.1
+</h3>
+
+<ul>
+<li>
+Fixed rounding bug in <tt>expm1</tt> (reported by Paul Zimmermann).
+
+<li>
+Fixed memory leak in several LLL routines (reported by Friedrich Bahr).
+
+<li>
+Fixed infinite loop in several LLL routines
+(this only occurred on machines, like x86, with double rounding).
+
+<li>
+Improved <tt>GF2X</tt> timing tests (suggested by Paul Zimmermann).
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2005.03.24: Changes between NTL 5.3.2 and 5.4  
+</h3>
+
+<ul>
+<li>
+By default, NTL now compiles in ISO mode (using namespaces, etc.).
+You can always revert to traditional mode by unsetting
+the flag <tt>NTL_STD_CXX</tt> 
+(either pass <tt>NTL_STD_CXX=off</tt> to the configure script,
+or manually edit the <tt>config.h</tt> file).
+<p>
+
+<li>
+Some bug fixes:
+
+<ul>
+<li>
+The <tt>sqrt</tt> and <tt>log1p</tt> routines
+for the <tt>RR</tt> class would produce incorrectly rounded
+results in certain circumstances (although this only affected the relative
+error of the result very marginally).
+<li>
+The <tt>SqrRootPrec</tt> routine for the <tt>RR</tt> class
+could not be called, because it was defined incorrectly.
+</ul>
+
+<p>
+
+Thanks to Paul Zimmermann for finding (and fixing) these bugs!
+Paul has also validated NTL's <tt>RR</tt> class by cross-checking it with the
+<a href="http://www.mpfr.org">MPFR</a> library.
+
+<p>
+<li>
+Some performance enhancements:
+
+<ul>
+<li>
+Added a new <tt>MulModPrecon</tt> inline function for 
+computing <tt>(a * b) % n</tt> for single precision numbers,
+when <tt>b</tt> and <tt>n</tt> are fixed for several computations.
+On some platforms this can be twice as fast or more than the
+old <tt>MulMod2</tt> routine.
+This indirectly affects a lot of computations that are done via
+homomorphic imaging (polynomial multiplication
+over <tt>zz_p</tt>, <tt>ZZ_p</tt>, and <tt>ZZ</tt>,
+matrix computations over <tt>zz_p</tt> and <tt>ZZ</tt>).
+
+<li>
+Rewrote the small prime FFT to take advantage of the new
+<tt>MulModPrecon</tt>, and to be more cache friendly.
+
+<li>
+Improved the performance of the <tt>GF2X</tt> multiplication routine.
+On some platforms, it can be twice as fast as the old one.
+Thanks (again) to Paul Zimmermann for suggesting some of these
+improvements and supplying some of the code.
+
+</ul>
+
+<p>
+<li>
+Miscellany:
+
+<ul>
+<li>
+Rewrote several of the installation scripts in Perl (the old shell
+scripts were getting too messy to maintain).
+However, the syntax for all of the command-line interfaces
+remains identical.
+
+</ul>
+ 
+
+
+
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+2004.05.21: Changes between NTL 5.3.1 and 5.3.2
+</h3>
+
+<ul>
+<li>
+Some bug fixes.
+
+<p>
+<li>
+Re-wrote <tt>SqrRootMod</tt> to make it run faster.
+
+</ul>
+
+
+
+<p> <hr> <p>
+<h3>
+2002.12.17: Changes between NTL 5.3 and 5.3.1
+</h3>
+
+<ul>
+<li>
+Fixed a bug affecting the <tt>BuildIrred</tt> routines
+for <tt>ZZ_pEX</tt> and <tt>zz_pEX</tt>.
+</ul>
+
+<p> <hr> <p>
+<h3>
+2002.07.05: Changes between NTL 5.2 and 5.3
+</h3>
+
+<ul>
+<li>
+Minimized and isolated constructs that do not adhere to <tt>C</tt>/<tt>C++</tt> 
+standards,
+and added flags <tt>NTL_CLEAN_INT</tt> and <tt>NTL_CLEAN_PTR</tt>
+which force stricter compliance with these standards 
+<a href="tour-impl.html">[more details]</a>.
+
+<p>
+<li>
+Added functions <tt>IsWhiteSpace</tt>, <tt>CharToIntVal</tt>,
+and <tt>IntValToChar</tt>  to the <tt>tools</tt> module
+<a href="tools.cpp.html">[more details]</a>.
+
+<p>
+<li>
+Added methods <tt>allocated</tt>, <tt>position1</tt> to generic vector classes
+<a href="vector.cpp.html">[more details]</a>.
+
+<p>
+<li>
+Added method <tt>allocated</tt> to the class <tt>vec_GF2</tt>
+<a href="vec_GF2.cpp.html">[more details]</a>.
+
+<p>
+<li>
+Added conversion routines from unsigned int/long to int, long, float, and double
+<a href="conversions.txt">[more details]</a>.
+
+<p>
+<li>
+Added routines <tt>AddPrec</tt>, <tt>SubPrec</tt>, etc., to the <tt>RR</tt>
+module, and declared the practice of directly  assigning to the variable
+<tt>RR::prec</tt> obsolete
+<a href="RR.cpp.html">[more details]</a>.
+
+<p>
+<li>
+Fixed a number of minor bugs.
+
+</ul>
+
+
+
+<p> <hr> <p>
+<h3>
+2001.07.19: Changes between NTL 5.1a and 5.2
+</h3>
+
+<p>
+
+<ul>
+<li>
+Implemented Mark van Hoeij's new algorithm for factorining polynomials
+with rational coefficients.
+This new algorithm is much more efficient than the previous algorithm
+used by NTL, and is the default (one can switch back to the old algorithm
+with a run-time switch).
+<p>
+<a href="ZZXFactoring.cpp.html">[documentation]</a>
+<p>
+<a href="tour-time.html">[performance measurements]</a>
+<p>
+
+<li>
+Added routines <tt>LLL_plus</tt> that are just like the all-integer 
+<tt>LLL</tt> routines, except that they return the exact values of the
+squared lengths of the Gramm-Schmidt basis vectors.
+This is useful in implementing van Hoeij's algorithm.
+<a href="LLL.cpp.html">[more details]</a>.
+<p>
+
+<li>
+Made a small change to <tt>quad_float.c</tt> to make it compile
+under  gcc version 3.0
+without errors.
+This is the <i>one</i> place in NTL where I resort to just a little
+assmebly code (but only on x86/Linux platforms), and wouldn't you know it,
+this is the <i>one</i> place where gcc 3.0 had problems.
+<p>
+
+<li>
+Made a small change to the procedure for generating a distribution,
+so that now all files in the "tar" file comprising the distribution
+come without any annoyingly excessive access control restrictions.
+<p>
+
+<li>
+Changes the version numbering scheme so that it is now closer to
+"standard practice".
+This is version "5.2".
+Any small bug fixes to this version will be named "5.2.1", "5.2.2", etc.
+Also, macros are now defined so that the numerical components
+of the version number are available to the programmer.
+<a href="version.cpp.html">[more details]</a>.
+
+
+</ul>
+
+
+<p> <hr> <p>
+<h3>
+2001.06.08: Changes between NTL 5.0c and 5.1a
+</h3>
+
+<p>
+Some minor fixes and additions.
+<p>
+Completely backward compatible.
+<p>
+
+<ul>
+
+<li>
+Added a routine <tt>LatticeSolve()</tt> for finding integer
+solutions to linear systems of integer equations.
+<a href="LLL.cpp.html">[more details]</a>
+
+<p>
+<li>
+Modified the stragey used by the <tt>LLL()</tt> and <tt>image()</tt>
+routines in the <a href="LLL.cpp.html">LLL package</a> to deal
+with linear dependencies.
+The new strategy guarantees better worst-case bounds on the
+sizes of intermediate values.
+I'm not sure if it will have any serious practical impact, though.
+
+<p>
+<li>
+Added some "partial ISO modes" so that one can use
+some of the features of Standard <tt>C++</tt>,
+even if ones compiler does not yet support all of the features.
+
+<p>
+<li>
+Bug fix: routine <tt>determnant()</tt> in <tt>mat_GF2.h</tt>
+was not visible to the linker because of a typo in <tt>mat_GF2.c</tt>.
+
+<p>
+<li>
+Made a "smarter" script for selecting the <tt>GetTime()</tt>
+function.
+This fixes an installation problem on Cygwin/Windows 95 platforms.
+I hope it doesn't create more problems than it solves, though.
+
+<p>
+<li>
+Added some extra documentation for installation under
+Windows/MS Visual <tt>C++</tt>. 
+<a href="tour-win.html">[more details]</a>
+
+<p>
+<li>
+Changed some names like <tt>c_lip.c</tt> to <tt>c_lip_impl.h</tt>.
+This should avoid some potential installation problems.
+
+<p>
+<li>
+Throw away first 256-bytes of arc4 streams to improve quality of
+the pseudo-random number generator.
+This may change the precise behavior of some  programs.
+
+<p>
+<li>
+Other minor, internal modifications.
+
+</ul>
+
+
+
+
+<p> <hr> <p>
+<h3>
+2001.02.19: Changes between NTL 5.0b and 5.0c
+</h3>
+
+<p>
+Fixed a naming problem in the Windows distribution.
+The Unix distribution is unaffected.
+
+
+<p> <hr> <p>
+<h3>
+2001.02.19: Changes between NTL 5.0a and 5.0b
+</h3>
+
+<p>
+Fixed a typo in <tt>vec_ulong.c</tt> that causes a compile error
+on some platforms.
+
+
+<p> <hr> <p>
+<h3>
+2001.02.19: Changes between NTL 4.3a and 5.0a
+</h3>
+
+<p>
+<ul>
+<li>
+I've now re-structured NTL so that one can use
+either 'traditional' LIP or GMP as the <i>primary</i> long integer package.
+Doing this introduced some (minor) backward incompatabilies in
+the programming interface, so there is also a 'third way' -- you
+can use GMP as a <i>supplemental</i> long integer package (as in NTL 4.3), 
+getting
+many (but not all) of the performance benefits of GMP, while
+maintaining <i>complete</i> backward compatability with the traditional
+long integer package.
+This 'third way' is not highly recommended -- it is only intended
+as a backward compatabilty hack.
+
+<p>
+Even if you do not use GMP, you should 
+<a href="tour-gmp.html">read about using NTL with GMP</a> so
+that you can write code that works with either the traditional or GMP
+long integer packages.
+<p>
+<li>
+Added a <tt>ZZ</tt> to unsigned long conversion routine.
+<a href="conversions.txt">[more details]</a>
+<li>
+Added new vector classes <tt>vec_ulong</tt> (vectors
+of unsigned longs) and <tt>vec_vec_ulong</tt>.
+<a href="tour-modules.html">[more details]</a>
+<li>
+Some minor bug fixes:  under some unusual circumstances, a memory
+allocation error could be erroneously raised; I also added a patch 
+that works around a bug in v3.0.1 of GMP.
+<li>
+Some internal cleansing, minimizing the use of non-standard constructs.
+</ul>
+
+
+<p> <hr> <p>
+<h3>
+Changes between NTL 4.2a and 4.3a
+</h3>
+
+This is backward compatible with previous versions.
+
+<p>
+<ul>
+<li>
+Improved the performance of <tt>ZZ_pX</tt> arithmetic when using 
+GMP.
+The GMP version is also more space efficient 
+(the pre-computed tables are much smaller).
+These improvements are most marked for very large <tt>p</tt> (several
+thousand bits).
+
+<p>
+The only thing unsatisfactory about this state of affairs is that 
+<i>vis a vis</i> the GMP version, the pure
+LIP code is asymptotically slower by <i>more</i> than a constant factor,
+and is is also less space efficient.
+Perhaps I'll get around to rectifying this imbalance someday.
+To do this, I need a sub-quadratic division with remainder routine for LIP.
+At any rate, the differences only become seriously noticible when
+<tt>p</tt> has more than a few thousand bits.
+
+<p>
+
+<li>
+Some other small adjustments here and there.
+
+</ul>
+
+<p> <hr> <p>
+<h3>
+Changes between NTL 4.1a and 4.2a
+</h3>
+
+This is backward compatible with previous versions.
+
+<p>
+<ul>
+<li>
+Hacked the big integer code so that NTL uses GMP
+(the GNU Multi-Precision library).
+This is done in such a way as to get most of the benefits of GMP
+with a reasonable amount of effort, and while maintaining complete backward
+compatability and minimizing the risk of introducing bugs.
+Some arithmetic operations 
+on some platforms may execute two to three times
+faster if using GMP. <a href="tour-gmp.html">[more details]</a>
+<li>
+Simplified the installation procedure on Unix systems by
+providing a simple configuration script so that setting 
+various configuration variables can be done without
+editing the <tt>makefile</tt> and  <tt>config.h</tt> file.
+<a href="tour-unix.html">[more details]</a>
+<li>
+Added function <tt>GenGermainPrime</tt>
+to efficiently generate random Germain primes, i.e., primes <i>p</i>
+such that <i>2p+1</i> is also prime. <a href="ZZ.cpp.html">[more details]</a>
+<li>
+Added a function <tt>random</tt> to generate random <tt>quad_floats</tt>.
+<a href="quad_float.cpp.html">[more details]</a>
+<li>
+Added an <tt>ifdef</tt> in <tt>tools.h</tt> that allows
+one to suppress the declaration of <tt>min</tt> and <tt>max</tt>
+functions in NTL client programs;
+these were causing problems when writing 'Windows applications'.
+<li>
+Implemented a faster algorithm for initializing the
+<tt>ZZ_p</tt> auxilliary data structures.
+<li>
+Polished up a few other minor things in the code and documentation.
+</ul>
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 4.0a and 4.1a
+</h3>
+<p>
+
+This is backward compatible with previous versions.
+
+<p>
+<ul>
+<li>
+Made some changes that should make NTL compile smoothly
+using any variation of the <tt>C++</tt> language between traditional and 
+ISO Standard.
+These changes do not affect the documented NTL interface or the
+behaviour of NTL.
+
+<li>
+Added a flag <tt>NTL_STD_CXX</tt> in the <tt>config.h</tt> file.
+Setting this flag causes all of NTL to be "wrapped" in namespace <tt>NTL</tt>,
+and that part of the standard library used by NTL is "wrapped"
+in namespace <tt>std</tt>.
+This should greatly help with the <i>namespace pollution</i> problem.
+
+</ul>
+
+
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.9b and 4.0a
+</h3>
+<p>
+
+This is backward compatible with previous version.
+
+<p>
+<ul>
+<li>
+Attached the GNU General Public License to NTL.
+
+<li>
+Fixed two bugs:
+<ul>
+<li>
+one in <tt>ReconstructRational</tt> which resulted in a crash on some inputs;
+<li>
+one in <tt>exp(RR)</tt> (and by implication in <tt>pow(RR,RR)</tt>),
+which led to wrong answers on 64-bit machines when computing <tt>exp(x)</tt>
+for <tt>x > 2^53</tt>.
+</ul>
+
+<li>
+Increased some inconvenient limiting bounds, including a restriction on the 
+FFT.
+
+</ul>
+
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.9a and 3.9b
+</h3>
+<p>
+
+This is a minor revision of 3.9a.
+
+<ul>
+<li>
+Improved time and space efficiency of the HNF routine
+(see <a href="HNF.cpp.html"><tt>HNF.txt</tt></a>).
+The old version was based on the description in Henri Cohen's book,
+which was not really properly optimized.
+</ul>
+
+
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.8b and 3.9a
+</h3>
+<p>
+
+This is backward compatible with previous versions.
+
+<ul>
+<li>
+Modified the installation script somewhat, adding
+a <i>configuration wizard</i> that sets the flags in
+<tt>config.h</tt> "automagically".
+This works for the <a href="tour-unix.html">Unix version</a> only.
+
+<li>
+Improved the <tt>xdouble</tt> input/output and ascii to <tt>xdouble</tt>
+conversion.
+The old version could be a bit flaky when reading/writing
+very large numbers.
+The new I/O routines also attain better accuracy.
+
+<li>
+Improved conversion routines between <tt>xdouble</tt>
+and <tt>ZZ</tt>/<tt>RR</tt>. 
+
+<li>
+Improved the <tt>RR</tt> output routine.
+The new version should be more accurate and also 
+completely platform independent.
+
+<li>
+Added the following routines to the <tt>RR</tt> package:
+<pre>
+   {Trunc,Floor,Ceil,Round}ToZZ, round
+   RoundToPrecision, MakeRR
+   random
+</pre>
+See <a href="RR.cpp.html"><tt>RR.txt</tt></a> for details.
+
+<li>
+Improved the accuracy of <tt>quad_float</tt> input/output,
+and the accuracy of conversion between <tt>quad_float</tt> and <tt>RR</tt>.
+
+<li>
+Made the timing function somewhat more robust.
+
+<li>
+Hacked the Unix installation script so that it works 
+more smoothly with Cygnus tools under Windows.
+
+<li>
+Fixed a few other, small problems.
+</ul>
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.8a and 3.8b
+</h3>
+<p>
+
+This is a minor revision of 3.8a.
+
+<ul>
+<li>
+Fixed a bug, a memory leak in routine <tt>gauss</tt> for <tt>mat_ZZ_pE</tt>
+and <tt>mat_zz_pE</tt>.
+<li>
+Fixed a minor problem in <tt>config.h</tt>.
+<li>
+Tightened up some size checks, so that now some nice "size invariants"
+are guaranteed, e.g., for a <tt>ZZ</tt> <tt>n</tt>,
+<!-- STARTPLAIN
+   NumBits(NumBits(n)) <= NTL_BITS_PER_LONG-4
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; NumBits(NumBits(n)) &lt;= NTL_BITS_PER_LONG-<font color="#ff8c00">4</font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Similarly for the type <tt>GF2X</tt>.
+Of course, on most platforms, one will run out of memory before
+these bounds are exceeded, but they are nevertheless convenient.
+</ul>
+
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.7a and 3.8a
+</h3>
+<p>
+
+This is backward compatible with previous versions.
+
+
+<ul>
+<li>
+Added conversion routines from <tt>unsigned</tt> <tt>int</tt>
+and <tt>unsigned</tt> <tt>long</tt> to 
+<tt>ZZ</tt>, <tt>RR</tt>, <tt>xdouble</tt>, and <tt>quad_float</tt>.
+
+<li>
+Added routines <tt>GF2XFromBytes</tt> and <tt>BytesFromGF2X</tt>
+for conversion between byte vectors and polynomials over <tt>GF(2)</tt>,
+along with routines <tt>NumBits</tt> and <tt>NumBytes</tt>
+for such polynomials.
+See <a href="GF2X.cpp.html"><tt>GF2X.txt</tt></a> for details.
+
+<li>
+Added a hack in the <tt>ZZX</tt> factorizer
+to exploit polynomials of the form <tt>g(x^k)</tt>.
+This can be disabled by setting the variable <tt>ZZXFac_PowerHack</tt>
+to zero.
+See <a href="ZZXFactoring.cpp.html"><tt>ZZXFactoring.txt</tt></a>
+for details.
+
+<li>
+Improved the hensel system solver <tt>solve1</tt>.
+See <a href="mat_ZZ.cpp.html"><tt>mat_ZZ.txt</tt></a> for details.
+
+<li>
+Changed documentation for <tt>RationalReconstruction</tt>
+to reflect the Wang, Guy, Davenport bounds.
+See <a href="ZZ.cpp.html"><tt>ZZ.txt</tt></a> for details.
+
+<li>
+Improved the routine <tt>GenPrime</tt> a bit. 
+
+<li>
+Some other small tweaks here and there.
+No real bug fixes.
+
+<li>
+Polished the documentation a bit, adding more examples.
+
+</ul>
+
+<p> <hr> <p>
+
+<p>
+<h3>
+Changes between NTL 3.6b and 3.7a
+</h3>
+<p>
+
+This is backward compatible with previous versions.
+
+<ul>
+<li>
+Added a "rational reconstruction" routine. 
+See the routine <tt>ReconstructRational</tt> in <a href="ZZ.cpp.html">ZZ.txt</a>.
+<li>
+Added another routine for solving linear systems over <tt>ZZ</tt>
+that is based on Hensel lifting, rather than Chinese Remaindering.
+It can be significantly faster in some cases.
+See the routine <tt>solve1</tt> in <a href="mat_ZZ.cpp.html">mat_ZZ.txt</a>).
+<li>
+Some performace tuning, especially CRT and polynomial interpolation code.
+<li>
+Various documentation corrections.
+<li>
+Added more "overflow checks" here and there to ensure programs crash gracefully
+when certain things get too big.
+<li>
+Fixed a "benign" bug (i.e., it would never get triggered on any of today's
+machines).
+<li>
+Removed references to <tt>&lt;malloc.h&gt;</tt>, which were unnecessary,
+non-standard, and caused problems on some platforms.
+</ul>
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 3.6a and 3.6b
+</h3>
+<p>
+
+Bug fixes.
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 3.5a and 3.6a
+</h3>
+<p>
+
+This version is backward compatible with 3.5a.
+
+<p>
+
+<ul>
+
+<li>
+A few small bug fixes and performance enhancements.
+
+<li>
+Changed to the <tt>ZZX</tt> factoring routines that in some
+cases yield dramatic performance improvements
+(<a href="tour-time.html">more details</a>).
+
+</ul>
+
+<p>
+<hr>
+
+
+<p>
+<h3>
+Changes between NTL 3.1b and 3.5a
+</h3>
+<p>
+
+<b>Please note.</b> This version is <b>NOT</b> completely backward compatible.
+
+<p>
+
+Summary of changes:
+
+<ul>
+
+<li>
+Improved performance of the "all integer" LLL routine.
+
+<li>
+Put in a better pseudo-random number generator,
+and added ZZ/byte array conversions.
+
+<li>
+Improved performance of primality test, and added a 
+more convenient routine <tt>GenPrime</tt>.
+
+<li>
+Overloaded NTL's vector placement "new" operator in a different
+way to avoid conflicts with standard <tt>C++</tt> library.
+
+<li>
+Renamed many macros.
+
+<li>
+Renamed header files.
+
+<li>
+Made some changes to the packaging
+the installation procedure.
+
+</ul>
+
+<p>
+<b>Renamed Macros.</b>
+I renamed many macros defined in NTL header files.
+
+<p>
+The reason is that I want to minimize namespace pollution.
+Someday, NTL will be wrapped in a namespace, and when that happens
+the only remaining namespace pollution problems will be caused by macros.
+Eliminating all macros from NTL is not feasible.
+Instead, all NTL defined macros now begin with the prefix "NTL_",
+which reduces the namespace pollution to an ecceptable level.
+You will probably not be affected by this, unless you
+do some low level hacking using a macro like <tt>ZZ_NBITS</tt>
+(now called <tt>NTL_NBITS</tt>), or unless you create your
+own NTL vectors using a macro like <tt>ntl_vector_decl</tt>
+(now called <tt>NTL_vector_decl</tt>).
+
+<p>
+For a complete list of affected names, see <a href="names.txt">names.txt</a>.
+
+<p>
+Adapting to this name change should be painless, as there is a 
+program to translate source files from the old naming convention to the new.
+The file "newnames.c", 
+can be compiled as either a <tt>C</tt> or <tt>C++</tt>
+program. 
+The program is a "filter" that copies its input to its output,
+replacing all the old macro names by the new macro names.
+<p>
+In the WinNTL distribibution, "newnames.c" is called 
+"newnames.cpp" and is located in the directory
+"newnames".
+
+
+<p>
+<b>Renamed header files.</b>
+The names of header files themeselves pollute another (extra-linguitsic) namespace.
+To alleviate this problem, the header files have been renamed.
+Instead of
+<!-- STARTPLAIN
+   #include "foo.h"
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+<font color="#1874cd">&nbsp;&nbsp; #include&nbsp;</font><font color="#4a708b">&quot;foo.h&quot;</font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one now should write
+<!-- STARTPLAIN
+   #include <NTL/foo.h>
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+<font color="#1874cd">&nbsp;&nbsp; #include&nbsp;</font><font color="#4a708b">&lt;NTL/foo.h&gt;</font><br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+The only exceptions are the old header files "ntl_vector.h",
+"ntl_matrix.h", and "ntl_pair.h", which are now called
+<tt>&lt;NTL/vector.h&gt;</tt>, <tt>&lt;NTL/matrix.h&gt;</tt>, and 
+<tt>&lt;NTL/pair.h&gt;</tt>.
+
+<p>
+<b>Installation procedure.</b>
+Now all
+NTL flags like NTL_LONG_LONG, NTL_AVOID_FLOAT, etc., can  now be set
+by editing the special file "include/NTL/config.h".
+See details in that file.
+The reason for this change is that this allows all of these settings
+to be made when NTL is configured and built.
+Clients of NTL will then automatically use consistent settings.
+One should not set these flags on the compiler command line as previously.
+
+
+<p>
+Pentium/Linux people should no longer have to worry
+about the NTL_X86_FIX flag. NTL now psychically deduces
+the "right thing to do", although if its psychic abilities fail,
+you can override it with flags in "include/NTL/config.h".
+
+<p>
+The "packaging" in the Unix distribution is slightly
+different, but hopefully nicer.
+Among other things, the tar file now unpacks into a sub-directory of the current directory.
+See <a href="tour-unix.html">the unix installation section</a>
+for more details.
+The Windows zip file now also 
+unpacks into  sub-directory.
+
+
+<p>
+<b>My apologies.</b>
+Although these changes are minor, they will cause some NTL
+users some inconvenience.
+I apologize for this.
+I really, really hope there are no more changes like this
+(see my <a href="tour-roadmap.html">roadmap</a> of NTL's future).
+
+<p>
+<hr>
+
+
+<p>
+<h3>
+Changes between NTL 3.1a and 3.1b
+</h3>
+<p>
+
+Defined functions <tt>div(GF2X,GF2X,GF2)</tt> and <tt>div(GF2X,GF2X,long)</tt>,
+which had not been defined in earlier versions.
+Affected file: <tt>GF2X.c</tt>.
+Most programs never use this, and most linkers do not complain
+if these are missing (but some do).
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 3.0f and 3.1a
+</h3>
+<p>
+
+This version is backward compatible with previous versions.
+
+<p>
+
+<ul>
+<li>
+Added floating point LLL routines based on Givens rotations,
+instead of classical Gramm-Schmidt orthogonalization.
+This is a more stable, but somewhat slower, method.
+See <a href="LLL.cpp.html">LLL.txt</a> for details.
+
+<li>
+Added support for irreducible trinomials and pentanomials
+over GF(2). The <tt>GF2XModulus</tt> routines,
+and by extension, the <tt>GF2E</tt> routines,
+now exploit moduli of this special form.
+The new routine <tt>BuildSparseIrred</tt> in <tt>GF2XFactoring</tt>
+builds irreducibles of this form.
+
+<li>
+Also implemented a faster modular inversion routine
+for <tt>GF2X</tt>, and improved the performance of <tt>ZZ_pX</tt>
+multiplication for small degree polynomials.
+</ul>
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 3.0e and 3.0f
+</h3>
+<p>
+
+<ul>
+<li>
+Fixed a bug (another one) affecting routines
+<pre>
+   RandomBits, RandomBits_ZZ
+</pre>
+in module <tt>ZZ</tt>.
+Affected source file: <tt>lip.c</tt>.
+
+<li>
+Bug fix and performance tweak in <tt>ZZX</tt> factorizer.
+Affected source file: <tt>ZZXFactoring.c</tt>.
+   
+</ul>
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 3.0 and 3.0e
+</h3>
+<p>
+
+<ul>
+<li>
+Fixed a bug affecting routines 
+<pre>
+   RandomBits, RandomBits_ZZ, RandomBits_long
+</pre>
+in module <tt>ZZ</tt>.
+The only source files that are affected and require re-compilation are
+<pre>
+   ZZ.c, lip.c
+</pre>
+
+<li>
+Note about names:
+3.0a-c were "pre-releases", which makes the "first release" 3.0d,
+and hence this bug fix 3.0e.
+   
+</ul>
+
+<p>
+<hr>
+
+
+<p>
+
+<h3>
+Changes between NTL 2.0 and 3.0
+</h3>
+<p>
+
+
+<ul>
+
+<li>
+Added functionality:
+<p>
+
+<ul>
+
+<li>
+Added classes vec_GF2 and mat_GF2 for fast linear algebra over GF(2).
+
+<li>
+Added classes ZZ_pE, ZZ_pEX, zz_pE, zz_pEX, supporting polynomial
+arithmetic over extension rings/fields over prime fields.
+
+<li>
+Added John Abbott's pruning heuristic to the ZZX factoring routine.
+
+<li>
+Speeded up multiplication in zz_pX for small p (this also helps
+the ZZX factoring routine).
+
+<li>
+Added some some transcendental functions (e.g., exp, log, pi) to RR.
+
+<li>
+Added verbose mode and pruning to the XD and RR variants of LLL.
+
+</ul>
+<p>
+
+<li>
+Improved programming interface:
+with this version, I've taken an the opportunity to 
+give the programming interface a "professional facelift".
+In previous releases, I've tried to maintain backward compatability
+as much as possible, but to make the badly needed improvements
+to the interface that I've made with this release, this was not
+possible.
+<p>
+NTL 3.0 is not backward compatable with NTL 2.0.
+<p>
+I apologize to NTL users for this, but it is a bit of painful
+medicine that should only be necessary to take just this one time
+(but then as a <tt>C++</tt> programmer, you must already
+be used to suffering ;-).
+Just about all of the incompatabilities are detectable by the compiler.
+See below for a detailed list of the changes and
+some tips on making the transition.
+<p>
+The new interface is much more enjoyable to work with,
+and I don't foresee any changes to the interace in the future.
+Here is a broad overview of the changes:
+<p>
+
+<ul>
+<li>
+Added functional/operator notation consistently throughout NTL,
+making it possible to write much more concise and readable code.
+<li>
+Got rid of automatic type conversions:  these cause just too
+many problems.  But I've overloaded all of the basic arithmetic
+operators and procedures so as to emulate a natural kind
+of "type promotion" logic.  With these promotions, along with
+a  full compliment of conversion functions, one hardly misses
+the automatic conversions.
+<li>
+Got rid of the macros
+<pre>
+   vector(T), matrix(T), pair(T),
+</pre>
+which were causing too many name space problems.
+
+<li>
+Made assignment operators have the "correct" return type.
+<li>
+Introduced a more powerful and flexible mechanism for modulus changing.
+<li>
+Cleaned up numerous other minor problems.
+</ul>
+
+</ul>
+
+<p>
+<h4>
+Compatibility
+</h4>
+<p>
+
+Here is a detailed list of the changes to the programming 
+interface.
+<p>
+
+
+<ul>
+
+<li>
+The names of the classes 
+<pre>
+   BB, BB_p, BB_pX
+</pre>
+have been changed to
+<pre>
+   GF2X, GF2E, GF2EX
+</pre>
+
+<li>
+There is also a class <tt>GF2</tt> to represent GF(2).
+Many of the functions relating to <tt>BB, BB_p, BB_pX</tt>
+had argument and return-value types of type <tt>long</tt>
+that are now of the more appropriate type <tt>GF2</tt>.
+This change was needed so that the interface would be consistent
+with that of the new classes
+<pre>
+   ZZ_pE, ZZ_pEX, zz_pE, zz_pEX.
+</pre>
+
+<li>
+The explicit conversion operator from <tt>GF2X</tt> 
+(the new <tt>BB</tt>) to <tt>GF2EX</tt> (the new <tt>BB_pX</tt>)
+has different semantics: it now performs a coefficient lift,
+instead of creating a constant polynomial.
+
+<li>
+The conversion operator "<tt>&lt;&lt;</tt>" has been retired.
+Now instead of
+<!-- STARTPLAIN
+   x << a; 
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x &lt;&lt; a;&nbsp;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one writes
+<!-- STARTPLAIN
+   conv(x, a);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; conv(x, a);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+<p>
+Operator "<tt>&lt;&lt;</tt>" is now used for shift operations.
+<li>
+Every conversion routine now has a corresponding functional version
+which has the name <tt>to_T</tt>, where <tt>T</tt> is the result type.
+These new names replace old names that were less consistent.
+So instead of
+<!-- STARTPLAIN
+   x = Long(a);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = Long(a);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one writes
+<!-- STARTPLAIN
+   x = to_long(a);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = to_long(a);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+
+<li>
+The names of the routines
+<pre>
+   ZZ_pInit, zz_pInit, zz_pFFTInit, GF2EInit
+</pre>
+have been changed to
+<pre>
+   zz_p::init, zz_p::init, zz_p::FFTInit, GF2E::init
+</pre>
+
+<li>
+The names of the routines 
+<pre>
+   and, or, xor 
+</pre>
+for class <tt>ZZ</tt> have
+changed to 
+<pre>
+   bit_and, bit_or, bit_xor, 
+</pre>
+because the new <tt>C++</tt>
+standard defines these as reserved words.
+
+<li>
+The function <tt>LowBits</tt> for <tt>ZZ</tt> is now called <tt>trunc</tt>.
+
+<li>
+Polynomial inversion mod <tt>X^n</tt> has changed from <tt>inv</tt>
+to <tt>InvTrunc</tt>.
+
+<li>
+Modular trace, norm, minimum polynomial and characteristic
+polynomial have changed from
+<pre>
+   trace, norm, MinPoly, IrredPoly, CharPoly
+</pre>
+to
+<pre>
+   TraceMod, NormMod, MinPolyMod, IrredPolyMod, CharPolyMod
+</pre>
+
+
+<li>
+For the class <tt>ZZX</tt>, the functions 
+<pre>
+   DivRem, div, rem, /, %, /=, %=
+</pre>
+have new semantics when dividing by non-monic polynomials.
+The old semantics are provided by new routines 
+<pre>
+   PseudoDivRem, PseudoDiv, PseudoRem.
+</pre>
+
+<li>
+The <tt>UpdateMap</tt> routines have slightly different semantics:
+in versions &lt; 3.0, the output always had length n;
+now high-order zeroes are stripped.
+
+<li>
+The classes <tt>ZZ_pBak</tt>, <tt>zz_pBak,</tt> etc.,  
+have just slightly different semantics;  I can't imagine
+any reasonable program detecting a difference.
+
+<li>
+The assignment operator and copy constructor for the class <tt>RR</tt>
+have different semantics: they now produce exact copies, instead
+of rounding to current precision.
+
+<li>
+All of the NTL compiler flags now start with <tt>NTL_</tt>
+to avoid name space problems.
+
+<li>
+All of the files "zz_p.h", vec_zz_p.h", etc., have been eliminated.
+Use instead the names "lzz_p.h", "vec_lzz_p.h", etc.
+
+</ul>
+
+<p>
+<h4>
+Tips on making the transition
+</h4>
+<p>
+
+<ul>
+
+<li>
+Apply this <a href="sedscript.txt">sed script</a> to make
+most of the necessary syntactic changes.
+
+<li>
+Re-compile old NTL programs with the flag 
+<pre>
+   -DNTL_TRANSITION
+</pre>
+See <a href="flags.txt">flags.txt</a> for details on how
+this will help your compiler detect remaining incompatabilities.
+In particular, any uses of operator <tt>&lt;&lt;</tt>
+in its old role as a conversion operator will cause the compiler
+to raise an error.
+You can then convert all of these to the new notation.
+
+</ul>
+
+
+<p>
+<hr>
+
+
+<p>
+<h3>
+Changes between NTL 1.7 and 2.0
+</h3>
+<p>
+
+<ul>
+<li>
+Implementation of classes BB (polynomials over GF(2))
+and BB_pX (polynomials over GF(2^n)).
+
+<li>
+A more consistent and natural interface, including arithmetic operators
+and a disciplined use of automatic conversion.
+So now one can write
+<!-- STARTPLAIN
+   x = a * b + c;
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; x = a * b + c;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+instead of 
+<!-- STARTPLAIN
+   mul(x, a, b);
+   add(x, x, c);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; mul(x, a, b);<br>
+&nbsp;&nbsp; add(x, x, c);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+as one must in older versions of NTL.
+The operator notation leads to somewhat less efficient code,
+and one can always use the old notation in situations
+where efficiency is critical.
+Despite the new programming interface,
+care has been taken to ensure backward compitability;
+pre-existing programs that use NTL should still work.
+
+<li>
+Windows port.
+
+<li>
+Added compile-time flag that allows one to exploit 
+"long long" data type if it exists (this especially helps on Pentium/Linux 
+platforms).
+
+<li>
+Added compile-time flag to get better quad_float code on
+Pentium/Linux platforms.
+
+<li>
+A few bug fixes and performance tuning.
+</ul>
+
+<p>
+<hr>
+
+
+<p>
+<h3>
+Changes between NTL 1.5 and NTL 1.7
+</h3>
+<p>
+
+<ul>
+<li>
+Incorporation of Keith Briggs' quadratic precision package.
+
+<li>
+Much faster and more robust lattice basis reduction,
+including Schnorr-Horner "volume heuristic" for Block Korkin
+Zolotarev reductions, and a new quadratic precision LLL variant
+that is much more robust.
+
+<li>
+A few bug fixes.
+
+</ul>
+
+
+<p>
+<hr>
+
+<p>
+<h3>
+Changes between NTL 1.0 and NTL 1.5
+</h3>
+<p>
+
+
+<ul>
+<li>
+Implementation of Schnorr-Euchner algorithms for
+lattice basis reduction, including deep insertions and
+block Korkin Zolotarev reduction.
+These are significantly faster than the LLL algorithm
+in NTL 1.0.
+
+<li>
+Implementation of arbitrary-precision floating point.
+
+<li>
+Implementation of double precision with extended exponent range,
+which is useful for lattice basis reduction when the coefficients
+are large.
+
+<li>
+Faster polynomial multiplication over the integers,
+incorporating the Schoenhagge-Strassen method.
+
+<li>
+Compilation flags that increase performance on machines
+with poor floating-point performance.
+
+<li>
+Sundry performance tuning and a few bug fixes.
+
+</ul>
+
+<center>
+<a href="tour-roadmap.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ack.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Using NTL with the gf2x library  </title>
+</head>
+
+
+<center>
+<a href="tour-gmp.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-time.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Using NTL with the <tt>GF2X</tt> library
+</p>
+</h1>
+
+<p> <hr> <p>
+
+<tt>gf2x</tt> is a library for fast multiplication 
+of polynomials over <i>GF(2)</i>.
+The <tt>gf2x</tt> library was developed by Emmanuel Thom&eacute;,
+Paul Zimmermmann, Pierrick Gaudry, and Richard Brent.
+You can get more information about it, as well as the latest version
+from <a href="http://gforge.inria.fr/projects/gf2x/">here.</a>
+
+<p>
+
+Unlike NTL, which only imlements a version of Karatsuba multiplication,
+<tt>gf2x</tt> implements other algorithms that are faster
+for very large degree polynomials.
+If you use NTL if the <tt>gf2x</tt> library,
+then multiplication, division, GCD, and minimum polynomal
+calculations for the <a href="GF2X.cpp.html">GF2X</a> class will 
+be faster for large degree polymials.
+
+<p>
+Note: you will need version 1.2 or later of <tt>gf2x</tt>
+for a thread-safe build of NTL.
+
+
+
+
+<p>
+<h2>
+Downloading and building <tt>gf2x</tt>
+</h2>
+<p>
+
+Download <tt>gf2x</tt> from <a href="http://gforge.inria.fr/projects/gf2x/">here.</a>
+You will get a file <tt>gf2x-XXX.tar.gz</tt>.
+<p>
+Now do the following:
+<pre>
+   % gunzip gf2x-XXX.tar.gz
+   % tar xf gf2x-XXX.tar
+   % cd gf2x-XXX
+   % ./configure --prefix=$HOME/sw
+   % make
+   % make check
+   % make install
+</pre>
+This will build, test, and install <tt>gf2x</tt> in <tt>$HOME/sw</tt>.
+Of course, change $HOME/sw to whatever you want (the default is 
+<tt>/usr/local</tt>).
+You will find the <tt>gf2x</tt> header files in <tt>$HOME/sw/include</tt> 
+and the compiled binaries in <tt>$HOME/sw/lib</tt>.
+
+<p>
+You can also supply the option
+<tt>--disable-shared</tt> to the <tt>configure</tt> script,
+if you only want static libraries.
+However, if you ultimately want to build NTL as a shared
+library, then you must also build <tt>gf2x</tt> as a shared library.
+
+<p>
+<p>
+You must ensure that NTL and <tt>gf2x</tt> have the same 
+<a href="tour-unix.html#abi">ABI</a>.
+<tt>gf2x</tt>'s configuration script might need some
+help to select the right one.
+For example, you may have to pass
+<pre>
+   ABI=64 CFLAGS="-m64 -O2"
+</pre>
+to <tt>gf2x</tt>'s configure script to force a 64-bit ABI.
+
+
+
+
+
+<p>
+<h2>
+Building and using NTL with <tt>gf2x</tt>
+</h2>
+<p>
+
+When building NTL with <tt>gf2x</tt>, you have to tell NTL that you want to
+use it.
+The easiest way to do this is by passing the argument 
+<tt>NTL_GF2X_LIB=on</tt> to the NTL configuration script
+when you are <a href="tour-unix.html">installing NTL</a>.
+Assuming you installed <tt>gf2x</tt> in <tt>$HOME/sw</tt> as above,
+and you also want to install NTL in <tt>$HOME/sw</tt>,
+you execute:
+<pre>
+   % ./configure PREFIX=$HOME/sw NTL_GF2X_LIB=on  GF2X_PREFIX=$HOME/sw
+</pre>
+You can write this more simply as 
+<pre>
+   % ./configure DEF_PREFIX=$HOME/sw NTL_GF2X_LIB=on 
+</pre>
+Here, <tt>DEF_PREFIX</tt> is a variable that is used
+to specify the location of all software,
+and it defaults to <tt>/usr/local</tt>.
+
+
+<p>
+If you installed <tt>gf2x</tt> in <tt>/usr/local</tt> (or some other
+standard system directory where your compiler will look by default)
+then simply
+<pre>
+   % ./configure PREFIX=$HOME/sw NTL_GF2X_LIB=on
+</pre>
+does the job.
+Moreover, if NTL is also to be installed in <tt>/usr/local</tt>,
+then
+<pre>
+   % ./configure NTL_GF2X_LIB=on
+</pre>
+does the job.
+
+
+<p>
+When compiling programs that use NTL with <tt>gf2x</tt>,
+you need to link with the <tt>gf2x</tt> library.
+If <tt>gf2x</tt> is installed as above in 
+<tt>$HOME/sw</tt>, rather than in a standard system directory,
+ this just means adding
+<tt>-L$HOME/sw/lib -lgf2x</tt> to the compilation command.
+If you installed <tt>gf2x</tt> in a standard system directory,
+then just <tt>-lgf2x</tt> does the job.
+Note that <tt>-lgf2x</tt> must come <i>after</i> <tt>-lntl</tt>
+on the command line.
+Finally, if NTL and <tt>gf2x</tt> are installed as
+shared libraries, then you don't even need <tt>-lgf2x</tt>.
+
+
+
+
+<p> <hr> <p>
+
+
+<p>
+
+<center>
+<a href="tour-gmp.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-time.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+
+
+</body>
+</html>

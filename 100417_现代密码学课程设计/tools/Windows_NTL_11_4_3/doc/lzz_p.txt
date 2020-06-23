@@ -1,0 +1,422 @@
+
+
+/**************************************************************************\
+
+MODULE: zz_p
+
+SUMMARY:
+
+The class zz_p is used to represent integers mod p, where 1 <= p <
+NTL_SP_BOUND.  Note that NTL_SP_BOUND is usually 2^30 on 32-bit machines and
+2^50 on 64-bit machines.
+
+The modulus p may be any positive integer, not necessarily prime.
+
+Objects of the class zz_p are represented as a long in the range 0..p-1.
+
+An executing program maintains a "current modulus", which is set to p using
+zz_p::init(p).  The current modulus *must* be initialized before any operations
+on zz_p's are performed.  The modulus may be changed, and a mechanism is provided
+for saving and restoring a modulus (see classes zz_pPush and zz_pContext below).
+
+\**************************************************************************/
+
+#include <NTL/ZZ.h>
+#include <NTL/FFT.h>
+#include <NTL/SmartPtr.h>
+
+
+class zz_p {
+public:
+   
+   zz_p(); // initial value 0
+
+   zz_p(const zz_p& a); // copy constructor
+   explicit zz_p(long a); // promotion constructor
+
+   zz_p& operator=(const zz_p& a); // assignment
+   zz_p& operator=(long a); // assignment
+
+   static void init(long p); 
+   // set the modulus to p, where p > 1.  This must be called before any
+   // zz_p constructors are invoked.
+   // The number p must have at most NTL_SP_NBITS bits.
+
+   static long modulus();
+   // zz_p::modulus() yields read-only reference to the current
+   // modulus
+
+
+   // typedefs to aid in generic programming
+   typedef long rep_type;
+   typedef zz_pContext context_type;
+   typedef zz_pBak bak_type;
+   typedef zz_pPush push_type;
+   typedef zz_pX poly_type;
+
+};
+
+
+long rep(zz_p a); // read-only access to representation of a
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+
+long operator==(zz_p a, zz_p b);
+long operator!=(zz_p a, zz_p b);
+
+long IsZero(zz_p a);  // test for 0
+long IsOne(zz_p a);  // test for 1
+
+// PROMOTIONS: operators ==, != promote long to zz_p on (a, b).
+
+
+/**************************************************************************\
+
+                                    Addition 
+
+\**************************************************************************/
+
+// operator notation:
+
+zz_p operator+(zz_p a, zz_p b);
+zz_p operator-(zz_p a, zz_p b);
+
+zz_p operator-(zz_p a); // unary -
+
+zz_p& operator+=(zz_p& x, zz_p a);
+zz_p& operator+=(zz_p& x, long a);
+
+zz_p& operator-=(zz_p& x, zz_p a);
+zz_p& operator-=(zz_p& x, long a);
+
+zz_p& operator++(zz_p& x);  // prefix
+void operator++(zz_p& x, int);  // postfix
+
+zz_p& operator--(zz_p& x);  // prefix
+void operator--(zz_p& x, int);  // postfix
+
+// procedural versions:
+
+
+void add(zz_p& x, zz_p a, zz_p b); // x = a + b
+void sub(zz_p& x, zz_p a, zz_p b); // x = a - b 
+void negate(zz_p& x, zz_p a); // x = -a
+
+// PROMOTIONS: binary +, -, and procedures add, sub promote
+// from long to zz_p on (a, b).
+
+
+/**************************************************************************\
+
+                                  Multiplication 
+
+\**************************************************************************/
+
+// operator notation:
+
+zz_p operator*(zz_p a, zz_p b);
+
+zz_p& operator*=(zz_p& x, zz_p a);
+zz_p& operator*=(zz_p& x, long a);
+
+// procedural versions:
+
+void mul(zz_p& x, zz_p a, zz_p b); // x = a * b
+
+void sqr(zz_p& x, zz_p a); // x = a^2
+zz_p sqr(zz_p a); 
+
+// PROMOTIONS: operator * and procedure mul promote from long to zz_p
+// on (a, b).
+
+
+/**************************************************************************\
+
+                                  Division
+
+\**************************************************************************/
+
+operator notation:
+
+zz_p operator/(z_p a, zz_p b);
+
+zz_p& operator/=(zz_p& x, zz_p a);
+zz_p& operator/=(zz_p& x, long a);
+
+procedural versions:
+
+void div(zz_p& x, zz_p a, zz_p b);
+// x = a/b
+
+void inv(zz_p& x, zz_p a);
+zz_p inv(zz_p a);
+// x = 1/a
+
+// PROMOTIONS: operator / and procedure div promote from long to zz_p
+// on (a, b).
+
+
+/**************************************************************************\
+
+                                  Exponentiation
+
+\**************************************************************************/
+
+
+void power(zz_p& x, zz_p a, long e); // x = a^e (e may be negative)
+zz_p power(zz_p a, long e); 
+
+
+/**************************************************************************\
+
+                               Random Elements
+
+\**************************************************************************/
+
+
+void random(zz_p& x);
+zz_p random_zz_p();
+// x = random element in zz_p.  Uses RandomBnd from ZZ.
+
+void VectorRandom(long k, zz_p *x);
+// equivalent to random(x[i]) for i in [0..k), but fatser
+
+
+/**************************************************************************\
+
+                                Input/Output
+
+\**************************************************************************/
+
+
+ostream& operator<<(ostream& s, zz_p a);
+
+istream& operator>>(istream& s, zz_p& x);
+// a ZZ is read and reduced mod p
+
+/**************************************************************************\
+
+                       Modulus Switching 
+
+A class zz_pPush is provided for "backing up" the current modulus
+and installing a new one.
+
+Here is what you do to save the current modulus, temporarily
+set it to p, and automatically restore it:
+
+   { 
+      zz_pPush push(p); 
+
+      ...
+
+   }
+
+The constructor for push will save the current modulus, and install p as the
+current modulus.  The destructor for push will restore the old modulus when the
+scope enclosing it exits.  This is the so-called RAII (resource acquisition is
+initialization) paradigm.
+
+You could also do the following:
+
+   {
+      zz_pPush push; // just backup current modulus
+
+        ...
+
+      zz_p::init(p1); // install p1 
+
+        ...
+
+      zz_p::init(p2); // install p2
+
+      // reinstall original modulus as close of scope
+   }
+
+      
+The zz_pPush interface is good for implementing simple stack-like
+modulus "context switching".  For more general context switching,
+see zz_pContext below.  There is also an older zz_pBak class
+that may also be useful.
+
+..........................................................................
+
+It is critical that zz_p objects created under one zz_p modulus are not used in
+any non-trivial way "out of context", i.e., under a different (or undefined)
+zz_p modulus.  However, for ease-of-use, some operations may be safely
+performed out of context.  These safe operations include: the default and copy
+constructor, the destructor, and the assignment operator.  In addition is is
+generally safe to read any zz_p object out of context (i.e., printing it out, or
+fetching its underlying representive using the rep() function).
+
+Any unsafe uses out of context are not in general checked, and may 
+lead to unpredictable behavior.
+
+\**************************************************************************/
+
+
+// A convenient interface for common cases:
+
+class zz_pPush {
+public:
+
+zz_pPush();  // just backup current modulus
+
+explicit zz_pPush(long p, long maxroot=NTL_FFTMaxRoot);
+zz_pPush(INIT_FFT_TYPE, long index); 
+zz_pPush(INIT_USER_FFT_TYPE, long p);
+explicit zz_pPush(const zz_pContext& context); 
+  // backup current modulus and install the given one
+  // see documentation for zz_p::init for more details
+
+private:
+zz_pPush(const zz_pPush&); // disabled
+void operator=(const zz_pPush&); // disabled
+
+};
+
+
+
+// more general context switching:
+// A zz_pContext object has a modulus q (possibly "null")
+
+class zz_pContext {
+
+
+public:
+
+zz_pContext();  // q = "null"
+
+explicit zz_pContext(long p); 
+zz_pContext(INIT_FFT_TYPE, long index); 
+zz_pContext(INIT_USER_FFT_TYPE, long p);
+  // q = the given modulus
+  // see documentation for zz_p::init for more details
+  
+
+void save(); // q = CurrentModulus
+void restore() const; // CurrentModulus = q
+
+zz_pContext(const zz_pContext&);  // copy
+zz_pContext& operator=(const zz_pContext&); // assignment
+~zz_pContext(); // destructor
+
+
+};
+
+
+/ An older interface:
+// To describe this logic, think of a zz_pBak object
+// of having two components: a modulus q (possibly "null") and 
+// an "auto-restore bit" b.
+
+class zz_pBak {
+public:
+
+
+   zz_pBak();  // q = "null", b = 0
+
+   ~zz_pBak();  // if (b) CurrentModulus = q
+
+   void save();  // q = CurrentModulus, b = 1 
+   void restore();  // CurrentModulus = q, b = 0
+
+
+private:
+   zz_pBak(const zz_pBak&);  // copy disabled
+   void operator=(const zz_pBak&);  // assignment disabled
+};
+
+
+
+
+
+
+
+
+/**************************************************************************\
+
+                               Miscellany
+
+\**************************************************************************/
+
+
+void clear(zz_p& x); // x = 0
+void set(zz_p& x); // x = 1
+
+static mulmod_t zz_p::ModulusInverse();
+// zz_p::ModulusInverse() returns PrepMulMod(zz_p::modulus()) 
+
+static zz_p zz_p::zero();
+// zz_p::zero() yields a read-only reference to zero
+
+void swap(zz_p& x, zz_p& y);
+// swap x and y 
+
+static void zz_p::init(long p, long maxroot);
+// Same as ordinary zz_p::init(p), but somewhat more efficient.  If you are
+// going to perform arithmetic modulo a degree n polynomial, in which
+// case set maxroot to NextPowerOfTwo(n)+1.  This is useful, for
+// example, if you are going to factor a polynomial of degree n modulo
+// p, and you know n in advance.
+// If maxroot is set too low, the program will abort with an
+// appropriate error message.
+
+static void zz_p::FFTInit(long i);
+// sets modulus to the i-th FFT prime (counting from 0).  FFT primes
+// are NTL_SP_NBITS-bit primes p, where p-1 is divisible by a high power
+// of two.  Thus, polynomial arithmetic mod p can be implemented
+// particularly efficiently using the FFT.  As i increases, the power
+// of 2 that divides p-1 gets smaller, thus placing a more severe
+// restriction on the degrees of the polynomials to be multiplied.
+
+static void zz_p::UserFFTInit(long p);
+// set the modulus to a user-provided FFT prime p. To be useful,
+// p-1 should be divisibly by a high power of 2. 
+// The function is a utility routine that may be used to 
+// calculate this value (see below). 
+// If you are going to perform arithmetic modulo a degree n polynomial, 
+// you will want CalcMaxRoot(p) >= NextPowerOfTwo(n)+1. 
+
+zz_pContext::zz_pContext(long p, long maxroot);
+// constructor for a zz_pContext with same semantics
+// as zz_p::init(p, maxroot) above.
+
+zz_pContext::zz_pContext(INIT_FFT_TYPE, long i);
+// constructor for a zz_pContext with same semantics
+// as zz_p::FFTInit(i) above; invoke as zz_pContext(INIT_FFT, i).
+
+zz_pContext::zz_pContext(INIT_USER_FFT_TYPE, long p);
+// constructor for a zz_pContext with same semantics
+// as zz_p::UserFFTInit(p) above; invoke as zz_pContext(INIT_USER_FFT, p).
+
+zz_p::zz_p(INIT_NO_ALLOC_TYPE);
+// provided for consistency with other classes, initialize to zero
+
+zz_p::zz_p(INIT_ALLOC_TYPE);
+// provided for consistency with other classes, initialize to zero
+
+zz_p::allocate();
+// provided for consistency with other classes, no action
+
+long CalcMaxRoot(long p);
+// p is assumed to be an odd prime.
+// Returns the largest k such that 2^k divides p-1
+// and such that k does not exceed an implementation defined
+// constant.  This represents the max power of two for which
+// an FFT mod p is supported.
+
+void VectorConv(long k, zz_p *x, const ZZ *a);
+void VectorConv(long k, zz_p *x, const long *a);
+// equivalent to conv(x[i], a[i]) for i in [0..k), but fatser
+
+
+
+
+

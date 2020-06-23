@@ -1,0 +1,639 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/RR.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: RR</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class RR is used to represent arbitrary-precision floating point</span>
+<span class="Comment">numbers.</span>
+
+<span class="Comment">The functions in this module guarantee very strong accuracy conditions</span>
+<span class="Comment">which make it easy to reason about the behavior of programs using</span>
+<span class="Comment">these functions.</span>
+
+<span class="Comment">The arithmetic operations always round their results to p bits, where</span>
+<span class="Comment">p is the current precision.  The current precision can be changed</span>
+<span class="Comment">using RR::SetPrecision(), and can be read using RR::precision().  </span>
+
+<span class="Comment">The minimum precision that can be set is 53 bits.</span>
+<span class="Comment">The maximum precision is limited only by the word size of the machine.</span>
+
+<span class="Comment">A convenience class RRPush is provided to automatically save and</span>
+<span class="Comment">restore the current precision.</span>
+
+<span class="Comment">All arithmetic operations are implemented so that the effect is as if the</span>
+<span class="Comment">result was computed exactly, and then rounded to p bits.  If a number</span>
+<span class="Comment">lies exactly half-way between two p-bit numbers, the &quot;round to even&quot;</span>
+<span class="Comment">rule is used.  So in particular, the computed result will have a relative error</span>
+<span class="Comment">of at most 2^{-p}.</span>
+
+
+<span class="Comment">The above rounding rules apply to all arithmetic operations in this</span>
+<span class="Comment">module, except for the following routines:</span>
+
+<span class="Comment">* The transcendental functions: </span>
+<span class="Comment">     log, exp, log10, expm1, log1p, pow, sin, cos, ComputePi</span>
+
+<span class="Comment">* The power function</span>
+
+<span class="Comment">* The input and ascii to RR conversion functions when using &quot;e&quot;-notation </span>
+
+<span class="Comment">For these functions, a very strong accuracy condition is still </span>
+<span class="Comment">guaranteed: the computed result has a relative error of less than 2^{-p + 1}</span>
+<span class="Comment">(and actually much closer to 2^{-p}).</span>
+<span class="Comment">That is, it is as if the resulted were computed exactly, and then</span>
+<span class="Comment">rounded to one of the two neighboring p-bit numbers (but not necessarily</span>
+<span class="Comment">the closest).</span>
+
+<span class="Comment">The behavior of all functions in this module is completely platform </span>
+<span class="Comment">independent: you should get *exactly* the same results on any platform</span>
+<span class="Comment">(the only exception to this rule is the random number generator).</span>
+
+<span class="Comment">Note that because precision is variable, a number may be computed with</span>
+<span class="Comment">to a high precision p', and then be used as input to an arithmetic operation</span>
+<span class="Comment">when the current precision is p &lt; p'.  </span>
+<span class="Comment">The above accuracy guarantees still apply; in particular, </span>
+<span class="Comment">no rounding is done until *after* the operation is performed.  </span>
+
+<span class="Comment">EXAMPLE: If x and y are computed to 200 bits of precision,</span>
+<span class="Comment">and then the precision is set to 100 bits, then x-y will</span>
+<span class="Comment">be computed correctly to 100 bits, even if, say, x and y agree</span>
+<span class="Comment">in their high-order 50 bits.  If x and y had been rounded to</span>
+<span class="Comment">100 bits before the subtraction, then the difference would</span>
+<span class="Comment">only be accurate to 50 bits of precision.</span>
+
+<span class="Comment">Note that the assignment operator and the copy constructor </span>
+<span class="Comment">produce *exact* copies of their inputs---they are *never* rounded. </span>
+<span class="Comment">This is a change in semantics from versions 2.0 and earlier</span>
+<span class="Comment">in which assignment and copy rounded their outputs.</span>
+<span class="Comment">This was deemed a design error and has been changed.</span>
+
+<span class="Comment">If you want to force rounding to current precision, the easiest</span>
+<span class="Comment">way to do this is with the RR to RR conversion routines:</span>
+<span class="Comment">   conv(x, a);</span>
+<span class="Comment">or</span>
+<span class="Comment">   x = to_RR(a); </span>
+<span class="Comment">This will round a to current precision and store the result in x.</span>
+<span class="Comment">Note that writing</span>
+<span class="Comment">   x = a + 0;</span>
+<span class="Comment">or</span>
+<span class="Comment">   x = a*1;</span>
+<span class="Comment">also has the same effect.</span>
+
+<span class="Comment">Unlike IEEE standard floating point, there are no &quot;special values&quot;,</span>
+<span class="Comment">like &quot;infinity&quot; or &quot;not a number&quot;, nor are there any &quot;denormalized</span>
+<span class="Comment">numbers&quot;.  Overflow, underflow, or taking a square root of a negative</span>
+<span class="Comment">number all result in an error being raised.</span>
+
+<span class="Comment">An RR is represented as a mantissa/exponent pair (x, e), where x is a</span>
+<span class="Comment">ZZ and e is a long.  The real number represented by (x, e) is x * 2^e.</span>
+<span class="Comment">Zero is always represented as (0, 0).  For all other numbers, x is</span>
+<span class="Comment">always odd.</span>
+
+
+<span class="Comment">CONVERSIONS AND PROMOTIONS:</span>
+<span class="Comment">The complete set of conversion routines between RR and other types is</span>
+<span class="Comment">documented in the file &quot;conversions.txt&quot;. Conversion from any type</span>
+<span class="Comment">to RR always rounds the result to the current precision.</span>
+
+<span class="Comment">The basic operations also support the notion of &quot;promotions&quot;, </span>
+<span class="Comment">so that they promote a double to an RR.  For example, one can write </span>
+<span class="Comment">   x = y + 1.5;</span>
+<span class="Comment">where x and y are RR's. One should be aware that these promotions are </span>
+<span class="Comment">always implemented using the double to RR conversion routine.</span>
+
+
+<span class="Comment">SIZE INVARIANT: max(NumBits(x), |e|) &lt; 2^(NTL_BITS_PER_LONG-4)</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/xdouble.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/quad_float.h&gt;</span>
+
+<span class="Type">class</span> RR {
+
+<span class="Statement">public</span>:
+
+RR(); <span class="Comment">// = 0</span>
+
+RR(<span class="Type">const</span> RR&amp; a); <span class="Comment">// copy constructor</span>
+
+
+<span class="Type">explicit</span> RR(<span class="Type">double</span> a);  <span class="Comment">// promotion constructor</span>
+
+RR&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> RR&amp; a); <span class="Comment">// assignment operator</span>
+
+<span class="Comment">// NOTE: the copy constructor and assignment operator</span>
+<span class="Comment">// produce exact copies of their inputs, and do not round</span>
+<span class="Comment">// to current precision.  </span>
+
+RR&amp; <span class="Statement">operator</span>=(<span class="Type">double</span> a); <span class="Comment">// convert and assign</span>
+
+~RR(); <span class="Comment">// destructor</span>
+
+RR(RR&amp;&amp; a);
+<span class="Comment">// move constructor (C++11 only)</span>
+<span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+RR&amp; <span class="Statement">operator</span>=(RR&amp;&amp; a);
+<span class="Comment">// move assignment (C++11 only)</span>
+<span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+<span class="Type">const</span> ZZ&amp; mantissa() <span class="Type">const</span>;  <span class="Comment">// read the mantissa</span>
+<span class="Type">long</span> exponent() <span class="Type">const</span>;  <span class="Comment">// read the exponent</span>
+
+<span class="Type">static</span> <span class="Type">void</span> SetPrecision(<span class="Type">long</span> p);
+<span class="Comment">// set current precision to max(p, 53) bits.</span>
+<span class="Comment">// The default is 150</span>
+
+<span class="Type">static</span> <span class="Type">long</span> precision();  <span class="Comment">// read current value of precision</span>
+
+<span class="Type">static</span> <span class="Type">void</span> SetOutputPrecision(<span class="Type">long</span> p);
+<span class="Comment">// set the number of output decimal digits to max(p, 1).</span>
+<span class="Comment">// The default is 10</span>
+
+<span class="Type">static</span> <span class="Type">long</span> OutputPrecision();
+<span class="Comment">// read the current number of output decimal digits</span>
+
+
+};
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Comment">// standard comparison operators:</span>
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>&lt;=(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>&gt;=(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span> &lt;(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span> &gt;(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> RR&amp; a); <span class="Comment">// test if 0</span>
+<span class="Type">long</span> IsOne(<span class="Type">const</span> RR&amp; a); <span class="Comment">// test if 1</span>
+
+<span class="Type">long</span> sign(<span class="Type">const</span> RR&amp; a);  <span class="Comment">// returns sign of a (+1, -1, 0)</span>
+<span class="Type">long</span> compare(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b); <span class="Comment">// returns sign(a-b);</span>
+
+<span class="Comment">// PROMOTIONS: operators ==, ..., &gt; and function compare</span>
+<span class="Comment">// promote double to RR on (a, b).</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Addition</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+RR <span class="Statement">operator</span>+(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+RR <span class="Statement">operator</span>-(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+RR <span class="Statement">operator</span>-(<span class="Type">const</span> RR&amp; a); <span class="Comment">// unary -</span>
+
+RR&amp; <span class="Statement">operator</span>+=(RR&amp; x, <span class="Type">const</span> RR&amp; a);
+RR&amp; <span class="Statement">operator</span>+=(RR&amp; x, <span class="Type">double</span> a);
+
+RR&amp; <span class="Statement">operator</span>-=(RR&amp; x, <span class="Type">const</span> RR&amp; a);
+RR&amp; <span class="Statement">operator</span>-=(RR&amp; x, <span class="Type">double</span> a);
+
+RR&amp; <span class="Statement">operator</span>++(RR&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(RR&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+RR&amp; <span class="Statement">operator</span>--(RR&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(RR&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> add(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b); <span class="Comment">// z = a+b</span>
+<span class="Type">void</span> sub(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b); <span class="Comment">// z = a-b</span>
+<span class="Type">void</span> negate(RR&amp; z, <span class="Type">const</span> RR&amp; a); <span class="Comment">// z = -a</span>
+
+<span class="Comment">// PROMOTIONS: operators +, -, and procedures add, sub promote double</span>
+<span class="Comment">// to RR on (a, b).</span>
+
+<span class="Type">void</span> abs(RR&amp; z, <span class="Type">const</span> RR&amp; a); <span class="Comment">// z = |a|</span>
+RR fabs(<span class="Type">const</span> RR&amp; a);
+RR abs(<span class="Type">const</span> RR&amp; a);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Multiplication</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+RR <span class="Statement">operator</span>*(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+
+RR&amp; <span class="Statement">operator</span>*=(RR&amp; x, <span class="Type">const</span> RR&amp; a);
+RR&amp; <span class="Statement">operator</span>*=(RR&amp; x, <span class="Type">double</span> a);
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> mul(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b); <span class="Comment">// z = a*b</span>
+
+<span class="Type">void</span> sqr(RR&amp; z, <span class="Type">const</span> RR&amp; a); <span class="Comment">// z = a * a</span>
+RR sqr(<span class="Type">const</span> RR&amp; a);
+
+<span class="Comment">// PROMOTIONS: operator * and procedure mul promote double to RR on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Division</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+RR <span class="Statement">operator</span>/(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b);
+
+RR&amp; <span class="Statement">operator</span>/=(RR&amp; x, <span class="Type">const</span> RR&amp; a);
+RR&amp; <span class="Statement">operator</span>/=(RR&amp; x, <span class="Type">double</span> a);
+
+
+<span class="Comment">// procedural versions:</span>
+
+
+<span class="Type">void</span> div(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b); z = a/b
+
+<span class="Type">void</span> inv(RR&amp; z, <span class="Type">const</span> RR&amp; a); <span class="Comment">// z = 1 / a</span>
+RR inv(<span class="Type">const</span> RR&amp; a);
+
+<span class="Comment">// PROMOTIONS: operator / and procedure div promote double to RR on (a, b).</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Transcendental functions </span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> exp(RR&amp; res, <span class="Type">const</span> RR&amp; x);  <span class="Comment">// e^x</span>
+RR exp(<span class="Type">const</span> RR&amp; x);
+
+<span class="Type">void</span> log(RR&amp; res, <span class="Type">const</span> RR&amp; x); <span class="Comment">// log(x) (natural log)</span>
+RR log(<span class="Type">const</span> RR&amp; x);
+
+<span class="Type">void</span> log10(RR&amp; res, <span class="Type">const</span> RR&amp; x); <span class="Comment">// log(x)/log(10)</span>
+RR log10(<span class="Type">const</span> RR&amp; x);
+
+<span class="Type">void</span> expm1(RR&amp; res, <span class="Type">const</span> RR&amp;  x);
+RR expm1(<span class="Type">const</span> RR&amp; x);
+<span class="Comment">// e^(x)-1; more accurate than exp(x)-1 when |x| is small</span>
+
+<span class="Type">void</span> log1p(RR&amp; res, <span class="Type">const</span> RR&amp; x);
+RR log1p(<span class="Type">const</span> RR&amp; x);
+<span class="Comment">// log(1 + x); more accurate than log(1 + x) when |x| is small</span>
+
+<span class="Type">void</span> pow(RR&amp; res, <span class="Type">const</span> RR&amp; x, <span class="Type">const</span> RR&amp; y);  <span class="Comment">// x^y</span>
+RR pow(<span class="Type">const</span> RR&amp; x, <span class="Type">const</span> RR&amp; y);
+
+<span class="Type">void</span> sin(RR&amp; res, <span class="Type">const</span> RR&amp; x);  <span class="Comment">// sin(x); restriction: |x| &lt; 2^1000</span>
+RR sin(<span class="Type">const</span> RR&amp; x);
+
+<span class="Type">void</span> cos(RR&amp; res, <span class="Type">const</span> RR&amp; x);  <span class="Comment">// cos(x); restriction: |x| &lt; 2^1000</span>
+RR cos(<span class="Type">const</span> RR&amp; x);
+
+<span class="Type">void</span> ComputePi(RR&amp; pi); <span class="Comment">// approximate pi to current precision</span>
+RR ComputePi_RR();
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                         Rounding to integer values        </span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">/*</span><span class="Comment">** RR output **</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> trunc(RR&amp; z, <span class="Type">const</span> RR&amp; a);  <span class="Comment">// z = a, truncated to 0</span>
+RR trunc(<span class="Type">const</span> RR&amp; a);
+
+<span class="Type">void</span> floor(RR&amp; z, <span class="Type">const</span> RR&amp; a);  <span class="Comment">// z = a, truncated to -infinity</span>
+RR floor(<span class="Type">const</span> RR&amp; a);
+
+<span class="Type">void</span> ceil(RR&amp; z, <span class="Type">const</span> RR&amp; a);   <span class="Comment">// z = a, truncated to +infinity</span>
+RR ceil(<span class="Type">const</span> RR&amp; a);
+
+<span class="Type">void</span> round(RR&amp; z, <span class="Type">const</span> RR&amp; a);   <span class="Comment">// z = a, truncated to nearest integer</span>
+RR round(<span class="Type">const</span> RR&amp; a);            <span class="Comment">// ties are rounded to an even integer</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">** ZZ output **</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> TruncToZZ(ZZ&amp; z, <span class="Type">const</span> RR&amp; a);  <span class="Comment">// z = a, truncated to 0</span>
+ZZ TruncToZZ(<span class="Type">const</span> RR&amp; a);
+
+<span class="Type">void</span> FloorToZZ(ZZ&amp; z, <span class="Type">const</span> RR&amp; a);  <span class="Comment">// z = a, truncated to -infinity</span>
+ZZ FloorToZZ(<span class="Type">const</span> RR&amp; a);           <span class="Comment">// same as RR to ZZ conversion</span>
+
+<span class="Type">void</span> CeilToZZ(ZZ&amp; z, <span class="Type">const</span> RR&amp; a);   <span class="Comment">// z = a, truncated to +infinity</span>
+ZZ CeilToZZ(<span class="Type">const</span> ZZ&amp; a);
+
+<span class="Type">void</span> RoundToZZ(ZZ&amp; z, <span class="Type">const</span> RR&amp; a);   <span class="Comment">// z = a, truncated to nearest integer</span>
+ZZ RoundToZZ(<span class="Type">const</span> RR&amp; a);            <span class="Comment">// ties are rounded to an even integer</span>
+
+
+
+<a name="push"></a>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                 Saving and restoring the current precision</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">class</span> RRPush {
+<span class="Statement">public</span>:
+   RRPush();  <span class="Comment">// saves the cuurent precision</span>
+   ~RRPush(); <span class="Comment">// restores the saved precision</span>
+
+<span class="Statement">private</span>:
+   RRPush(<span class="Type">const</span> RRPush&amp;); <span class="Comment">// disable</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> RRPush&amp;); <span class="Comment">// disable</span>
+};
+
+
+<span class="Comment">// Example: </span>
+<span class="Comment">//</span>
+<span class="Comment">// {</span>
+<span class="Comment">//    RRPush push;  // don't forget to declare a variable!!</span>
+<span class="Comment">//    RR::SetPrecsion(new_p);</span>
+<span class="Comment">//    ...</span>
+<span class="Comment">// } // old precsion restored when scope is exited</span>
+
+
+<span class="Type">class</span> RROutputPush {
+<span class="Statement">public</span>:
+   RROutputPush();   <span class="Comment">// saves the cuurent output precision</span>
+   ~RROutputPush();  <span class="Comment">// restores the saved output precision</span>
+
+<span class="Statement">private</span>:
+   RROutputPush(<span class="Type">const</span> RROutputPush&amp;); <span class="Comment">// disable</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> RROutputPush&amp;); <span class="Comment">// disable</span>
+};
+
+
+<span class="Comment">// Example: </span>
+<span class="Comment">//</span>
+<span class="Comment">// {</span>
+<span class="Comment">//    RROutputPush push;  // don't forget to declare a variable!!</span>
+<span class="Comment">//    RR::SetOutputPrecsion(new_op);</span>
+<span class="Comment">//    ...</span>
+<span class="Comment">// } // old output precsion restored when scope is exited</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                 Miscelaneous</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> MakeRR(RR&amp; z, <span class="Type">const</span> ZZ&amp; a,  <span class="Type">long</span> e);
+RR MakeRR(<span class="Type">const</span> ZZ&amp; a,  <span class="Type">long</span> e);
+<span class="Comment">// z = a*2^e, rounded to current precision</span>
+
+<span class="Type">void</span> random(RR&amp; z);
+RR random_RR();
+<span class="Comment">// z = pseudo-random number in the range [0,1).</span>
+<span class="Comment">// Note that the behaviour of this function is somewhat platform</span>
+<span class="Comment">// dependent, because the underlying pseudo-ramdom generator is.</span>
+
+
+<span class="Type">void</span> SqrRoot(RR&amp; z, <span class="Type">const</span> RR&amp; a); <span class="Comment">// z = sqrt(a);</span>
+RR SqrRoot(<span class="Type">const</span> RR&amp; a);
+RR sqrt(<span class="Type">const</span> RR&amp; a);
+
+<span class="Type">void</span> power(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> e); <span class="Comment">// z = a^e, e may be negative</span>
+RR power(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> e);
+
+<span class="Type">void</span> power2(RR&amp; z, <span class="Type">long</span> e); <span class="Comment">// z = 2^e, e may be negative</span>
+RR power2_RR(<span class="Type">long</span> e);
+
+
+<span class="Type">void</span> clear(RR&amp; z);  <span class="Comment">// z = 0</span>
+<span class="Type">void</span> set(RR&amp; z);  <span class="Comment">// z = 1</span>
+
+<span class="Type">void</span> RR::swap(RR&amp; a);
+<span class="Type">void</span> swap(RR&amp; a, RR&amp; b);
+<span class="Comment">// swap (pointer swap)</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Input/Output</span>
+<span class="Comment">Input Syntax:</span>
+
+<span class="Comment">&lt;number&gt;: [ &quot;-&quot; ] &lt;unsigned-number&gt;</span>
+<span class="Comment">&lt;unsigned-number&gt;: &lt;dotted-number&gt; [ &lt;e-part&gt; ] | &lt;e-part&gt;</span>
+<span class="Comment">&lt;dotted-number&gt;: &lt;digits&gt; | &lt;digits&gt; &quot;.&quot; &lt;digits&gt; | &quot;.&quot; &lt;digits&gt; | &lt;digits&gt; &quot;.&quot;</span>
+<span class="Comment">&lt;digits&gt;: &lt;digit&gt; &lt;digits&gt; | &lt;digit&gt;</span>
+<span class="Comment">&lt;digit&gt;: &quot;0&quot; | ... | &quot;9&quot;</span>
+<span class="Comment">&lt;e-part&gt;: ( &quot;E&quot; | &quot;e&quot; ) [ &quot;+&quot; | &quot;-&quot; ] &lt;digits&gt;</span>
+
+<span class="Comment">Examples of valid input:</span>
+
+<span class="Comment">17 1.5 0.5 .5 5.  -.5  e10 e-10 e+10 1.5e10 .5e10 .5E10</span>
+
+<span class="Comment">Note that the number of decimal digits of precision that are used</span>
+<span class="Comment">for output can be set to any number p &gt;= 1 by calling</span>
+<span class="Comment">the routine RR::SetOutputPrecision(p).  The default value of p is 10.</span>
+<span class="Comment">The current value of p is returned by a call to RR::OutputPrecision().</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> RR&amp; a);
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, RR&amp; x);
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+
+<span class="Comment">            Specialized routines with explicit precision parameter</span>
+
+<span class="Comment">These routines take an explicit precision parameter p.  The value of p may be</span>
+<span class="Comment">any positive integer.  All results are computed to *precisely* p bits of</span>
+<span class="Comment">precision, regardless of the current precision (as set by RR::SetPrecision).</span>
+
+<span class="Comment">These routines are provided both for convenience and for situations where the</span>
+<span class="Comment">computation must be done with a precision that may be less than 53.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+
+<span class="Type">void</span> AddPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p); <span class="Comment">// z = a + b</span>
+RR AddPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p);
+
+<span class="Type">void</span> SubPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p); <span class="Comment">// z = a - b</span>
+RR SubPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p);
+
+<span class="Type">void</span> NegatePrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = -a</span>
+RR NegatePrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> AbsPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = |a|</span>
+RR AbsPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> MulPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p); <span class="Comment">// z = a*b</span>
+RR MulPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p);
+
+<span class="Type">void</span> SqrPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a*a</span>
+RR SqrPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> DivPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p);  <span class="Comment">// z = a/b</span>
+RR DivPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">const</span> RR&amp; b, <span class="Type">long</span> p);
+
+<span class="Type">void</span> InvPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);  <span class="Comment">// z = 1/a</span>
+RR DivPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> SqrRootPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = sqrt(a)</span>
+RR SqrRootPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> TruncPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a, truncated to 0</span>
+RR TruncPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> FloorPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a, truncated to -infinity</span>
+RR FloorPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> CeilPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);  <span class="Comment">// z = a, truncated to +infinity</span>
+RR CeilPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> RoundPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a, </span>
+                                            <span class="Comment">// truncated to nearest integer,</span>
+                                            <span class="Comment">// ties are roundec to an even </span>
+                                            <span class="Comment">// integer</span>
+RR RoundPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">const</span> RR&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">const</span> ZZ&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">const</span> ZZ&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">long</span> a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">long</span> a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">int</span> a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">int</span> a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">unsigned</span> <span class="Type">long</span> a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">long</span> p); <span class="Comment">// z = a </span>
+RR ConvPrec(<span class="Type">unsigned</span> <span class="Type">int</span> a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">double</span> a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">double</span> a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">const</span> xdouble&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">const</span> xdouble&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">const</span> quad_float&amp; a, <span class="Type">long</span> p); <span class="Comment">// z = a</span>
+RR ConvPrec(<span class="Type">const</span> quad_float&amp; a, <span class="Type">long</span> p);
+
+<span class="Type">void</span> ConvPrec(RR&amp; z, <span class="Type">const</span> <span class="Type">char</span> *s, <span class="Type">long</span> p); <span class="Comment">// read z from s</span>
+RR ConvPrec(<span class="Type">const</span> <span class="Type">char</span> *s, <span class="Type">long</span> p);
+
+istream&amp; InputPrec(RR&amp; z, istream&amp; s, <span class="Type">long</span> p);  <span class="Comment">// read z from s</span>
+RR InputPrec(istream&amp; s, <span class="Type">long</span> p);
+<span class="Comment">// The functional variant raises an error if input</span>
+<span class="Comment">// is missing or ill-formed, while procedural form</span>
+<span class="Comment">// does not.</span>
+
+<span class="Type">void</span> MakeRRPrec(RR&amp; z, <span class="Type">const</span> ZZ&amp; a, <span class="Type">long</span> e, <span class="Type">long</span> p); <span class="Comment">// z = a*2^e</span>
+RR MakeRRPrec(<span class="Type">const</span> ZZ&amp; a, <span class="Type">long</span> e, <span class="Type">long</span> p);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">COMPATABILITY NOTES: </span>
+
+<span class="Comment"> (1)  Prior to version 5.3, the documentation indicated that under certain</span>
+<span class="Comment">      circumstances, the value of the current precision could be directly set</span>
+<span class="Comment">      by setting the variable RR::prec.  Such usage is now considered</span>
+<span class="Comment">      obsolete.  To perform computations using a precision of less than 53</span>
+<span class="Comment">      bits, users should use the specialized routines AddPrec, SubPrec, etc.,</span>
+<span class="Comment">      documented above.</span>
+
+<span class="Comment"> (2)  The routine RoundToPrecision is obsolete, although for backward</span>
+<span class="Comment">      compatability, it is still declared (in both procedural and function</span>
+<span class="Comment">      forms), and is equivalent to ConvPrec.</span>
+
+<span class="Comment"> (3)  In versions 2.0 and earlier, the assignment operator and copy</span>
+<span class="Comment">      constructor for the class RR rounded their outputs to the current</span>
+<span class="Comment">      precision.  This is no longer the case:  their outputs are now exact</span>
+<span class="Comment">      copies of their inputs, regardless of the current precision.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

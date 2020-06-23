@@ -1,0 +1,1157 @@
+
+/**************************************************************************\
+
+MODULE: ZZ
+
+SUMMARY:
+
+The class ZZ is used to represent signed, arbitrary length integers.
+
+Routines are provided for all of the basic arithmetic operations, as
+well as for some more advanced operations such as primality testing.
+Space is automatically managed by the constructors and destructors.
+
+This module also provides routines for generating small primes, and
+fast routines for performing modular arithmetic on single-precision
+numbers.
+
+
+\**************************************************************************/
+
+#include <NTL/tools.h>
+
+
+class ZZ {
+public:
+
+
+   ZZ(); // initial value is 0
+
+   ZZ(const ZZ& a);  // copy constructor
+   explicit ZZ(long a);  // promotion constructor
+
+   ~ZZ(); // destructor
+
+   ZZ& operator=(const ZZ& a);  // assignment operator
+   ZZ& operator=(long a);  
+
+   ZZ(ZZ&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+   ZZ& operator=(ZZ&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+
+
+   // typedefs to aid in generic programming
+   typedef ZZ_p residue_type;
+   typedef ZZX poly_type;
+
+
+   // ...
+
+};
+
+
+// NOTE: A ZZ is represented as a sequence of "limbs",
+// where each limb is between 0 and 2^{NTL_ZZ_NBITS-1}.
+
+// NTL_ZZ_NBITS is  macros defined in <NTL/ZZ.h>.
+
+// SIZE INVARIANT: the number of bits in a ZZ is always less than
+// 2^(NTL_BITS_PER_LONG-4).
+
+
+
+/**************************************************************************\
+
+                                 Comparison
+
+\**************************************************************************/
+
+
+
+// The usual comparison operators: 
+   
+long operator==(const ZZ& a, const ZZ& b);
+long operator!=(const ZZ& a, const ZZ& b);
+long operator<(const ZZ& a, const ZZ& b);
+long operator>(const ZZ& a, const ZZ& b);
+long operator<=(const ZZ& a, const ZZ& b);
+long operator>=(const ZZ& a, const ZZ& b);
+
+// other stuff:
+
+long sign(const ZZ& a); // returns sign of a (-1, 0, +1)
+long IsZero(const ZZ& a); // test for 0
+long IsOne(const ZZ& a); // test for 1
+
+long compare(const ZZ& a, const ZZ& b); // returns sign of a-b (-1, 0, or 1).
+
+// PROMOTIONS: the comparison operators and the function compare
+// support promotion from long to ZZ on (a, b).
+
+
+/**************************************************************************\
+
+                                 Addition
+
+\**************************************************************************/
+
+
+// operator notation:
+
+ZZ operator+(const ZZ& a, const ZZ& b);
+ZZ operator-(const ZZ& a, const ZZ& b);
+ZZ operator-(const ZZ& a); // unary -
+
+ZZ& operator+=(ZZ& x, const ZZ& a); 
+ZZ& operator+=(ZZ& x, long a); 
+
+ZZ& operator-=(ZZ& x, const ZZ& a); 
+ZZ& operator-=(ZZ& x, long a); 
+
+ZZ& operator++(ZZ& x);  // prefix
+void operator++(ZZ& x, int);  // postfix
+
+ZZ& operator--(ZZ& x);  // prefix
+void operator--(ZZ& x, int);  // postfix
+
+
+
+// procedural versions:
+
+void add(ZZ& x, const ZZ& a, const ZZ& b); // x = a + b
+void sub(ZZ& x, const ZZ& a, const ZZ& b); // x = a - b
+void SubPos(ZZ& x, const ZZ& a, const ZZ& b); // x = a-b; assumes a >= b >= 0.
+void negate(ZZ& x, const ZZ& a); // x = -a
+
+void abs(ZZ& x, const ZZ& a); // x = |a|
+ZZ abs(const ZZ& a);
+
+// PROMOTIONS: binary +, -, as well as the procedural versions add, sub
+// support promotions from long to ZZ on (a, b).
+
+
+/**************************************************************************\
+
+                             Multiplication
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ operator*(const ZZ& a, const ZZ& b);
+
+ZZ& operator*=(ZZ& x, const ZZ& a);
+ZZ& operator*=(ZZ& x, long a);
+
+// procedural versions:
+
+void mul(ZZ& x, const ZZ& a, const ZZ& b); // x = a * b
+
+void sqr(ZZ& x, const ZZ& a); // x = a*a
+ZZ sqr(const ZZ& a); 
+
+// PROMOTIONS: operator * and procedure mul support promotion
+// from long to ZZ on (a, b).
+
+/**************************************************************************\
+
+                            Combined Multiply and Add 
+
+\**************************************************************************/
+
+
+void MulAddTo(ZZ& x, const ZZ& a, const ZZ& b); // x += a*b
+void MulAddTo(ZZ& x, const ZZ& a, long b);      // x += a*b
+
+
+void MulSubFrom(ZZ& x, const ZZ& a, const ZZ& b); // x -= a*b
+void MulSubFrom(ZZ& x, const ZZ& a, long b);      // x -= a*b
+
+// NOTE: these are provided for both convenience and efficiency.
+// The single-precision versions may be significantly
+// faster than the code sequence 
+//   mul(tmp, a, b); add(x, x, tmp);
+// However, for the single-precision version, the use-case
+// that is optimized is for |b| < 2^{NTL_WSP_BOUND}.
+
+
+
+/**************************************************************************\
+
+                                 Division
+
+\**************************************************************************/
+
+
+// operator notation:
+
+ZZ operator/(const ZZ& a, const ZZ& b);
+ZZ operator/(const ZZ& a, long  b);
+
+ZZ operator%(const ZZ& a, const ZZ& b);
+long operator%(const ZZ& a, long b);
+
+ZZ& operator/=(ZZ& x, const ZZ& b);
+ZZ& operator/=(ZZ& x, long b);
+
+ZZ& operator%=(ZZ& x, const ZZ& b);
+
+
+// procedural versions:
+
+void DivRem(ZZ& q, ZZ& r, const ZZ& a, const ZZ& b);
+// q = floor(a/b), r = a - b*q.
+// This implies that:
+//    |r| < |b|, and if r != 0, sign(r) = sign(b)
+
+void div(ZZ& q, const ZZ& a, const ZZ& b);
+// q = floor(a/b)
+
+void rem(ZZ& r, const ZZ& a, const ZZ& b);
+// q = floor(a/b), r = a - b*q
+
+
+// single-precision variants:
+
+long DivRem(ZZ& q, const ZZ& a, long b);
+// q = floor(a/b), r = a - b*q, return value is r.
+
+long rem(const ZZ& a, long b);
+// q = floor(a/b), r = a - b*q, return value is r.
+
+
+// divisibility testing:
+
+long divide(ZZ& q, const ZZ& a, const ZZ& b);
+long divide(ZZ& q, const ZZ& a, long b);
+// if b | a, sets q = a/b and returns 1; otherwise returns 0.
+
+long divide(const ZZ& a, const ZZ& b);
+long divide(const ZZ& a, long b);
+// if b | a, returns 1; otherwise returns 0.
+
+
+/**************************************************************************\
+
+                                    GCD's
+
+\**************************************************************************/
+
+
+void GCD(ZZ& d, const ZZ& a, const ZZ& b);
+ZZ GCD(const ZZ& a, const ZZ& b); 
+
+// d = gcd(a, b) (which is always non-negative).  Uses a binary GCD
+// algorithm.
+
+
+
+void XGCD(ZZ& d, ZZ& s, ZZ& t, const ZZ& a, const ZZ& b);
+
+//  d = gcd(a, b) = a*s + b*t.
+
+// The coefficients s and t are defined according to the standard
+// Euclidean algorithm applied to |a| and |b|, with the signs then
+// adjusted according to the signs of a and b.
+
+// The implementation may or may not Euclid's algorithm,
+// but the coefficients s and t are always computed as if 
+// it did.
+
+// In particular, the following inequalties should hold:
+//    |s| <= 1   OR   |s| < |b|/(2*d)
+//    |t| <= 1   OR   |t| < |a|/(2*d)
+
+
+
+// special-purpose single-precision variants:
+
+long GCD(long a, long b);
+// return value is gcd(a, b) (which is always non-negative)
+
+void XGCD(long& d, long& s, long& t, long a, long b);
+//  d = gcd(a, b) = a*s + b*t.
+
+//  The coefficients s and t are defined according to the standard
+//  Euclidean algorithm applied to |a| and |b|, with the signs then
+//  adjusted according to the signs of a and b.
+
+
+
+/**************************************************************************\
+
+                             Modular Arithmetic
+
+The following routines perform arithmetic mod n, where n > 1.
+
+All arguments (other than exponents) are assumed to be in the range
+0..n-1.  Some routines may check this and raise an error if this
+does not hold.  Others may not, and the behaviour is unpredictable
+in this case.
+
+\**************************************************************************/
+
+
+
+void AddMod(ZZ& x, const ZZ& a, const ZZ& b, const ZZ& n); // x = (a+b)%n
+ZZ AddMod(const ZZ& a, const ZZ& b, const ZZ& n);
+
+void SubMod(ZZ& x, const ZZ& a, const ZZ& b, const ZZ& n); // x = (a-b)%n
+ZZ SubMod(const ZZ& a, const ZZ& b, const ZZ& n);
+
+void NegateMod(ZZ& x, const ZZ& a, const ZZ& n); // x = -a % n
+ZZ NegateMod(const ZZ& a, const ZZ& n);
+
+void MulMod(ZZ& x, const ZZ& a, const ZZ& b, const ZZ& n); // x = (a*b)%n
+ZZ MulMod(const ZZ& a, const ZZ& b, const ZZ& n);
+
+void SqrMod(ZZ& x, const ZZ& a, const ZZ& n); // x = a^2 % n
+ZZ SqrMod(const ZZ& a, const ZZ& n);
+
+
+
+
+void InvMod(ZZ& x, const ZZ& a, const ZZ& n);
+ZZ InvMod(const ZZ& a, const ZZ& n);
+// x = a^{-1} mod n (0 <= x < n); error is raised occurs if inverse
+// not defined
+
+// If exceptions are enabled, an object of the following class 
+// is throw by the InvMod routine if the inverse of a mod n is
+// not defined. The methods get_a() and get_n() give read-only
+// access to the offending values of a and n.
+// This also happens for any indirect call to InvMod, via PowerMod,
+// of via inverse computations in ZZ_p.
+
+class InvModErrorObject : public ArithmeticErrorObject {
+public:
+   InvModErrorObject(const char *s, const ZZ& a, const ZZ& n);
+   const ZZ& get_a() const;
+   const ZZ& get_n() const;
+};
+
+long InvModStatus(ZZ& x, const ZZ& a, const ZZ& n);
+// if gcd(a,n) = 1, then return-value = 0, x = a^{-1} mod n;
+// otherwise, return-value = 1, x = gcd(a, n)
+
+void PowerMod(ZZ& x, const ZZ& a, const ZZ& e, const ZZ& n);
+ZZ PowerMod(const ZZ& a, const ZZ& e, const ZZ& n);
+
+void PowerMod(ZZ& x, const ZZ& a, long e, const ZZ& n);
+ZZ PowerMod(const ZZ& a, long e, const ZZ& n);
+
+// x = a^e % n (e may be negative)
+
+
+// PROMOTIONS: AddMod, SubMod, and MulMod (both procedural and functional
+// forms) support promotions from long to ZZ on (a, b).
+
+
+
+
+// @anchor{modarith}
+
+/**************************************************************************\
+
+                        Single-precision modular arithmetic
+
+These routines implement single-precision modular arithmetic.  If n is
+the modulus, all inputs should be in the range 0..n-1.  The number n
+itself should be in the range 2..NTL_SP_BOUND-1.
+
+Most of these routines are, of course, implemented as fast inline
+functions.  No checking is done that inputs are in range.
+
+
+\**************************************************************************/
+
+
+
+
+long AddMod(long a, long b, long n); // return (a+b)%n
+
+long SubMod(long a, long b, long n); // return (a-b)%n
+
+long NegateMod(long a, long n); // return (-a)%n
+
+long MulMod(long a, long b, long n); // return (a*b)%n
+
+long MulMod(long a, long b, long n, mulmod_t ninv); 
+// return (a*b)%n.  
+//
+// Usually faster than plain MulMod when n is fixed for many
+// invocations. The value ninv should be precomputed as 
+//   mulmod_t ninv = PrepMulMod(n);
+
+mulmod_t PrepMulMod(long n);
+// Prepare auxiliary data for MulMod.
+
+long MulModPrecon(long a, long b, long n, mulmod_precon_t bninv);
+// return (a*b)%n.  
+//
+// Usually much faster than MulMod when both b and n are fixed for 
+// many invocations.  The value bninv should be precomputed as
+//   mulmod_precon_t bninv = PrepMulModPrecon(b, n);
+// or as
+//   mulmod_precon_t bninv = PrepMulModPrecon(b, n, ninv);
+// where ninv = PrepMulMod(n).
+
+mulmod_precon_t PrepMulModPrecon(long b, long n);
+mulmod_precon_t PrepMulModPrecon(long b, long n, mulmod_t ninv);
+// Prepare auxiliary data for MulModPrecon.
+// In the second version, ninv = PrepMulMod(n).
+
+
+
+long InvMod(long a, long n);
+// computes a^{-1} mod n.  Error is raised if undefined.
+
+long InvModStatus(long& x, long a, long n);
+// if gcd(a,n) = 1, then return-value = 0, x = a^{-1} mod n;
+// otherwise, return-value = 1, x = gcd(a, n)
+
+long PowerMod(long a, long e, long n);
+// computes a^e mod n (e may be negative)
+
+// The following are vector versions of the MulMod routines
+// They each compute x[i] = (a[i] * b)% n   i = 0..k-1 
+
+void VectorMulMod(long k, long *x, const long *a, long b, long n);
+
+void VectorMulMod(long k, long *x, const long *a, long b, long n, 
+                  mulmod_t ninv);
+// ninv = PrepMulMod(n)
+
+void VectorMulModPrecon(long k, long *x, const long *a, long b, long n, 
+                        mulmod_precon_t bninv);
+// bninv = MulModPrecon(b, n)
+
+
+// The following is provided for legacy support, but is not generally 
+// recommended:
+
+long MulDivRem(long& q, long a, long b, long n, muldivrem_t bninv);
+// return (a*b)%n, set q = (a*b)/n.  
+// The value bninv should be precomputed as 
+//   muldivrem_t bninv = PrepMulDivRem(b, n);
+// or as
+//   muldivrem_t bninv = PrepMulDivRem(b, n, ninv);
+// where ninv = PrepMod(n).
+
+ muldivrem_t PrepMulDivRem(long b, long n);
+ muldivrem_t PrepMulDivRem(long b, long n, mulmod_t ninv);
+// Prepare auxiliary data for MulDivRem.
+// In the second version, ninv = PrepMulMod(n).
+
+// NOTE: despite the similarity in the interface to MulModPrecon,
+// this routine is typically implemented in a very different way,
+// and usually much less efficient.
+// It was initially designed for specialized, internal use
+// within NTL, but has been a part of the documented NTL
+// interface for some time, and remains so even after the
+// v9.0 upgrade.
+
+
+
+//
+// Compatibility notes:
+//
+// The types mulmod_t and muldivrem_t were introduced in NTL v9.0, as were the
+// functions PrepMulMod and PrepMulDivRem.  Prior to this, the built-in type
+// "double" played the role of these types, and the user was expected to
+// compute PrepMulMod(n) as 1/double(n) and PrepMulDivRem(b, n) as
+// double(b)/double(n).
+// 
+// By abstracting these types, NTL is able to exploit a wider variety of
+// implementation strategies.  Some old client code may break, but the compiler
+// will easily find the code that needs to be updated, and the updates are
+// quite mechanical (unless the old code implicitly made use of the assumption
+// that NTL_SP_NBITS <= NTL_DOUBLE_PRECISION-3).
+//
+// It is highly recommended that old client codes be updated.  However, one may
+// build NTL with the configuration option NTL_LEGACY_SP_MULMOD=on, which will
+// cause the interfaces and implementations to revert to their pre-v9.0
+// definitions.  This option will also make the following (obsolete) function
+// visible:
+
+    long MulMod2(long a, long b, long n, double bninv);
+    // return (a*b)%n.  bninv = ((double) b)/((double) n).  This is faster
+    // if both n and b are fixed for many multiplications.
+    // Note: This is OBSOLETE -- use MulModPrecon.
+
+
+// As of v9.2 of NTL, this new interface allows for 60-bit moduli on most
+// 64-bit machines.  The requirement is that a working 128-bit integer type is
+// available.  For current versions of gcc, clang, and icc, this is available
+// vie the types __int128_t and __uint128_t.  If this requirement is met (which
+// is verified during NTL installation), then a "long long" implementation for
+// MulMod is used.  In versions 9.0 and 9.1 of NTL, a "long double"
+// implementation was introduced, which utilized the 80-bit extended double
+// precision hardware on x86 machines.  This also allows for 60-bit moduli on
+// 64-bit machines.
+
+// If 128-bit integer types are not available, or if you build NTL with the
+// NTL_DISABLE_LONGLONG=on flag, NTL will attempt to use the extended double
+// precision hardware to still allow 60-bit moduli.  If that is not possible,
+// or if you build NTL with the NTL_DISABLE_LONGDOUBLE=on flag, then NTL will
+// fall back to its "classical" implementation (pre-9.0) that relies on
+// double-precision arithmetic and imposes a 50-bit limit on moduli.  
+
+// Note that in on 64-bit machines, either the "long long" or "long double"
+// implementations could support 62-bit moduli, rather than 60-bit moduli.
+// However, the restriction to 60-bits speeds up a few things, and so seems
+// like a good trade off.  This is subject to change in the future.
+
+// Also note that all of these enhancements introduced since v9.0 are only
+// available to builds of NTL that use GMP.  Builds that don't use GMP will
+// still be restricted to 50-bit moduli on 64-bit machines. 
+
+// On machines with 32-bit longs, moduli will be resricted to 30 bits,
+// regardless on the implementation, which will be based on "long long"
+// arithmetic (if a 64-bit integer type is available), or on double-precision
+// floating point (otherwise).
+
+// One can detect the new (v9) interface by testing if the macro
+// NTL_HAVE_MULMOD_T is defined.  The following code can be used to make
+// new-style NTL clients work with either older (pre-9.0) versions of NTL or
+// newer versions (post-9.0):
+
+
+   #ifndef NTL_HAVE_MULMOD_T
+      namespace NTL {
+         typedef double mulmod_t;
+         typedef double muldivrem_t;
+
+         static inline double PrepMulMod(long n) 
+         { return double(1L)/double(n); }
+
+         static inline double PrepMulDivRem(long b, long n, double ninv) 
+         { return double(b)*ninv; }
+
+         static inline double PrepMulDivRem(long b, long n) 
+         { return double(b)/double(n); }
+
+         static inline double PrepMulModPrecon(long b, long n) 
+         { return PrepMulModPrecon(b, n, PrepMulMod(n)); }
+      }
+   #endif
+
+
+
+
+
+/**************************************************************************\
+
+                               Shift Operations
+
+LeftShift by n means multiplication by 2^n
+RightShift by n means division by 2^n, with truncation toward zero
+  (so the sign is preserved).
+
+A negative shift amount reverses the direction of the shift.
+
+\**************************************************************************/
+
+// operator notation:
+
+ZZ operator<<(const ZZ& a, long n);
+ZZ operator>>(const ZZ& a, long n);
+
+ZZ& operator<<=(ZZ& x, long n);
+ZZ& operator>>=(ZZ& x, long n);
+
+// procedural versions:
+
+void LeftShift(ZZ& x, const ZZ& a, long n); 
+ZZ LeftShift(const ZZ& a, long n);
+
+void RightShift(ZZ& x, const ZZ& a, long n); 
+ZZ RightShift(const ZZ& a, long n); 
+
+
+
+/**************************************************************************\
+
+                              Bits and Bytes
+
+\**************************************************************************/
+
+
+
+long MakeOdd(ZZ& x);
+// removes factors of 2 from x, returns the number of 2's removed
+// returns 0 if x == 0
+
+long NumTwos(const ZZ& x);
+// returns max e such that 2^e divides x if x != 0, and returns 0 if x == 0.
+
+long IsOdd(const ZZ& a); // test if a is odd
+
+long NumBits(const ZZ& a);
+long NumBits(long a);  
+// returns the number of bits in binary represenation of |a|; 
+// NumBits(0) = 0
+
+
+long bit(const ZZ& a, long k);
+long bit(long a, long k); 
+// returns bit k of |a|, position 0 being the low-order bit.
+// If  k < 0 or k >= NumBits(a), returns 0.
+
+
+void trunc(ZZ& x, const ZZ& a, long k);
+// x = low order k bits of |a|. 
+// If k <= 0, x = 0.
+
+// two functional variants:
+ZZ trunc_ZZ(const ZZ& a, long k);  
+long trunc_long(const ZZ& a, long k);
+
+long SetBit(ZZ& x, long p);
+// returns original value of p-th bit of |a|, and replaces p-th bit of
+// a by 1 if it was zero; low order bit is bit 0; error if p < 0;
+// the sign of x is maintained
+
+long SwitchBit(ZZ& x, long p);
+// returns original value of p-th bit of |a|, and switches the value
+// of p-th bit of a; low order bit is bit 0; error if p < 0
+// the sign of x is maintained
+
+long weight(const ZZ& a); // returns Hamming weight of |a|
+long weight(long a); 
+
+// bit-wise Boolean operations, procedural form:
+
+void bit_and(ZZ& x, const ZZ& a, const ZZ& b); // x = |a| AND |b|
+void bit_or(ZZ& x, const ZZ& a, const ZZ& b); // x = |a| OR |b|
+void bit_xor(ZZ& x, const ZZ& a, const ZZ& b); // x = |a| XOR |b|
+
+// bit-wise Boolean operations, operator notation:
+
+ZZ operator&(const ZZ& a, const ZZ& b);
+ZZ operator|(const ZZ& a, const ZZ& b);
+ZZ operator^(const ZZ& a, const ZZ& b);
+
+// PROMOTIONS: the above bit-wise operations (both procedural 
+// and operator forms) provide promotions from long to ZZ on (a, b).
+
+ZZ& operator&=(ZZ& x, const ZZ& b);
+ZZ& operator&=(ZZ& x, long b);
+
+ZZ& operator|=(ZZ& x, const ZZ& b);
+ZZ& operator|=(ZZ& x, long b);
+
+ZZ& operator^=(ZZ& x, const ZZ& b);
+ZZ& operator^=(ZZ& x, long b);
+
+
+
+// conversions between byte sequences and ZZ's
+
+void ZZFromBytes(ZZ& x, const unsigned char *p, long n);
+ZZ ZZFromBytes(const unsigned char *p, long n);
+// x = sum(p[i]*256^i, i=0..n-1). 
+// NOTE: in the unusual event that a char is more than 8 bits, 
+//       only the low order 8 bits of p[i] are used
+
+void BytesFromZZ(unsigned char *p, const ZZ& a, long n);
+// Computes p[0..n-1] such that abs(a) == sum(p[i]*256^i, i=0..n-1) mod 256^n.
+
+long NumBytes(const ZZ& a);
+long NumBytes(long a);
+// returns # of base 256 digits needed to represent abs(a).
+// NumBytes(0) == 0.
+
+
+// @anchor{prg}
+
+/**************************************************************************\
+
+                            Pseudo-Random Numbers
+
+\**************************************************************************/
+
+
+// Routines for generating pseudo-random numbers.
+
+// These routines generate high qualtity, cryptographically strong
+// pseudo-random numbers.  They are implemented so that their behaviour
+// is completely independent of the underlying hardware and long 
+// integer implementation.  Note, however, that other routines 
+// throughout NTL use pseudo-random numbers, and because of this,
+// the word size of the machine can impact the sequence of numbers
+// seen by a client program.
+
+
+void SetSeed(const ZZ& s);
+void SetSeed(const unsigned char *data, long dlen);
+void SetSeed(const RandomStream& s);
+// Initializes generator with a "seed".
+
+// The first version hashes the binary representation of s to obtain a key for
+// a low-level RandomStream object (see below).
+
+// The second version does the same, hashing the first dlen bytes pointed to by
+// data to obtain a key for the RandomStream object.
+
+// The third version initializes the PRG state directly with the given
+// RandomStream object.
+
+// EXCEPTIONS: strong ES
+
+
+void RandomBnd(ZZ& x, const ZZ& n);
+ZZ RandomBnd(const ZZ& n);
+void RandomBnd(long& x, long n);
+long RandomBnd(long n);
+// x = pseudo-random number in the range 0..n-1, or 0 if n <= 0
+// EXCEPTIONS: strong ES
+
+void VectorRandomBnd(long k, long *x, long n);
+// equivalent to x[i] = RandomBnd(n) for i in [0..k), but faster
+// EXCEPTIONS: strong ES
+
+void VectorRandomWord(long k, long *x);
+// equivalent to x[i] = RandomWord(n) for i in [0..k), but faster
+// EXCEPTIONS: strong ES
+
+
+void RandomBits(ZZ& x, long l);
+ZZ RandomBits_ZZ(long l);
+void RandomBits(long& x, long l);
+long RandomBits_long(long l);
+// x = pseudo-random number in the range 0..2^l-1.
+// EXCEPTIONS: strong ES
+
+void RandomLen(ZZ& x, long l);
+ZZ RandomLen_ZZ(long l);
+void RandomLen(long& x, long l);
+long RandomLen_long(long l);
+// x = psuedo-random number with precisely l bits,
+// or 0 of l <= 0.
+// EXCEPTIONS: strong ES
+
+unsigned long RandomBits_ulong(long l);
+// returns a pseudo-random number in the range 0..2^l-1
+// EXCEPTIONS: strong ES
+
+unsigned long RandomWord();
+// returns a word filled with pseudo-random bits.
+// Equivalent to RandomBits_ulong(NTL_BITS_PER_LONG).
+// EXCEPTIONS: strong ES
+
+
+
+class RandomStream { 
+// The low-level pseudo-random generator (PRG).
+// After initializing it with a key, one can effectively read an unbounded
+// stream of pseudorandom bytes
+
+public:
+
+   explicit RandomStream(const unsigned char *key);
+   // key should point to an array of NTL_PRG_KEYLEN bytes
+   // EXCEPTIONS: strong ES
+
+   void get(unsigned char *res, long n); 
+   // read the next n bytes from the stream and store to location pointed to by
+   // res
+   // EXCEPTIONS: throws a LogicError exception if n is negative
+
+   RandomStream(const RandomStream&); 
+   // EXCEPTIONS: strong ES
+
+   RandomStream& operator=(const RandomStream&); 
+   // EXCEPTIONS: strong ES
+};
+
+
+RandomStream& GetCurrentRandomStream();
+// get reference to the current PRG state. If SetSeed has not been called, it
+// is called with a default value (which should be unique to each
+// process/thread).  NOTE: this is a reference to a thread-local object, so
+// different threads will use different PRG's, and by default, each will be
+// initialized with a unique seed.
+// NOTE: using this reference, you can copy the current PRG state or assign a
+// different value to it; however, see the helper class RandomStreamPush below,
+// which may be more convenient.
+// EXCEPTIONS: strong ES
+
+
+
+class RandomStreamPush {
+// RAII for saving/restoring current PRG state
+public:
+   RandomStreamPush();   // save a copy of the current PRG state
+                         // EXCEPTIONS: strong ES
+
+   ~RandomStreamPush();  // restore the saved copy of the PRG state
+
+private: 
+   RandomStreamPush(const RandomStreamPush&); // disable
+   void operator=(const RandomStreamPush&); // disable
+};
+
+
+void DeriveKey(unsigned char *key, long klen,  
+               const unsigned char *data, long dlen);
+// utility routine to derive from the byte string (data, dlen) a byte string
+// (key, klen).  Heuristically, if (data, dlen) has high entropy, then (key,
+// klen) should be pseudorandom.  This routine is also used internally to
+// derive PRG keys.
+// EXCEPTIONS: throws LogicError exception if klen < 0 or hlen < 0
+
+
+
+/**************************************************************************\
+
+             Incremental Chinese Remaindering
+
+\**************************************************************************/
+
+long CRT(ZZ& a, ZZ& p, const ZZ& A, const ZZ& P);
+long CRT(ZZ& a, ZZ& p, long A, long P);
+
+// 0 <= A < P, (p, P) = 1; computes a' such that a' = a mod p, 
+// a' = A mod P, and -p*P/2 < a' <= p*P/2; sets a := a', p := p*P, and
+// returns 1 if a's value has changed, otherwise 0
+
+
+/**************************************************************************\
+
+                  Rational Reconstruction
+
+\**************************************************************************/
+
+long ReconstructRational(ZZ& a, ZZ& b, const ZZ& x, const ZZ& m, 
+                         const ZZ& a_bound, const ZZ& b_bound);
+
+// 0 <= x < m, m > 2 * a_bound * b_bound,
+// a_bound >= 0, b_bound > 0
+
+// This routine either returns 0, leaving a and b unchanged, 
+// or returns 1 and sets a and b so that
+//   (1) a = b x (mod m),
+//   (2) |a| <= a_bound, 0 < b <= b_bound, and
+//   (3) gcd(m, b) = gcd(a, b).
+
+// If there exist a, b satisfying (1), (2), and 
+//   (3') gcd(m, b) = 1,
+// then a, b are uniquely determined if we impose the additional
+// condition that gcd(a, b) = 1;  moreover, if such a, b exist,
+// then these values are returned by the routine.
+
+// Unless the calling routine can *a priori* guarantee the existence
+// of a, b satisfying (1), (2), and (3'),
+// then to ensure correctness, the calling routine should check
+// that gcd(m, b) = 1, or equivalently, gcd(a, b) = 1.
+
+// This is implemented using a variant of Lehmer's extended
+// Euclidean algorithm.
+
+// Literature:  see G. Collins and M. Encarnacion, J. Symb. Comp. 20:287-297, 
+// 1995; P. Wang, M. Guy, and J. Davenport, SIGSAM Bulletin 16:2-3, 1982. 
+
+
+/**************************************************************************\
+
+                                Primality Testing 
+                           and Prime Number Generation
+
+\**************************************************************************/
+
+void GenPrime(ZZ& n, long l, long err = 80);
+ZZ GenPrime_ZZ(long l, long err = 80);
+long GenPrime_long(long l, long err = 80);
+
+// GenPrime generates a random prime n of length l so that the
+// probability that the resulting n is composite is bounded by 2^(-err).
+// This calls the routine RandomPrime below, and uses results of 
+// Damgard, Landrock, Pomerance to "optimize" 
+// the number of Miller-Rabin trials at the end.
+
+// Note that the prime generated by GenPrime and RandomPrime 
+// is not entirely platform independent.  The behavior of the
+// algorithm can depend on the size parameters, such as  NTL_SP_NBITS 
+// NTL_ZZ_NBITS, and NTL_BITS_PER_LONG. However, on a given platform
+// you will always get the same prime if you run the algorithm
+// with the same RandomStream. 
+
+// Note that RandomPrime and GenPrime are thread boosted.
+// Nevertheless, their behavior is independent of the number of
+// available threads and any indeterminacy arising from 
+// concurrent computation.
+
+void GenGermainPrime(ZZ& n, long l, long err = 80);
+ZZ GenGermainPrime_ZZ(long l, long err = 80);
+long GenGermainPrime_long(long l, long err = 80);
+
+// A (Sophie) Germain prime is a prime p such that p' = 2*p+1 is also a prime.
+// Such primes are useful for cryptographic applications...cryptographers
+// sometimes call p' a "strong" or "safe" prime.
+// GenGermainPrime generates a random Germain prime n of length l
+// so that the probability that either n or 2*n+1 is not a prime
+// is bounded by 2^(-err).
+
+// Note that GenGermainPrime is thread boosted.
+// Nevertheless, its behavior is independent of the number of
+// available threads and any indeterminacy arising from 
+// concurrent computation.
+
+long ProbPrime(const ZZ& n, long NumTrials = 10);
+long ProbPrime(long n, long NumTrials = 10);
+// performs trial division, followed by one Miller-Rabin test
+// to the base 2, followed by NumTrials Miller-witness tests 
+// with random bases.
+
+void RandomPrime(ZZ& n, long l, long NumTrials=10);
+ZZ RandomPrime_ZZ(long l, long NumTrials=10);
+long RandomPrime_long(long l, long NumTrials=10);
+// n = random l-bit prime.  Uses ProbPrime with NumTrials.
+
+void NextPrime(ZZ& n, const ZZ& m, long NumTrials=10);
+ZZ NextPrime(const ZZ& m, long NumTrials=10);
+// n = smallest prime >= m.  Uses ProbPrime with NumTrials.
+
+long NextPrime(long m, long NumTrials=10);
+// Single precision version of the above.
+// Result will always be bounded by NTL_ZZ_SP_BOUND, and an
+// error is raised if this cannot be satisfied.
+
+long MillerWitness(const ZZ& n, const ZZ& w);
+// Tests if w is a witness to compositeness a la Miller.  Assumption: n is
+// odd and positive, 0 <= w < n.
+// Return value of 1 implies n is composite.
+// Return value of 0 indicates n might be prime.
+
+
+/**************************************************************************\
+
+                               Exponentiation
+
+\**************************************************************************/
+
+
+void power(ZZ& x, const ZZ& a, long e); // x = a^e (e >= 0)
+ZZ power(const ZZ& a, long e); 
+
+void power(ZZ& x, long a, long e);
+
+// two functional variants:
+ZZ power_ZZ(long a, long e);
+long power_long(long a, long e);
+
+void power2(ZZ& x, long e); // x = 2^e (e >= 0)
+ZZ power2_ZZ(long e);
+
+
+/**************************************************************************\
+
+                               Square Roots
+
+\**************************************************************************/
+
+
+void SqrRoot(ZZ& x, const ZZ& a); // x = floor(a^{1/2}) (a >= 0)
+ZZ SqrRoot(const ZZ& a); 
+
+long SqrRoot(long a); 
+
+
+
+
+/**************************************************************************\
+
+                    Jacobi symbol and modular square roots
+
+\**************************************************************************/
+
+
+long Jacobi(const ZZ& a, const ZZ& n);
+//  compute Jacobi symbol of a and n; assumes 0 <= a < n, n odd
+
+void SqrRootMod(ZZ& x, const ZZ& a, const ZZ& n);
+ZZ SqrRootMod(const ZZ& a, const ZZ& n); 
+//  computes square root of a mod n; assumes n is an odd prime, and
+//  that a is a square mod n, with 0 <= a < n.
+
+
+
+
+/**************************************************************************\
+
+                             Input/Output
+
+I/O Format:
+
+Numbers are written in base 10, with an optional minus sign.
+
+\**************************************************************************/
+
+istream& operator>>(istream& s, ZZ& x);  
+ostream& operator<<(ostream& s, const ZZ& a); 
+
+
+
+/**************************************************************************\
+
+                            Miscellany
+
+\**************************************************************************/
+
+
+// The following macros are defined:
+
+#define NTL_ZZ_NBITS (...)  // number of bits in a limb;
+                            // a ZZ is represented as a sequence of limbs.
+
+#define NTL_SP_NBITS (...)  // max number of bits in a "single-precision" number
+
+#define NTL_WSP_NBITS (...)  // max number of bits in a "wide single-precision"
+                             // number
+
+// The following relations hold:
+//    30 <= NTL_SP_NBITS <= NTL_WSP_NBITS 
+//       <= min(NTL_ZZ_NBITS, NTL_BITS_PER_LONG-2)
+
+// Note that NTL_ZZ_NBITS may be less than, equal to, or greater than
+// NTL_BITS_PER_LONG  -- no particular relationship should be assumed to hold.
+// In particular, expressions like (1L << NTL_ZZ_BITS) might overflow.
+//
+// "single-precision" numbers are meant to be used in conjunction with the
+//  single-precision modular arithmetic routines.
+//
+// "wide single-precision" numbers are meant to be used in conjunction
+//  with the ZZ arithmetic routines for optimal efficiency.
+
+// The following auxiliary macros are also defined
+
+#define NTL_FRADIX (...) // double-precision value of 2^NTL_ZZ_NBITS
+
+#define NTL_SP_BOUND (1L << NTL_SP_NBITS)
+#define NTL_WSP_BOUND (1L << NTL_WSP_NBITS)
+
+
+// Backward compatibility notes:
+//
+// Prior to version 5.0, the macro NTL_NBITS was defined,
+// along with the macro NTL_RADIX defined to be (1L << NTL_NBITS).
+// While these macros are still available when using NTL's traditional 
+// long integer package (i.e., when NTL_GMP_LIP is not set), 
+// they are not available when using the GMP as the primary long integer 
+// package (i.e., when NTL_GMP_LIP is set).
+// Furthermore, when writing portable programs, one should avoid these macros.
+// Note that when using traditional long integer arithmetic, we have
+//    NTL_ZZ_NBITS = NTL_SP_NBITS = NTL_WSP_NBITS = NTL_NBITS.
+//
+// Prior to version 9.0, one could also assume that 
+//   NTL_SP_NBITS <= NTL_DOUBLE_PRECISION-3;
+// however, this is no longer the case (unless NTL is build with he NTL_LEGACY_SP_MULMOD
+// flag turned on).
+
+
+// Here are some additional functions.
+
+void clear(ZZ& x); // x = 0
+void set(ZZ& x);   // x = 1
+
+void swap(ZZ& x, ZZ& y);
+// swap x and y (done by "pointer swapping", if possible).
+
+double log(const ZZ& a);
+// returns double precision approximation to log(a)
+
+long NextPowerOfTwo(long m);
+// returns least nonnegative k such that 2^k >= m
+
+long ZZ::size() const;
+// a.size() returns the number of limbs of |a|; the
+// size of 0 is 0.
+
+void ZZ::SetSize(long k)
+// a.SetSize(k) does not change the value of a, but simply pre-allocates
+// space for k limbs.
+
+long ZZ::SinglePrecision() const;
+// a.SinglePrecision() is a predicate that tests if abs(a) < NTL_SP_BOUND
+
+long ZZ::WideSinglePrecision() const;
+// a.WideSinglePrecision() is a predicate that tests if abs(a) < NTL_WSP_BOUND
+
+long digit(const ZZ& a, long k);
+// returns k-th limb of |a|, position 0 being the low-order
+// limb.
+// OBSOLETE: this routine is only available when using NTL's traditional
+// long integer arithmetic, and should not be used in programs
+// that are meant to be portable. You should instead use the 
+// routine ZZ_limbs_get, defined in ZZ_limbs.h.
+
+void ZZ::kill();
+// a.kill() sets a to zero and frees the space held by a.
+
+void ZZ::swap(ZZ& x);
+// swap method (done by "pointer swapping" if possible)
+
+ZZ::ZZ(INIT_SIZE_TYPE, long k);
+// ZZ(INIT_SIZE, k) initializes to 0, but space is pre-allocated so
+// that numbers x with x.size() <= k can be stored without
+// re-allocation.
+
+static const ZZ& ZZ::zero();
+// ZZ::zero() yields a read-only reference to zero, if you need it.
+
+
+
+
+/**************************************************************************\
+
+                    Small Prime Generation
+
+primes are generated in sequence, starting at 2, and up to a maximum
+that is no more than min(NTL_SP_BOUND, 2^30).
+
+Example: print the primes up to 1000
+
+#include <NTL/ZZ.h>
+
+main()
+{
+   PrimeSeq s;
+   long p;
+
+   p = s.next();
+   while (p <= 1000) {
+      cout << p << "\n";
+      p = s.next();
+   }
+}
+
+\**************************************************************************/
+
+
+
+class PrimeSeq {
+public:
+   PrimeSeq();
+   ~PrimeSeq();
+
+   long next();
+   // returns next prime in the sequence.  returns 0 if list of small
+   // primes is exhausted.
+
+   void reset(long b);
+   // resets generator so that the next prime in the sequence is the
+   // smallest prime >= b.
+
+private:
+   PrimeSeq(const PrimeSeq&);        // disabled
+   void operator=(const PrimeSeq&);  // disabled
+
+};
+
+

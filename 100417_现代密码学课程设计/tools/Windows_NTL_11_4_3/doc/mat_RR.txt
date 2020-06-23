@@ -1,0 +1,142 @@
+
+/**************************************************************************\
+
+MODULE: mat_RR
+
+SUMMARY:
+
+Defines the class mat_RR.
+
+\**************************************************************************/
+
+
+#include <NTL/matrix.h>
+#include <NTL/vec_vec_RR.h>
+
+typedef Mat<RR> mat_RR; // backward compatibility
+
+void add(mat_RR& X, const mat_RR& A, const mat_RR& B); 
+// X = A + B
+
+void sub(mat_RR& X, const mat_RR& A, const mat_RR& B); 
+// X = A - B
+
+void negate(mat_RR& X, const mat_RR& A); 
+// X = - A
+
+void mul(mat_RR& X, const mat_RR& A, const mat_RR& B); 
+// X = A * B
+
+void mul(vec_RR& x, const mat_RR& A, const vec_RR& b); 
+// x = A * b
+
+void mul(vec_RR& x, const vec_RR& a, const mat_RR& B); 
+// x = a * B
+
+void mul(mat_RR& X, const mat_RR& A, const RR& b);
+void mul(mat_RR& X, const mat_RR& A, double b);
+// X = A * b
+
+void mul(mat_RR& X, const RR& a, const mat_RR& B);
+void mul(mat_RR& X, double a, const mat_RR& B);
+// X = a * B
+
+
+void determinant(RR& d, const mat_RR& A);
+RR determinant(const mat_RR& A);
+// d = determinant(A)
+
+
+void transpose(mat_RR& X, const mat_RR& A);
+mat_RR transpose(const mat_RR& A);
+// X = transpose of A
+
+void solve(RR& d, vec_RR& X,
+           const mat_RR& A, const vec_RR& b);
+// A is an n x n matrix, b is a length n vector.  Computes d =
+// determinant(A).  If d != 0, solves x*A = b.
+
+void inv(RR& d, mat_RR& X, const mat_RR& A);
+// A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
+// computes X = A^{-1}.
+
+void sqr(mat_RR& X, const mat_RR& A);
+mat_RR sqr(const mat_RR& A);
+// X = A*A
+
+void inv(mat_RR& X, const mat_RR& A);
+mat_RR inv(const mat_RR& A);
+// X = A^{-1}; error is raised if A is  singular
+
+void power(mat_RR& X, const mat_RR& A, const ZZ& e);
+mat_RR power(const mat_RR& A, const ZZ& e);
+
+void power(mat_RR& X, const mat_RR& A, long e);
+mat_RR power(const mat_RR& A, long e);
+// X = A^e; e may be negative (in which case A must be nonsingular).
+
+void ident(mat_RR& X, long n);
+mat_RR ident_mat_RR(long n);
+// X = n x n identity matrix
+
+long IsIdent(const mat_RR& A, long n);
+// test if A is the n x n identity matrix
+
+void diag(mat_RR& X, long n, const RR& d);
+mat_RR diag(long n, const RR& d);
+// X = n x n diagonal matrix with d on diagonal
+
+long IsDiag(const mat_RR& A, long n, const RR& d);
+// test if X is an  n x n diagonal matrix with d on diagonal
+
+
+
+
+
+// miscellaneous:
+
+void clear(mat_RR& a);
+// x = 0 (dimension unchanged)
+
+long IsZero(const mat_RR& a);
+// test if a is the zero matrix (any dimension)
+
+
+// operator notation:
+
+mat_RR operator+(const mat_RR& a, const mat_RR& b);
+mat_RR operator-(const mat_RR& a, const mat_RR& b);
+mat_RR operator*(const mat_RR& a, const mat_RR& b);
+
+mat_RR operator-(const mat_RR& a);
+
+
+// matrix/scalar multiplication:
+
+mat_RR operator*(const mat_RR& a, const RR& b);
+mat_RR operator*(const mat_RR& a, double b);
+
+mat_RR operator*(const RR& a, const mat_RR& b);
+mat_RR operator*(double a, const mat_RR& b);
+
+
+// matrix/vector multiplication:
+
+vec_RR operator*(const mat_RR& a, const vec_RR& b);
+
+vec_RR operator*(const vec_RR& a, const mat_RR& b);
+
+
+// assignment operator notation:
+
+mat_RR& operator+=(mat_RR& x, const mat_RR& a);
+mat_RR& operator-=(mat_RR& x, const mat_RR& a);
+mat_RR& operator*=(mat_RR& x, const mat_RR& a);
+
+mat_RR& operator*=(mat_RR& x, const RR& a);
+mat_RR& operator*=(mat_RR& x, double a);
+
+vec_RR& operator*=(vec_RR& x, const mat_RR& a);
+
+
+

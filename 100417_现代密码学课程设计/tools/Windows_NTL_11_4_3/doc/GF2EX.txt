@@ -1,0 +1,901 @@
+
+/**************************************************************************\
+
+MODULE: GF2EX
+
+SUMMARY:
+
+The class GF2EX represents polynomials over GF2E,
+and so can be used, for example, for arithmentic in GF(2^n)[X].
+However, except where mathematically necessary (e.g., GCD computations),
+GF2E need not be a field.
+
+\**************************************************************************/
+
+#include <NTL/GF2E.h>
+#include <NTL/vec_GF2E.h>
+
+class GF2EX {
+public:
+
+   GF2EX(); // initial value 0
+
+   GF2EX(const GF2EX& a); // copy
+   explicit GF2EX(const GF2E& a);  // promotion
+   explicit GF2EX(GF2 a); 
+   explicit GF2EX(long a); 
+
+   GF2EX& operator=(const GF2EX& a); // assignment
+   GF2EX& operator=(const GF2E& a);
+   GF2EX& operator=(GF2 a);
+   GF2EX& operator=(long a);
+
+   ~GF2EX(); // destructor
+
+
+   GF2EX(GF2EX&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   GF2EX& operator=(GF2EX&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+#endif
+
+
+   GF2EX(INIT_MONO_TYPE, long i, const GF2E& c); 
+   GF2EX(INIT_MONO_TYPE, long i, GF2 c); 
+   GF2EX(INIT_MONO_TYPE, long i, long c); 
+   // initialize to c*X^i, invoke as GF2EX(INIT_MONO, i, c)
+
+   GF2EX(INIT_MONO_TYPE, long i); 
+   // initialize to X^i, invoke as GF2EX(INIT_MONO, i)
+
+
+
+
+   // typedefs to aid in generic programming
+
+   typedef GF2E coeff_type;
+   typedef GF2EXModulus modulus_type;
+   // ...
+
+};
+
+
+
+
+
+/**************************************************************************\
+
+                              Accessing coefficients
+
+The degree of a polynomial f is obtained as deg(f),
+where the zero polynomial, by definition, has degree -1.
+
+A polynomial f is represented as a coefficient vector.
+Coefficients may be accesses in one of two ways.
+
+The safe, high-level method is to call the function
+coeff(f, i) to get the coefficient of X^i in the polynomial f,
+and to call the function SetCoeff(f, i, a) to set the coefficient
+of X^i in f to the scalar a.
+
+One can also access the coefficients more directly via a lower level 
+interface.  The coefficient of X^i in f may be accessed using 
+subscript notation f[i].  In addition, one may write f.SetLength(n)
+to set the length of the underlying coefficient vector to n,
+and f.SetMaxLength(n) to allocate space for n coefficients,
+without changing the coefficient vector itself.
+
+After setting coefficients using this low-level interface,
+one must ensure that leading zeros in the coefficient vector
+are stripped afterwards by calling the function f.normalize().
+
+NOTE: the coefficient vector of f may also be accessed directly
+as f.rep; however, this is not recommended. Also, for a properly
+normalized polynomial f, we have f.rep.length() == deg(f)+1,
+and deg(f) >= 0  =>  f.rep[deg(f)] != 0.
+
+\**************************************************************************/
+
+
+
+long deg(const GF2EX& a);  // return deg(a); deg(0) == -1.
+
+const GF2E& coeff(const GF2EX& a, long i);
+// returns the coefficient of X^i, or zero if i not in range
+
+const GF2E& LeadCoeff(const GF2EX& a);
+// returns leading term of a, or zero if a == 0
+
+const GF2E& ConstTerm(const GF2EX& a);
+// returns constant term of a, or zero if a == 0
+
+void SetCoeff(GF2EX& x, long i, const GF2E& a);
+void SetCoeff(GF2EX& x, long i, GF2 a);
+void SetCoeff(GF2EX& x, long i, long a);
+// makes coefficient of X^i equal to a; error is raised if i < 0
+
+void SetCoeff(GF2EX& x, long i);
+// makes coefficient of X^i equal to 1;  error is raised if i < 0
+
+void SetX(GF2EX& x); // x is set to the monomial X
+
+long IsX(const GF2EX& a); // test if x = X
+
+
+
+
+GF2E& GF2EX::operator[](long i); 
+const GF2E& GF2EX::operator[](long i) const;
+// indexing operators: f[i] is the coefficient of X^i ---
+// i should satsify i >= 0 and i <= deg(f).
+// No range checking (unless NTL_RANGE_CHECK is defined).
+
+void GF2EX::SetLength(long n);
+// f.SetLength(n) sets the length of the inderlying coefficient
+// vector to n --- after this call, indexing f[i] for i = 0..n-1
+// is valid.
+
+void GF2EX::normalize();  
+// f.normalize() strips leading zeros from coefficient vector of f
+
+void GF2EX::SetMaxLength(long n);
+// f.SetMaxLength(n) pre-allocate spaces for n coefficients.  The
+// polynomial that f represents is unchanged.
+
+
+
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+
+long operator==(const GF2EX& a, const GF2EX& b);
+long operator!=(const GF2EX& a, const GF2EX& b);
+
+long IsZero(const GF2EX& a); // test for 0
+long IsOne(const GF2EX& a); // test for 1
+
+// PROMOTIONS: ==, != promote {long,GF2,GF2E} to GF2EX on (a, b).
+
+/**************************************************************************\
+
+                                   Addition
+
+\**************************************************************************/
+
+// operator notation:
+
+GF2EX operator+(const GF2EX& a, const GF2EX& b);
+GF2EX operator-(const GF2EX& a, const GF2EX& b);
+GF2EX operator-(const GF2EX& a);
+
+GF2EX& operator+=(GF2EX& x, const GF2EX& a);
+GF2EX& operator+=(GF2EX& x, const GF2E& a);
+GF2EX& operator+=(GF2EX& x, GF2 a);
+GF2EX& operator+=(GF2EX& x, long a);
+
+
+GF2EX& operator++(GF2EX& x);  // prefix
+void operator++(GF2EX& x, int);  // postfix
+
+GF2EX& operator-=(GF2EX& x, const GF2EX& a);
+GF2EX& operator-=(GF2EX& x, const GF2E& a);
+GF2EX& operator-=(GF2EX& x, GF2 a);
+GF2EX& operator-=(GF2EX& x, long a);
+
+GF2EX& operator--(GF2EX& x);  // prefix
+void operator--(GF2EX& x, int);  // postfix
+
+// procedural versions:
+
+void add(GF2EX& x, const GF2EX& a, const GF2EX& b); // x = a + b
+void sub(GF2EX& x, const GF2EX& a, const GF2EX& b); // x = a - b 
+void negate(GF2EX& x, const GF2EX& a); // x = - a 
+
+// PROMOTIONS: +, -, add, sub promote {long,GF2,GF2E} to GF2EX on (a, b).
+
+
+
+/**************************************************************************\
+
+                               Multiplication
+
+\**************************************************************************/
+
+// operator notation:
+
+GF2EX operator*(const GF2EX& a, const GF2EX& b);
+
+GF2EX& operator*=(GF2EX& x, const GF2EX& a);
+GF2EX& operator*=(GF2EX& x, const GF2E& a);
+GF2EX& operator*=(GF2EX& x, GF2 a);
+GF2EX& operator*=(GF2EX& x, long a);
+
+
+// procedural versions:
+
+
+void mul(GF2EX& x, const GF2EX& a, const GF2EX& b); // x = a * b
+
+void sqr(GF2EX& x, const GF2EX& a); // x = a^2
+GF2EX sqr(const GF2EX& a); 
+
+// PROMOTIONS: *, mul promote {long,GF2,GF2E} to GF2EX on (a, b).
+
+void power(GF2EX& x, const GF2EX& a, long e);  // x = a^e (e >= 0)
+GF2EX power(const GF2EX& a, long e);
+
+
+/**************************************************************************\
+
+                               Shift Operations
+
+LeftShift by n means multiplication by X^n
+RightShift by n means division by X^n
+
+A negative shift amount reverses the direction of the shift.
+
+\**************************************************************************/
+
+// operator notation:
+
+GF2EX operator<<(const GF2EX& a, long n);
+GF2EX operator>>(const GF2EX& a, long n);
+
+GF2EX& operator<<=(GF2EX& x, long n);
+GF2EX& operator>>=(GF2EX& x, long n);
+
+// procedural versions:
+
+void LeftShift(GF2EX& x, const GF2EX& a, long n); 
+GF2EX LeftShift(const GF2EX& a, long n);
+
+void RightShift(GF2EX& x, const GF2EX& a, long n); 
+GF2EX RightShift(const GF2EX& a, long n); 
+
+
+
+/**************************************************************************\
+
+                                  Division
+
+\**************************************************************************/
+
+// operator notation:
+
+GF2EX operator/(const GF2EX& a, const GF2EX& b);
+GF2EX operator/(const GF2EX& a, const GF2E& b);
+GF2EX operator/(const GF2EX& a, GF2 b);
+GF2EX operator/(const GF2EX& a, long b);
+
+GF2EX operator%(const GF2EX& a, const GF2EX& b);
+
+GF2EX& operator/=(GF2EX& x, const GF2EX& a);
+GF2EX& operator/=(GF2EX& x, const GF2E& a);
+GF2EX& operator/=(GF2EX& x, GF2 a);
+GF2EX& operator/=(GF2EX& x, long a);
+
+GF2EX& operator%=(GF2EX& x, const GF2EX& a);
+
+// procedural versions:
+
+
+void DivRem(GF2EX& q, GF2EX& r, const GF2EX& a, const GF2EX& b);
+// q = a/b, r = a%b
+
+void div(GF2EX& q, const GF2EX& a, const GF2EX& b);
+void div(GF2EX& q, const GF2EX& a, const GF2E& b);
+void div(GF2EX& q, const GF2EX& a, GF2 b);
+void div(GF2EX& q, const GF2EX& a, long b);
+// q = a/b
+
+void rem(GF2EX& r, const GF2EX& a, const GF2EX& b);
+// r = a%b
+
+long divide(GF2EX& q, const GF2EX& a, const GF2EX& b);
+// if b | a, sets q = a/b and returns 1; otherwise returns 0
+
+long divide(const GF2EX& a, const GF2EX& b);
+// if b | a, sets q = a/b and returns 1; otherwise returns 0
+
+
+/**************************************************************************\
+
+                                   GCD's
+
+These routines are intended for use when GF2E is a field.
+
+\**************************************************************************/
+
+
+void GCD(GF2EX& x, const GF2EX& a, const GF2EX& b);
+GF2EX GCD(const GF2EX& a, const GF2EX& b); 
+// x = GCD(a, b),  x is always monic (or zero if a==b==0).
+
+
+void XGCD(GF2EX& d, GF2EX& s, GF2EX& t, const GF2EX& a, const GF2EX& b);
+// d = gcd(a,b), a s + b t = d 
+
+
+/**************************************************************************\
+
+                                  Input/Output
+
+I/O format:
+
+   [a_0 a_1 ... a_n],
+
+represents the polynomial a_0 + a_1*X + ... + a_n*X^n.
+
+On output, all coefficients will be polynomials of degree < GF2E::degree() and
+a_n not zero (the zero polynomial is [ ]).  On input, the coefficients
+are arbitrary polynomials which are reduced modulo GF2E::modulus(), and leading
+zeros stripped.
+
+\**************************************************************************/
+
+istream& operator>>(istream& s, GF2EX& x);
+ostream& operator<<(ostream& s, const GF2EX& a);
+
+
+/**************************************************************************\
+
+                              Some utility routines
+
+\**************************************************************************/
+
+
+void diff(GF2EX& x, const GF2EX& a); // x = derivative of a
+GF2EX diff(const GF2EX& a); 
+
+void MakeMonic(GF2EX& x); 
+// if x != 0 makes x into its monic associate; LeadCoeff(x) must be
+// invertible in this case
+
+void reverse(GF2EX& x, const GF2EX& a, long hi);
+GF2EX reverse(const GF2EX& a, long hi);
+
+void reverse(GF2EX& x, const GF2EX& a);
+GF2EX reverse(const GF2EX& a);
+
+// x = reverse of a[0]..a[hi] (hi >= -1);
+// hi defaults to deg(a) in second version
+
+void VectorCopy(vec_GF2E& x, const GF2EX& a, long n);
+vec_GF2E VectorCopy(const GF2EX& a, long n);
+// x = copy of coefficient vector of a of length exactly n.
+// input is truncated or padded with zeroes as appropriate.
+
+
+
+
+/**************************************************************************\
+
+                             Random Polynomials
+
+\**************************************************************************/
+
+void random(GF2EX& x, long n);
+GF2EX random_GF2EX(long n);
+// x = random polynomial of degree < n 
+
+
+/**************************************************************************\
+
+                    Polynomial Evaluation and related problems
+
+\**************************************************************************/
+
+
+void BuildFromRoots(GF2EX& x, const vec_GF2E& a);
+GF2EX BuildFromRoots(const vec_GF2E& a);
+// computes the polynomial (X-a[0]) ... (X-a[n-1]), where n = a.length()
+
+void eval(GF2E& b, const GF2EX& f, const GF2E& a);
+GF2E eval(const GF2EX& f, const GF2E& a);
+// b = f(a)
+
+void eval(GF2E& b, const GF2X& f, const GF2E& a);
+GF2E eval(const GF2EX& f, const GF2E& a);
+// b = f(a); uses ModComp algorithm for GF2X
+
+void eval(vec_GF2E& b, const GF2EX& f, const vec_GF2E& a);
+vec_GF2E eval(const GF2EX& f, const vec_GF2E& a);
+//  b.SetLength(a.length()); b[i] = f(a[i]) for 0 <= i < a.length()
+
+void interpolate(GF2EX& f, const vec_GF2E& a, const vec_GF2E& b);
+GF2EX interpolate(const vec_GF2E& a, const vec_GF2E& b);
+// interpolates the polynomial f satisfying f(a[i]) = b[i].  
+
+/**************************************************************************\
+
+                       Arithmetic mod X^n
+
+Required: n >= 0; otherwise, an error is raised.
+
+\**************************************************************************/
+
+void trunc(GF2EX& x, const GF2EX& a, long n); // x = a % X^n
+GF2EX trunc(const GF2EX& a, long n); 
+
+void MulTrunc(GF2EX& x, const GF2EX& a, const GF2EX& b, long n);
+GF2EX MulTrunc(const GF2EX& a, const GF2EX& b, long n);
+// x = a * b % X^n
+
+void SqrTrunc(GF2EX& x, const GF2EX& a, long n);
+GF2EX SqrTrunc(const GF2EX& a, long n);
+// x = a^2 % X^n
+
+void InvTrunc(GF2EX& x, const GF2EX& a, long n);
+GF2EX InvTrunc(GF2EX& x, const GF2EX& a, long n);
+// computes x = a^{-1} % X^m.  Must have ConstTerm(a) invertible.
+
+/**************************************************************************\
+
+                Modular Arithmetic (without pre-conditioning)
+
+Arithmetic mod f.
+
+All inputs and outputs are polynomials of degree less than deg(f), and
+deg(f) > 0.
+
+
+NOTE: if you want to do many computations with a fixed f, use the
+GF2EXModulus data structure and associated routines below for better
+performance.
+
+\**************************************************************************/
+
+void MulMod(GF2EX& x, const GF2EX& a, const GF2EX& b, const GF2EX& f);
+GF2EX MulMod(const GF2EX& a, const GF2EX& b, const GF2EX& f);
+// x = (a * b) % f
+
+void SqrMod(GF2EX& x, const GF2EX& a, const GF2EX& f);
+GF2EX SqrMod(const GF2EX& a, const GF2EX& f);
+// x = a^2 % f
+
+void MulByXMod(GF2EX& x, const GF2EX& a, const GF2EX& f);
+GF2EX MulByXMod(const GF2EX& a, const GF2EX& f);
+// x = (a * X) mod f
+
+void InvMod(GF2EX& x, const GF2EX& a, const GF2EX& f);
+GF2EX InvMod(const GF2EX& a, const GF2EX& f);
+// x = a^{-1} % f, error is a is not invertible
+
+long InvModStatus(GF2EX& x, const GF2EX& a, const GF2EX& f);
+// if (a, f) = 1, returns 0 and sets x = a^{-1} % f; otherwise,
+// returns 1 and sets x = (a, f)
+
+
+/**************************************************************************\
+
+                     Modular Arithmetic with Pre-Conditioning
+
+If you need to do a lot of arithmetic modulo a fixed f, build
+GF2EXModulus F for f.  This pre-computes information about f that
+speeds up subsequent computations.
+
+As an example, the following routine the product modulo f of a vector
+of polynomials.
+
+#include <NTL/GF2EX.h>
+
+void product(GF2EX& x, const vec_GF2EX& v, const GF2EX& f)
+{
+   GF2EXModulus F(f);
+   GF2EX res;
+   res = 1;
+   long i;
+   for (i = 0; i < v.length(); i++)
+      MulMod(res, res, v[i], F); 
+   x = res;
+}
+
+NOTE: A GF2EX may be used wherever a GF2EXModulus is required,
+and a GF2EXModulus may be used wherever a GF2EX is required.
+
+
+\**************************************************************************/
+
+class GF2EXModulus {
+public:
+   GF2EXModulus(); // initially in an unusable state
+
+   GF2EXModulus(const GF2EX& f); // initialize with f, deg(f) > 0
+
+   GF2EXModulus(const GF2EXModulus&); // copy
+
+   GF2EXModulus& operator=(const GF2EXModulus&); // assignment
+
+   ~GF2EXModulus(); // destructor
+
+   operator const GF2EX& () const; // implicit read-only access to f
+
+   const GF2EX& val() const; // explicit read-only access to f
+};
+
+void build(GF2EXModulus& F, const GF2EX& f);
+// pre-computes information about f and stores it in F.  Must have
+// deg(f) > 0.  Note that the declaration GF2EXModulus F(f) is
+// equivalent to GF2EXModulus F; build(F, f).
+
+// In the following, f refers to the polynomial f supplied to the
+// build routine, and n = deg(f).
+
+
+long deg(const GF2EXModulus& F);  // return n=deg(f)
+
+void MulMod(GF2EX& x, const GF2EX& a, const GF2EX& b, const GF2EXModulus& F);
+GF2EX MulMod(const GF2EX& a, const GF2EX& b, const GF2EXModulus& F);
+// x = (a * b) % f; deg(a), deg(b) < n
+
+void SqrMod(GF2EX& x, const GF2EX& a, const GF2EXModulus& F);
+GF2EX SqrMod(const GF2EX& a, const GF2EXModulus& F);
+// x = a^2 % f; deg(a) < n
+
+void PowerMod(GF2EX& x, const GF2EX& a, const ZZ& e, const GF2EXModulus& F);
+GF2EX PowerMod(const GF2EX& a, const ZZ& e, const GF2EXModulus& F);
+
+void PowerMod(GF2EX& x, const GF2EX& a, long e, const GF2EXModulus& F);
+GF2EX PowerMod(const GF2EX& a, long e, const GF2EXModulus& F);
+
+// x = a^e % f; e >= 0, deg(a) < n.  Uses a sliding window algorithm.
+// (e may be negative)
+
+void PowerXMod(GF2EX& x, const ZZ& e, const GF2EXModulus& F);
+GF2EX PowerXMod(const ZZ& e, const GF2EXModulus& F);
+
+void PowerXMod(GF2EX& x, long e, const GF2EXModulus& F);
+GF2EX PowerXMod(long e, const GF2EXModulus& F);
+
+// x = X^e % f (e may be negative)
+
+void rem(GF2EX& x, const GF2EX& a, const GF2EXModulus& F);
+// x = a % f
+
+void DivRem(GF2EX& q, GF2EX& r, const GF2EX& a, const GF2EXModulus& F);
+// q = a/f, r = a%f
+
+void div(GF2EX& q, const GF2EX& a, const GF2EXModulus& F);
+// q = a/f
+
+// operator notation:
+
+GF2EX operator/(const GF2EX& a, const GF2EXModulus& F);
+GF2EX operator%(const GF2EX& a, const GF2EXModulus& F);
+
+GF2EX& operator/=(GF2EX& x, const GF2EXModulus& F);
+GF2EX& operator%=(GF2EX& x, const GF2EXModulus& F);
+
+
+
+/**************************************************************************\
+
+                             vectors of GF2EX's
+
+\**************************************************************************/
+
+typedef Vec<GF2EX> vec_GF2EX; // backward compatibility
+
+
+
+/**************************************************************************\
+
+                              Modular Composition
+
+Modular composition is the problem of computing g(h) mod f for
+polynomials f, g, and h.
+
+The algorithm employed is that of Brent & Kung (Fast algorithms for
+manipulating formal power series, JACM 25:581-595, 1978), which uses
+O(n^{1/2}) modular polynomial multiplications, and O(n^2) scalar
+operations.
+
+
+\**************************************************************************/
+
+void CompMod(GF2EX& x, const GF2EX& g, const GF2EX& h, const GF2EXModulus& F);
+GF2EX CompMod(const GF2EX& g, const GF2EX& h, 
+                    const GF2EXModulus& F);
+
+// x = g(h) mod f; deg(h) < n
+
+void Comp2Mod(GF2EX& x1, GF2EX& x2, const GF2EX& g1, const GF2EX& g2,
+              const GF2EX& h, const GF2EXModulus& F);
+// xi = gi(h) mod f (i=1,2); deg(h) < n.
+
+
+void Comp3Mod(GF2EX& x1, GF2EX& x2, GF2EX& x3, 
+              const GF2EX& g1, const GF2EX& g2, const GF2EX& g3,
+              const GF2EX& h, const GF2EXModulus& F);
+// xi = gi(h) mod f (i=1..3); deg(h) < n.
+
+
+
+/**************************************************************************\
+
+                     Composition with Pre-Conditioning
+
+If a single h is going to be used with many g's then you should build
+a GF2EXArgument for h, and then use the compose routine below.  The
+routine build computes and stores h, h^2, ..., h^m mod f.  After this
+pre-computation, composing a polynomial of degree roughly n with h
+takes n/m multiplies mod f, plus n^2 scalar multiplies.  Thus,
+increasing m increases the space requirement and the pre-computation
+time, but reduces the composition time.
+
+\**************************************************************************/
+
+
+struct GF2EXArgument {
+   vec_GF2EX H;
+};
+
+void build(GF2EXArgument& H, const GF2EX& h, const GF2EXModulus& F, long m);
+// Pre-Computes information about h.  m > 0, deg(h) < n.
+
+void CompMod(GF2EX& x, const GF2EX& g, const GF2EXArgument& H, 
+             const GF2EXModulus& F);
+
+GF2EX CompMod(const GF2EX& g, const GF2EXArgument& H, 
+                    const GF2EXModulus& F);
+
+extern thread_local long GF2EXArgBound;
+
+// Initially 0.  If this is set to a value greater than zero, then
+// composition routines will allocate a table of no than about
+// GF2EXArgBound KB.  Setting this value affects all compose routines
+// and the power projection and minimal polynomial routines below, 
+// and indirectly affects many routines in GF2EXFactoring.
+
+/**************************************************************************\
+
+                     power projection routines
+
+\**************************************************************************/
+
+void project(GF2E& x, const GF2EVector& a, const GF2EX& b);
+GF2E project(const GF2EVector& a, const GF2EX& b);
+// x = inner product of a with coefficient vector of b
+
+
+void ProjectPowers(vec_GF2E& x, const vec_GF2E& a, long k,
+                   const GF2EX& h, const GF2EXModulus& F);
+
+vec_GF2E ProjectPowers(const vec_GF2E& a, long k,
+                   const GF2EX& h, const GF2EXModulus& F);
+
+// Computes the vector
+
+//    project(a, 1), project(a, h), ..., project(a, h^{k-1} % f).  
+
+// This operation is the "transpose" of the modular composition operation.
+
+void ProjectPowers(vec_GF2E& x, const vec_GF2E& a, long k,
+                   const GF2EXArgument& H, const GF2EXModulus& F);
+
+vec_GF2E ProjectPowers(const vec_GF2E& a, long k,
+                   const GF2EXArgument& H, const GF2EXModulus& F);
+
+// same as above, but uses a pre-computed GF2EXArgument
+
+class GF2EXTransMultiplier { /* ... */ };
+
+void build(GF2EXTransMultiplier& B, const GF2EX& b, const GF2EXModulus& F);
+
+
+
+void UpdateMap(vec_GF2E& x, const vec_GF2E& a,
+               const GF2EXMultiplier& B, const GF2EXModulus& F);
+
+vec_GF2E UpdateMap(const vec_GF2E& a,
+               const GF2EXMultiplier& B, const GF2EXModulus& F);
+
+// Computes the vector
+
+//    project(a, b), project(a, (b*X)%f), ..., project(a, (b*X^{n-1})%f)
+
+// Restriction: a.length() <= deg(F), deg(b) < deg(F).
+// This is "transposed" MulMod by B.
+// Input may have "high order" zeroes stripped.
+// Output always has high order zeroes stripped.
+
+
+/**************************************************************************\
+
+                              Minimum Polynomials
+
+These routines should be used only when GF2E is a field.
+
+All of these routines implement the algorithm from [Shoup, J. Symbolic
+Comp. 17:371-391, 1994] and [Shoup, J. Symbolic Comp. 20:363-397,
+1995], based on transposed modular composition and the
+Berlekamp/Massey algorithm.
+
+\**************************************************************************/
+
+
+void MinPolySeq(GF2EX& h, const vec_GF2E& a, long m);
+GF2EX MinPolySeq(const vec_GF2E& a, long m);
+// computes the minimum polynomial of a linealy generated sequence; m
+// is a bound on the degree of the polynomial; required: a.length() >=
+// 2*m
+
+
+void ProbMinPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F, long m);
+GF2EX ProbMinPolyMod(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void ProbMinPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F);
+GF2EX ProbMinPolyMod(const GF2EX& g, const GF2EXModulus& F);
+
+// computes the monic minimal polynomial if (g mod f).  m = a bound on
+// the degree of the minimal polynomial; in the second version, this
+// argument defaults to n.  The algorithm is probabilistic, always
+// returns a divisor of the minimal polynomial, and returns a proper
+// divisor with probability at most m/2^{GF2E::degree()}.
+
+void MinPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F, long m);
+GF2EX MinPolyMod(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void MinPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F);
+GF2EX MinPolyMod(const GF2EX& g, const GF2EXModulus& F);
+
+// same as above, but guarantees that result is correct
+
+void IrredPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F, long m);
+GF2EX IrredPolyMod(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void IrredPolyMod(GF2EX& h, const GF2EX& g, const GF2EXModulus& F);
+GF2EX IrredPolyMod(const GF2EX& g, const GF2EXModulus& F);
+
+// same as above, but assumes that f is irreducible, or at least that
+// the minimal poly of g is itself irreducible.  The algorithm is
+// deterministic (and is always correct).
+
+
+/**************************************************************************\
+
+           Composition and Minimal Polynomials in towers
+
+These are implementations of algorithms that will be described
+and analyzed in a forthcoming paper.
+
+GF2E need not be a field.
+
+\**************************************************************************/
+
+
+void CompTower(GF2EX& x, const GF2X& g, const GF2EXArgument& h,
+             const GF2EXModulus& F);
+
+GF2EX CompTower(const GF2X& g, const GF2EXArgument& h,
+             const GF2EXModulus& F);
+
+void CompTower(GF2EX& x, const GF2X& g, const GF2EX& h,
+             const GF2EXModulus& F);
+
+GF2EX CompTower(const GF2X& g, const GF2EX& h,
+             const GF2EXModulus& F);
+
+
+// x = g(h) mod f
+
+
+void ProbMinPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F,
+                      long m);
+
+GF2X ProbMinPolyTower(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void ProbMinPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F);
+
+GF2X ProbMinPolyTower(const GF2EX& g, const GF2EXModulus& F);
+
+// Uses a probabilistic algorithm to compute the minimal
+// polynomial of (g mod f) over GF2.
+// The parameter m is a bound on the degree of the minimal polynomial
+// (default = deg(f)*GF2E::degree()).
+// In general, the result will be a divisor of the true minimimal
+// polynomial.  For correct results, use the MinPoly routines below.
+
+
+
+void MinPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F, long m);
+
+GF2X MinPolyTower(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void MinPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F);
+
+GF2X MinPolyTower(const GF2EX& g, const GF2EXModulus& F);
+
+// Same as above, but result is always correct.
+
+
+void IrredPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F, long m);
+
+GF2X IrredPolyTower(const GF2EX& g, const GF2EXModulus& F, long m);
+
+void IrredPolyTower(GF2X& h, const GF2EX& g, const GF2EXModulus& F);
+
+GF2X IrredPolyTower(const GF2EX& g, const GF2EXModulus& F);
+
+// Same as above, but assumes the minimal polynomial is
+// irreducible, and uses a slightly faster, deterministic algorithm.
+
+
+
+/**************************************************************************\
+
+                   Traces, norms, resultants
+
+\**************************************************************************/
+
+
+void TraceMod(GF2E& x, const GF2EX& a, const GF2EXModulus& F);
+GF2E TraceMod(const GF2EX& a, const GF2EXModulus& F);
+
+void TraceMod(GF2E& x, const GF2EX& a, const GF2EX& f);
+GF2E TraceMod(const GF2EX& a, const GF2EXModulus& f);
+// x = Trace(a mod f); deg(a) < deg(f)
+
+
+void TraceVec(vec_GF2E& S, const GF2EX& f);
+vec_GF2E TraceVec(const GF2EX& f);
+// S[i] = Trace(X^i mod f), i = 0..deg(f)-1; 0 < deg(f)
+
+// The above trace routines implement the asymptotically fast trace
+// algorithm from [von zur Gathen and Shoup, Computational Complexity,
+// 1992].
+
+void NormMod(GF2E& x, const GF2EX& a, const GF2EX& f);
+GF2E NormMod(const GF2EX& a, const GF2EX& f);
+// x = Norm(a mod f); 0 < deg(f), deg(a) < deg(f)
+
+void resultant(GF2E& x, const GF2EX& a, const GF2EX& b);
+GF2E resultant(const GF2EX& a, const GF2EX& b);
+// x = resultant(a, b)
+
+// NormMod and resultant require that GF2E is a field.
+
+
+
+/**************************************************************************\
+
+                           Miscellany
+
+
+\**************************************************************************/
+
+
+void clear(GF2EX& x) // x = 0
+void set(GF2EX& x); // x = 1
+
+
+void GF2EX::kill();
+// f.kill() sets f to 0 and frees all memory held by f.  Equivalent to
+// f.rep.kill().
+
+GF2EX::GF2EX(INIT_SIZE_TYPE, long n);
+// GF2EX(INIT_SIZE, n) initializes to zero, but space is pre-allocated
+// for n coefficients
+
+static const GF2EX& zero();
+// GF2EX::zero() is a read-only reference to 0
+
+void GF2EX::swap(GF2EX& x);
+void swap(GF2EX& x, GF2EX& y); 
+// swap (via "pointer swapping")
+
+GF2EX::GF2EX(long i, const GF2E& c); 
+GF2EX::GF2EX(long i, GF2 c); 
+GF2EX::GF2EX(long i, long c); 
+// initialize to X^i*c, provided for backward compatibility
+

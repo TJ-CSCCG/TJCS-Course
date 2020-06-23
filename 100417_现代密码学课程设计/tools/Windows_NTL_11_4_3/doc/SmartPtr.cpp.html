@@ -1,0 +1,1023 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/SmartPtr.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Constant { color: #ff8c00; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">***************************************************************************</span>
+
+<span class="Comment">SmartPtr: a smart pointer class.</span>
+
+<span class="Comment">Synopsis: provides a reference counted smart pointer, similar to shared_ptr</span>
+<span class="Comment">in the standard library.  It is provided here to minimize reliance</span>
+<span class="Comment">on the standard library, especially for older C++ compilers, which may</span>
+<span class="Comment">not provide shared_ptr, or it may be in TR1, which gets messy.</span>
+
+
+<span class="Comment">Examples:</span>
+
+
+<span class="Comment">  SmartPtr&lt;T&gt; p1;         // initialize to null</span>
+<span class="Comment">  SmartPtr&lt;T&gt; p1(0); </span>
+
+<span class="Comment">  SmartPtr&lt;T&gt; p2 = 0;     // 0/nullptr implicitly converts to SmartPtr&lt;T&gt;</span>
+
+<span class="Comment">  SmartPtr&lt;T&gt; p3(p1);     // copy constructor</span>
+
+<span class="Comment">  T *rp;</span>
+<span class="Comment">  SmartPtr&lt;T&gt; p4(rp);     // construct using raw pointer (explicit): better </span>
+<span class="Comment">                          // to use MakeSmart below</span>
+
+<span class="Comment">  p1 = MakeSmart&lt;T&gt;(...); // build new T object by invoking constructor</span>
+<span class="Comment">                          // T(...) with pseudo-variadic templates.</span>
+<span class="Comment">                          // This is safer and more efficient that</span>
+<span class="Comment">                          // using the raw-pointer constructor</span>
+<span class="Comment">                        </span>
+<span class="Comment">  p1 = p2;                // assignment</span>
+<span class="Comment">  p1 = 0;                 // assign null</span>
+
+
+<span class="Comment">  if (!p1) ...            //  test for null</span>
+<span class="Comment">  if (p1 == 0) ... </span>
+
+<span class="Comment">  if (p1) ...             // test for not null ... </span>
+<span class="Comment">  if (p1 != 0) ... </span>
+
+<span class="Comment">  if (p1 == p2) ...       // test for equality </span>
+<span class="Comment">  if (p1 != p2) </span>
+
+<span class="Comment">  *p1                     // dereferencing</span>
+<span class="Comment">  p1-&gt;...</span>
+
+<span class="Comment">  p1.get();               // return the underlying raw pointer...dangerous!</span>
+
+<span class="Comment">  p1.swap(p2);            // fast swap</span>
+<span class="Comment">  swap(p1, p2);</span>
+
+
+<span class="Comment">Automatic Conversions:</span>
+
+<span class="Comment">If S is another class, SmartPtr&lt;S&gt; converts to SmartPtr&lt;T&gt; if S* converts to T*</span>
+<span class="Comment">(for example, if S is a subclass of T).  Similarly, SmartPtr&lt;S&gt; and SmartPtr&lt;T&gt;</span>
+<span class="Comment">may be compared if S* and T* may be compared.</span>
+
+<span class="Comment">0/nullptr automatically converts to SmartPtr&lt;T&gt;.</span>
+
+<span class="Comment">MakeSmart:</span>
+
+<span class="Comment">One can write SmartPtr&lt;T&gt; p = MakeSmart&lt;T&gt;(x1, ..., xn), and this will create a</span>
+<span class="Comment">smart pointer to an object constructed as T(x1, ..., xn).  Besides notational</span>
+<span class="Comment">convenience, it also reduces the number of memory allocations from 2 to 1, as</span>
+<span class="Comment">the data and control block can be allocated in one chunck of memory.</span>
+
+<span class="Comment">In C++11 mode, this is implemented using variadic templates and &quot;perfect</span>
+<span class="Comment">forwarding&quot;.  Otherwise, this is implemented using macros, and there are some</span>
+<span class="Comment">limitations: first, the number n of arguments is limited to 9; second, all</span>
+<span class="Comment">arguments are pass by const reference, but you can work around this by using</span>
+<span class="Comment">the helper function Fwd.  For example, if T has a 2-argument constructor where</span>
+<span class="Comment">the second must be a non-const reference of some type, and x2 is a variable of</span>
+<span class="Comment">that type, you can write MakeSmart&lt;T&gt;(x1, Fwd(x2)), to forward that reference</span>
+<span class="Comment">through in a typesafe manner.  Note that for compatibility, the Fwd function is</span>
+<span class="Comment">also available in C++11 mode, so you can write code that will work in either</span>
+<span class="Comment">mode.</span>
+
+<span class="Comment">MakeRaw:</span>
+
+<span class="Comment">One can also write T *p = MakeRaw&lt;T&gt;(x1, ..., xn) to create a </span>
+<span class="Comment">raw pointer.  This is the same as writing T *p = new T(x1, ..., xn),</span>
+<span class="Comment">except that error handling is determined by the NTL_EXCEPTION</span>
+<span class="Comment">flag (on =&gt; bad_alloc exception is thrown, off =&gt; error message</span>
+<span class="Comment">and abort).</span>
+
+<span class="Comment">MakeRawArray:</span>
+
+<span class="Comment">Another utility routine: one can write T *p = MakeRawArray&lt;T&gt;(n)</span>
+<span class="Comment">to make a plain array of n T objects.  Error handling is the same</span>
+<span class="Comment">as for MakeRaw.</span>
+
+<span class="Comment">Dynamic casting:</span>
+
+<span class="Comment">I've also supplied a dynamic cast operation for smart pointers.</span>
+
+<span class="Comment">   SmartPtr&lt;Derived&gt; d = MakeSmart&lt;Derived&gt;(); // d points to Derived</span>
+<span class="Comment">   SmartPtr&lt;Base&gt; b = d; // implicit upcast: OK</span>
+
+<span class="Comment">   SmartPtr&lt;Derived&gt; d1 = DynamicCast&lt;Derived&gt;(b);</span>
+<span class="Comment">      // downcast to a Derived object -- returns null for a bad cast</span>
+
+<span class="Comment">DeleterPolicy:</span>
+
+<span class="Comment">Normally, when the object pointed to a SmartPtr needs to be destroyed, this is</span>
+<span class="Comment">done by invoking delete on the raw pointer.  The user can override this</span>
+<span class="Comment">behavior by specifying a &quot;deleter policy&quot;, which is a class P that defines a</span>
+<span class="Comment">static member function deleter, which is invoked as P::deleter(p).  Such a</span>
+<span class="Comment">policy can be attached to a SmartPtr using a specialized constructor (see</span>
+<span class="Comment">below).</span>
+
+<span class="Comment">A deleter policy can be useful, for example, in realizing the PIPL</span>
+<span class="Comment">pattern, where the class T's definition is not visible.  The specified deleter</span>
+<span class="Comment">can invoke a free-standing function that itself invokes delete.  A deleter</span>
+<span class="Comment">policy can also be useful is memory is to be managed using some mechanism other</span>
+<span class="Comment">than new/delete.</span>
+
+
+<span class="Comment">Implementation notes:</span>
+
+<span class="Comment">If NTL is compiled with the NTL_THREADS option, then the reference counting</span>
+<span class="Comment">will be thread safe.</span>
+
+<span class="Comment">The SmartPtrControl class heirarchy is used to make sure the right destructor</span>
+<span class="Comment">is called when the ref count goes to zero.  This can be an issue for forward</span>
+<span class="Comment">declared classes and for subclasses.  For example, if T is forward declared in</span>
+<span class="Comment">a context where the ref count goes to zero, or if the object's actual type is a</span>
+<span class="Comment">subclass of T and T's destructor was not declared virtual.  The implementation</span>
+<span class="Comment">of SmartPtr guarantees correct behavior in these situations.</span>
+
+<span class="Comment">The null tests p, !p, p == 0, are all effected via an implicit conversion from</span>
+<span class="Comment">SmartPtr&lt;T&gt; to a funny pointer type (a pointer to a member function, which</span>
+<span class="Comment">avoids other, unwanted implicit conversions: this is the so-called &quot;safe bool</span>
+<span class="Comment">idiom&quot;);</span>
+
+<span class="Comment">Also, there is an implicit conversion from another funny pointer type to</span>
+<span class="Comment">SmartPtr&lt;T&gt;, which is how the implicit conversion from 0/nullptr is achieved.</span>
+
+<span class="Comment">In C++11 both of the above effects could perhaps be achieved more directly.</span>
+<span class="Comment">The new &quot;explict bool&quot; operator can replace the &quot;safe bool idiom&quot;, and </span>
+<span class="Comment">the new nullptr_t type could be used to get the conversion from null to work.</span>
+
+<span class="Comment">NOTES: See <a href="http://www.artima.com/cppsource/safebool.html">http://www.artima.com/cppsource/safebool.html</a> for more on the &quot;safe</span>
+<span class="Comment">bool idiom&quot;.  </span>
+
+
+<span class="Comment">****************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// The default &quot;deleter policy&quot;</span>
+<span class="Type">struct</span> DefaultDeleterPolicy {
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+   <span class="Type">static</span> <span class="Type">void</span> deleter(T *p) { <span class="Statement">delete</span> p; }
+
+};
+
+<span class="Comment">// A tagging class, for better readability in invoking constructor.</span>
+<span class="Comment">// Usage: SmartPtr&lt;T&gt; p(r, ChoosePolicy&lt;MyDeleterPolicy&gt;());</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> P&gt;
+<span class="Type">struct</span> ChoosePolicy { };
+
+
+
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> SmartPtr {
+<span class="Statement">public</span>:
+<span class="Statement">public</span>:
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; <span class="Type">explicit</span> SmartPtr(Y* p);
+   <span class="Comment">// construct smart pointer from raw pointer with deleter policy</span>
+   <span class="Comment">// DefaultDeleterPolicy (so p should be allocated using new).</span>
+
+   <span class="Comment">// NOTE: Y* must convert to T*, but upon the original pointer is preserved</span>
+   <span class="Comment">// so that when ref count drops to 0, the *original* object of type Y is destroyed.</span>
+
+   <span class="Comment">// EXCEPTIONS: a control block is dynamically allocated;</span>
+   <span class="Comment">//    if this allocation fails, the object pointed to by p is destroyed</span>
+   <span class="Comment">//    and a bad_alloc exception is thrown</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y, <span class="Type">class</span> P&gt; SmartPtr(Y* p, ChoosePolicy&lt;P&gt;);
+   <span class="Comment">// construct smart pointer from raw pointer with deleter policy P.</span>
+
+   <span class="Comment">// NOTE: Y* must convert to T*, but upon the original pointer is preserved</span>
+   <span class="Comment">// so that when ref count drops to 0, the *original* object of type Y is destroyed.</span>
+
+   <span class="Comment">// EXCEPTIONS: a control block is dynamically allocated;</span>
+   <span class="Comment">//    if this allocation fails, the object pointed to by p is destroyed</span>
+   <span class="Comment">//    and a bad_alloc exception is thrown</span>
+
+   SmartPtr();
+   <span class="Comment">// initial value null</span>
+
+   SmartPtr(fake_null_type1);
+   <span class="Comment">// automatic conversion from 0/nullptr</span>
+
+   ~SmartPtr();
+   <span class="Comment">// destructor</span>
+
+   SmartPtr(<span class="Type">const</span> SmartPtr&amp; other);
+   SmartPtr&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> SmartPtr&amp; other);
+   <span class="Comment">// copy and assignment</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; SmartPtr(<span class="Type">const</span> SmartPtr&lt;Y&gt;&amp; other);
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; SmartPtr&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> SmartPtr&lt;Y&gt;&amp; other);
+   <span class="Comment">// copy and assignment</span>
+
+   SmartPtr(SmartPtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   SmartPtr&amp; <span class="Statement">operator</span>=(SmartPtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; SmartPtr(SmartPtr&lt;Y&gt;&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; SmartPtr&amp; <span class="Statement">operator</span>=(SmartPtr&lt;Y&gt;&amp;&amp; other);
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   T&amp; <span class="Statement">operator</span>*()  <span class="Type">const</span>;
+   T* <span class="Statement">operator</span>-&gt;() <span class="Type">const</span>;
+   <span class="Comment">// indirection</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// get underlying raw pointer</span>
+
+   <span class="Type">void</span> swap(SmartPtr&amp; other);
+
+   SmartPtr(fake_null_type);
+   <span class="Comment">// allows assignment and initialization from 0</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparisons to 0</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; SmartPtr&lt;Y&gt; DynamicCast() <span class="Type">const</span>;
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(SmartPtr&lt;T&gt;&amp; p, SmartPtr&lt;T&gt;&amp; q);
+
+<span class="Comment">// free dynamic cast function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt; SmartPtr&lt;X&gt; DynamicCast(<span class="Type">const</span> SmartPtr&lt;Y&gt;&amp; p);
+
+
+<span class="Comment">// Equality testing</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt;
+<span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> SmartPtr&lt;X&gt;&amp; a, <span class="Type">const</span> SmartPtr&lt;Y&gt;&amp; b);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt;
+<span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> SmartPtr&lt;X&gt;&amp; a, <span class="Type">const</span> SmartPtr&lt;Y&gt;&amp; b);
+
+<span class="Comment">// MakeSmart variadic template</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span>... Args&gt;
+SmartPtr&lt;T&gt; MakeSmart(Args&amp;&amp;... args);
+<span class="Comment">// EXCEPTIONS: may throw an exception if constructor for T throws</span>
+<span class="Comment">// or memory allocation fails</span>
+
+
+<span class="Comment">// EXCEPTIONS: unless otherwise specified, the methods above</span>
+<span class="Comment">// never throw an exception (under C++11 rules, if a destructor</span>
+<span class="Comment">// is invoked that throws an exception, the program will terminate).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">***************************************************************************</span>
+
+<span class="Comment">Experimantal: CloneablePtr&lt;T&gt; ...essentially same interface as SmartPtr, but </span>
+<span class="Comment">allows cloning of complete objects.  The differences:</span>
+<span class="Comment">*  must construct using MakeCloneable</span>
+<span class="Comment">*  a clone method is provided</span>
+<span class="Comment">*  implicit conversion from CloneablePtr to SmartPtr is allowed</span>
+
+<span class="Comment">Example:</span>
+
+<span class="Comment">   CloneablePtr&lt;Derived&gt; d = MakeCloneable&lt;Derived&gt;(); </span>
+<span class="Comment">   // d points to Derived</span>
+
+<span class="Comment">   CloneablePtr&lt;Base&gt; b = d; // implicit upcast: OK</span>
+
+<span class="Comment">   CloneablePtr&lt;Base&gt; b1 = b.clone(); </span>
+<span class="Comment">   // clone of b, which is really a Derived object</span>
+
+<span class="Comment">   CloneablePtr&lt;Derived&gt; d1 = DynamicCast&lt;Derived&gt;(b1);</span>
+<span class="Comment">   // downcast to a Derived object -- returns null for a bad cast</span>
+
+<span class="Comment">   SmartPtr&lt;Base&gt; b2 = d1;</span>
+<span class="Comment">   </span>
+
+
+<span class="Comment">Implementation:</span>
+
+<span class="Comment">In the clone method, the object is constructed using the copy constructor for</span>
+<span class="Comment">the type T, where T is the compile-time type with which the first smart pointer</span>
+<span class="Comment">to this object was was created, even if the pointer has been subsequently</span>
+<span class="Comment">upcasted to a base type S.  Such objects must have been initially created using</span>
+<span class="Comment">the MakeCloneable function.  It turns out, this is hard to do in a completely</span>
+<span class="Comment">standards-compliant way, because of the type erasure going on.  So I settled on</span>
+<span class="Comment">the current method, which does some low-level pointer arithmetic.  Even with</span>
+<span class="Comment">fancy things like multiple and virtual inheritance, it should work, under the</span>
+<span class="Comment">assumption that if two objects have the same (runtime) type, then their memory</span>
+<span class="Comment">layout is the same.  I don't think anything like that is guaranteed by the</span>
+<span class="Comment">standard, but this seems reasonable, and it seems to work.  Like I said, it is</span>
+<span class="Comment">experimental, and I would appreciate feedback from C++ gurus.</span>
+
+<span class="Comment">Note that NTL does not use this feature, but I do have applications where this</span>
+<span class="Comment">is convenient.</span>
+
+
+<span class="Comment">*********************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> CloneablePtr {
+<span class="Statement">public</span>:
+   CloneablePtr();
+   <span class="Comment">// initial value null</span>
+
+   ~CloneablePtr();
+   <span class="Comment">// if ref count drops to zero, then delete referent</span>
+
+   CloneablePtr(<span class="Type">const</span> CloneablePtr&amp; other);
+   CloneablePtr&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> CloneablePtr&amp; other);
+   <span class="Comment">// copy and assignment</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; CloneablePtr(<span class="Type">const</span> CloneablePtr&lt;Y&gt;&amp; other);
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; CloneablePtr&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> CloneablePtr&lt;Y&gt;&amp; other);
+   <span class="Comment">// copy and assignment</span>
+
+   CloneablePtr(CloneablePtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   CloneablePtr&amp; <span class="Statement">operator</span>=(CloneablePtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; CloneablePtr(CloneablePtr&lt;Y&gt;&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; CloneablePtr&amp; <span class="Statement">operator</span>=(CloneablePtr&lt;Y&gt;&amp;&amp; other);
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   T&amp; <span class="Statement">operator</span>*()  <span class="Type">const</span>;
+   T* <span class="Statement">operator</span>-&gt;() <span class="Type">const</span>;
+   <span class="Comment">// indirection</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// get underlying raw pointer</span>
+
+   <span class="Type">void</span> swap(CloneablePtr&amp; other);
+
+   CloneablePtr(fake_null_type);
+   <span class="Comment">// allows assignment and initialization from 0</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparisons to 0</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; CloneablePtr&lt;Y&gt; DynamicCast() <span class="Type">const</span>;
+
+   CloneablePtr clone() <span class="Type">const</span>;
+   <span class="Comment">// construct a clone, using the copy constructor</span>
+   <span class="Comment">// EXCEPTIONS: may throw if copy construction fails</span>
+
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> Y&gt; <span class="Statement">operator</span> SmartPtr&lt;Y&gt;();
+   <span class="Comment">// implicit conversion from CloneablePtr&lt;T&gt; to SmartPtr&lt;Y&gt;,</span>
+   <span class="Comment">// allowed if T* converts implicitly to Y*.</span>
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(CloneablePtr&lt;T&gt;&amp; p, CloneablePtr&lt;T&gt;&amp; q);
+
+<span class="Comment">// free dynamic cast function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt; CloneablePtr&lt;X&gt; DynamicCast(<span class="Type">const</span> CloneablePtr&lt;Y&gt;&amp; p);
+
+
+<span class="Comment">// Equality testing</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt;
+<span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> CloneablePtr&lt;X&gt;&amp; a, <span class="Type">const</span> CloneablePtr&lt;Y&gt;&amp; b);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> Y&gt;
+<span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> CloneablePtr&lt;X&gt;&amp; a, <span class="Type">const</span> CloneablePtr&lt;Y&gt;&amp; b);
+
+<span class="Comment">// MakeCloneable psuedo-variadic template</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span>... Args&gt;
+CloneablePtr&lt;T&gt; MakeCloneable(Args&amp;&amp;... args);
+<span class="Comment">// EXCEPTIONS: may throw an exception if constructor for T throws</span>
+<span class="Comment">// or memory allocation fails</span>
+
+
+<span class="Comment">// EXCEPTIONS: unless otherwise specified, the methods above</span>
+<span class="Comment">// never throw an exception (under C++11 rules, if a destructor</span>
+<span class="Comment">// is invoked that throws an exception, the program will terminate).</span>
+
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*********************************************************************</span>
+
+<span class="Comment">UniquePtr&lt;T&gt; -- unique pointer to object with copying disabled.</span>
+<span class="Comment">Useful for pointers inside classes so that we can</span>
+<span class="Comment">automatically destruct them.  </span>
+
+<span class="Comment">Constructors:</span>
+<span class="Comment">   UniquePtr&lt;T&gt; p1;     // initialize with null</span>
+<span class="Comment">   UniquePtr&lt;T&gt; p1(0); </span>
+
+<span class="Comment">   T* rp;</span>
+<span class="Comment">   UniquePtr&lt;T&gt; p1(rp); // construct using raw pointer (explicit)</span>
+
+<span class="Comment">   p1 = 0;              // destroy's p1's referent and assigns null</span>
+
+<span class="Comment">   p1.make(...);        // destroy's p1's referent and assigns</span>
+<span class="Comment">                        // a fresh objected constructed via T(...),</span>
+<span class="Comment">                        // using psuedo-variadic templates</span>
+<span class="Comment">                </span>
+<span class="Comment">   p1.reset(rp);        // destroy's p1's referent and assign rp</span>
+
+<span class="Comment">   if (!p1) ...         // test for null</span>
+<span class="Comment">   if (p1 == 0) ...</span>
+
+<span class="Comment">   if (p1) ...          // test for nonnull</span>
+<span class="Comment">   if (p1 != 0) ...</span>
+
+<span class="Comment">   if (p1 == p2) ...    // test for equality</span>
+<span class="Comment">   if (p1 != p2) ...   </span>
+
+<span class="Comment">   *p1                  // dereferencing</span>
+<span class="Comment">   p1-&gt;...</span>
+
+
+<span class="Comment">   rp = p1.get();       // fetch raw pointer</span>
+<span class="Comment">   rp = p1.release();   // fetch raw pointer, and set to null</span>
+
+<span class="Comment">   p1.move(p2);         // move p2 to p1, destroying p1's referent</span>
+<span class="Comment">                        //   if p1 != p2</span>
+
+<span class="Comment">   p1.swap(p2);         // swap pointers</span>
+<span class="Comment">   swap(p1, p2);</span>
+
+
+<span class="Comment">DeleterPolicy:</span>
+
+<span class="Comment">UniquePtr supports a &quot;deleter policy&quot;, analogous to that used in SmartPtr.</span>
+
+<span class="Comment">Normally, when the object pointed to a UniquePtr needs to be destroyed, this is</span>
+<span class="Comment">done by invoking delete on the raw pointer.  The user can override this</span>
+<span class="Comment">behavior by specifying a &quot;deleter policy&quot;, which is a class P that defines a</span>
+<span class="Comment">static member function deleter, which is invoked as P::deleter(p).  </span>
+
+<span class="Comment">Unlike with a SmartPtr, the deleter policy must be attached to the type.</span>
+<span class="Comment">The default policy is the same DefaultDeleterPolicy, defined above.</span>
+
+<span class="Comment">A deleter policy can be useful, for example, in realizing the PIPL</span>
+<span class="Comment">pattern, where the class T's definition is not visible.  The specified deleter</span>
+<span class="Comment">can invoke a free-standing function that itself invokes delete.  A deleter</span>
+<span class="Comment">policy can also be useful is memory is to be managed using some mechanism other</span>
+<span class="Comment">than new/delete.</span>
+
+<span class="Comment">   </span>
+<span class="Comment">*********************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span> P=DefaultDeleterPolicy&gt;
+<span class="Type">class</span> UniquePtr {
+<span class="Statement">public</span>:
+   <span class="Type">explicit</span> UniquePtr(T *p);
+   <span class="Comment">// construct UniquePtr from raw pointer (allocated with new)</span>
+
+   UniquePtr();
+   <span class="Comment">// initial value is null</span>
+
+   UniquePtr(UniquePtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   UniquePtr&amp; <span class="Statement">operator</span>=(UniquePtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   UniquePtr&amp; <span class="Statement">operator</span>=(fake_null_type1);
+   <span class="Comment">// allows assignment of 0; equivalent to calling reset()</span>
+
+   ~UniquePtr();
+   <span class="Comment">// destroys referent by calling P::deleter</span>
+
+   <span class="Type">void</span> reset(T* p = <span class="Constant">0</span>);
+   <span class="Comment">// reset underlying pointer to p, destroying original referent</span>
+   <span class="Comment">// by calling P::deleter</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span>... Args&gt;
+   <span class="Type">void</span> make(Args&amp;&amp;... args);
+   <span class="Comment">// pseudo-variadic template, roughly equivalent to</span>
+   <span class="Comment">// reset(new T(std::forward&lt;args&gt; args...))</span>
+   <span class="Comment">// EXCEPTIONS: this may throw (but provides strong ES guarantee)</span>
+
+   T&amp; <span class="Statement">operator</span>*()  <span class="Type">const</span>;
+   T* <span class="Statement">operator</span>-&gt;() <span class="Type">const</span>;
+   <span class="Comment">// indirection</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// get raw pointer</span>
+
+   T* release();
+   <span class="Comment">// returns raw pointer, and sets the raw pointer to null</span>
+
+   <span class="Type">void</span> move(UniquePtr&amp; other);
+   <span class="Comment">// move other to *this, destroying original referent</span>
+   <span class="Comment">// by calling P::deleter</span>
+
+   <span class="Type">void</span> swap(UniquePtr&amp; other);
+   <span class="Comment">// swap raw pointers</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparison with 0</span>
+
+<span class="Statement">private</span>:
+   UniquePtr(<span class="Type">const</span> UniquePtr&amp;); <span class="Comment">// disabled</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> UniquePtr&amp;); <span class="Comment">// disabled</span>
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(UniquePtr&lt;T&gt;&amp; p, UniquePtr&lt;T&gt;&amp; q);
+
+
+
+<span class="Comment">// Equality testing</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> P&gt; <span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> UniquePtr&lt;X,P&gt;&amp; a, <span class="Type">const</span> UniquePtr&lt;X,P&gt;&amp; b);
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> P&gt; <span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> UniquePtr&lt;X,P&gt;&amp; a, <span class="Type">const</span> UniquePtr&lt;X,P&gt;&amp; b);
+
+
+<span class="Comment">// EXCEPTIONS: unless otherwise specified, the methods above</span>
+<span class="Comment">// never throw an exception (under C++11 rules, if a destructor</span>
+<span class="Comment">// is invoked that throws an exception, the program will terminate).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*********************************************************************</span>
+
+<span class="Comment">CopiedPtr&lt;T&gt; -- essentially the same interface and implemetation as UniquePtr,</span>
+<span class="Comment">with the following exceptions:</span>
+
+<span class="Comment"> * copy constructor is defined: by default, it will create a copy</span>
+<span class="Comment">   of the referrent using T's copy constructor (but this bahavior</span>
+<span class="Comment">   can be overridden -- see below)</span>
+
+<span class="Comment"> * assignment operator is defined (and implemented in terms of the</span>
+<span class="Comment">   copy constructor)</span>
+
+<span class="Comment"> * The policy managing a CopiedPtr specifier deleter and copier functions:</span>
+<span class="Comment">   the deleter is used to delete objects and the copies is used for making</span>
+<span class="Comment">   copies (see below).</span>
+
+<span class="Comment">NOTE: this class is meant to replace the OptionalVal class, whose</span>
+<span class="Comment">interface is not so nice.  For backwards compatibility, OptionalVal will</span>
+<span class="Comment">be maintained, however.</span>
+<span class="Comment">   </span>
+<span class="Comment">*********************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// This class specifies the default copier</span>
+<span class="Type">struct</span> DefaultCopierPolicy {
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+   <span class="Type">static</span> T* copier(T *p) { <span class="Statement">return</span> (p ?  MakeRaw&lt;T&gt;(*p) : <span class="Constant">0</span>); }
+
+};
+
+<span class="Comment">// This class specifies an alternative copier, which is meant</span>
+<span class="Comment">// to perform &quot;deep&quot; copies on class heirarchies that support an</span>
+<span class="Comment">// appropriate clone() method.</span>
+<span class="Type">struct</span> CloningCopier {
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+   <span class="Type">static</span> T* copier(T *p) { <span class="Statement">return</span> (p ?  p-&gt;clone() : <span class="Constant">0</span>); }
+
+};
+
+<span class="Type">struct</span> DefaultCopiedPtrPolicy : DefaultDeleterPolicy, DefaultCopierPolicy { };
+<span class="Type">struct</span> CloningCopiedPtrPolicy : DefaultDeleterPolicy, CloningCopier { };
+
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span> P=DefaultCopiedPtrPolicy&gt;
+<span class="Type">class</span> CopiedPtr {
+<span class="Statement">public</span>:
+   <span class="Type">explicit</span> CopiedPtr(T *p);
+   <span class="Comment">// construct CopiedPtr from raw pointer (allocated with new)</span>
+
+   CopiedPtr();
+   <span class="Comment">// initial value is null</span>
+
+   CopiedPtr(<span class="Type">const</span> CopiedPtr&amp; other);
+   <span class="Comment">// creates a copy of other's referent by calling P::copier</span>
+
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> CopiedPtr&amp;);
+   <span class="Comment">// creates a copy of other's referent by calling P::copier,</span>
+   <span class="Comment">// and destroys original referent by calling P::deleter</span>
+
+   CopiedPtr&amp; <span class="Statement">operator</span>=(fake_null_type1);
+   <span class="Comment">// allows assignment of 0; equivalent to calling reset()</span>
+
+   ~CopiedPtr();
+   <span class="Comment">// destroys referent by calling P::deleter</span>
+
+   CopiedPtr(CopiedPtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   CopiedPtr&amp; <span class="Statement">operator</span>=(CopiedPtr&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">void</span> reset(T* p = <span class="Constant">0</span>);
+   <span class="Comment">// reset underlying pointer to p, destroying original referent</span>
+   <span class="Comment">// by calling P::deleter</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span>... Args&gt;
+   <span class="Type">void</span> make(Args&amp;&amp;... args);
+   <span class="Comment">// pseudo-variadic template, roughly equivalent to</span>
+   <span class="Comment">// reset(new T(std::forward&lt;args&gt; args...))</span>
+   <span class="Comment">// EXCEPTIONS: this may throw (but provides strong ES guarantee)</span>
+
+   T&amp; <span class="Statement">operator</span>*()  <span class="Type">const</span>;
+   T* <span class="Statement">operator</span>-&gt;() <span class="Type">const</span>;
+   <span class="Comment">// indirection</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// get raw pointer</span>
+
+   T* release();
+   <span class="Comment">// returns raw pointer, and sets the raw pointer to null</span>
+
+   <span class="Type">void</span> move(CopiedPtr&amp; other);
+   <span class="Comment">// move other to *this, destroying original referent</span>
+   <span class="Comment">// by calling P::deleter</span>
+
+
+   <span class="Type">void</span> swap(CopiedPtr&amp; other);
+   <span class="Comment">// swap raw pointers</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparison with 0</span>
+
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(CopiedPtr&lt;T&gt;&amp; p, CopiedPtr&lt;T&gt;&amp; q);
+
+
+
+<span class="Comment">// Equality testing</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> P&gt; <span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> CopiedPtr&lt;X,P&gt;&amp; a, <span class="Type">const</span> CopiedPtr&lt;X,P&gt;&amp; b);
+<span class="Type">template</span>&lt;<span class="Type">class</span> X, <span class="Type">class</span> P&gt; <span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> CopiedPtr&lt;X,P&gt;&amp; a, <span class="Type">const</span> CopiedPtr&lt;X,P&gt;&amp; b);
+
+
+<span class="Comment">// EXCEPTIONS: unless otherwise specified, the methods above</span>
+<span class="Comment">// never throw an exception (under C++11 rules, if a destructor</span>
+<span class="Comment">// is invoked that throws an exception, the program will terminate).</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*********************************************************************</span>
+
+<span class="Comment">UniqueArray&lt;T&gt; -- similar to UniquePtr, but for arrays.  These arrays cannot be</span>
+<span class="Comment">resized -- for that, you should use the Vec class.</span>
+
+<span class="Comment">Constructors:</span>
+<span class="Comment">   UniqueArray&lt;T&gt; p1;     // initialize with null</span>
+<span class="Comment">   UniqueArray&lt;T&gt; p1(0); </span>
+
+<span class="Comment">   T* rp;</span>
+<span class="Comment">   UniqueArray&lt;T&gt; p1(rp); // construct using raw pointer (explicit)</span>
+
+<span class="Comment">   p1 = 0;              // destroy's p1's referent and assigns null</span>
+
+<span class="Comment">   p1.SetLength(n);     // destroy's p1's referent and assigns</span>
+<span class="Comment">                        // a fresh objected constructed via new T[n]</span>
+<span class="Comment">                </span>
+<span class="Comment">   p1.reset(rp);        // destroy's p1's referent and assign rp</span>
+
+<span class="Comment">   if (!p1) ...         // test for null</span>
+<span class="Comment">   if (p1 == 0) ...</span>
+
+<span class="Comment">   if (p1) ...          // test for nonnull</span>
+<span class="Comment">   if (p1 != 0) ...</span>
+
+<span class="Comment">   if (p1 == p2) ...    // test for equality</span>
+<span class="Comment">   if (p1 != p2) ...   </span>
+
+<span class="Comment">   p1[i]                // array indexing</span>
+
+<span class="Comment">   rp = p1.get();       // fetch raw pointer</span>
+<span class="Comment">   rp = p1.release();   // fetch raw pointer, and set to null</span>
+<span class="Comment">   p1.move(p2);         // move p2 to p1, destroying p1's referent </span>
+<span class="Comment">                        //   if p1 != p2</span>
+
+<span class="Comment">   p1.swap(p2);         // fast swap</span>
+<span class="Comment">   swap(p1, p2);</span>
+
+<span class="Comment">   </span>
+<span class="Comment">*********************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> UniqueArray {
+<span class="Statement">public</span>:
+   <span class="Type">explicit</span> UniqueArray(T *p);
+   <span class="Comment">// construct from raw pointer (allocated with new[])</span>
+
+   UniqueArray();
+   <span class="Comment">// initially null</span>
+
+   UniqueArray&amp; <span class="Statement">operator</span>=(fake_null_type1);
+   <span class="Comment">// allows of 0</span>
+
+   ~UniqueArray();
+
+   UniqueArray(UniqueArray&amp;&amp; other) <span class="Statement">noexcept</span>;
+   UniqueArray&amp; <span class="Statement">operator</span>=(UniqueArray&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">void</span> reset(T* p = <span class="Constant">0</span>);
+   <span class="Comment">// reset with raw pointer, destroying referent</span>
+
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n);
+   <span class="Comment">// destroys referent and allocates an array of size n</span>
+   <span class="Comment">// EXCEPTIONS: this may throw (but provides strong ES guarantee)</span>
+
+   T&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// accesses ith element in the array (currently no range checking)</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// get raw pointer</span>
+
+   T* elts() <span class="Type">const</span>;
+   <span class="Comment">// get raw pointer (for compatibility with the Vec class)</span>
+
+   T* release();
+   <span class="Comment">// get raw pointer and reset to null</span>
+
+   <span class="Type">void</span> move(UniqueArray&amp; other);
+   <span class="Comment">// move raw pointer</span>
+
+   <span class="Type">void</span> swap(UniqueArray&amp; other);
+   <span class="Comment">// swap raw pointer</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparison to 0</span>
+
+<span class="Statement">private</span>:
+   UniqueArray(<span class="Type">const</span> UniqueArray&amp;); <span class="Comment">// disabled</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> UniqueArray&amp;); <span class="Comment">// disabled</span>
+
+};
+
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(UniqueArray&lt;T&gt;&amp; p, UniqueArray&lt;T&gt;&amp; q);
+
+
+
+<span class="Comment">// Equality testing</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X&gt; <span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> UniqueArray&lt;X&gt;&amp; a, <span class="Type">const</span> UniqueArray&lt;X&gt;&amp; b);
+<span class="Type">template</span>&lt;<span class="Type">class</span> X&gt; <span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> UniqueArray&lt;X&gt;&amp; a, <span class="Type">const</span> UniqueArray&lt;X&gt;&amp; b);
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*********************************************************************</span>
+
+<span class="Comment">Unique2DArray&lt;T&gt; -- unique pointer to array of arrays.</span>
+
+<span class="Comment">This is very similar to UniqueArray&lt; UniqueArray&lt;T&gt; &gt;, except that </span>
+<span class="Comment">we can retrofit old code that accepts objects of type T**.</span>
+
+<span class="Comment">Constructors:</span>
+<span class="Comment">   Unique2DArray&lt;T&gt; p1;     // initialize with null</span>
+<span class="Comment">   Unique2DArray&lt;T&gt; p1(0); </span>
+
+<span class="Comment">   p1 = 0;              // destroy's p1's referent and assigns null</span>
+<span class="Comment">   p1.reset();</span>
+
+<span class="Comment">   p1.SetLength(n);     // destroy's p1's referent and assigns</span>
+<span class="Comment">                        // a fresh array of null pointers</span>
+
+<span class="Comment">   p1.SetDims(n, m)     // creates an n x m array</span>
+<span class="Comment">                </span>
+<span class="Comment">   if (!p1) ...         // test for null</span>
+<span class="Comment">   if (p1 == 0) ...</span>
+
+<span class="Comment">   if (p1) ...          // test for nonnull</span>
+<span class="Comment">   if (p1 != 0) ...</span>
+
+<span class="Comment">   if (p1 == p2) ...    // test for equality</span>
+<span class="Comment">   if (p1 != p2) ...   </span>
+
+<span class="Comment">   p1[i]                // array indexing</span>
+
+<span class="Comment">   T **rp;</span>
+<span class="Comment">   rp = p1.get();       // fetch raw pointer</span>
+<span class="Comment">   rp = p1.release();   // fetch raw pointer, and set to null</span>
+<span class="Comment">   p1.move(p2);         // if p1 != p2 then:</span>
+<span class="Comment">                        //    makes p1 point to p2's referent,</span>
+<span class="Comment">                        //    setting p2 to null and destroying</span>
+<span class="Comment">                        //    p1's referent</span>
+
+<span class="Comment">   p1.swap(p2);         // fast swap</span>
+<span class="Comment">   swap(p1, p2);</span>
+
+<span class="Comment">   </span>
+<span class="Comment">*********************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> Unique2DArray {
+<span class="Statement">public</span>:
+   <span class="Type">typedef</span> T *T_ptr;
+
+   Unique2DArray();
+   <span class="Comment">// initially null</span>
+
+   Unique2DArray&amp; <span class="Statement">operator</span>=(fake_null_type1);
+   <span class="Comment">// allows initialization and assignment of 0</span>
+
+   ~Unique2DArray();
+   <span class="Comment">// destroys the entire array and each row in the array</span>
+
+   Unique2DArray(Unique2DArray&amp;&amp; other) <span class="Statement">noexcept</span>;
+   Unique2DArray&amp; <span class="Statement">operator</span>=(Unique2DArray&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">void</span> reset();
+   <span class="Comment">// reset to null</span>
+
+
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n);
+   <span class="Comment">// resets the array to a vector of length n,</span>
+   <span class="Comment">// each entry initialized to null.</span>
+   <span class="Comment">// EXCEPTIONS: may throw (provides strong ES guarantee)</span>
+
+   <span class="Type">void</span> SetDims(<span class="Type">long</span> n, <span class="Type">long</span> m);
+   <span class="Comment">// resets the array to a 2D array with n rows and m columns.</span>
+   <span class="Comment">// EXCEPTIONS: may throw (provides strong ES guarantee)</span>
+
+   <span class="Type">void</span> SetDimsFrom1(<span class="Type">long</span> n, <span class="Type">long</span> m);
+   <span class="Comment">// same as above, but only initializes rows 1..n-1.</span>
+   <span class="Comment">// this helps with some legacy code.</span>
+   <span class="Comment">// EXCEPTIONS: may throw (provides strong ES guarantee)</span>
+
+   T_ptr&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// array indexing, no range checking</span>
+
+   T_ptr* get() <span class="Type">const</span>;
+   <span class="Comment">// return underlying pointer</span>
+
+   T_ptr* release() { len = <span class="Constant">0</span>; <span class="Statement">return</span> dp.release(); }
+   <span class="Comment">// return underlying pointer and reset to null</span>
+
+
+   <span class="Type">void</span> move(Unique2DArray&amp; other);
+   <span class="Comment">// move pointers</span>
+
+   <span class="Type">void</span> swap(Unique2DArray&amp; other);
+   <span class="Comment">// swap pointers</span>
+
+   <span class="Statement">operator</span> fake_null_type() <span class="Type">const</span>;
+   <span class="Comment">// allows comparison to 0</span>
+
+
+<span class="Statement">private</span>:
+
+   Unique2DArray(<span class="Type">const</span> Unique2DArray&amp;); <span class="Comment">// disabled</span>
+   <span class="Type">void</span> <span class="Statement">operator</span>=(<span class="Type">const</span> Unique2DArray&amp;); <span class="Comment">// disabled</span>
+
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(Unique2DArray&lt;T&gt;&amp; p, Unique2DArray&lt;T&gt;&amp; q);
+
+
+
+<span class="Comment">// Equality testing</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> X&gt; <span class="Type">bool</span> <span class="Statement">operator</span>==(<span class="Type">const</span> Unique2DArray&lt;X&gt;&amp; a, <span class="Type">const</span> Unique2DArray&lt;X&gt;&amp; b);
+<span class="Type">template</span>&lt;<span class="Type">class</span> X&gt; <span class="Type">bool</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> Unique2DArray&lt;X&gt;&amp; a, <span class="Type">const</span> Unique2DArray&lt;X&gt;&amp; b);
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*********************************************************************</span>
+
+
+<span class="Comment">OptionalVal&lt;T&gt; -- unique pointer to object with copying enabled.</span>
+
+<span class="Comment">NOTE: this class is deprecated; use CopiedPtr instead.</span>
+<span class="Comment">It will, however, be maintained indefinitely for backward compatibility.</span>
+
+<span class="Comment">Constructors:</span>
+<span class="Comment">   OptionalVal&lt;T&gt; p1;     // initialize with null</span>
+
+<span class="Comment">   T* rp;</span>
+<span class="Comment">   OptionalVal&lt;T&gt; p1(rp); // construct using raw pointer (explicit)</span>
+
+<span class="Comment">   OptionalVal&lt;T&gt; p2(p1); // construct a copy of p1's referent</span>
+
+<span class="Comment">    </span>
+
+<span class="Comment">   p1.make(...);        // destroy's p1's referent and assigns</span>
+<span class="Comment">                        // a fresh objected constructed via T(...),</span>
+<span class="Comment">                        // using psuedo variadic templates</span>
+<span class="Comment">                </span>
+<span class="Comment">   p1.reset(rp);        // destroy's p1's referent and assign rp</span>
+
+<span class="Comment">   if (p1.exists()) ... // test for null</span>
+
+<span class="Comment">   p1.val()             // dereference</span>
+
+<span class="Comment">   rp = p1.get();       // fetch raw pointer</span>
+<span class="Comment">   rp = p1.release();   // fetch raw pointer, and set to NULL</span>
+<span class="Comment">   p1.move(p2);         // move p2 to p1, destroying p1's referent</span>
+<span class="Comment">                        //   if p1 != p2</span>
+
+<span class="Comment">   p1 = p2;             // deep copy, using T's copy constructor</span>
+
+<span class="Comment">   p1.swap(p2);         // swap pointers</span>
+<span class="Comment">   swap(p1, p2);</span>
+
+<span class="Comment">   </span>
+<span class="Comment">*********************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> OptionalVal {
+<span class="Statement">public</span>:
+   <span class="Type">explicit</span> OptionalVal(T *p);
+   <span class="Comment">// initialize using raw pointer (allocated with new)</span>
+
+   OptionalVal();
+   <span class="Comment">// initialize to null</span>
+
+   OptionalVal(<span class="Type">const</span> OptionalVal&amp; other);
+   <span class="Comment">// initialize using a deep copy (via T's copy constructor)</span>
+
+   OptionalVal&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> OptionalVal&amp; other);
+   <span class="Comment">// assignment using a deep copy (via T's copy constructor)</span>
+
+   ~OptionalVal();
+   <span class="Comment">// destroys the referent</span>
+
+   OptionalVal(OptionalVal&amp;&amp; other) <span class="Statement">noexcept</span>;
+   OptionalVal&amp; <span class="Statement">operator</span>=(OptionalVal&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   <span class="Type">void</span> reset(T* p = <span class="Constant">0</span>);
+   <span class="Comment">// resets the referent</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> T, <span class="Type">class</span>... Args&gt;
+   <span class="Type">void</span> make(Args&amp;&amp;... args);
+   <span class="Comment">// pseudo-variadic template.</span>
+   <span class="Comment">// resets the referent to a new object T(std::forward&lt;Args&gt; args...)</span>
+   <span class="Comment">// EXCEPTIONS: may throw an exception (but provides strong ES guarantee)</span>
+
+   T&amp; val() <span class="Type">const</span>;
+   <span class="Comment">// returns reference to referent </span>
+   <span class="Comment">// if underlying pointer p is null, the indirection *p</span>
+   <span class="Comment">// is undefined behavior, but most likely leads to program termination</span>
+
+   <span class="Type">bool</span> exists() <span class="Type">const</span>;
+   <span class="Comment">// checks that underlying pointer is not null</span>
+
+   T* get() <span class="Type">const</span>;
+   <span class="Comment">// returns underlying raw pointer</span>
+
+   T* release();
+   <span class="Comment">// returns raw pointer, and sets the raw pointer to null</span>
+
+   <span class="Type">void</span> move(OptionalVal&amp; other);
+   <span class="Comment">// performs a (shallow) pointer move</span>
+
+   <span class="Type">void</span> swap(OptionalVal&amp; other);
+   <span class="Comment">// performs a (shallow) pointer swap</span>
+
+};
+
+
+<span class="Comment">// free swap function</span>
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt; <span class="Type">void</span> swap(OptionalVal&lt;T&gt;&amp; p, OptionalVal&lt;T&gt;&amp; q);
+
+
+
+<span class="Comment">// EXCEPTIONS: unless otherwise specified, the methods above</span>
+<span class="Comment">// never throw an exception (under C++11 rules, if a destructor</span>
+<span class="Comment">// is invoked that throws an exception, the program will terminate).</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

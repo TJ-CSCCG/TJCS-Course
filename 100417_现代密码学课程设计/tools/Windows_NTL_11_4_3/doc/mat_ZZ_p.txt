@@ -1,0 +1,165 @@
+
+/**************************************************************************\
+
+MODULE: mat_ZZ_p
+
+SUMMARY:
+
+Defines the class mat_ZZ_p.
+
+\**************************************************************************/
+
+
+#include <NTL/matrix.h>
+#include <NTL/vec_vec_ZZ_p.h>
+
+
+typedef Mat<ZZ_p> mat_ZZ_p; // backward compatibility
+
+void add(mat_ZZ_p& X, const mat_ZZ_p& A, const mat_ZZ_p& B); 
+// X = A + B
+
+void sub(mat_ZZ_p& X, const mat_ZZ_p& A, const mat_ZZ_p& B); 
+// X = A - B
+
+void negate(mat_ZZ_p& X, const mat_ZZ_p& A); 
+// X = - A
+
+void mul(mat_ZZ_p& X, const mat_ZZ_p& A, const mat_ZZ_p& B); 
+// X = A * B
+
+void mul(vec_ZZ_p& x, const mat_ZZ_p& A, const vec_ZZ_p& b); 
+// x = A * b
+
+void mul(vec_ZZ_p& x, const vec_ZZ_p& a, const mat_ZZ_p& B); 
+// x = a * B
+
+void mul(mat_ZZ_p& X, const mat_ZZ_p& A, const ZZ_p& b);
+void mul(mat_ZZ_p& X, const mat_ZZ_p& A, long b);
+// X = A * b
+
+void mul(mat_ZZ_p& X, const ZZ_p& a, const mat_ZZ_p& B);
+void mul(mat_ZZ_p& X, long a, const mat_ZZ_p& B);
+// X = a * B
+
+
+void determinant(ZZ_p& d, const mat_ZZ_p& A);
+ZZ_p determinant(const mat_ZZ_p& a); 
+// d = determinant(A)
+
+
+void transpose(mat_ZZ_p& X, const mat_ZZ_p& A);
+mat_ZZ_p transpose(const mat_ZZ_p& A);
+// X = transpose of A
+
+void solve(ZZ_p& d, vec_ZZ_p& x, const mat_ZZ_p& A, const vec_ZZ_p& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves x*A = b.
+
+void solve(zz_p& d, const mat_zz_p& A, vec_zz_p& x, const vec_zz_p& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves A*x = b (so x and b are treated as a column vectors).
+
+void inv(ZZ_p& d, mat_ZZ_p& X, const mat_ZZ_p& A);
+// A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
+// computes X = A^{-1}.
+
+void sqr(mat_ZZ_p& X, const mat_ZZ_p& A);
+mat_ZZ_p sqr(const mat_ZZ_p& A);
+// X = A*A   
+
+void inv(mat_ZZ_p& X, const mat_ZZ_p& A);
+mat_ZZ_p inv(const mat_ZZ_p& A);
+// X = A^{-1}; error is raised if A is  singular
+
+void power(mat_ZZ_p& X, const mat_ZZ_p& A, const ZZ& e);
+mat_ZZ_p power(const mat_ZZ_p& A, const ZZ& e);
+
+void power(mat_ZZ_p& X, const mat_ZZ_p& A, long e);
+mat_ZZ_p power(const mat_ZZ_p& A, long e);
+// X = A^e; e may be negative (in which case A must be nonsingular).
+
+void ident(mat_ZZ_p& X, long n);
+mat_ZZ_p ident_mat_ZZ_p(long n);
+// X = n x n identity matrix
+
+long IsIdent(const mat_ZZ_p& A, long n);
+// test if A is the n x n identity matrix
+
+void diag(mat_ZZ_p& X, long n, const ZZ_p& d);
+mat_ZZ_p diag(long n, const ZZ_p& d);
+// X = n x n diagonal matrix with d on diagonal
+
+long IsDiag(const mat_ZZ_p& A, long n, const ZZ_p& d);
+// test if X is an  n x n diagonal matrix with d on diagonal
+
+
+
+void random(mat_ZZ_p& x, long n, long m);  // x = random n x m matrix
+mat_ZZ_p random_mat_ZZ_p(long n, long m);
+
+
+
+long gauss(mat_ZZ_p& M);
+long gauss(mat_ZZ_p& M, long w);
+// Performs unitary row operations so as to bring M into row echelon
+// form.  If the optional argument w is supplied, stops when first w
+// columns are in echelon form.  The return value is the rank (or the
+// rank of the first w columns).
+
+void image(mat_ZZ_p& X, const mat_ZZ_p& A);
+// The rows of X are computed as basis of A's row space.  X is is row
+// echelon form
+
+void kernel(mat_ZZ_p& X, const mat_ZZ_p& A);
+// Computes a basis for the kernel of the map x -> x*A. where x is a
+// row vector.
+
+
+
+// miscellaneous:
+
+void clear(mat_ZZ_p& a);
+// x = 0 (dimension unchanged)
+
+long IsZero(const mat_ZZ_p& a);
+// test if a is the zero matrix (any dimension)
+
+
+// operator notation:
+
+mat_ZZ_p operator+(const mat_ZZ_p& a, const mat_ZZ_p& b);
+mat_ZZ_p operator-(const mat_ZZ_p& a, const mat_ZZ_p& b);
+mat_ZZ_p operator*(const mat_ZZ_p& a, const mat_ZZ_p& b);
+
+mat_ZZ_p operator-(const mat_ZZ_p& a);
+
+
+// matrix/scalar multiplication:
+
+mat_ZZ_p operator*(const mat_ZZ_p& a, const ZZ_p& b);
+mat_ZZ_p operator*(const mat_ZZ_p& a, long b);
+
+mat_ZZ_p operator*(const ZZ_p& a, const mat_ZZ_p& b);
+mat_ZZ_p operator*(long a, const mat_ZZ_p& b);
+
+// matrix/vector multiplication:
+
+vec_ZZ_p operator*(const mat_ZZ_p& a, const vec_ZZ_p& b);
+
+vec_ZZ_p operator*(const vec_ZZ_p& a, const mat_ZZ_p& b);
+
+
+// assignment operator notation:
+
+mat_ZZ_p& operator+=(mat_ZZ_p& x, const mat_ZZ_p& a);
+mat_ZZ_p& operator-=(mat_ZZ_p& x, const mat_ZZ_p& a);
+mat_ZZ_p& operator*=(mat_ZZ_p& x, const mat_ZZ_p& a);
+
+mat_ZZ_p& operator*=(mat_ZZ_p& x, const ZZ_p& a);
+mat_ZZ_p& operator*=(mat_ZZ_p& x, long a);
+
+vec_ZZ_p& operator*=(vec_ZZ_p& x, const mat_ZZ_p& a);
+
+
+

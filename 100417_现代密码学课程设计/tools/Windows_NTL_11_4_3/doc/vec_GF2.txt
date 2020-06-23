@@ -1,0 +1,288 @@
+
+/**************************************************************************\
+
+MODULE: vec_GF2
+
+SUMMARY:
+
+
+The class Vec<GF2> is explicitly specialized.  It behaves much like a generic
+Vec<T> (see vector.txt), but there are some differences.
+
+For efficiency, elements of a Vec<GF2> are "packed" into a word.  You can still
+use subscript notation v[i] or v(i).  For const vectors, these evaluate to
+values of type const GF2.  For non-const vectors, these evaluate to values of
+the special type ref_GF2, which is defined in the GF2 header file.
+
+There are implicit conversions from ref_GF2 to const GF2 and from GF2& to
+ref_GF2.  Therefore, if you want to declare a function that takes a non-const
+reference to a GF2, you should declare the parameter of type ref_GF2: this will
+allow you to pass variables of type GF2 as well as elements of vec_GF2's
+obtained through indexing.
+
+As an alternative, one can use the get and put methods below to access
+vector elements.
+
+There is a subtle but important difference in the semantics of Vec<GF2> and
+that of generic NTL vectors.  With a Vec<GF2>, whenever its length is increased
+(via SetLength), the "new" bits are always 0.  For example, if 
+v.length() == 20, then 
+
+   v.SetLength(10); v.setLength(20);
+
+will effectively clear bits 10..19 of v.  This is quite different from the
+semantics of generic NTL vectors, where the above sequence would not change the
+value of v at all.  One has to be aware of this difference, but it will not
+matter in most ordinary circumstances.
+
+
+Another thing to be aware of is the use of Vec<GF2> in range-based
+for loops.  The safest ways to do this are as follows:
+
+   for (auto&& item : vec) { ... } // for read-only or read/write access
+
+or
+
+   for (GF2 item : vec) { ... } // for access via a copy
+
+Note that:
+   * declaring item as "auto&" or "GF2&" will yield a syntax error
+   * declaring item as "auto" or "const auto&" will potentially
+     allow code to modify vec via item, without a warning or error,
+     contrary to expectations (although this cannot happen if vec
+     itself is const)
+
+However, declaring item as "auto&&" will work as expected, and the compiler
+will raise an error if you try to modify a const Vec<GF2>.  
+
+All of these issues arise because ref_GF2 is not a true reference, and the
+semantics of "auto" and "auto&" interact badly.  Similar issues arise with
+vector<bool> in the STL.
+
+\**************************************************************************/
+
+
+
+template<> 
+class Vec<GF2> {
+
+public:
+
+   Vec(); // 0 length vector
+   Vec(INIT_SIZE_TYPE, long n); // initialize to length n
+                                // usage: Vec(INIT_SIZE, n)
+
+   Vec(const Vec<GF2>& a); // copy constructor
+   Vec& operator=(const Vec<GF2>& a); // assignment
+
+   Vec(Vec&& a);
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+   // will revert to copy constructor if a is fixed
+
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   Vec& operator=(Vec&& a);
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+   // will revert to copy assignment if *this or a is fixed
+#endif
+
+   ~Vec(); // destructor
+
+
+
+   void SetLength(long n); // set length to n bits
+   void SetLength(long n, GF2 a); 
+      // set length to n, if length increases, initialize new bits to a
+
+   void SetMaxLength(long n); // allocate space for n bits
+
+   long length() const; // current length, in bits
+
+   long MaxLength() const; // maximum length, i.e., the maximum
+                           // value passed to either SetLength or SetMaxLength
+                           // since creation or last kill
+
+   long allocated() const; // number of bits for which space is allocated;
+                           // if n <= v.allocated(), then v.SetLength(n)
+                           // will not result in any memory re-allocation.
+
+   // INVARIANT: 
+   //    length() <= MaxLength() <= allocated() < 2^(NTL_BITS_PER_LONG-4)
+
+
+   void FixLength(long n); // fix length to n bits
+   // can only be applied after default initialization or kill
+
+
+   void FixAtCurrentLength();
+   // fixes the length at the cuurent length and prohibits
+   // all future length changes.  
+
+   // It is required that length() == MaxLength() when called.
+
+   // EXCEPTIONS: if length() != MaxLength() and error is raised;
+   // Strong ES.
+
+
+   long fixed() const; // test if length has been fixed
+
+   void kill(); // free space and make length 0
+
+   const GF2 get(long i) const; // fetch value at index i (indexing from 0)
+
+   void put(long i, GF2 a); // write value a to index i (indexing from 0)
+   void put(long i, long a); 
+
+// Here are the subscripting operators, defined using the
+// "helper" class ref_GF2
+
+   ref_GF2 operator[](long i);
+   ref_GF2 operator()(long i);
+
+   const GF2 operator[](long i) const;
+   const GF2 operator()(long i) const;
+
+
+   void swap(Vec<GF2>& y);
+   // swap with y (fast: just swaps pointers)
+
+   void move(Vec<GF2>& y);
+   // move y to *this (fast: just moves pointers)
+
+   void append(GF2 a);
+   // append a to end of vector
+
+   void append(const Vec<GF2>& w);
+   // append w to end of vector
+
+
+// Some partial STL compatibility...also used
+// to interface with the Matrix template class
+
+   typedef GF2 value_type;
+   typedef ref_GF2 reference;
+   typedef const GF2 const_reference;
+   typedef /* implementation defined type */ iterator;
+   typedef /* implementation defined type */ const_iterator;
+
+   ref_GF2 at(long i);
+   const GF2 at(long i) const;
+   // indexing with range checking
+
+
+   iterator begin();
+   const_iterator begin() const;
+   // pointer to beginning of vector
+
+   iterator end();
+   const_iterator end() const;
+   // pointer to (one past) end of vector
+
+   // NOTES: The iterator types act like pointers.  You can perform all the
+   // usual arithmetic on them, as well as dereferencing and subscripting.
+   // Dereferencing an iterator yields a ref_GF2.  Dereferencing a
+   // const_iterator yields a const GF2.
+
+
+};
+
+
+
+void swap(Vec<GF2>& x, Vec<GF2>& y);
+// swap x and y (fast pointer swap)
+
+void append(Vec<GF2>& v, GF2 a);
+// append a to v
+
+void append(Vec<GF2>& v, const Vec<GF2>& a);
+// append a to v
+
+// equality operators:
+
+long operator==(const Vec<GF2>& a, const Vec<GF2>& b);
+long operator!=(const Vec<GF2>& a, const Vec<GF2>& b);
+
+
+// I/O operators:
+
+ostream& operator<<(ostream& s, const Vec<GF2>& a);
+istream& operator>>(istream& s, Vec<GF2>& a);
+
+// The I/O format is [a_0 a_1 ... a_{n-1}], where each a_i is "0" or "1".
+// On input, the a_i may be arbitrary integers, which are reduced mod 2.
+
+
+
+typedef Vec<GF2> vec_GF2;  // backward compatibility
+
+// utility routines:
+
+void clear(vec_GF2& x); // clear all bits--length unchanged
+long IsZero(const vec_GF2& a); // test if all bits are zero
+
+void shift(vec_GF2& x, const vec_GF2& a, long n);
+vec_GF2 shift(const vec_GF2& a, long n);
+// x = a shifted n places, where n may be positive or negative.
+// Generally, x[i] = a[i-n], so positive n shifts to a higher index.
+// The length of x is set to the length of a, and bits 
+// are zero-filled or discarded as necessary.
+
+void reverse(vec_GF2& x, const vec_GF2& a); // c = a reversed
+vec_GF2 reverse(const vec_GF2& a);
+
+long weight(const vec_GF2& a); // return number of 1 bits in a
+
+
+// arithmetic operations over GF(2):
+
+void add(vec_GF2& x, const vec_GF2& a, const vec_GF2& b);
+void sub(vec_GF2& x, const vec_GF2& a, const vec_GF2& b);
+void negate(vec_GF2& x, const vec_GF2& a);
+
+void mul(vec_GF2& x, const vec_GF2& a, GF2 b);
+void mul(vec_GF2& x, const vec_GF2& a, long b);
+
+void mul(vec_GF2& x, GF2 a, const vec_GF2& b);
+void mul(vec_GF2& x, long a, const vec_GF2& b);
+// x = a * b
+
+void InnerProduct(ref_GF2 x, const vec_GF2& a, const vec_GF2& b);
+// vectors may differ in length
+
+void VectorCopy(vec_GF2& x, const vec_GF2& a, long n);
+vec_GF2 VectorCopy(const vec_GF2& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+void random(vec_GF2& x, long n);  // x = random vector of length n
+vec_GF2 random_vec_GF2(long n);
+
+
+
+// arithmetic operator notation:
+
+vec_GF2 operator+(const vec_GF2& a, const vec_GF2& b);
+vec_GF2 operator-(const vec_GF2& a, const vec_GF2& b);
+vec_GF2 operator-(const vec_GF2& a);
+
+// scalar mul:
+
+vec_GF2 operator*(const vec_GF2& a, GF2 b);
+vec_GF2 operator*(const vec_GF2& a, long b);
+
+vec_GF2 operator*(GF2 a, const vec_GF2& b); 
+vec_GF2 operator*(long a, const vec_GF2& b); 
+
+// inner product: 
+
+inline GF2 operator*(const vec_GF2& a, const vec_GF2& b); 
+
+// assignment operator notation:
+
+vec_GF2& operator+=(vec_GF2& x, const vec_GF2& a);
+vec_GF2& operator-=(vec_GF2& x, const vec_GF2& a);
+
+vec_GF2& operator*=(vec_GF2& x, GF2 a);
+vec_GF2& operator*=(vec_GF2& x, long a);
+
