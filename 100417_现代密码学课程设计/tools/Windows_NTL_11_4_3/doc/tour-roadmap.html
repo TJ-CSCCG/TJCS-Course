@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>
+A Tour of NTL: NTL past, present, and future  </title>
+</head>
+
+<center>
+<a href="tour-time.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-changes.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: NTL past, present, and future 
+</p>
+</h1>
+
+<p> <hr> <p>
+
+<h3>
+Some History
+</h3>
+
+<p>
+
+Work on NTL started around 1990, when I wanted to implement some new
+algorithms for factoring polynomials over finite fields.
+I found that none of the available software was adequate for
+this task, mainly because the code for polynomial arithmetic in
+the available software was too slow.
+So I wrote my own.
+My starting point was Arjen Lenstra's LIP package for long integer
+arithmetic, which was written in <tt>C</tt>.
+It soon became clear that using <tt>C++</tt> instead of <tt>C</tt>
+would be much more productive and less prone to errors,
+mainly because of <tt>C++</tt>'s constructors and destructors
+which allow memory management to be automated.
+Using <tt>C++</tt> has other benefits as well, like function
+and operator overloading, which makes for more readable code.
+
+<p>
+One of the basic design principles of LIP was portability.
+I adopted this principle for NTL as well, for a number of reasons,
+not the least of which was that my computing environment
+kept changing whenever I changed jobs.
+Achieving portability is getting easier as standards,
+like IEEE floating point, get widely adopted, and as the definition of
+and implementations of the
+<tt>C++</tt> language stabilize.
+
+
+<p>
+Since 1990, NTL has evolved in many ways,
+and it now provides a fairly polished and well-rounded programming interface.
+
+<p>
+When I started working on NTL, there really were not that many 
+good, portable long integer packages around.
+Besides LIP, there was the BSD Unix MP library.
+The first version of GMP was released in the early 1990's.
+At that point in time, LIP seemed like the best starting point.
+LIP remains a reasonable long integer package, but in recent years,
+GMP has really become quite good:  it seems well supported on
+many platforms, and is typically much faster than LIP.
+
+<p>
+I've now re-structured NTL so that one can use
+either 'traditional' LIP or GMP as the long integer package.
+
+<p>
+
+<h3>
+The Future of NTL
+</h3>
+
+<p>
+
+
+As you can well imagine, there is potentially no end to algorithms one
+could implement.
+That is why I have to stop somewhere.
+I think NTL has reached a point where it provides a reasonably
+well-rounded suite of algorithms for basic problems.
+I plan to continue supporting NTL, fixing bugs and improving performance.
+
+<p>
+While I don't have time to add significant new functionality to NTL,
+there seems to be an ever-growing number of NTL users
+out there, and I encourage them to make their code available to
+others.
+These might be in the form of NTL "add ons", but there is the
+possibility of integrating 
+new functionality or algorithmic improvements into NTL itself.
+
+
+<h3>Wish list</h3>
+These are a few things I wish others could perhaps contribute to 
+NTL.
+I'd be happy to discuss and assist with any design and integration issues,
+or any other ideas for improvement.
+I'd also be happy to discuss ideas for making NTL more
+open to make it easier for others to contribute.
+
+<ul>
+<p> <li>
+Support for
+bivariate polynomial arithmetic, including GCDs, resultants,
+and factoring, and for integer and all the various finite field
+coefficient rings.
+
+<p><li>
+Code for elliptic curves,
+including an elliptic curve point counting algorithm.
+
+<p><li>
+Integer factorization algorithms.
+
+<p><li>
+Implementations of some of the newer lattice basis reduction algorithms.
+
+<p><li>
+Improvements to the
+polynomial multiplication algorithms over <tt>ZZ</tt>
+could be improved.
+One specific improvement: the Schoenhage-Strassen algorithm
+currently does not incorporate the so-called "square root of two trick".
+
+<p><li>
+Improvements to <tt>zz_pX</tt> arithmetic.
+For small <tt>p</tt>, it is likely faster to use 
+Kronecker-substitution to reduce <tt>zz_pX</tt> 
+multiplication to <tt>ZZ</tt> multiplication.
+This is especially true if GMP is used for <tt>ZZ</tt> arithmetic.
+Implementing this should not be too hard, but then one would have
+to go through all of the <tt>zz_pX</tt> code to make all
+other operations directly reduce to multiplication in <tt>zz_pX</tt>.
+This will be a bit tedious, but it shouldn't be too difficult,
+since one can copy and paste corresponding code from <tt>zz_pEX</tt>,
+where this that already been done.
+
+<p><li>
+Improvements to some of the <tt>RR</tt> algorithms.
+In particular, the trig, exp, and log functions are currently woefully
+inefficient.
+
+</ul>
+
+<h3>Some things I plan to work on</h3>
+
+Here are a few things I plan to work on in the near future.
+
+<ul>
+<p><li>
+Now that NTL is thread safe, it is possible to use multiple cores
+within NTL to improve performance.
+One possibilty is to utilize multiple cores in the modular
+FFT implementation of polynomial multiplication.
+Both the FFT (over different small primes) and reduce/CRT
+(over different coefficients) steps are trivially parallelizable.
+
+<p><li>
+Introduce some <tt>C++11</tt> features, like "move constructors"
+and "move assignment".
+This would have to be done with compile-time flags to support
+older compilers.
+
+<p><li>
+If nobody else will do it, I will eventually do the <tt>zz_pX</tt>
+improvements outlined above.
+
+
+</ul>
+
+
+<p>
+
+<center>
+<a href="tour-time.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-changes.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

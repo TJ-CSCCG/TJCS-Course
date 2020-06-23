@@ -1,0 +1,40 @@
+
+
+Use the compiler flag
+
+    -DNTL_TRANSITION
+
+to help with the transition to NTL 3.0 from earlier versions.
+
+This has the effect of undeclaring certain functions
+whose semantics in 3.0 is different than in versions < 3.0.
+Thus, one can use the compiler to find the trouble spots.
+
+THE LIBRARY CAN NOT BE COMPILED WITH THIS FLAG!
+ONLY USE TO FIND TRANSITION PROBLEMS IN CLIENT CODE.
+
+Undeclares all shift operators for NTL arithmetic type;
+in versions < 3.0, << was a conversion operator; now it
+is a shift operator.
+
+Undeclares division functions in ZZX;  in versions < 3.0,
+these were defined in terms of pseudo-division; now they are
+defined as ordinary division with an error being raised if the
+result is not integral.  Explicit pseudo-division functions
+are now provided for the old semantics.
+
+Undeclares the UpdateMap function in for ZZ_pX and zz_pX;
+in versions < 3.0, the output always had length n;
+now high-order zeroes are stripped.
+
+Undeclares the conversion from GF2X to GF2EX functions;
+in versions < 3.0, this was defined as creating a constant
+polynomial by reduction modulo GF2E::modulus();
+now, it is defined as a coefiicient-wise "lift".
+GF2X and GF2EX happened to be called BB and BB_pX in 
+versions < 3.0.
+
+Declares assignment and copy for RR to be private.  The
+semantics of these have changed from "copy and round to
+current precision" to "exact copy".
+

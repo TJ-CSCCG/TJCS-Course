@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Tips for Getting the Best Performance out of NTL 
+</title>
+</head>
+
+<center>
+<a href="tour-win.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-impl.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Tips for Getting the Best Performance out of NTL
+</p>
+</h1>
+
+<p> <hr> <p>
+
+<ol>
+
+<p>
+<li>
+Make sure you run the configuration wizard when you install NTL.
+This is the default behaviour in the makefile
+in the Unix distribution, so don't change this;
+in the Windows distribution, there is unfortunately no 
+easy way to run the wizard.
+
+<p>
+<li>
+In time-critical code, avoid creating unnecessary temporary
+objects.
+For example, instead of
+<!-- STARTPLAIN
+ZZ InnerProduct(const ZZ *a, const ZZ *b, long n)
+{
+   long i;
+   ZZ res;
+   for (i = 0; i < n; i++)
+      res += a[i] * b[i];
+   return res;
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+ZZ InnerProduct(<font color="#008b00"><b>const</b></font>&nbsp;ZZ *a,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ *b,&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;n)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+&nbsp;&nbsp; ZZ res;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>for</b></font>&nbsp;(i =&nbsp;<font color="#ff8c00">0</font>; i &lt; n; i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res += a[i] * b[i];<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;res;<br>
+}<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+write this as
+<!-- STARTPLAIN
+ZZ InnerProduct(const ZZ *a, const ZZ *b, long n)
+{
+   long i;
+   ZZ res, t;
+   for (i = 0; i < n; i++) {
+      mul(t, a[i], b[i]);
+      add(res, res, t);
+   }
+   return res;
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+ZZ InnerProduct(<font color="#008b00"><b>const</b></font>&nbsp;ZZ *a,&nbsp;<font color="#008b00"><b>const</b></font>&nbsp;ZZ *b,&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;n)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;<font color="#008b00"><b>long</b></font>&nbsp;i;<br>
+&nbsp;&nbsp; ZZ res, t;<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>for</b></font>&nbsp;(i =&nbsp;<font color="#ff8c00">0</font>; i &lt; n; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(t, a[i], b[i]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add(res, res, t);<br>
+&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;<font color="#b03060"><b>return</b></font>&nbsp;res;<br>
+}<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+The first version of <tt>InnerProduct</tt>
+creates and destroys a temporary object, holding the value
+<tt>a[i]*b[i]</tt>, in every loop iteration.
+The second does not.
+
+
+
+<p>
+<li>
+If you use the class <tt>ZZ_p</tt>, try to avoid switching the modulus
+too often, as this can be a rather expensive operation.
+If you <i>must</i> switch the modulus often,
+use the class <tt>ZZ_pContext</tt> to save the information
+associated with the modulus (see <a href="ZZ_p.cpp.html">ZZ_p.txt</a>). 
+The same holds for analogous classes, such as <tt>zz_p</tt> 
+and <tt>GF2E</tt>.
+
+
+
+</ol>
+
+<p>
+
+<center>
+<a href="tour-win.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-impl.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+
+</body>
+</html>

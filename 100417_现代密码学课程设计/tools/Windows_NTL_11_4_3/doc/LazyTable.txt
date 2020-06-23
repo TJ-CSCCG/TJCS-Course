@@ -1,0 +1,85 @@
+
+
+/***************************************************************************
+
+
+LazyTable<T,MAX>: template class for lazy initialization of objects whose
+values do not change after initialization.  In a multi-threaded environment,
+this makes use of "double checked locking" for an efficient, thread-safe
+solution.
+
+Usage:
+
+   LazyTable<T,MAX> tab; // declaration of the lazy table, 
+                         // with max size == MAX
+
+    ...
+
+   do {
+      LazyTable<T,MAX>::Builder builder(tab, n); // request length n
+      long amt = builder.amt();
+      if (!amt) break;      
+
+      ... initialize elements i = n-amt..n-1 
+          using builder.move(p), where p is a UnqiuePtr<T>
+          note that each move application appends one element
+                             
+   } while(0);    // When this scope closes, 
+                  // the table is fully initialized to length n
+
+
+   const T* val = table[i];  // read-only access to table elements 0..n-1
+                             
+
+It is important to follow this recipe carefully.  In particular,
+the builder must be enclosed in a scope, as it's destructor
+plays a crucial role in finalizing the initialization.
+
+****************************************************************************/
+
+template<class T, long MAX>
+class LazyTable {
+public:
+   LazyTable();
+   ~LazyTable();
+
+   const T * const  operator[] (long i) const;
+   // element access -- currently no range checking
+
+
+   long length() const; 
+   // current table length
+
+   class Builder {
+      Builder(const LazyTable&, long request); 
+      // EXCEPTIONS: may throw an exception if request is out of range
+      // or if alocation of table fails
+
+     ~Builder()
+
+      long amt() const;
+
+      void move(UniquePtr<T>& p);
+      // EXCEPTIONS: throws exception of move is not allowed.
+      // Provides strong ES guarantee.
+   };
+
+private:
+   LazyTable(const LazyTable&);             // disabled
+   LazyTable& operator=(const LazyTable&);
+
+};
+   
+
+
+// EXCEPTIONS: except where noted, no exceptions are thrown
+
+// NOTE: For more on double-checked locking, see
+// http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/
+
+// NOTE: when compiled with the NTL_THREADS option, the LazyTable
+// class may contain data members from the standard library
+// that may not satisfy the requirements of the Vec class
+// (i.e., relocatability).  One can wrap it in a pointer 
+// class (e.g., CopiedPtr) to deal with this.
+

@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Extension Rings and Fields </title>
+</head>
+
+<center>
+<a href="tour-ex4.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex6.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Extension Rings and Fields
+</p>
+</h1>
+
+<p> <hr> <p>
+
+NTL also supports extension rings and fields over finite fields,
+and polynomial arithmetic over such extensions.
+Here is a little program that illustrates this.
+
+<!-- STARTPLAIN
+#include <NTL/ZZ_pXFactoring.h>
+#include <NTL/ZZ_pEX.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   ZZ_p::init(ZZ(17)); // define GF(17)
+
+   ZZ_pX P;
+   BuildIrred(P, 10); // generate an irreducible polynomial P
+                      // of degree 10 over GF(17)
+
+   ZZ_pE::init(P); // define GF(17^10)
+
+   ZZ_pEX f, g, h;  // declare polynomials over GF(17^10)
+
+   random(f, 20);  // f is a random, monic polynomial of degree 20
+   SetCoeff(f, 20);
+
+   random(h, 20); // h is a random polynomial of degree less than 20
+
+   g = MinPolyMod(h, f); // compute the minimum polynomial of h modulo f
+
+   if (g == 0) Error("oops (1)"); // check that g != 0
+
+   if (CompMod(g, h, f) != 0) // check that g(h) = 0 mod f
+      Error("oops (2)");
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_pXFactoring.h&gt;</font><br>
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZ_pEX.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZ_p::init(ZZ(<font color="#ff8b00">17</font>)); <font color="#0000ed"><i>// define GF(17)</i></font><br>
+<br>
+&nbsp;&nbsp; ZZ_pX P;<br>
+&nbsp;&nbsp; BuildIrred(P, <font color="#ff8b00">10</font>); <font color="#0000ed"><i>// generate an irreducible polynomial P</i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000ed"><i>// of degree 10 over GF(17)</i></font><br>
+<br>
+&nbsp;&nbsp; ZZ_pE::init(P); <font color="#0000ed"><i>// define GF(17^10)</i></font><br>
+<br>
+&nbsp;&nbsp; ZZ_pEX f, g, h;&nbsp;&nbsp;<font color="#0000ed"><i>// declare polynomials over GF(17^10)</i></font><br>
+<br>
+&nbsp;&nbsp; random(f, <font color="#ff8b00">20</font>);&nbsp;&nbsp;<font color="#0000ed"><i>// f is a random, monic polynomial of degree 20</i></font><br>
+&nbsp;&nbsp; SetCoeff(f, <font color="#ff8b00">20</font>);<br>
+<br>
+&nbsp;&nbsp; random(h, <font color="#ff8b00">20</font>); <font color="#0000ed"><i>// h is a random polynomial of degree less than 20</i></font><br>
+<br>
+&nbsp;&nbsp; g = MinPolyMod(h, f); <font color="#0000ed"><i>// compute the minimum polynomial of h modulo f</i></font><br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(g == <font color="#ff8b00">0</font>) Error(<font color="#4a6f8b">&quot;oops (1)&quot;</font>); <font color="#0000ed"><i>// check that g != 0</i></font><br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(CompMod(g, h, f) != <font color="#ff8b00">0</font>) <font color="#0000ed"><i>// check that g(h) = 0 mod f</i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error(<font color="#4a6f8b">&quot;oops (2)&quot;</font>);<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+This example illustrates building extension rings over <tt>ZZ_p</tt>.
+One can also use <tt>zz_p</tt> and <tt>GF2</tt> as base classes;
+the syntax is exactly the same.
+
+<p>
+See <a href="ZZ_pE.cpp.html"><tt>ZZ_pE.txt</tt></a> for the basics of the extension
+ring <tt>ZZ_pE</tt> over <tt>ZZ_p</tt>.
+Also see <a href="ZZ_pEX.cpp.html"><tt>ZZ_pEX.txt</tt></a> for polynomial
+arithmetic over <tt>ZZ_pE</tt>, and 
+<a href="ZZ_pEXFactoring.cpp.html"><tt>ZZ_pEXFactoring.txt</tt></a> for factoring
+routines over <tt>ZZ_pE</tt>.
+See <a href="vec_ZZ_pE.cpp.html"><tt>vec_ZZ_pE.txt</tt></a> for vectors over <tt>ZZ_pE</tt>,
+and <a href="mat_ZZ_pE.cpp.html"><tt>mat_ZZ_pE.txt</tt></a> for matrices over <tt>ZZ_pE</tt>.
+
+<p>
+See <a href="lzz_pE.cpp.html"><tt>lzz_pE.txt</tt></a> for the basics of the extension
+ring <tt>zz_pE</tt> over <tt>zz_p</tt>.
+Also see <a href="lzz_pEX.cpp.html"><tt>lzz_pEX.txt</tt></a> for polynomial
+arithmetic over <tt>zz_pE</tt>, and 
+<a href="lzz_pEXFactoring.cpp.html"><tt>lzz_pEXFactoring.txt</tt></a> for factoring
+routines over <tt>zz_pE</tt>.
+See <a href="vec_lzz_pE.cpp.html"><tt>vec_lzz_pE.txt</tt></a> for vectors over <tt>zz_pE</tt>,
+and <a href="mat_lzz_pE.cpp.html"><tt>mat_lzz_pE.txt</tt></a> for matrices over <tt>zz_pE</tt>.
+
+<p>
+See <a href="GF2E.cpp.html"><tt>GF2E.txt</tt></a> for the basics of the extension
+ring <tt>GF2E</tt> over <tt>GF2</tt>.
+Also see <a href="GF2EX.cpp.html"><tt>GF2EX.txt</tt></a> for polynomial
+arithmetic over <tt>GF2E</tt>, and 
+<a href="GF2EXFactoring.cpp.html"><tt>GF2EXFactoring.txt</tt></a> for factoring
+routines over <tt>GF2E</tt>.
+See <a href="vec_GF2E.cpp.html"><tt>vec_GF2E.txt</tt></a> for vectors over <tt>GF2E</tt>,
+and <a href="mat_GF2E.cpp.html"><tt>mat_GF2E.txt</tt></a> for matrices over <tt>GF2E</tt>.
+
+
+<center>
+<a href="tour-ex4.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex6.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

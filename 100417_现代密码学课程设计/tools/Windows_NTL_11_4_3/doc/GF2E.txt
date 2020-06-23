@@ -1,0 +1,419 @@
+
+
+/**************************************************************************\
+
+MODULE: GF2E
+
+SUMMARY:
+
+The class GF2E is used to represent polynomials in F_2[X] modulo a
+polynomial P.  The modulus P may be any polynomial with deg(P) > 0,
+not necessarily irreducible.  
+
+Objects of the class GF2E are represented as a GF2X of degree < deg(P).
+
+An executing program maintains a "current modulus", which is set to P using
+GF2E::init(P).  The current modulus *must* be initialized before any operations
+on GF2E's are performed.  The modulus may be changed, and a mechanism is provided
+for saving and restoring a modulus (see classes GF2EPush and GF2EContext below).
+
+
+NOTE: if P is a trinomial X^n + X^k + 1, or a pentanomial
+X^n + X^k3 + X^k2 + X^k1 + 1, or of the form X^n + g, where
+g has low degree, then performance will be somewhat improved.
+Such polynomials are constructed by the routines
+BuildSparseIrred and BuildIrred in GF2XFactoring.
+
+
+\**************************************************************************/
+
+#include <NTL/GF2X.h>
+#include <NTL/SmartPtr.h>
+
+
+class GF2E {
+public:
+   
+   GF2E(); // initial value 0
+
+   GF2E(const GF2E& a); // copy constructor
+   explicit GF2E(GF2 a); // promotion constructor
+   explicit GF2E(long a); // promotion constructor
+   
+   GF2E& operator=(const GF2E& a); // assignment
+   GF2E& operator=(GF2 a); // assignment
+   GF2E& operator=(long a); // assignment
+   
+   ~GF2E(); // destructor
+
+   GF2E(GF2E&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   GF2E& operator=(GF2E&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+#endif
+
+   static void init(const GF2X& P);
+   // GF2E::init(P) initializes the current modulus to P;
+   // required: deg(P) >= 1.
+   
+   static const GF2XModulus& modulus();
+   // GF2E::modulus() yields read-only reference to the current modulus 
+
+   static long degree();
+   // GF2E::degree() returns deg(P)
+
+   // typedefs to aid generic programming
+   typedef GF2X rep_type;
+   typedef GF2EContext context_type;
+   typedef GF2EBak bak_type;
+   typedef GF2EPush push_type;
+   typedef GF2EX poly_type;
+
+};
+
+
+const GF2X& rep(const GF2E& a); // read-only access to representation of a
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+long operator==(const GF2E& a, const GF2E& b);
+long operator!=(const GF2E& a, const GF2E& b);
+
+long IsZero(const GF2E& a);  // test for 0
+long IsOne(const GF2E& a);  // test for 1
+
+// PROMOTIONS: ==, != promote {long, GF2} to GF2E on (a, b).
+
+
+/**************************************************************************\
+
+                                    Addition 
+
+\**************************************************************************/
+
+// operator notation:
+
+GF2E operator+(const GF2E& a, const GF2E& b);
+
+GF2E operator-(const GF2E& a, const GF2E& b);
+GF2E operator-(const GF2E& a);
+
+GF2E& operator+=(GF2E& x, const GF2E& a);
+GF2E& operator+=(GF2E& x, GF2 a);
+GF2E& operator+=(GF2E& x, long a);
+
+GF2E& operator++(GF2E& x); // prefix
+void operator++(GF2E& x, int); // postfix
+
+GF2E& operator-=(GF2E& x, const GF2E& a);
+GF2E& operator-=(GF2E& x, GF2 a);
+GF2E& operator-=(GF2E& x, long a);
+
+GF2E& operator--(GF2E& x); // prefix
+void operator--(GF2E& x, int); // postfix
+
+// procedural versions:
+
+void add(GF2E& x, const GF2E& a, const GF2E& b); // x = a + b
+void sub(GF2E& x, const GF2E& a, const GF2E& b); // x = a - b = a + b
+void negate(GF2E& x, const GF2E& a); // x = - a = a
+
+// PROMOTIONS: +, -, add, sub promote {long, GF2} to GF2E on (a, b).
+
+
+/**************************************************************************\
+
+                                  Multiplication 
+
+\**************************************************************************/
+
+
+// operator notation:
+
+GF2E operator*(const GF2E& a, const GF2E& b);
+
+GF2E& operator*=(GF2E& x, const GF2E& a);
+GF2E& operator*=(GF2E& x, GF2 a);
+GF2E& operator*=(GF2E& x, long a);
+
+// procedural versions:
+
+
+void mul(GF2E& x, const GF2E& a, const GF2E& b); // x = a * b
+
+void sqr(GF2E& x, const GF2E& a); // x = a^2
+GF2E sqr(const GF2E& a); 
+
+// PROMOTIONS: *, mul promote {long, GF2} to GF2E on (a, b).
+
+
+/**************************************************************************\
+
+                                     Division
+
+\**************************************************************************/
+
+
+// operator notation:
+
+GF2E operator/(const GF2E& a, const GF2E& b);
+
+GF2E& operator/=(GF2E& x, const GF2E& a);
+GF2E& operator/=(GF2E& x, GF2 a);
+GF2E& operator/=(GF2E& x, long a);
+
+
+// procedural versions:
+
+void div(GF2E& x, const GF2E& a, const GF2E& b);
+// x = a/b.  If b is not invertible, an error is raised.
+
+void inv(GF2E& x, const GF2E& a);
+GF2E inv(const GF2E& a);
+// x = 1/a
+
+PROMOTIONS: /, div promote {long, GF2} to GF2E on (a, b).
+
+
+/**************************************************************************\
+
+                                  Exponentiation
+
+\**************************************************************************/
+
+
+
+void power(GF2E& x, const GF2E& a, const ZZ& e); 
+GF2E power(const GF2E& a, const ZZ& e);
+
+void power(GF2E& x, const GF2E& a, long e); 
+GF2E power(const GF2E& a, long e);
+
+// x = a^e (e may be negative)
+
+
+
+/**************************************************************************\
+
+                               Random Elements
+
+\**************************************************************************/
+
+
+void random(GF2E& x);
+GF2E random_GF2E();
+// x = random element in GF2E.
+
+/**************************************************************************\
+
+                                  Traces
+
+\**************************************************************************/
+
+
+void trace(GF2& x, const GF2E& a);  // x = trace of a
+GF2 trace(const GF2E& a);
+
+
+
+/**************************************************************************\
+
+                                Input/Output
+
+\**************************************************************************/
+
+
+ostream& operator<<(ostream& s, const GF2E& a);
+
+istream& operator>>(istream& s, GF2E& x);
+// a GF2X is read and reduced mod p
+
+
+/**************************************************************************\
+
+                       Modulus Switching 
+
+A class GF2EPush is provided for "backing up" the current modulus
+and installing a new one.
+
+Here is what you do to save the current modulus, temporarily
+set it to P, and automatically restore it:
+
+   { 
+      GF2EPush push(P); 
+
+      ...
+
+   }
+
+The constructor for push will save the current modulus, and install P as the
+current modulus.  The destructor for push will restore the old modulus when the
+scope enclosing it exits.  This is the so-called RAII (resource acquisition is
+initialization) paradigm.
+
+You could also do the following:
+
+   {
+      GF2EPush push; // just backup current modulus
+
+        ...
+
+      GF2E::init(P1); // install P1 
+
+        ...
+
+      GF2E::init(P2); // install P2
+
+      // reinstall original modulus as close of scope
+   }
+
+      
+The GF2EPush interface is good for implementing simple stack-like
+modulus "context switching".  For more general context switching,
+see GF2EContext below.  There is also an older GF2EBak class
+that may also be useful.
+
+..........................................................................
+
+It is critical that GF2E objects created under one GF2E modulus are not used in
+any non-trivial way "out of context", i.e., under a different (or undefined)
+GF2E modulus.  However, for ease-of-use, some operations may be safely
+performed out of context.  These safe operations include: the default and copy
+constructor, the destructor, and the assignment operator.  In addition is is
+generally safe to read any GF2E object out of context (i.e., printing it out, or
+fetching its underlying representive using the rep() function).
+
+Any unsafe uses out of context are not in general checked, and may 
+lead to unpredictable behavior.
+
+
+NOTE: the implementation of Vec<GF2E> is specialized to manage memory more
+efficiently than in the default implementation of Vec<T>.  Specifically,
+contiguous elements in a Vec<GF2E> are allocated in a contiguous region of
+memory.  This reduces the number of calls to the memory allocator, and --- more
+significantly --- leads to greater locality of reference.  A consequence of
+this implementation is that any calls to SetLength on a Vec<GF2E> object will
+need to use information about the current modulus, and so such calls should
+only be done "in context".  That said, it is still safe to construct a
+Vec<GF2E> using the default or copy contructor, and to assign or append one
+Vec<GF2E> to another "out of context".
+
+\**************************************************************************/
+
+
+// A convenient interface for common cases
+
+class GF2EPush {
+
+public:
+GF2EPush();  // backup current modulus
+explicit GF2EPush(const GF2X& P); 
+explicit GF2EPush(const GF2EContext& context); 
+  // backup current modulus and install the given one
+
+private:
+GF2EPush(const GF2EPush&); // disabled
+void operator=(const GF2EPush&); // disabled
+
+};
+
+
+
+// more general context switching:
+// A GF2EContext object has a modulus Q (possibly "null"),
+
+class GF2EContext {
+
+
+public:
+
+GF2EContext(); // Q = "null"
+explicit GF2EContext(const GF2X& P); // Q = P
+
+void save(); // Q = CurrentModulus
+void restore() const; // CurrentModulus = Q
+
+GF2EContext(const GF2EContext&);  // copy
+GF2EContext& operator=(const GF2EContext&); // assignment
+~GF2EContext(); // destructor
+
+
+};
+
+
+// An older interface:
+// To describe this logic, think of a GF2EBak object
+// of having two components: a modulus Q (possibly "null") and 
+// an "auto-restore bit" b.
+
+
+class GF2EBak {
+public:
+
+
+   GF2EBak();  // Q = "null", b = 0
+
+   ~GF2EBak();  // if (b) CurrentModulus = Q
+
+   void save();  // Q = CurrentModulus, b = 1 
+   void restore();  // CurrentModulus = Q, b = 0
+
+
+private:
+   GF2EBak(const GF2EBak&);  // copy disabled
+   void operator=(const GF2EBak&);  // assignment disabled
+};
+
+
+
+
+
+
+/**************************************************************************\
+
+                               Miscellany
+
+\**************************************************************************/
+
+void clear(GF2E& x); // x = 0
+void set(GF2E& x); // x = 1
+
+static const GF2E& GF2E::zero();
+// GF2E::zero() yields a read-only reference to zero
+
+static long GF2X::WordLength();
+// GF2E::WordLength() returns # of words needed to store a polynomial of
+// degree < GF2E::degree()
+
+void GF2E::swap(GF2E& x);
+void swap(GF2E& x, GF2E& y);
+// swap (done by "pointer swapping", if possible).
+
+static ZZ& GF2E::cardinality();
+// yields the cardinality, i.e., 2^{GF2E::degree()}
+
+
+GF2E::GF2E(INIT_NO_ALLOC_TYPE);
+// special constructor: invoke as GF2E x(INIT_NO_ALLOC);
+// initializes x to 0, but allocates no space (this is now the default)
+
+GF2E::GF2E(INIT_ALLOC_TYPE);
+// special constructor: invoke as GF2E x(INIT_ALLOC);
+// initializes x to 0, but allocates space 
+
+GF2E::allocate();
+// useful in conjunction with the INIT_NO_ALLLOC constructor:
+// x.allocate() will pre-allocate space for x, using the
+// current modulus
+
+

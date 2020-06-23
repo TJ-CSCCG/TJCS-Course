@@ -1,0 +1,46 @@
+/**************************************************************************\
+
+MODULE: ZZ_limbs
+
+SUMMARY:
+
+Defines low-level access to the "limbs" of a ZZ.
+
+\**************************************************************************/
+
+
+#include <NTL/ZZ.h>
+
+#ifdef NTL_GMP_LIP
+#include <gmp.h>
+#endif
+// NOTE: unlike other NTL header files, this one needs access
+// to GMP's header file, which means that C++ files that include
+// this file will need to ensure that the compiler has the 
+// right "include path" to get at GMP's header file.
+
+
+typedef ... ZZ_limb_t;
+// The type of a limb. 
+// With GMP, this is mp_limb_t, wich is usually (but not always) 
+// typedef'd to unsigned long.
+// Without GMP, this is unisigned long (although that is subject to change).
+// In any case, all that one should assume is that this is an 
+// unisgned integral type.
+
+#define NTL_BITS_PER_LIMB_T (...)
+// Integral constant defining the number of bits of ZZ_limb_t.
+
+const ZZ_limb_t * ZZ_limbs_get(const ZZ& a);
+// Get a pointer to the limbs of a (possibly null).
+// The number of limbs can be obtained by invoking a.size().
+
+void ZZ_limbs_set(ZZ& x, const ZZ_limb_t *p, long n);
+// Sets the limbs of x to p[0..n-1].
+// An error is raised on n < 0 or p == NULL and n > 0.
+// It will work correctly even if p points to a limb of x
+// itself.
+
+
+
+

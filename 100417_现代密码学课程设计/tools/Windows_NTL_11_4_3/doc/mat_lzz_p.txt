@@ -1,0 +1,209 @@
+
+/**************************************************************************\
+
+MODULE: mat_zz_p
+
+SUMMARY:
+
+Defines the class mat_zz_p.
+Note that the modulus p need not be a prime, except as indicated below.
+
+IMPLEMENTATION NOTES: 
+
+Starting with NTL version 9.7.0 (and 9.7.1), many of the routines here have
+been optimized to take better advantage of specific hardware features available
+on 64-bit Intel CPU's.  Currently, the mul, inv, determinant, solve, gauss,
+kernel, and image routines are fastest for p up to 23-bits long (assuming the
+CPU supports AVX instructions).  After that, performance degrades in three
+stages: stage 1: up to 28-bits; stage 2: up to 31-bits; stage 3: 32-bits and
+up. 
+
+For primes up to 23-bits, AVX floating point instructions are used.  After
+that, ordinary integer arithmetic is used.  In a future version, I may exploit
+AVX2 integer instructions to get better stage 2 performance.  And in the more
+distant future, AVX512 instructions will be used, when they become available.
+
+On older Intel machines, or non-Intel machines that have "long long" support,
+one still gets optimizations corresponding to the three stages above.  On
+32-bit machines, one still gets three stages, just with smaller crossover
+points.
+
+\**************************************************************************/
+
+
+#include <NTL/matrix.h>
+#include "vec_vec_zz_p.h"
+
+
+typedef Mat<zz_p> mat_zz_p; // backward compatibility
+
+void add(mat_zz_p& X, const mat_zz_p& A, const mat_zz_p& B); 
+// X = A + B
+
+void sub(mat_zz_p& X, const mat_zz_p& A, const mat_zz_p& B); 
+// X = A - B
+
+void mul(mat_zz_p& X, const mat_zz_p& A, const mat_zz_p& B); 
+// X = A * B
+
+void mul(vec_zz_p& x, const mat_zz_p& A, const vec_zz_p& b); 
+// x = A * b
+
+void mul(vec_zz_p& x, const vec_zz_p& a, const mat_zz_p& B); 
+// x = a * B
+
+void mul(mat_zz_p& X, const mat_zz_p& A, zz_p b);
+void mul(mat_zz_p& X, const mat_zz_p& A, long b);
+// X = A * b
+
+void mul(mat_zz_p& X, zz_p a, const mat_zz_p& B);
+void mul(mat_zz_p& X, long a, const mat_zz_p& B);
+// X = a * B
+
+
+void transpose(mat_zz_p& X, const mat_zz_p& A);
+mat_zz_p transpose(const mat_zz_p& A);
+// X = transpose of A
+
+
+void determinant(zz_p& d, const mat_zz_p& A);
+zz_p determinant(const mat_zz_p& a); 
+// d = determinant(A)
+
+void solve(zz_p& d, vec_zz_p& x, const mat_zz_p& A, const vec_zz_p& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves x*A = b (so x and b are treated as a row vectors).
+
+void solve(zz_p& d, const mat_zz_p& A, vec_zz_p& x, const vec_zz_p& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves A*x = b (so x and b are treated as a column vectors).
+
+void inv(zz_p& d, mat_zz_p& X, const mat_zz_p& A);
+// A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
+// computes X = A^{-1}.
+
+
+void inv(mat_zz_p& X, const mat_zz_p& A);
+mat_zz_p inv(const mat_zz_p& A);
+// X = A^{-1}; error is raised if A is  singular
+
+void power(mat_zz_p& X, const mat_zz_p& A, const ZZ& e);
+mat_zz_p power(const mat_zz_p& A, const ZZ& e);
+void power(mat_zz_p& X, const mat_zz_p& A, long e);
+mat_zz_p power(const mat_zz_p& A, long e);
+// X = A^e; e may be negative (in which case A must be nonsingular).
+
+// NOTE: the routines determinant, solve, inv, and power (with negative
+// exponent) all require that the modulus p is prime: during elimination, if a
+// non-zero pivot element does not have an inverse, and error is raised.  The
+// following "relaxed" versions of these routines will also work with prime
+// powers, if the optional parameter relax is true (which is the default).
+// However, note that in these relaxed routines, if a computed determinant
+// value is zero, this may not be the true determinant: all that you can assume
+// is that the true determinant is not invertible mod p. If the parameter
+// relax==false, then these routines behave identically to their "unrelaxed"
+// counterparts.
+
+void relaxed_determinant(zz_p& d, const mat_zz_p& A, bool relax=true);
+zz_p relaxed_determinant(const mat_zz_p& a, bool relax=true); 
+void relaxed_solve(zz_p& d, vec_zz_p& x, const mat_zz_p& A, const vec_zz_p& b, bool relax=true);
+void relaxed_solve(zz_p& d, const mat_zz_p& A, vec_zz_p& x, const vec_zz_p& b, bool relax=true);
+void relaxed_inv(zz_p& d, mat_zz_p& X, const mat_zz_p& A, bool relax=true);
+void relaxed_inv(mat_zz_p& X, const mat_zz_p& A, bool relax=true);
+mat_zz_p relaxed_inv(const mat_zz_p& A, bool relax=true);
+void relaxed_power(mat_zz_p& X, const mat_zz_p& A, const ZZ& e, bool relax=true);
+mat_zz_p relaxed_power(const mat_zz_p& A, const ZZ& e, bool relax=true);
+void relaxed_power(mat_zz_p& X, const mat_zz_p& A, long e, bool relax=true);
+mat_zz_p relaxed_power(const mat_zz_p& A, long e, bool relax=true);
+
+
+void sqr(mat_zz_p& X, const mat_zz_p& A);
+mat_zz_p sqr(const mat_zz_p& A);
+// X = A*A   
+
+void ident(mat_zz_p& X, long n);
+mat_zz_p ident_mat_zz_p(long n);
+// X = n x n identity matrix
+
+long IsIdent(const mat_zz_p& A, long n);
+// test if A is the n x n identity matrix
+
+void diag(mat_zz_p& X, long n, zz_p d);
+mat_zz_p diag(long n, zz_p d);
+// X = n x n diagonal matrix with d on diagonal
+
+long IsDiag(const mat_zz_p& A, long n, zz_p d);
+// test if X is an  n x n diagonal matrix with d on diagonal
+
+
+void random(mat_zz_p& x, long n, long m);  // x = random n x m matrix
+mat_zz_p random_mat_zz_p(long n, long m);
+
+
+
+long gauss(mat_zz_p& M);
+long gauss(mat_zz_p& M, long w);
+// Performs unitary row operations so as to bring M into row echelon
+// form.  If the optional argument w is supplied, stops when first w
+// columns are in echelon form.  The return value is the rank (or the
+// rank of the first w columns).
+
+void image(mat_zz_p& X, const mat_zz_p& A);
+// The rows of X are computed as basis of A's row space.  X is is row
+// echelon form
+
+void kernel(mat_zz_p& X, const mat_zz_p& A);
+// Computes a basis for the kernel of the map x -> x*A. where x is a
+// row vector.
+
+// NOTE: the gauss, image, and kernel routines all require that
+// the modulus p is prime. 
+
+
+
+// miscellaneous:
+
+void clear(mat_zz_p& a);
+// x = 0 (dimension unchanged)
+
+long IsZero(const mat_zz_p& a);
+// test if a is the zero matrix (any dimension)
+
+
+// operator notation:
+
+mat_zz_p operator+(const mat_zz_p& a, const mat_zz_p& b);
+mat_zz_p operator-(const mat_zz_p& a, const mat_zz_p& b);
+mat_zz_p operator*(const mat_zz_p& a, const mat_zz_p& b);
+
+mat_zz_p operator-(const mat_zz_p& a);
+
+
+// matrix/scalar multiplication:
+
+mat_zz_p operator*(const mat_zz_p& a, zz_p b);
+mat_zz_p operator*(const mat_zz_p& a, long b);
+
+mat_zz_p operator*(zz_p a, const mat_zz_p& b);
+mat_zz_p operator*(long a, const mat_zz_p& b);
+
+
+// matrix/vector multiplication:
+
+vec_zz_p operator*(const mat_zz_p& a, const vec_zz_p& b);
+
+vec_zz_p operator*(const vec_zz_p& a, const mat_zz_p& b);
+
+
+// assignment operator notation:
+
+mat_zz_p& operator+=(mat_zz_p& x, const mat_zz_p& a);
+mat_zz_p& operator-=(mat_zz_p& x, const mat_zz_p& a);
+mat_zz_p& operator*=(mat_zz_p& x, const mat_zz_p& a);
+
+mat_zz_p& operator*=(mat_zz_p& x, zz_p a);
+mat_zz_p& operator*=(mat_zz_p& x, long a);
+
+vec_zz_p& operator*=(vec_zz_p& x, const mat_zz_p& a);
+
+

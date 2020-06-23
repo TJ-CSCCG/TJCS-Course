@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Floating Point Classes </title>
+</head>
+
+<center>
+<a href="tour-ex5.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex7.html"><img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Floating Point Classes
+</p>
+</h1>
+
+<p> <hr> <p>
+
+NTL also supports arbitrary precision floating point with 
+the class <tt>RR</tt>.
+Additionally, it supports two specialized classes: <tt>quad_float</tt>,
+which gives a form of quadruple precision, but without an extended
+exponent range, 
+and <tt>xdouble</tt>,
+which gives double precision, but with an extended exponent range.
+The advantage of the latter two classes is efficiency.
+
+<p>
+
+Here again is a program that reads a list of numbers from the input,
+and outputs the sum of their squares, using the class <tt>RR</tt>.
+
+<!-- STARTPLAIN
+#include <NTL/RR.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   RR acc, val;
+
+   acc = 0;
+   while (cin >> val) 
+      acc += val*val;
+
+   cout << acc << "\n";
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/RR.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; RR acc, val;<br>
+<br>
+&nbsp;&nbsp; acc = <font color="#ff8b00">0</font>;<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>while</b></font>&nbsp;(cin &gt;&gt; val) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;acc += val*val;<br>
+<br>
+&nbsp;&nbsp; cout &lt;&lt; acc &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+
+The precision used for the computation can be set by executing 
+<!-- STARTPLAIN
+   RR::SetPrecision(p);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; RR::SetPrecision(p);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+which sets the effective precision to <tt>p</tt> bits.
+By default, <tt>p=150</tt>.
+All of the basic arithmetic operations compute their results
+by rounding to the nearest <tt>p</tt>-bit floating point number. 
+The semantics of this are exactly the same as in the IEEE floating
+point standard (except that there are no special values, like 
+"infinity" and "not a number").
+
+<p>
+
+The number of <i>decimal</i> digits of precision that are used when
+printing an <tt>RR</tt> can be set be executing
+<!-- STARTPLAIN
+   RR::SetOutputPrecision(d);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; RR::SetOutputPrecision(d);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+which sets the output precision to <tt>d</tt>.
+By default, <tt>d=10</tt>.
+
+<p>
+See <a href="RR.cpp.html"><tt>RR.txt</tt></a> for details.
+
+<p>
+
+By replacing the occurences of <tt>RR</tt> by either <tt>quad_float</tt>
+or <tt>xdouble</tt>, one gets an equivalent program using one of the
+other floating point classes.
+The output precision for these two classes can be controlled just
+as with <tt>RR</tt>.
+See <a href="quad_float.cpp.html"><tt>quad_float.txt</tt></a> and 
+<a href="xdouble.cpp.html"><tt>xdouble.txt</tt></a>
+for details.
+
+<p>
+
+
+<center>
+<a href="tour-ex5.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex7.html"><img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

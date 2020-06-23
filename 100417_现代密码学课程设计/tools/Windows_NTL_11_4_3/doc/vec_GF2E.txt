@@ -1,0 +1,104 @@
+
+/**************************************************************************\
+
+MODULE: vec_GF2E
+
+SUMMARY:
+
+Provides vectors over GF2E, along with some related operations.
+
+\**************************************************************************/
+
+#include <NTL/GF2E.h>
+#include <NTL/vector.h>
+
+
+typedef Vec<GF2E> vec_GF2E; // backward compatibility
+
+void mul(vec_GF2E& x, const vec_GF2E& a, const GF2E& b);
+void mul(vec_GF2E& x, const vec_GF2E& a, GF2 b);
+void mul(vec_GF2E& x, const vec_GF2E& a, long b);
+
+void mul(vec_GF2E& x, const GF2E& a, const vec_GF2E& b);
+void mul(vec_GF2E& x, GF2 a, const vec_GF2E& b);
+void mul(vec_GF2E& x, long a, const vec_GF2E& b);
+// x = a * b
+
+void add(vec_GF2E& x, const vec_GF2E& a, const vec_GF2E& b);
+// x = a + b
+
+void sub(vec_GF2E& x, const vec_GF2E& a, const vec_GF2E& b);
+// x = a - b = x + a
+
+void negate(vec_GF2E& x, const vec_GF2E& a);
+// x = - a = a
+
+void clear(vec_GF2E& x);
+// x = 0 (length unchanged)
+
+long IsZero(const vec_GF2E& a);
+// test if a is the zero vector
+
+
+
+void InnerProduct(GF2E& x, const vec_GF2E& a, const vec_GF2E& b);
+// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(), b.length())
+
+void InnerProduct(GF2E& x, const vec_GF2E& a, const vec_GF2E& b,
+                  long offset);
+// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),
+// b.length()+offset)
+
+void VectorCopy(vec_GF2E& x, const vec_GF2E& a, long n);
+vec_GF2E VectorCopy(const vec_GF2E& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+void random(vec_GF2E& x, long n);  // x = random vector of length n
+vec_GF2E random_vec_GF2E(long n);
+
+
+// operator notation:
+
+vec_GF2E 
+operator+(const vec_GF2E& a, const vec_GF2E& b);
+
+vec_GF2E 
+operator-(const vec_GF2E& a, const vec_GF2E& b);
+
+vec_GF2E operator-(const vec_GF2E& a);
+
+
+// vector/scalar multiplication:
+
+vec_GF2E operator*(const vec_GF2E& a, const GF2E& b);
+vec_GF2E operator*(const vec_GF2E& a, GF2 b);
+vec_GF2E operator*(const vec_GF2E& a, long b);
+
+vec_GF2E operator*(const GF2E& a, const vec_GF2E& b);
+vec_GF2E operator*(GF2 a, const vec_GF2E& b);
+vec_GF2E operator*(long a, const vec_GF2E& b);
+
+// inner product:
+
+GF2E operator*(const vec_GF2E& a, const vec_GF2E& b);
+
+
+// assignment operator notation:
+
+vec_GF2E& operator+=(vec_GF2E& x, const vec_GF2E& a);
+vec_GF2E& operator-=(vec_GF2E& x, const vec_GF2E& a);
+
+vec_GF2E& operator*=(vec_GF2E& x, const GF2E& a);
+vec_GF2E& operator*=(vec_GF2E& x, GF2 a);
+vec_GF2E& operator*=(vec_GF2E& x, long a);
+
+
+
+// Implementation note: the BlockConstruct routine has been customized
+// for GF2E so that when a vec_GF2E is grown, space for the needed
+// elements is allocated in one contiguous chunk.  This saves on calls to
+// malloc and free, and should also yield better locality of reference.
+// One consequence of this is that swapping an element of a vec_GF2E
+// with another GF2E can not be implemented by pointer swap, and will in
+// this case be done by copy.

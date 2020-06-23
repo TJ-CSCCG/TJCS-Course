@@ -1,0 +1,117 @@
+
+/**************************************************************************\
+
+MODULE: GF2XFactoring
+
+SUMMARY:
+
+Routines are provided for factorization in F_2[X], as well as routines
+for related problems such as testing irreducibility and constructing
+irreducible polynomials of given degree.
+
+\**************************************************************************/
+
+#include <NTL/GF2X.h>
+#include <NTL/pair_GF2X_long.h>
+
+void SquareFreeDecomp(vec_pair_GF2X_long& u, const GF2X& f);
+vec_pair_GF2X_long SquareFreeDecomp(const GF2X& f);
+
+// Performs square-free decomposition.  f must be monic.  If f =
+// prod_i g_i^i, then u is set to a list of pairs (g_i, i).  The list
+// is is increasing order of i, with trivial terms (i.e., g_i = 1)
+// deleted.
+
+
+void DDF(vec_pair_GF2X_long& factors, const GF2X& f, long verbose=0);
+vec_pair_GF2X_long DDF(const GF2X& f, long verbose=0);
+
+// This computes a distinct-degree factorization.  The input must be
+// monic and square-free.  factors is set to a list of pairs (g, d),
+// where g is the product of all irreducible factors of f of degree d.
+// Only nontrivial pairs (i.e., g != 1) are included.
+
+
+
+void EDF(vec_GF2X& factors, const GF2X& f, long d, long verbose=0);
+vec_GF2X EDF(const GF2X& f, long d, long verbose=0);
+
+// Performs equal-degree factorization.  f is monic, square-free, and
+// all irreducible factors have same degree.  d = degree of
+// irreducible factors of f
+
+void SFCanZass(vec_GF2X& factors, const GF2X& f, long verbose=0);
+vec_GF2X SFCanZass(const GF2X& f, long verbose=0);
+
+
+// Assumes f is monic and square-free.  returns list of factors of f.
+
+
+void CanZass(vec_pair_GF2X_long& factors, const GF2X& f, long verbose=0);
+vec_pair_GF2X_long CanZass(const GF2X& f, long verbose=0);
+
+// returns a list of factors, with multiplicities.  f must be monic.
+// Calls SquareFreeDecomp and SFCanZass.
+
+
+void mul(GF2X& f, const vec_pair_GF2X_long& v);
+GF2X mul(const vec_pair_GF2X_long& v);
+
+// multiplies polynomials, with multiplicities
+
+
+/**************************************************************************\
+
+                            Irreducible Polynomials
+
+\**************************************************************************/
+
+long IterIrredTest(const GF2X& f);
+
+// performs an iterative deterministic irreducibility test, based on
+// DDF.  Fast on average (when f has a small factor).
+
+void BuildSparseIrred(GF2X& f, long n);
+GF2X BuildSparseIrred_GF2X(long n);
+
+// Builds a monic irreducible polynomial of degree n.
+// If there is an irreducible trinomial X^n + X^k + 1,
+// then the one with minimal k is chosen.
+// Otherwise, if there is an irreducible pentanomial 
+// X^n + X^k3 + X^k2 + x^k1 + 1, then the one with minimal
+// k3 is chosen (minimizing first k2 and then k1).
+// Otherwise, if there is niether an irreducible trinomial
+// or pentanomial, the routine result from BuildIrred (see below)
+// is chosen---this is probably only of academic interest,
+// since it a reasonable, but unproved, conjecture that they
+// exist for every n > 1.
+
+// For n <= 2048, the polynomial is constructed
+// by table lookup in a pre-computed table.
+
+// The GF2XModulus data structure and routines (and indirectly GF2E) 
+// are optimized to deal with the output from BuildSparseIrred.
+
+void BuildIrred(GF2X& f, long n);
+GF2X BuildIrred_GF2X(long n);
+
+// Build a monic irreducible poly of degree n.  The polynomial
+// constructed is "canonical" in the sense that it is of the form
+// f=X^n + g, where the bits of g are the those of the smallest
+// non-negative integer that make f irreducible.  
+
+// The GF2XModulus data structure and routines (and indirectly GF2E) 
+// are optimized to deal with the output from BuildIrred.
+
+// Note that the output from BuildSparseIrred will generally yield
+// a "better" representation (in terms of efficiency) for
+// GF(2^n) than the output from BuildIrred.
+
+
+
+void BuildRandomIrred(GF2X& f, const GF2X& g);
+GF2X BuildRandomIrred(const GF2X& g);
+
+// g is a monic irreducible polynomial.  Constructs a random monic
+// irreducible polynomial f of the same degree.
+
