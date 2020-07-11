@@ -1,6 +1,6 @@
 # :tada: TJCS-Course
 
-![GitHub](https://img.shields.io/github/license/TJ-CSCCG/TJCS-Course?color=green)  ![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)
+![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)
 
 
 ## :ship: 精神
