@@ -100,7 +100,51 @@
 
 但在 **全球最大同性 / 异性交友网站** 上，一切都不是问题了。
 
-THIS IS THE WAY!
+**THIS IS THE WAY!**
+
+
+
+## :anchor: 标准
+
+### 1. 仓库中命名格式
+
+* 文件夹：[6位课号]\_[课程名]，如：102109\_数字逻辑。**（禁止：10210901\_数字逻辑、数字逻辑、102109——数字逻辑、102109\_数逻）**
+* 文件名：任意，但尽量体现文件内容和价值。
+
+
+
+### 2. 仓库中文件夹一般目录结构
+
+本仓库中 **仅包含与课程有关** 的内容，大体目录结构如下：
+
+```repo
+----|
+	|----README.md (summary)
+	|
+	|----book/
+	|	 |----README.md(links to books)
+	|
+	|----doc/
+	|	 |----README.md(desc doc folder)
+	|	 |----...(folders of various doc)
+	|
+	|----template/
+	|	 |----README.md(desc template folder)
+	|	 |----...(templates)
+	|
+	|----tools/
+		 |----README.md(directions or links)
+		 |----...(folders containing tools)
+```
+
+
+
+### 3. 注意
+
+* book 文件夹中仅有 README.md 一个文件，不应上传 pdf；
+* doc 文件夹规则要求较少，应尽量组织结构，并写 README；
+* template 文件夹中只能放模板。模板本属于 doc，但为快速找到模板，故独立设置文件夹；
+* tools 文件夹可上传个人开发的各种工具，应写好 README。
 
 
 
