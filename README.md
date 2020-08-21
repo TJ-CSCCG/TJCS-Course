@@ -20,6 +20,25 @@
 
 
 
+## :gift: 下载 / 使用
+
+由于各种各样的原因，正常的 `git clone` 可能会有如下情形：
+
+* 10 KB / s
+* FATAL: unable to access 'xxx', Failed to connect to github.com port 443: Timed out
+* FATAL: the remote end hung up unexpectedly
+* ...
+
+众所周知的办法是把仓库加载到码云上，但是码云只支持 1GB 以下的仓库加载，再大是要花钱的。
+
+码云不行，所以这里提供几个 **方便** 的小办法：
+
+1. [gitclone.com](https://gitclone.com/)
+2. [GitZip for github](https://chrome.google.com/webstore/detail/gitzip-for-github/ffabmkklhbepgcgfonabamgnfafbdlkn?hl=zh-CN)
+3. [git-scm: git clone --depth=...](https://git-scm.com/docs/git-clone)
+
+
+
 ## :sob: ​实际
 
 ### :cry: 资源距离
@@ -30,7 +49,7 @@
 
 * 这个课要上什么啊，是不是我想的那样？
 
-* 下节课上什么，提前学的话那些不用预习？
+* 下节课上什么，提前学的话哪些不用预习？
 
 * 报告模板放到哪里去了，又整丢了？
 
@@ -90,6 +109,8 @@
 
 大家应都有过被他人点醒的经历，也应有自己明悟的经历，但点醒他人却不是人人都有的。
 
+**习题解答、大作业思路、课程设计、备考/考试感想、学习书单、参赛经验、面试技巧，以及，校园外的世界…… **
+
 对自己而言，只是举手之劳。但对他人，却意义非凡。
 
 
@@ -119,22 +140,22 @@
 
 ```repo
 ----|
-	|----README.md (summary)
-	|
-	|----book/
-	|	 |----README.md(links to books)
-	|
-	|----doc/
-	|	 |----README.md(desc doc folder)
-	|	 |----...(folders of various doc)
-	|
-	|----template/
-	|	 |----README.md(desc template folder)
-	|	 |----...(templates)
-	|
-	|----tools/
-		 |----README.md(directions or links)
-		 |----...(folders containing tools)
+    |----README.md (summary)
+    |
+    |----book/
+    |    |----README.md(links to books)
+    |
+    |----doc/
+    |    |----README.md(desc doc folder)
+    |    |----...(folders of various doc)
+    |
+    |----template/
+    |    |----README.md(desc template folder)
+    |    |----...(templates)
+    |
+    |----tools/
+         |----README.md(directions or links)
+         |----...(folders containing tools)
 ```
 
 
