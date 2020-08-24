@@ -1,6 +1,6 @@
 # :tada: TJCS-Course
 
-![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)
+![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)
 
 
 ## :ship: 精神
@@ -109,7 +109,7 @@
 
 大家应都有过被他人点醒的经历，也应有自己明悟的经历，但点醒他人却不是人人都有的。
 
-**习题解答、大作业思路、课程设计、备考/考试感想、学习书单、参赛经验、面试技巧，以及，校园外的世界…… **
+**习题解答、大作业思路、课程设计、备考/考试感想、学习书单、参赛经验、面试技巧，以及，校园外的世界……**
 
 对自己而言，只是举手之劳。但对他人，却意义非凡。
 
