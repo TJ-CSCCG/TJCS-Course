@@ -8,8 +8,6 @@
 
 并且，有的时候程序一通过，就不会再回头看过。这样减少了对加解密过程、特殊算法的理解时间，作业便没有起到复习巩固的作用。
 
-
-
 ### 二、工具分述
 
 #### 1. [ShiCrypto](https://github.com/skyleaworlder/ShiCrypto)：[skyleaworlder](https://github.com/skyleaworlder)
@@ -25,8 +23,6 @@
 * **没有具体与作业题绑定在一起**；
 * 写的时候，我尽量按照课件的布置来布置；
 * 基本覆盖了所有烦了点的计算，比如 ECC 上点的计算。
-
-
 
 ##### b. 使用
 
