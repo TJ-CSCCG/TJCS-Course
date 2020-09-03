@@ -79,7 +79,7 @@
     "MD005": true,
     "MD007": {
       // unordered list indent tab
-      "indent": 4
+      "indent": 2
     },
     "MD012": {
       "maximum": 1
