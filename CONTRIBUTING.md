@@ -73,19 +73,19 @@
     "MD001": true,
     "MD002": true,
     "MD004": {
-      // unordered list style
+      "//": "unordered list style",
       "style": "asterisk",
     },
     "MD005": true,
     "MD007": {
-      // unordered list indent tab
+      "//": "unordered list indent tab",
       "indent": 2
     },
     "MD012": {
       "maximum": 1
     },
     "MD013": {
-      // line length
+      "//": "line length",
       "line_length": 150,
       "code_block_line_length": 200,
       "heading_line_length": 100
@@ -108,11 +108,11 @@
     "MD027": true,
     "MD031": true,
     "MD033": {
-      // html elements allowed
+      "//": "html elements allowed",
       "allowed_elements": ["b", "h", "br", "span", "href", "font", "u"]
     },
     "MD035": {
-      // sep line style
+      "//": "sep line style",
       "style": "consistent",
     },
     "MD036": true,
@@ -138,6 +138,8 @@
 * 记事本（大雾）
 * 配合预览功能，登录 `GitHub` 直接修改需要修改的文件
 
+（注：极不建议使用 `Typora` 作为编辑器）
+
 ## :warning: 注意
 
 需要遵守以下约定：
@@ -151,3 +153,4 @@
 * 若经著作权人许可，则需与著作权人达成协议或约定，依照协议、约定或其他有关规定提供补偿。
 
 本仓库使用者不应将资料用于商业用途。
+
