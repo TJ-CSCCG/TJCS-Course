@@ -29,3 +29,15 @@
 ##### b. 使用
 
 见 README.md
+
+#### 4. [mips-disassembler](https://github.com/skyleaworlder/mips-disassembler.py) : [skyleaworlder](https://github.com/skyleaworlder)
+
+##### a. 介绍
+
+一个反汇编 `python` 脚本，将一定格式的机器码指令转化为调试需要的数据输出。
+
+不要脸地自己打个广告（但是我觉得应该会有帮助的！
+
+##### b. 使用
+
+见仓库 README.md
