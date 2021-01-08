@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<students>
+  	<student>
+  		<name>小赵</name>
+  		<sex>男</sex>
+  		<age>23</age>
+  	</student>
+  	<student>
+  		<name>小孙</name>
+  		<sex>女</sex>
+  		<age>24</age>
+  	</student>
+  	<student>
+  		<name>小王</name>
+  		<sex>女</sex>
+  		<age>26</age>
+  	</student>
+</students>

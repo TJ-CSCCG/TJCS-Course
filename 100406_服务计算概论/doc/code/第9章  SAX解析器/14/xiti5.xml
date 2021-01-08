@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<message>
+<persion>
+<name>小李</name>
+<age>25</age>
+<tel>14741</tel>
+</persion>
+<persion>
+<name>小张</name>
+<age>23</age>
+<tel>25852</tel>
+</persion>
+<persion>
+<name>小赵</name>
+<age>24</age>
+<tel>36963</tel>
+</persion>
+</message>

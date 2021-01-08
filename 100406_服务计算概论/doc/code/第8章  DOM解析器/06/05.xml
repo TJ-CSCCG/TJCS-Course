@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE  persion  PUBLIC  "-//ISO1234567//sunsang//ForXml//Ch"  "01.dtd"[
+<!ELEMENT lxfs (tel,email)>
+<!ELEMENT tel (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+]>
+<persion>
+<name>小李</name>
+<lxfs>
+<tel>1234567</tel>
+<email>xiaoli@163.com</email>
+</lxfs>
+</persion>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gb2312"?>
+<root xmlns:p1="jilin" xmlns:p2="liaoning">
+ <p1:张三>
+  出生日期：1980.10.10
+ </p1:张三>
+ <p2:张三>
+  出生日期：1981.11.12
+ </p2:张三>
+</root>
