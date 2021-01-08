@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gb2312"?>
+<score xmlns:f="ChangChun">
+<f:student name="小李">
+    <math>89</math>
+</f:student>
+<student name="小王">
+    <math />
+</student>
+</score>

@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>内嵌的数据岛</title>
+</head>
+<body>
+<xml id="students">
+  <students>
+  	<student>
+  		<name>张三</name>
+  		<sex>男</sex>
+  		<age>25</age>
+  	</student>
+  	<student>
+  		<name>李四</name>
+  		<sex>女</sex>
+  		<age>24</age>
+  	</student>
+  	<student>
+  		<name>王五</name>
+  		<sex>男</sex>
+  		<age>26</age>
+  	</student>
+  </students>
+</xml>
+<center>
+<h5>内嵌的数据岛</h5>
+<table border="1" datasrc="#students" width="300">
+<thead bgcolor="#99FF99">
+<td>姓名</td>
+<td>性别</td>
+<td>年龄</td>
+</thead>
+<tr>
+<td><span datafld="name"></span></td>
+<td><span datafld="sex"></span></td>
+<td><span datafld="age"></span></td>
+</tr>
+</table>
+</center>
+</body>
+</html>

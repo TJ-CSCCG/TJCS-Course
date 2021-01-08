@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE cars[
+<!ELEMENT cars ANY>
+<!ELEMENT car (#PCDATA)>
+<!ATTLIST  car
+type  CDATA  "A2"
+color  CDATA  "red"
+max-speed  CDATA  "120"
+>
+]>
+<cars>	
+<car>
+	没有显示地设置属性。
+</car>
+<car type="A4" color="blue" max-speed="200" >
+	显示地设置了属性。
+</car>
+</cars>

@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>习题5</title>
+</head>
+<body>
+<center>
+<h3>部分国家电话直拨区号表</h3>
+<div id="s_t"></div>
+第<span id="cpage"></span>页/共<span id="tpage"></span>页&nbsp;&nbsp;
+转到第<input type="text" name="pagenum" size="3" />页
+<input type="button" value="确定" onclick="gotopage(pagenum.value);" /><br> 
+<input type="button" value="首  页" onclick="firstpage();" />
+<input type="button" value="上一页" onclick="previouspage();" />
+<input type="button" value="下一页" onclick="nextpage();" />
+<input type="button" value="尾  页" onclick="lastpage();" />
+
+<xml id="students" src="xiti5.xml" />
+<script language="javascript">
+var rs = students.recordset;
+rs.pagesize=3;
+
+function firstpage(){
+    rs.absolutepage=1;
+    disp();
+}
+
+function previouspage(){
+  if(rs.absolutepage==1){
+    alert("已经是第一页！");
+  }else{
+    rs.absolutepage=rs.absolutepage-1;
+    disp();
+  }
+}
+
+function nextpage(){
+  if(rs.absolutepage==rs.pagecount){
+    alert("已经是最后一页！");
+  }else{
+    rs.absolutepage=rs.absolutepage+1;
+    disp();
+  }
+}
+
+function lastpage(){
+    rs.absolutepage=rs.pagecount;
+    disp();
+}
+
+function gotopage(pagenum){
+    if(pagenum>=1&&pagenum<=rs.pagecount){
+    rs.absolutepage=pagenum;
+    disp();
+    }else{
+      alert("输入的页码错误!")
+    }
+}
+
+function disp(){
+stu_tab="";
+stu_tab="<table><tr bgcolor='#AAAAAA'>";
+stu_tab=stu_tab+"<th width='200' align='center'>国家名称</th>";
+stu_tab=stu_tab+"<th width='200' align='center'>直拨区号</th></tr>";
+for(i=1;i<=rs.pagesize;i++){
+if(i<=rs.pagesize&&!rs.EOF){
+stu_tab=stu_tab+"<tr bgcolor='#EEEEEE'><td align='center'>"+rs(0)+"</td>";
+stu_tab=stu_tab+"<td align='center'>"+rs(1)+"</td></tr>";
+if(i<rs.pagesize){
+rs.moveNext();
+}
+}
+}
+
+stu_tab=stu_tab+"</table>";
+s_t.innerHTML=stu_tab;
+cpage.innerHTML=rs.absolutepage;
+tpage.innerHTML=rs.pagecount;
+}
+
+disp()
+</script>
+</body>
+</html>

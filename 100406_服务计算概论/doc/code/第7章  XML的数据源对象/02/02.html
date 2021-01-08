@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>调用外部的数据岛</title>
+</head>
+<body>
+<xml id="students" src="01.xml" />
+<center>
+<h5>调用外部数据岛</h5>
+<table border="1" datasrc="#students" width="300">
+<thead bgcolor="#99FF99">
+<td>姓名</td>
+<td>性别</td>
+<td>年龄</td>
+</thead>
+<tr>
+<td><span datafld="name"></span></td>
+<td><span datafld="sex"></span></td>
+<td><span datafld="age"></span></td>
+</tr>
+</table>
+</center>
+</body>
+</html>

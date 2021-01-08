@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>遍历记录集</title>
+</head>
+<body>
+<h5>遍历记录集</h5>
+<xml id="students" src="02.xml" />
+<script language="javascript">
+var rs = students.recordset;
+document.write("总记录数:"+rs.RecordCount+"。当前记录编号:");
+document.write("<input type='text' size='1' name='num' value='1'><br>");
+function firstr() 
+{ 
+  rs.movefirst();
+  num.value=rs.AbsolutePosition;
+} 
+function previousr() 
+{ 
+  if(rs.AbsolutePosition==1){
+    alert("已经是第一条");
+  }else{
+  rs.movePrevious();
+  num.value=rs.AbsolutePosition;
+  }
+} 
+function nextr() 
+{  
+   if(rs.AbsolutePosition==rs.RecordCount){
+    alert("已经是最后一条");
+   }else{
+     rs.moveNext();
+     num.value=rs.AbsolutePosition;
+   }
+} 
+function lastr() 
+{ 
+  rs.moveLast();
+  num.value=rs.AbsolutePosition;
+}
+
+</script>
+
+
+姓名:<span datasrc="#students" datafld="name"></span><br>
+性别:<span datasrc="#students" datafld="sex" ></span><br>
+年龄:<span datasrc="#students" datafld="age" ></span><br>
+
+
+<input type="button"  value="第一条" onClick="firstr();">
+<input type="button"  value="上一条" onClick="previousr();">
+<input type="button"  value="下一条" onClick="nextr();">
+<input type="button"  value="最后一条" onClick="lastr();">
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+<!ELEMENT persion ANY>
+<!ELEMENT name (#PCDATA)>
