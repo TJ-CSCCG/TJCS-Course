@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="gb2312"?>
+<persions>
+<小李 sex="男" height="181" weight="75.2" age="25"> 
+体型很标准
+</小李>
+<小赵 sex="男" height="175" weight="76" age="24">
+体型较胖
+</小赵>
+<小王 sex="女" height="162" weight="76" age="24">
+体型较瘦
+</小王> 
+</persions>

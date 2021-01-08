@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<students>
+  	<student>
+  		<name>张三</name>
+  		<sex>男</sex>
+  		<age>25</age>
+  	</student>
+  	<student>
+  		<name>李四</name>
+  		<sex>女</sex>
+  		<age>24</age>
+  	</student>
+  	<student>
+  		<name>王五</name>
+  		<sex>男</sex>
+  		<age>26</age>
+  	</student>
+        <student>
+  		<name>小赵</name>
+  		<sex>女</sex>
+  		<age>25</age>
+  	</student>
+  	<student>
+  		<name>小孙</name>
+  		<sex>女</sex>
+  		<age>24</age>
+  	</student>
+  	<student>
+  		<name>小李</name>
+  		<sex>男</sex>
+  		<age>26</age>
+  	</student>
+</students>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE root SYSTEM "01.dtd">
+<root>
+<element>
+引用内部实体：&inen;
+</element>
+<element>
+引用外部实体：&outen;
+</element>
+<element>
+引用未定义实体：&unknownen;
+</element>
+</root>

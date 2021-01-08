@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="01.xsl" ?>
+<persions>
+	<persion>
+		<name>小李</name>
+		<sex>male</sex>
+		<birthday>1983.09.24</birthday>
+	</persion>
+	<persion> 
+		<name>小王</name>
+		<sex>female</sex>
+		<birthday>1895.10.20</birthday>
+	</persion>
+</persions>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE 实体引用[
+<!ENTITY inen "我是内部实体" >
+<!ENTITY outen SYSTEM "01.txt">
+<!ELEMENT 实体引用 (内部实体,外部实体)>
+<!ELEMENT 内部实体 (#PCDATA)>
+<!ELEMENT 外部实体 (#PCDATA)>
+]>
+<实体引用>
+<内部实体>
+&inen;
+</内部实体>
+<外部实体>
+&outen;
+</外部实体>
+</实体引用>

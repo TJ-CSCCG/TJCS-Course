@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/css" ?>
+<books xmlns:HTML="http://www.w3.org/Profiles/XHTML-transitional">
+<HTML:style>
+#book1{
+display:block;
+font-size:25pt;
+color:red;
+}
+#book2{
+display:block;
+font-size:15pt;
+color:blue;
+}
+.name{
+display:line;
+font-size:20pt;
+color:black;
+}
+</HTML:style>
+<book ID="book1">
+	<name  CLASS="name">name1</name>
+	<author>author1</author>
+</book>
+<book ID="book2">
+	<name>name2</name>
+	<author CLASS="name">author2</author>
+</book>
+</books>

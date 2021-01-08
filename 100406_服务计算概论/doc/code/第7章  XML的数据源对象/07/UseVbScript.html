@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>×ª´æÊı¾İ</title>
+</head>
+<body>
+<xml id="students" src="02.xml" />
+<script language="vbscript">
+set rs = students.recordset
+sarray = rs.getrows()
+for I=0 to ubound(sarray)-1
+for J=0 to ubound(sarray,2)
+document.write "sarray(" & I & "," & J & "):" & sarray(I,J)
+
+next
+document.write "<br>"
+next
+</script>
+
+</body>
+</html>

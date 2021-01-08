@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="gb2312"?>
+<books>
+	<book>
+		<title>Java面向对象编程</title>
+		<author>孙卫琴</author>
+	</book>
+	<book>
+		<title>JSP动态网页编程技术</title>
+		<author>王先国</author>
+	</book>
+</books>

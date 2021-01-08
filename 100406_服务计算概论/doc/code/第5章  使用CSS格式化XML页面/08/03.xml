@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="gb2312"?>
+<?xml-stylesheet type="text/css" href="03.css" ?>
+<root>
+<chemistry>
+氢气燃烧产生水:
+2h<bottom>2</bottom>+o<bottom>2</bottom>=2h<bottom>2</bottom>o
+</chemistry>
+<discretion>
+这一反应过程中有大量热放出，火焰呈<bold>淡蓝色</bold>。
+</discretion>
+</root>
