@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" ?>
+<persions>
+	<persion>
+		<name>小张</name>
+		<sex>male</sex>
+		<birthday>1983.10.25</birthday>
+	</persion>
+	<persion> 
+		<name>小王</name>
+		<sex>female</sex>
+		<birthday>2003.10.20</birthday>
+	</persion>
+</persions>

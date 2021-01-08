@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<?xml-stylesheet type="text/xsl" href="12.xsl" ?>
+<message>
+  <persion>
+    <name>小李</name>
+    <age>25</age>
+    <sex>male</sex>
+  </persion>
+  <persion>
+    <name>小王</name>
+    <age>23</age>
+    <sex>female</sex>
+  </persion>
+  <persion>
+    <name>小李</name>
+    <age>22</age>
+    <sex>female</sex>
+  </persion>
+  <persion>
+    <name>小张</name>
+    <age>21</age>
+    <sex>male</sex>
+  </persion>
+</message>

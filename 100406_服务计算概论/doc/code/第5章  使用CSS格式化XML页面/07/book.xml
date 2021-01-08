@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="gb2312"?>
+<?xml-stylesheet type="text/css" href="book.css" ?>
+<books>
+<book>
+《水浒传》
+<author>施耐庵</author>
+<price>52.30</price>
+</book>
+<book>
+《西游记》
+<author>吴承恩</author>
+<price>32.00</price>
+</book>
+<book>
+《三国演义》
+<picture ID="1" ></picture> 
+<author>罗贯中</author>
+<price>41.50</price>
+</book>
+<book>
+《红楼梦》
+<picture ID="4"></picture>
+<author>曹雪芹</author>
+<price>43.90</price>
+</book>
+</books>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<?xml-stylesheet type="text/xsl" href="07.xsl" ?>
+<message>
+  <persion id="1">
+    <name>小李</name>
+    <sex>male</sex>
+    <age>25</age>
+    <lxfs>
+       <tel>1234567</tel>
+    </lxfs>
+  </persion>
+  <persion id="2">
+    <name>小王</name>
+    <sex>female</sex>
+    <age>20</age>
+    <lxfs>
+       <email>xiaowang@163.com</email>
+    </lxfs>
+  </persion>
+  <persion>
+    <name>小张</name>
+    <name>小李</name>
+    <sex>female</sex>
+    <age>22</age>
+    <lxfs>
+       <email>xiaozhang@163.com</email>
+       <tel>7654321</tel>
+    </lxfs>
+  </persion>
+</message>

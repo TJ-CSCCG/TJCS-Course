@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="gb2312"?>
+<persion xmlns:jl="Jilin"
+         xmlns:bj="Beijing">
+  <jl:name>
+      小李
+      <tel>1234567</tel>
+  </jl:name>
+  <sy:name xmlns:sy="http://www.sunyang.net.cn">
+      小王
+      <tel>7654321</tel>
+  </sy:name>
+  <bj:name>
+      小李
+      <tel>1357911</tel>
+  </bj:name>
+</persion>
