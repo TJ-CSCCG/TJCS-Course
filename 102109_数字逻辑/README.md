@@ -27,13 +27,13 @@
 
 编程作业使用 verilog 语言，会给实验课的时间做，但或许还需要自己投入时间。作业一共有 30 个。
 
-![0](./img/0.png)
+![0](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/102109_数字逻辑/img/0.png)
 
 （数量虽然多，但是不少作业间可共用）
 
 提交与迟交，效果如下所示：
 
-![1](./img/1.png)
+![1](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/102109_数字逻辑/img/1.png)
 
 大作业需要使用外设。外设将在 11 月初到 11 月末间开放领取。
 

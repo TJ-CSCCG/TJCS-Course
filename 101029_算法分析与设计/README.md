@@ -49,9 +49,9 @@
 
 最后 Zhang 老师在期末加大题量的前提下，**平时作业：期末考试 = 5：5**
 
-![没事](./img/没事.png)
+![没事](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101029_算法分析与设计/img/没事.png)
 
-![兄弟萌，把“一生”打在公屏上](./img/一生.png)
+![兄弟萌，把“一生”打在公屏上](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101029_算法分析与设计/img/一生.png)
 
 #### 2. 99017 Yan
 
@@ -59,7 +59,7 @@
 
 Yan 老师的确不太喜欢看群，平常是放养状态，考试前说的话也比较少。
 
-![早知道](./img/早知道.png)
+![早知道](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101029_算法分析与设计/img/早知道.png)
 
 Zhang 老师一开始并没有打算考试，想的是用大作业来做最后的考核。但是 Yan 老师希望考试，之后 **Yan 老师打电话征求了部分同学意见**，最终使得两个班都是考试。（然后 Zhang 老师出的卷子）
 

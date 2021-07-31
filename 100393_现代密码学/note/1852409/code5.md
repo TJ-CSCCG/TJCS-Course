@@ -6,11 +6,11 @@
 
 
 
-![1](./img/5-1.png)
+![1](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-1.png)
 
 如果每个密钥匙用的概率都相等，都是 $\dfrac{1}{K}$ ，那么计算原来明文概率和已知明文概率是否相等即可。
 
-![2](./img/5-2.png)
+![2](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-2.png)
 
 高亮部分就是完善保密性的核心。先验概率等于概率。
 
@@ -44,7 +44,7 @@ $$
 
 假设明文空间是
 
-![3](./img/5-3.png)
+![3](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-3.png)
 
 用 Ki 定义密钥的名字。对于每一个明文，只有一把密钥，将其加密为 yi
 
@@ -58,7 +58,7 @@ $$
 
 
 
-![4](./img/5-4.png)
+![4](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-4.png)
 
 一次一密。维吉尼亚算法。
 
@@ -66,7 +66,7 @@ $$
 
 ## 熵
 
-![5](./img/5-5.png)
+![5](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-5.png)
 
 X 是一个随机变量。
 
@@ -74,15 +74,15 @@ X 是一个随机变量。
 
 ## 凸函数
 
-![6](./img/5-6.png)
+![6](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-6.png)
 
-![7](./img/5-7.png)
+![7](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-7.png)
 
 
 
 ## 琴生不等式
 
-![7](./img/5-8.png)
+![7](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-8.png)
 
 
 
@@ -90,21 +90,21 @@ X 是一个随机变量。
 
 熵是非负数。当且仅当某事件变成确定事件的时候，熵为 0 。
 
-![9](./img/5-9.png)
+![9](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-9.png)
 
 所有的概率相等时，熵取最大的 log_2 n。
 
-![10](./img/5-10.png)
+![10](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-10.png)
 
-![11](./img/5-11.png)
+![11](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-11.png)
 
-![12](./img/5-12.png)
+![12](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-12.png)
 
-![13](./img/5-13.png)
+![13](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-13.png)
 
 等号当且仅当 $p_i q_j$ 都相等时成立 。
 
-![14](./img/5-14.png)
+![14](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-14.png)
 
 log2 26 = 4.7
 
@@ -114,16 +114,16 @@ log2 26 = 4.7
 
 语言有一定的冗余度——有一些词不写出来也会被推出来。
 
-![15](./img/5-15.png)
+![15](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-15.png)
 
 若把 HL = 1.25，如果语言文字充分多，可以把原来的语言压缩成之前的 25% 。
 
 
 
-![16](./img/5-16.png)
+![16](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-16.png)
 
 存在一个明文，使得有密钥可以把明文加密成密文，所有这样的密钥构成了一个集合，这个密钥集合中只有一个是真的密钥，剩下的都是伪密钥。
 
 
 
-![17](./img/5-17.png)
+![17](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/5-17.png)
