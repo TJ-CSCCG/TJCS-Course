@@ -23,7 +23,7 @@
 
 2018 级之前平时作业还由 mips246 上的内容有关。
 
-![1](./img/1.png)
+![1](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/1.png)
 
 可见对于 2018 级之前的年级，**CPU31** 只是期中的小实验。
 
@@ -37,7 +37,7 @@
 
 会通过微信或者 QQ "接龙"签到。
 
-![2](./img/2.png)
+![2](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/2.png)
 
 ##### b. 上课提问与回答
 
@@ -45,7 +45,7 @@
 
 回答采用“接龙”形式回答。
 
-![3](./img/3.png)
+![3](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/3.png)
 
 ##### c. 作业布置
 
@@ -53,11 +53,11 @@
 
 有些班级布置作业仅仅是口头提醒，也有展示课件的。
 
-![4](./img/4.png)
+![4](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/4.png)
 
 ##### d. 日常
 
-![5](./img/5.png)
+![5](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/5.png)
 
 #### 4. 考试
 

@@ -72,7 +72,7 @@
 
 （预测在计科导挪到大二上之后，大作业数目会减少）
 
-![难](./img/难.png)
+![难](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100383_计算机科学导论/img/难.png)
 
 #### 3. 课堂
 

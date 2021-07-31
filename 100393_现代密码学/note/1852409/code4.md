@@ -8,7 +8,7 @@
 
 由此可以相信频率最高的三个字母就是 THE加密的。
 
-![1](./img/4-1.png)
+![1](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-1.png)
 
 CHR 出现的位置分别是 1 166 236 276 286.
 
@@ -28,15 +28,15 @@ CHR 出现的位置分别是 1 166 236 276 286.
 
 把原本 A 的频率和现在算出来的 A 的频率做乘法……
 
-![3](./img/4-3.png)
+![3](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-3.png)
 
 直到 Z，得到一个频率，这里是 0.035。（专门针对维吉尼亚加密算法，因为其是一个移位算法）
 
-![2](./img/4-2.png)
+![2](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-2.png)
 
 可以看到是 0.061，0.069，0.066，0.060，0.072。
 
-![4](./img/4-4.png)
+![4](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-4.png)
 
 如果猜对了，真正准确的概率是 0.065，而错误的话平均为 0.038。差距很大，很明显。
 
@@ -48,7 +48,7 @@ CHR 出现的位置分别是 1 166 236 276 286.
 
 friday是明文，密钥假设为 K，那么就可以有：
 
-![5](./img/4-5.png)
+![5](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-5.png)
 
 一定要已知明文，不知道明文的话，难度很大。
 
@@ -73,7 +73,7 @@ LFSR stream cipher。
 
 
 
-![6](./img/4-6.png)
+![6](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100393_现代密码学/note/1852409/img/4-6.png)
 
 这就是线性反馈移位寄存器。可以使用电路实现，所以很快。
 
