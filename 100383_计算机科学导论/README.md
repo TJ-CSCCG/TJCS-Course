@@ -14,9 +14,9 @@
 
 * 13182 Zhao
 
-  Computer Science An Overview (11th Edition) J. Glenn Brookshear  ISBN:9780132569033
+  Computer Science An Overview (11th Edition) J. Glenn Brookshear  ISBN: 9780132569033
 
-  计算机科学概论 （第 11 版） J. Glenn Brookshear 人民邮电出版社 ISBN:9787115277947
+  计算机科学概论（第 11 版）J. Glenn Brookshear 人民邮电出版社 ISBN: 9787115277947
 
 * 09044 Zhang
 
@@ -28,8 +28,9 @@
 
 * 课后习题，小作业比较少，基本是书上的；
 
-* 大作业，具体见下：
-#### i.18级 **（仅供参考）**
+* 大作业，具体见下：  
+
+#### i.18 级 **（仅供参考）**
 
 * 18 级及以前的正常教学班，大作业数量为 4~5 个，分别是：
 
@@ -81,7 +82,7 @@
 
 ![难](https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/100383_计算机科学导论/img/难.png)
 
-#### ii.20级
+#### ii.20 级
 
 需要小组合作完成， Zhao 班上限 7 人， Zhang 班上限 3 人。据说是根据实际选课人数划定的，即一个班内组数是固定的，选课人数多的班每组人就多。  
 
