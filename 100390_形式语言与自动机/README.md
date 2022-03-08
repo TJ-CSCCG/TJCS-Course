@@ -12,7 +12,7 @@
 
 其中 3 为推荐使用的教材，2 是在**特殊情况**下可能用到的教材。
 
-[自动机理论、语言和计算导论答案](http://www.doc88.com/p-7458004893329.html)
+[自动机理论、语言和计算导论答案](http://infolab.stanford.edu/~ullman/ialcsols/sols.html)
 
 [计算理论导引（第 3 版）答案](https://github.com/ryandougherty/Introduction-to-the-Theory-of-Computation-Solutions) （第 2 版与第 3 版于习题方面差别不大，可用，但答案不全）
 
