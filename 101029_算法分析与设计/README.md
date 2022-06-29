@@ -14,20 +14,20 @@
 
 自学推荐书目：
 
-- 我的第一本算法书 石田保辉 / 宮崎修一 人民邮电出版社 ISBN 9787115495242
-- 算法图解 Aditya Bhargava 人民邮电出版社 ISBN 9787115447630
-- 算法导论 （原书第 3 版）  Thomas H.Cormen / Charles E.Leiserson / Ronald L.Rivest / Clifford Stein 机械工业出版社 ISBN 9787111407010
-- （应聘适用）剑指 Offer （第 2 版） 何海涛 电子工业出版社 ISBN 9787121310928
-- （应聘适用） [LeetCode Cookbook (halfrost.com)](https://books.halfrost.com/leetcode/)
+* 我的第一本算法书 石田保辉 / 宮崎修一 人民邮电出版社 ISBN 9787115495242
+* 算法图解 Aditya Bhargava 人民邮电出版社 ISBN 9787115447630
+* 算法导论 （原书第 3 版）  Thomas H.Cormen / Charles E.Leiserson / Ronald L.Rivest / Clifford Stein 机械工业出版社 ISBN 9787111407010
+* （应聘适用）剑指 Offer （第 2 版） 何海涛 电子工业出版社 ISBN 9787121310928
+* （应聘适用） [LeetCode Cookbook (halfrost.com)](https://books.halfrost.com/leetcode/)
 
 #### 2. 作业
 
 作业一共分为两部分，一为平时作业，二为大作业。
 
-- 平时作业又为分两类：
-  - 算法分析题，均来自于《计算机算法设计与分析》中；
-  - 算法实现题，也是来自于教材习题。
-- 大作业（或许是疫情特色）
+* 平时作业又为分两类：
+  * 算法分析题，均来自于《计算机算法设计与分析》中；
+  * 算法实现题，也是来自于教材习题。
+* 大作业（或许是疫情特色）
 
 或许会有一些老师（如 05152 Zhang）编程题所用语言不做要求，只要得出结果即可。
 
