@@ -44,9 +44,10 @@
 期末考试前会给出复习大纲，虽然考试的重点仅在 “数据链路层” 和 “网络层” 两章，但这并不妨碍大纲中出现 50 多个考点。（而且据观测，考纲有逐年增加的趋势）
 
 * 有一些考点看上去就不知道能咋考，那肯定不会考；
-* 不要钻牛角尖，课件书本为主，一切以教材为准，其他纸质资料与网上资料仅作参考。
+* 不要钻牛角尖，课件书本为主，一切以教材为准，其他纸质资料与网上资料仅作参考；
+* **基本但不绝对！**
 
-这里提供一些 “网上资料”：[计算机网络复习提纲-phil329](https://github.com/TJ-CSCCG/TJCS-Images/tree/TJCS-Course/101062_计算机网络/2020/files/计算机网络复习提纲.pdf) | [计算机网络复习提纲-skyleaworlder](https://github.com/skyleaworlder/NOT_NOTE/tree/main/Computer-Network/AST-DJW)。
+这里提供一些 “网上资料”：[计算机网络复习提纲-phil329](https://github.com/TJ-CSCCG/TJCS-Images/tree/TJCS-Course/101062_计算机网络/2020/files/计算机网络复习提纲.pdf) | [计算机网络复习提纲-skyleaworlder](https://github.com/skyleaworlder/NOT_NOTE/tree/main/Computer-Network/AST-DJW) | [计算机网络复习提纲-tobiasforest](https://github.com/tobiasforest/r/blob/main/101062_计算机网络/计网复习.md)。
 
 #### 2. 07119 Tian
 
