@@ -1,6 +1,6 @@
 # :tada: TJCS-Course
 
-![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)  ![visitors](https://visitor-badge.glitch.me/badge?page_id=TJ-CSCCG.TJCS-Course)  [![Generate-Power-With-Love](https://img.shields.io/badge/Generate--Power--With-Love-red)](https://github.com/TJ-CSCCG/TJCS-Assignment)
+![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)  ![visitors](https://visitor-badge.lithub.cc/badge?page_id=TJ-CSCCG.TJCS-Course)  [![Generate-Power-With-Love](https://img.shields.io/badge/Generate--Power--With-Love-red)](https://github.com/TJ-CSCCG/TJCS-Assignment)
 
 
 ## :ship: 精神
