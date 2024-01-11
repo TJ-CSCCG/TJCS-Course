@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="gb2312" ?>
-<?xml-stylesheet type="text/xsl" href="17.xsl" ?>
-<books>
-  <book>
-    <title language="chinese">三国演义</title>
-    <author>罗贯中</author>
-  </book>
-</books>
-

@@ -1,4 +1,0 @@
-<!ENTITY inen "&lt;I'm inner Entity.&gt;" >
-<!ENTITY outen SYSTEM "01.txt">
-<!ELEMENT root (element*)>
-<!ELEMENT element (#PCDATA)>

@@ -1,5 +1,0 @@
-<!ELEMENT persions (persion*)>
-<!ELEMENT persion (name,sex,birthday)>
-<!ELEMENT name    (#PCDATA)>
-<!ELEMENT sex    (#PCDATA)>
-<!ELEMENT birthday (#PCDATA)>

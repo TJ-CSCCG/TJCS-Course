@@ -1,1 +1,0 @@
-﻿&lt;I'm outter Entity.&gt;

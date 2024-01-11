@@ -1,3 +1,0 @@
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT sex (#PCDATA)>
-<!ELEMENT age (#PCDATA)>
