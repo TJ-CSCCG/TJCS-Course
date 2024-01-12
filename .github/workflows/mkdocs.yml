@@ -20,10 +20,17 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Migrate Files for Mkdocs
-        run: ./mkdocs.py
+      # It seems the actions by mhausenblas below can't properly install mkdocs
+      - name: Install Mkdocs
+        run: |
+            echo 'mkdocs' > requirements.txt
+            echo 'mkdocs-material' >> requirements.txt
 
-      - name: Deploy docs
+      - name: Migrate Files for Mkdocs
+        run: |
+            python ./mkdocs.py
+
+      - name: Deploy Docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
