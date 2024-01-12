@@ -1,0 +1,7 @@
+site_name: TJ-Courses
+
+theme:
+  name: material
+
+markdown_extensions:
+  - def_list
