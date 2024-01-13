@@ -3,6 +3,7 @@
 # modified from https://github.com/conanhujinming/comments-for-awesome-courses/blob/main/update.py
 
 import os
+import yaml
 
 EXCLUDE_DIRS = ['.git', 'docs', '.vscode', '.circleci', 'site', 'overrides', '.github']
 README_MD = ['README.md', 'readme.md', 'index.md']
@@ -16,44 +17,49 @@ def list_files(course: str):
                 readme_path = '{}/{}'.format(root, f)
     return readme_path
 
-
-def generate_md(course: str, readme_path: str, topic: str):
-    final_texts = ['\n\n'.encode()]
+def generate_md(term: str, course: str, readme_path: str):
+    final_texts = ['\n'.encode()]
     if readme_path:
         with open(readme_path, 'rb') as file:
             final_texts = file.readlines() + final_texts
-    topic_path = os.path.join('docs', topic)
-    if not os.path.isdir(topic_path):
-        os.mkdir(topic_path)
-    with open(os.path.join(topic_path, '{}.md'.format(course)), 'wb') as file:
-        file.writelines(final_texts)
-        
 
+    term_path = os.path.join('docs', term)
+    if not os.path.isdir(term_path):
+        os.mkdir(term_path)
+    with open(os.path.join(term_path, '{}.md'.format(course)), 'wb') as file:
+        file.writelines(final_texts)
 
 if __name__ == '__main__':
     if not os.path.isdir('docs'):
         os.mkdir('docs')
 
-    topics = list(filter(lambda x: os.path.isdir(x) and (
-        x not in EXCLUDE_DIRS), os.listdir('.')))  # list topics
+    # read courses from terms.yml
+    with open('terms.yml', 'r') as file:
+        yaml_data = yaml.safe_load(file)
 
-    print(topics)
+    terms = yaml_data.keys()
 
-    for topic in topics:
-        topic_path = os.path.join('.', topic)
-
-        courses = list(filter(lambda x: os.path.isdir(os.path.join(topic_path, x)) and (
-            x not in EXCLUDE_DIRS), os.listdir(topic_path)))  # list courses
-
-        print(topic_path)
+    for term in terms:
+        courses = yaml_data[term]
 
         for course in courses:
-            course_path = os.path.join(".", topic, course)
-            readme_path = list_files(course_path)
-            generate_md(course, readme_path, topic)
+            readme_path = list_files(course)
+            generate_md(term, course, readme_path)
 
+    # use main README.md as index.md
     with open('README.md', 'rb') as file:
         mainreadme_lines = file.readlines()
 
     with open('docs/index.md', 'wb') as file:
         file.writelines(mainreadme_lines)
+
+    # handle navigation part. if not specified, '大三上' will be ahead of '大二上', weird
+    with open ('mkdocs.yml', 'a') as file:
+        print('nav:', file=file)
+        print('  - Home: index.md', file=file)
+
+        for term in terms:
+            print('  - {}:'.format(term), file=file)
+            courses = yaml_data[term]
+            for course in courses:
+                print('    - {}: {}/{}.md'.format(course.replace('_', ' '), term, course), file=file)

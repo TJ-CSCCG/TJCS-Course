@@ -23,6 +23,7 @@ jobs:
       # It seems the actions by mhausenblas below can't properly install mkdocs
       - name: Install Mkdocs
         run: |
+            pip install pyyaml
             echo 'mkdocs' > requirements.txt
             echo 'mkdocs-material' >> requirements.txt
 
