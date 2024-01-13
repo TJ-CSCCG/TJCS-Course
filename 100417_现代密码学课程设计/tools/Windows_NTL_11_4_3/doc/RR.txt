@@ -1,0 +1,604 @@
+
+/**************************************************************************\
+
+MODULE: RR
+
+SUMMARY:
+
+The class RR is used to represent arbitrary-precision floating point
+numbers.
+
+The functions in this module guarantee very strong accuracy conditions
+which make it easy to reason about the behavior of programs using
+these functions.
+
+The arithmetic operations always round their results to p bits, where
+p is the current precision.  The current precision can be changed
+using RR::SetPrecision(), and can be read using RR::precision().  
+
+The minimum precision that can be set is 53 bits.
+The maximum precision is limited only by the word size of the machine.
+
+A convenience class RRPush is provided to automatically save and
+restore the current precision.
+
+All arithmetic operations are implemented so that the effect is as if the
+result was computed exactly, and then rounded to p bits.  If a number
+lies exactly half-way between two p-bit numbers, the "round to even"
+rule is used.  So in particular, the computed result will have a relative error
+of at most 2^{-p}.
+
+
+The above rounding rules apply to all arithmetic operations in this
+module, except for the following routines:
+
+* The transcendental functions: 
+     log, exp, log10, expm1, log1p, pow, sin, cos, ComputePi
+
+* The power function
+
+* The input and ascii to RR conversion functions when using "e"-notation 
+
+For these functions, a very strong accuracy condition is still 
+guaranteed: the computed result has a relative error of less than 2^{-p + 1}
+(and actually much closer to 2^{-p}).
+That is, it is as if the resulted were computed exactly, and then
+rounded to one of the two neighboring p-bit numbers (but not necessarily
+the closest).
+
+The behavior of all functions in this module is completely platform 
+independent: you should get *exactly* the same results on any platform
+(the only exception to this rule is the random number generator).
+
+Note that because precision is variable, a number may be computed with
+to a high precision p', and then be used as input to an arithmetic operation
+when the current precision is p < p'.  
+The above accuracy guarantees still apply; in particular, 
+no rounding is done until *after* the operation is performed.  
+
+EXAMPLE: If x and y are computed to 200 bits of precision,
+and then the precision is set to 100 bits, then x-y will
+be computed correctly to 100 bits, even if, say, x and y agree
+in their high-order 50 bits.  If x and y had been rounded to
+100 bits before the subtraction, then the difference would
+only be accurate to 50 bits of precision.
+
+Note that the assignment operator and the copy constructor 
+produce *exact* copies of their inputs---they are *never* rounded. 
+This is a change in semantics from versions 2.0 and earlier
+in which assignment and copy rounded their outputs.
+This was deemed a design error and has been changed.
+
+If you want to force rounding to current precision, the easiest
+way to do this is with the RR to RR conversion routines:
+   conv(x, a);
+or
+   x = to_RR(a); 
+This will round a to current precision and store the result in x.
+Note that writing
+   x = a + 0;
+or
+   x = a*1;
+also has the same effect.
+
+Unlike IEEE standard floating point, there are no "special values",
+like "infinity" or "not a number", nor are there any "denormalized
+numbers".  Overflow, underflow, or taking a square root of a negative
+number all result in an error being raised.
+
+An RR is represented as a mantissa/exponent pair (x, e), where x is a
+ZZ and e is a long.  The real number represented by (x, e) is x * 2^e.
+Zero is always represented as (0, 0).  For all other numbers, x is
+always odd.
+
+
+CONVERSIONS AND PROMOTIONS:
+The complete set of conversion routines between RR and other types is
+documented in the file "conversions.txt". Conversion from any type
+to RR always rounds the result to the current precision.
+
+The basic operations also support the notion of "promotions", 
+so that they promote a double to an RR.  For example, one can write 
+   x = y + 1.5;
+where x and y are RR's. One should be aware that these promotions are 
+always implemented using the double to RR conversion routine.
+
+
+SIZE INVARIANT: max(NumBits(x), |e|) < 2^(NTL_BITS_PER_LONG-4)
+
+\**************************************************************************/
+
+
+
+
+#include <NTL/ZZ.h>
+#include <NTL/xdouble.h>
+#include <NTL/quad_float.h>
+
+class RR {
+
+public:
+
+RR(); // = 0
+
+RR(const RR& a); // copy constructor
+
+
+explicit RR(double a);  // promotion constructor
+
+RR& operator=(const RR& a); // assignment operator
+
+// NOTE: the copy constructor and assignment operator
+// produce exact copies of their inputs, and do not round
+// to current precision.  
+
+RR& operator=(double a); // convert and assign
+
+~RR(); // destructor
+
+RR(RR&& a); 
+// move constructor (C++11 only)
+// declared noexcept unless NTL_EXCEPTIONS flag is set
+
+RR& operator=(RR&& a); 
+// move assignment (C++11 only)
+// declared noexcept unless NTL_EXCEPTIONS flag is set
+
+const ZZ& mantissa() const;  // read the mantissa
+long exponent() const;  // read the exponent
+
+static void SetPrecision(long p);  
+// set current precision to max(p, 53) bits.
+// The default is 150
+
+static long precision();  // read current value of precision
+
+static void SetOutputPrecision(long p);  
+// set the number of output decimal digits to max(p, 1).
+// The default is 10
+
+static long OutputPrecision();
+// read the current number of output decimal digits
+
+
+};
+
+
+
+/**************************************************************************\
+
+                                  Comparison
+
+\**************************************************************************/
+
+
+
+// standard comparison operators:
+
+long operator==(const RR& a, const RR& b);
+long operator!=(const RR& a, const RR& b);
+long operator<=(const RR& a, const RR& b);
+long operator>=(const RR& a, const RR& b);
+long operator <(const RR& a, const RR& b);
+long operator >(const RR& a, const RR& b);
+
+
+long IsZero(const RR& a); // test if 0
+long IsOne(const RR& a); // test if 1
+
+long sign(const RR& a);  // returns sign of a (+1, -1, 0)
+long compare(const RR& a, const RR& b); // returns sign(a-b);
+
+// PROMOTIONS: operators ==, ..., > and function compare
+// promote double to RR on (a, b).
+
+
+
+/**************************************************************************\
+
+                                  Addition
+
+\**************************************************************************/
+
+// operator notation:
+
+RR operator+(const RR& a, const RR& b);
+RR operator-(const RR& a, const RR& b);
+RR operator-(const RR& a); // unary -
+
+RR& operator+=(RR& x, const RR& a);
+RR& operator+=(RR& x, double a);
+
+RR& operator-=(RR& x, const RR& a);
+RR& operator-=(RR& x, double a);
+
+RR& operator++(RR& x);  // prefix
+void operator++(RR& x, int);  // postfix
+
+RR& operator--(RR& x);  // prefix
+void operator--(RR& x, int);  // postfix
+
+
+// procedural versions:
+
+void add(RR& z, const RR& a, const RR& b); // z = a+b
+void sub(RR& z, const RR& a, const RR& b); // z = a-b
+void negate(RR& z, const RR& a); // z = -a
+
+// PROMOTIONS: operators +, -, and procedures add, sub promote double
+// to RR on (a, b).
+
+void abs(RR& z, const RR& a); // z = |a|
+RR fabs(const RR& a);  
+RR abs(const RR& a); 
+
+
+/**************************************************************************\
+
+                                  Multiplication
+
+\**************************************************************************/
+
+
+// operator notation:
+
+RR operator*(const RR& a, const RR& b);
+
+RR& operator*=(RR& x, const RR& a);
+RR& operator*=(RR& x, double a);
+
+// procedural versions:
+
+
+void mul(RR& z, const RR& a, const RR& b); // z = a*b
+
+void sqr(RR& z, const RR& a); // z = a * a
+RR sqr(const RR& a); 
+
+// PROMOTIONS: operator * and procedure mul promote double to RR on (a, b).
+
+
+/**************************************************************************\
+
+                               Division
+
+\**************************************************************************/
+
+
+// operator notation:
+
+RR operator/(const RR& a, const RR& b);
+
+RR& operator/=(RR& x, const RR& a);
+RR& operator/=(RR& x, double a);
+
+
+// procedural versions:
+
+
+void div(RR& z, const RR& a, const RR& b); z = a/b
+
+void inv(RR& z, const RR& a); // z = 1 / a
+RR inv(const RR& a); 
+
+// PROMOTIONS: operator / and procedure div promote double to RR on (a, b).
+
+
+
+/**************************************************************************\
+
+                       Transcendental functions 
+
+\**************************************************************************/
+
+
+void exp(RR& res, const RR& x);  // e^x
+RR exp(const RR& x); 
+
+void log(RR& res, const RR& x); // log(x) (natural log)
+RR log(const RR& x); 
+
+void log10(RR& res, const RR& x); // log(x)/log(10)
+RR log10(const RR& x); 
+
+void expm1(RR& res, const RR&  x);
+RR expm1(const RR& x); 
+// e^(x)-1; more accurate than exp(x)-1 when |x| is small
+
+void log1p(RR& res, const RR& x);
+RR log1p(const RR& x); 
+// log(1 + x); more accurate than log(1 + x) when |x| is small
+
+void pow(RR& res, const RR& x, const RR& y);  // x^y
+RR pow(const RR& x, const RR& y); 
+
+void sin(RR& res, const RR& x);  // sin(x); restriction: |x| < 2^1000
+RR sin(const RR& x); 
+
+void cos(RR& res, const RR& x);  // cos(x); restriction: |x| < 2^1000
+RR cos(const RR& x); 
+
+void ComputePi(RR& pi); // approximate pi to current precision
+RR ComputePi_RR();
+
+
+/**************************************************************************\
+
+                         Rounding to integer values        
+
+\**************************************************************************/
+
+
+/*** RR output ***/
+
+void trunc(RR& z, const RR& a);  // z = a, truncated to 0
+RR trunc(const RR& a);
+
+void floor(RR& z, const RR& a);  // z = a, truncated to -infinity
+RR floor(const RR& a);
+
+void ceil(RR& z, const RR& a);   // z = a, truncated to +infinity
+RR ceil(const RR& a);
+
+void round(RR& z, const RR& a);   // z = a, truncated to nearest integer
+RR round(const RR& a);            // ties are rounded to an even integer
+
+
+
+/*** ZZ output ***/
+
+void TruncToZZ(ZZ& z, const RR& a);  // z = a, truncated to 0
+ZZ TruncToZZ(const RR& a);
+
+void FloorToZZ(ZZ& z, const RR& a);  // z = a, truncated to -infinity
+ZZ FloorToZZ(const RR& a);           // same as RR to ZZ conversion
+
+void CeilToZZ(ZZ& z, const RR& a);   // z = a, truncated to +infinity
+ZZ CeilToZZ(const ZZ& a);
+
+void RoundToZZ(ZZ& z, const RR& a);   // z = a, truncated to nearest integer
+ZZ RoundToZZ(const RR& a);            // ties are rounded to an even integer
+
+
+
+// @anchor{push}
+
+/**************************************************************************\
+
+                 Saving and restoring the current precision
+
+\**************************************************************************/
+
+
+class RRPush {
+public:
+   RRPush();  // saves the cuurent precision
+   ~RRPush(); // restores the saved precision
+
+private: 
+   RRPush(const RRPush&); // disable
+   void operator=(const RRPush&); // disable
+};
+
+
+// Example: 
+//
+// {
+//    RRPush push;  // don't forget to declare a variable!!
+//    RR::SetPrecsion(new_p);
+//    ...
+// } // old precsion restored when scope is exited
+
+
+class RROutputPush {
+public:
+   RROutputPush();   // saves the cuurent output precision
+   ~RROutputPush();  // restores the saved output precision
+
+private: 
+   RROutputPush(const RROutputPush&); // disable
+   void operator=(const RROutputPush&); // disable
+};
+
+
+// Example: 
+//
+// {
+//    RROutputPush push;  // don't forget to declare a variable!!
+//    RR::SetOutputPrecsion(new_op);
+//    ...
+// } // old output precsion restored when scope is exited
+
+
+
+
+/**************************************************************************\
+
+                                 Miscelaneous
+
+\**************************************************************************/
+
+
+void MakeRR(RR& z, const ZZ& a,  long e);
+RR MakeRR(const ZZ& a,  long e);
+// z = a*2^e, rounded to current precision
+
+void random(RR& z);
+RR random_RR(); 
+// z = pseudo-random number in the range [0,1).
+// Note that the behaviour of this function is somewhat platform
+// dependent, because the underlying pseudo-ramdom generator is.
+
+
+void SqrRoot(RR& z, const RR& a); // z = sqrt(a);
+RR SqrRoot(const RR& a);
+RR sqrt(const RR& a);
+
+void power(RR& z, const RR& a, long e); // z = a^e, e may be negative
+RR power(const RR& a, long e); 
+
+void power2(RR& z, long e); // z = 2^e, e may be negative
+RR power2_RR(long e); 
+
+
+void clear(RR& z);  // z = 0
+void set(RR& z);  // z = 1
+
+void RR::swap(RR& a);
+void swap(RR& a, RR& b);  
+// swap (pointer swap)
+
+
+
+/**************************************************************************\
+
+                               Input/Output
+Input Syntax:
+
+<number>: [ "-" ] <unsigned-number>
+<unsigned-number>: <dotted-number> [ <e-part> ] | <e-part>
+<dotted-number>: <digits> | <digits> "." <digits> | "." <digits> | <digits> "."
+<digits>: <digit> <digits> | <digit>
+<digit>: "0" | ... | "9"
+<e-part>: ( "E" | "e" ) [ "+" | "-" ] <digits>
+
+Examples of valid input:
+
+17 1.5 0.5 .5 5.  -.5  e10 e-10 e+10 1.5e10 .5e10 .5E10
+
+Note that the number of decimal digits of precision that are used
+for output can be set to any number p >= 1 by calling
+the routine RR::SetOutputPrecision(p).  The default value of p is 10.
+The current value of p is returned by a call to RR::OutputPrecision().
+
+
+\**************************************************************************/
+
+
+
+ostream& operator<<(ostream& s, const RR& a);
+istream& operator>>(istream& s, RR& x);
+
+/**************************************************************************\
+
+
+            Specialized routines with explicit precision parameter
+
+These routines take an explicit precision parameter p.  The value of p may be
+any positive integer.  All results are computed to *precisely* p bits of
+precision, regardless of the current precision (as set by RR::SetPrecision).
+
+These routines are provided both for convenience and for situations where the
+computation must be done with a precision that may be less than 53.
+
+
+\**************************************************************************/
+
+
+
+
+void AddPrec(RR& z, const RR& a, const RR& b, long p); // z = a + b
+RR AddPrec(const RR& a, const RR& b, long p);
+
+void SubPrec(RR& z, const RR& a, const RR& b, long p); // z = a - b
+RR SubPrec(const RR& a, const RR& b, long p);
+
+void NegatePrec(RR& z, const RR& a, long p); // z = -a
+RR NegatePrec(const RR& a, long p);
+
+void AbsPrec(RR& z, const RR& a, long p); // z = |a|
+RR AbsPrec(const RR& a, long p);
+
+void MulPrec(RR& z, const RR& a, const RR& b, long p); // z = a*b
+RR MulPrec(const RR& a, const RR& b, long p);
+
+void SqrPrec(RR& z, const RR& a, long p); // z = a*a
+RR SqrPrec(const RR& a, long p);
+
+void DivPrec(RR& z, const RR& a, const RR& b, long p);  // z = a/b
+RR DivPrec(const RR& a, const RR& b, long p);
+
+void InvPrec(RR& z, const RR& a, long p);  // z = 1/a
+RR DivPrec(const RR& a, long p);
+
+void SqrRootPrec(RR& z, const RR& a, long p); // z = sqrt(a)
+RR SqrRootPrec(const RR& a, long p);
+
+void TruncPrec(RR& z, const RR& a, long p); // z = a, truncated to 0
+RR TruncPrec(const RR& a, long p);
+
+void FloorPrec(RR& z, const RR& a, long p); // z = a, truncated to -infinity
+RR FloorPrec(const RR& a, long p);
+
+void CeilPrec(RR& z, const RR& a, long p);  // z = a, truncated to +infinity
+RR CeilPrec(const RR& a, long p);
+
+void RoundPrec(RR& z, const RR& a, long p); // z = a, 
+                                            // truncated to nearest integer,
+                                            // ties are roundec to an even 
+                                            // integer
+RR RoundPrec(const RR& a, long p);
+
+void ConvPrec(RR& z, const RR& a, long p); // z = a
+RR ConvPrec(const RR& a, long p);
+
+void ConvPrec(RR& z, const ZZ& a, long p); // z = a
+RR ConvPrec(const ZZ& a, long p);
+
+void ConvPrec(RR& z, long a, long p); // z = a
+RR ConvPrec(long a, long p);
+
+void ConvPrec(RR& z, int a, long p); // z = a
+RR ConvPrec(int a, long p);
+
+void ConvPrec(RR& z, unsigned long a, long p); // z = a
+RR ConvPrec(unsigned long a, long p);
+
+void ConvPrec(RR& z, unsigned int a, long p); // z = a 
+RR ConvPrec(unsigned int a, long p);
+
+void ConvPrec(RR& z, double a, long p); // z = a
+RR ConvPrec(double a, long p);
+
+void ConvPrec(RR& z, const xdouble& a, long p); // z = a
+RR ConvPrec(const xdouble& a, long p);
+
+void ConvPrec(RR& z, const quad_float& a, long p); // z = a
+RR ConvPrec(const quad_float& a, long p);
+
+void ConvPrec(RR& z, const char *s, long p); // read z from s
+RR ConvPrec(const char *s, long p);
+
+istream& InputPrec(RR& z, istream& s, long p);  // read z from s
+RR InputPrec(istream& s, long p);
+// The functional variant raises an error if input
+// is missing or ill-formed, while procedural form
+// does not.
+
+void MakeRRPrec(RR& z, const ZZ& a, long e, long p); // z = a*2^e
+RR MakeRRPrec(const ZZ& a, long e, long p);
+
+
+/**************************************************************************\
+
+COMPATABILITY NOTES: 
+
+ (1)  Prior to version 5.3, the documentation indicated that under certain
+      circumstances, the value of the current precision could be directly set
+      by setting the variable RR::prec.  Such usage is now considered
+      obsolete.  To perform computations using a precision of less than 53
+      bits, users should use the specialized routines AddPrec, SubPrec, etc.,
+      documented above.
+
+ (2)  The routine RoundToPrecision is obsolete, although for backward
+      compatability, it is still declared (in both procedural and function
+      forms), and is equivalent to ConvPrec.
+
+ (3)  In versions 2.0 and earlier, the assignment operator and copy
+      constructor for the class RR rounded their outputs to the current
+      precision.  This is no longer the case:  their outputs are now exact
+      copies of their inputs, regardless of the current precision.
+
+\**************************************************************************/
+
+

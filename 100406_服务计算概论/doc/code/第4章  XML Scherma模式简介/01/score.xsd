@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="score">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="eng"/>
+				<xsd:element ref="math"/>
+				<xsd:element ref="physics"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="eng" type="xsd:float "/>
+	<xsd:element name="math" type="xsd:float "/>
+	<xsd:element name="physics" type="xsd:float "/>
+</xsd:schema>

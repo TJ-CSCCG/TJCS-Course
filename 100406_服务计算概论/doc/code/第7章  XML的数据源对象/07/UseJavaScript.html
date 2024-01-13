@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>×ª´æÊı¾İ</title>
+</head>
+<body>
+<xml id="students" src="02.xml" />
+<script language="javascript">
+ rs = students.recordset;
+
+ studentsarray=rs.getrows().toArray(); 
+ 
+for(i=0;i<studentsarray.length;i++){
+ 
+   document.write("studentsarray["+i+"]:");
+   document.write(studentsarray[i]+"<br>");
+
+}
+</script>
+
+</body>
+</html>

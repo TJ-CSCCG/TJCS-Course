@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<?xml-stylesheet type="text/xsl" href="19.xsl" ?>
+<root>
+  <company>
+    <name>三扬科技</name>
+    <url>http://www.sunyang.net.cn</url>
+    <picture>sunyang.bmp</picture>
+  </company>
+</root>

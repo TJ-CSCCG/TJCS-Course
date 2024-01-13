@@ -1,0 +1,642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/ZZX.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Constant { color: #ff8c00; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: ZZX</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class ZZX implements polynomials in ZZ[X], i.e., univariate</span>
+<span class="Comment">polynomials with integer coefficients.</span>
+
+<span class="Comment">Polynomial multiplication is implemented using one of 4 different</span>
+<span class="Comment">algorithms:</span>
+
+<span class="Comment">1) classical </span>
+
+<span class="Comment">2) Karatsuba</span>
+
+<span class="Comment">3) Schoenhage &amp; Strassen --- performs an FFT by working</span>
+<span class="Comment">     modulo a &quot;Fermat number&quot; of appropriate size...</span>
+<span class="Comment">     good for polynomials with huge coefficients</span>
+<span class="Comment">     and moderate degree</span>
+
+<span class="Comment">4) CRT/FFT --- performs an FFT by working modulo several</span>
+<span class="Comment">     small primes...good for polynomials with moderate coefficients</span>
+<span class="Comment">     and huge degree.</span>
+
+<span class="Comment">The choice of algorithm is somewhat heuristic, and may not always be</span>
+<span class="Comment">perfect.</span>
+
+<span class="Comment">Many thanks to Juergen Gerhard &lt;jngerhar@plato.uni-paderborn.de&gt; for</span>
+<span class="Comment">pointing out the deficiency in the NTL-1.0 ZZX arithmetic, and for</span>
+<span class="Comment">contributing the Schoenhage/Strassen code.</span>
+
+<span class="Comment">Extensive use is made of modular algorithms to enhance performance</span>
+<span class="Comment">(e.g., the GCD algorithm and amny others).</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/vec_ZZ.h&gt;</span>
+<span class="PreProc">#include </span><span class="String">&quot;zz_pX.h&quot;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ_pX.h&gt;</span>
+
+
+<span class="Type">class</span> ZZX {
+<span class="Statement">public</span>:
+
+
+   ZZX(); <span class="Comment">// initial value 0</span>
+
+   ZZX(<span class="Type">const</span> ZZX&amp; a); <span class="Comment">// copy</span>
+   <span class="Type">explicit</span> ZZX(<span class="Type">const</span> ZZ&amp; a); <span class="Comment">// promotion</span>
+   <span class="Type">explicit</span> ZZX(<span class="Type">long</span> a); <span class="Comment">// promotion</span>
+
+   ~ZZX();
+
+
+   ZZX(ZZX&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+   ZZX&amp; <span class="Statement">operator</span>=(ZZX&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+
+
+   ZZX(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">const</span> ZZ&amp; c);
+   ZZX(INIT_MONO_TYPE, <span class="Type">long</span> i, <span class="Type">long</span> c);
+   <span class="Comment">// initial value c*X^i, invoke as ZZX(INIT_MONO, i, c)</span>
+
+   ZZX(INIT_MONO_TYPE, <span class="Type">long</span> i);
+   <span class="Comment">// initial value X^i, invoke as ZZX(INIT_MONO, i)</span>
+
+   ZZX&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZX&amp; a); <span class="Comment">// assignment</span>
+   ZZX&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZ&amp; a);
+   ZZX&amp; <span class="Statement">operator</span>=(<span class="Type">long</span> a);
+
+   <span class="Type">typedef</span> ZZ coeff_type;
+
+   <span class="Comment">// ...</span>
+
+};
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Accessing coefficients</span>
+
+<span class="Comment">The degree of a polynomial f is obtained as deg(f),</span>
+<span class="Comment">where the zero polynomial, by definition, has degree -1.</span>
+
+<span class="Comment">A polynomial f is represented as a coefficient vector.</span>
+<span class="Comment">Coefficients may be accesses in one of two ways.</span>
+
+<span class="Comment">The safe, high-level method is to call the function</span>
+<span class="Comment">coeff(f, i) to get the coefficient of X^i in the polynomial f,</span>
+<span class="Comment">and to call the function SetCoeff(f, i, a) to set the coefficient</span>
+<span class="Comment">of X^i in f to the scalar a.</span>
+
+<span class="Comment">One can also access the coefficients more directly via a lower level </span>
+<span class="Comment">interface.  The coefficient of X^i in f may be accessed using </span>
+<span class="Comment">subscript notation f[i].  In addition, one may write f.SetLength(n)</span>
+<span class="Comment">to set the length of the underlying coefficient vector to n,</span>
+<span class="Comment">and f.SetMaxLength(n) to allocate space for n coefficients,</span>
+<span class="Comment">without changing the coefficient vector itself.</span>
+
+<span class="Comment">After setting coefficients using this low-level interface,</span>
+<span class="Comment">one must ensure that leading zeros in the coefficient vector</span>
+<span class="Comment">are stripped afterwards by calling the function f.normalize().</span>
+
+<span class="Comment">NOTE: the coefficient vector of f may also be accessed directly</span>
+<span class="Comment">as f.rep; however, this is not recommended. Also, for a properly</span>
+<span class="Comment">normalized polynomial f, we have f.rep.length() == deg(f)+1,</span>
+<span class="Comment">and deg(f) &gt;= 0  =&gt;  f.rep[deg(f)] != 0.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+<span class="Type">long</span> deg(<span class="Type">const</span> ZZX&amp; a);  <span class="Comment">// return deg(a); deg(0) == -1.</span>
+
+<span class="Type">const</span> ZZ&amp; coeff(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> i);
+<span class="Comment">// returns the coefficient of X^i, or zero if i not in range</span>
+
+<span class="Type">const</span> ZZ&amp; LeadCoeff(<span class="Type">const</span> ZZX&amp; a);
+<span class="Comment">// returns leading term of a, or zero if a == 0</span>
+
+<span class="Type">const</span> ZZ&amp; ConstTerm(<span class="Type">const</span> ZZX&amp; a);
+<span class="Comment">// returns constant term of a, or zero if a == 0</span>
+
+<span class="Type">void</span> SetCoeff(ZZX&amp; x, <span class="Type">long</span> i, <span class="Type">const</span> ZZ&amp; a);
+<span class="Type">void</span> SetCoeff(ZZX&amp; x, <span class="Type">long</span> i, <span class="Type">long</span> a);
+<span class="Comment">// makes coefficient of X^i equal to a; error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetCoeff(ZZX&amp; x, <span class="Type">long</span> i);
+<span class="Comment">// makes coefficient of X^i equal to 1;  error is raised if i &lt; 0</span>
+
+<span class="Type">void</span> SetX(ZZX&amp; x); <span class="Comment">// x is set to the monomial X</span>
+
+<span class="Type">long</span> IsX(<span class="Type">const</span> ZZX&amp; a); <span class="Comment">// test if x = X</span>
+
+
+
+
+ZZ&amp; ZZX::<span class="Statement">operator</span>[](<span class="Type">long</span> i);
+<span class="Type">const</span> ZZ&amp; ZZX::<span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+<span class="Comment">// indexing operators: f[i] is the coefficient of X^i ---</span>
+<span class="Comment">// i should satsify i &gt;= 0 and i &lt;= deg(f).</span>
+<span class="Comment">// No range checking (unless NTL_RANGE_CHECK is defined).</span>
+
+<span class="Type">void</span> ZZX::SetLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetLength(n) sets the length of the inderlying coefficient</span>
+<span class="Comment">// vector to n --- after this call, indexing f[i] for i = 0..n-1</span>
+<span class="Comment">// is valid.</span>
+
+<span class="Type">void</span> ZZX::normalize();
+<span class="Comment">// f.normalize() strips leading zeros from coefficient vector of f</span>
+
+<span class="Type">void</span> ZZX::SetMaxLength(<span class="Type">long</span> n);
+<span class="Comment">// f.SetMaxLength(n) pre-allocate spaces for n coefficients.  The</span>
+<span class="Comment">// polynomial that f represents is unchanged.</span>
+
+
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> ZZX&amp; a);  <span class="Comment">// test for 0</span>
+<span class="Type">long</span> IsOne(<span class="Type">const</span> ZZX&amp; a);  <span class="Comment">// test for 1</span>
+
+<span class="Comment">// PROMOTIONS: operators ==, != promote {long, ZZ} to ZZX on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                   Addition</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZX <span class="Statement">operator</span>+(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX <span class="Statement">operator</span>-(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX <span class="Statement">operator</span>-(<span class="Type">const</span> ZZX&amp; a); <span class="Comment">// unary -</span>
+
+ZZX&amp; <span class="Statement">operator</span>+=(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a);
+ZZX&amp; <span class="Statement">operator</span>-=(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a);
+
+ZZX&amp; <span class="Statement">operator</span>++(ZZX&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(ZZX&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+ZZX&amp; <span class="Statement">operator</span>--(ZZX&amp; x);  <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(ZZX&amp; x, <span class="Type">int</span>);  <span class="Comment">// postfix</span>
+
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> add(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b); <span class="Comment">// x = a + b</span>
+<span class="Type">void</span> sub(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b); <span class="Comment">// x = a - b</span>
+<span class="Type">void</span> negate(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a); <span class="Comment">// x = -a</span>
+
+<span class="Comment">// PROMOTIONS: binary +, - and procedures add, sub promote {long, ZZ} </span>
+<span class="Comment">// to ZZX on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Multiplication</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZX <span class="Statement">operator</span>*(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+
+ZZX&amp; <span class="Statement">operator</span>*=(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a);
+
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> mul(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b); <span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> sqr(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a); <span class="Comment">// x = a^2</span>
+ZZX sqr(<span class="Type">const</span> ZZX&amp; a);
+
+<span class="Comment">// PROMOTIONS: operator * and procedure mul promote {long, ZZ} to ZZX </span>
+<span class="Comment">// on (a, b).</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Shift Operations</span>
+
+<span class="Comment">LeftShift by n means multiplication by X^n</span>
+<span class="Comment">RightShift by n means division by X^n</span>
+
+<span class="Comment">A negative shift amount reverses the direction of the shift.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Comment">// operator notation:</span>
+
+ZZX <span class="Statement">operator</span>&lt;&lt;(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+ZZX <span class="Statement">operator</span>&gt;&gt;(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+
+ZZX&amp; <span class="Statement">operator</span>&lt;&lt;=(ZZX&amp; x, <span class="Type">long</span> n);
+ZZX&amp; <span class="Statement">operator</span>&gt;&gt;=(ZZX&amp; x, <span class="Type">long</span> n);
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> LeftShift(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+ZZX LeftShift(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+
+<span class="Type">void</span> RightShift(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+ZZX RightShift(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Division</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// Given polynomials a, b in ZZ[X], there exist polynomials</span>
+<span class="Comment">// q, r in QQ[X] such that a = b*q + r, deg(r) &lt; deg(b).</span>
+<span class="Comment">// These routines return q and/or r if q and/or r lie(s) in ZZ[X],</span>
+<span class="Comment">// and otherwise raise an error.  </span>
+
+<span class="Comment">// Note that if the leading coefficient of b is 1 or -1, </span>
+<span class="Comment">// then q and r always lie in ZZ[X], and no error can occur.</span>
+
+<span class="Comment">// For example, you can write f/2 for a ZZX f.  If all coefficients</span>
+<span class="Comment">// of f are even, the result is f with a factor of two removed;</span>
+<span class="Comment">// otherwise, an error is raised.  More generally, f/g will be</span>
+<span class="Comment">// evaluate q in ZZ[X] such that f = q*g if such a q exists,</span>
+<span class="Comment">// and will otherwise raise an error.</span>
+
+<span class="Comment">// See also below the routines for pseudo-division and division</span>
+<span class="Comment">// predicates for routines that are perhaps more useful in</span>
+<span class="Comment">// some situations.</span>
+
+
+<span class="Comment">// operator notation: </span>
+
+ZZX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZ&amp; b);
+ZZX <span class="Statement">operator</span>/(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> b);
+
+ZZX <span class="Statement">operator</span>%(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+
+ZZX&amp; <span class="Statement">operator</span>/=(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; b);
+ZZX&amp; <span class="Statement">operator</span>/=(ZZX&amp; x, <span class="Type">const</span> ZZ&amp; b);
+ZZX&amp; <span class="Statement">operator</span>/=(ZZX&amp; x, <span class="Type">long</span> b);
+
+ZZX&amp; <span class="Statement">operator</span>%=(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; b);
+
+
+<span class="Comment">// procedural versions:</span>
+
+<span class="Type">void</span> DivRem(ZZX&amp; q, ZZX&amp; r, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// computes q, r such that a = b q + r and deg(r) &lt; deg(b).</span>
+
+<span class="Type">void</span> div(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Type">void</span> div(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZ&amp; b);
+<span class="Type">void</span> div(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> b);
+<span class="Comment">// same as DivRem, but only computes q</span>
+
+<span class="Type">void</span> rem(ZZX&amp; r, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// same as DivRem, but only computes r</span>
+
+
+
+<span class="Comment">// divide predicates:</span>
+
+<span class="Type">long</span> divide(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Type">long</span> divide(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZ&amp; b);
+<span class="Type">long</span> divide(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> b);
+<span class="Comment">// if b | a, sets q = a/b and returns 1; otherwise returns 0</span>
+
+
+<span class="Type">long</span> divide(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Type">long</span> divide(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZ&amp; b);
+<span class="Type">long</span> divide(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> b);
+<span class="Comment">// if b | a, returns 1; otherwise returns 0</span>
+
+<span class="Comment">// These algorithms employ a modular approach, performing the division</span>
+<span class="Comment">// modulo small primes (reconstructing q via the CRT).  It is</span>
+<span class="Comment">// usually much faster than the general division routines above</span>
+<span class="Comment">// (especially when b does not divide a).</span>
+
+
+<span class="Type">void</span> content(ZZ&amp; d, <span class="Type">const</span> ZZX&amp; f);
+ZZ content(<span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// d = content of f, sign(d) == sign(LeadCoeff(f)); content(0) == 0</span>
+
+<span class="Type">void</span> PrimitivePart(ZZX&amp; pp, <span class="Type">const</span> ZZX&amp; f);
+ZZX PrimitivePart(<span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// pp = primitive part of f, LeadCoeff(pp) &gt;= 0; PrimitivePart(0) == 0</span>
+
+
+
+<span class="Comment">// pseudo-division:</span>
+
+<span class="Type">void</span> PseudoDivRem(ZZX&amp; q, ZZX&amp; r, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// performs pseudo-division: computes q and r with deg(r) &lt; deg(b),</span>
+<span class="Comment">// and LeadCoeff(b)^(deg(a)-deg(b)+1) a = b q + r.  Only the classical</span>
+<span class="Comment">// algorithm is used.</span>
+
+<span class="Type">void</span> PseudoDiv(ZZX&amp; q, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX PseudoDiv(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// same as PseudoDivRem, but only computes q</span>
+
+<span class="Type">void</span> PseudoRem(ZZX&amp; r, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX PseudoRem(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// same as PseudoDivRem, but only computes r</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  GCD's</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> GCD(ZZX&amp; d, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+ZZX GCD(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b);
+<span class="Comment">// d = gcd(a, b), LeadCoeff(d) &gt;= 0.  Uses a modular algorithm.</span>
+
+
+<span class="Type">void</span> XGCD(ZZ&amp; r, ZZX&amp; s, ZZX&amp; t, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b,
+          <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+<span class="Comment">// r = resultant of a and b; if r != 0, then computes s and t such</span>
+<span class="Comment">// that: a*s + b*t = r; otherwise s and t not affected.  if</span>
+<span class="Comment">// !deterministic, then resultant computation may use a randomized</span>
+<span class="Comment">// strategy that errs with probability no more than 2^{-80}.</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Input/Output</span>
+
+<span class="Comment">I/O format:</span>
+
+<span class="Comment">   [a_0 a_1 ... a_n],</span>
+
+<span class="Comment">represents the polynomial a_0 + a_1*X + ... + a_n*X^n.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, ZZX&amp; x);
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> ZZX&amp; a);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Some utility routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> diff(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a); <span class="Comment">// x = derivative of a</span>
+ZZX diff(<span class="Type">const</span> ZZX&amp; a);
+
+<span class="Type">long</span> MaxBits(<span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// returns max NumBits of coefficients of f</span>
+
+<span class="Type">void</span> reverse(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> hi);
+ZZX reverse(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> hi);
+
+<span class="Type">void</span> reverse(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a);
+ZZX reverse(<span class="Type">const</span> ZZX&amp; a);
+
+<span class="Comment">// x = reverse of a[0]..a[hi] (hi &gt;= -1);</span>
+<span class="Comment">// hi defaults to deg(a) in second version</span>
+
+
+<span class="Type">void</span> VectorCopy(vec_ZZ&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+vec_ZZ VectorCopy(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = copy of coefficient vector of a of length exactly n.</span>
+<span class="Comment">// input is truncated or padded with zeroes as appropriate.</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Arithmetic mod X^n</span>
+
+<span class="Comment">All routines require n &gt;= 0, otherwise an error is raised.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> trunc(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> m); <span class="Comment">// x = a % X^m</span>
+ZZX trunc(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> m);
+
+<span class="Type">void</span> MulTrunc(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">long</span> n);
+ZZX MulTrunc(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">long</span> n);
+<span class="Comment">// x = a * b % X^n</span>
+
+<span class="Type">void</span> SqrTrunc(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+ZZX SqrTrunc(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a^2 % X^n</span>
+
+<span class="Type">void</span> InvTrunc(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+ZZX InvTrunc(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// computes x = a^{-1} % X^m.  Must have ConstTerm(a) invertible.</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Modular Arithmetic</span>
+
+<span class="Comment">The modulus f must be monic with deg(f) &gt; 0, </span>
+<span class="Comment">and other arguments must have smaller degree.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">void</span> MulMod(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">const</span> ZZX&amp; f);
+ZZX MulMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// x = a * b mod f</span>
+
+<span class="Type">void</span> SqrMod(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+ZZX SqrMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// x = a^2 mod f</span>
+
+<span class="Type">void</span> MulByXMod(ZZX&amp; x, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+ZZX MulByXMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// x = a*X mod f</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                  traces, norms, resultants, discriminants,</span>
+<span class="Comment">                   minimal and characteristic polynomials</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> TraceMod(ZZ&amp; res, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+ZZ TraceMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// res = trace of (a mod f).  f must be monic, 0 &lt; deg(f), deg(a) &lt;</span>
+<span class="Comment">// deg(f)</span>
+
+<span class="Type">void</span> TraceVec(vec_ZZ&amp; S, <span class="Type">const</span> ZZX&amp; f);
+vec_ZZ TraceVec(<span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// S[i] = Trace(X^i mod f), for i = 0..deg(f)-1.</span>
+<span class="Comment">// f must be a monic polynomial.</span>
+
+
+<span class="Comment">// The following routines use a modular approach.</span>
+
+<span class="Type">void</span> resultant(ZZ&amp; res, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+ZZ resultant(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; b, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+<span class="Comment">// res = resultant of a and b. If !deterministic, then it may use a</span>
+<span class="Comment">// randomized strategy that errs with probability no more than</span>
+<span class="Comment">// 2^{-80}.</span>
+
+
+
+<span class="Type">void</span> NormMod(ZZ&amp; res, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+ZZ NormMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+<span class="Comment">// res = norm of (a mod f).  f must be monic, 0 &lt; deg(f), deg(a) &lt;</span>
+<span class="Comment">// deg(f). If !deterministic, then it may use a randomized strategy</span>
+<span class="Comment">// that errs with probability no more than 2^{-80}.</span>
+
+
+
+<span class="Type">void</span> discriminant(ZZ&amp; d, <span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+ZZ discriminant(<span class="Type">const</span> ZZX&amp; a, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+<span class="Comment">// d = discriminant of a = (-1)^{m(m-1)/2} resultant(a, a')/lc(a),</span>
+<span class="Comment">// where m = deg(a). If !deterministic, then it may use a randomized</span>
+<span class="Comment">// strategy that errs with probability no more than 2^{-80}.</span>
+
+
+<span class="Type">void</span> CharPolyMod(ZZX&amp; g, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+ZZX CharPolyMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f, <span class="Type">long</span> deterministic=<span class="Constant">0</span>);
+<span class="Comment">// g = char poly of (a mod f).  f must be monic.  If !deterministic,</span>
+<span class="Comment">// then it may use a randomized strategy that errs with probability no</span>
+<span class="Comment">// more than 2^{-80}.</span>
+
+
+<span class="Type">void</span> MinPolyMod(ZZX&amp; g, <span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+ZZX MinPolyMod(<span class="Type">const</span> ZZX&amp; a, <span class="Type">const</span> ZZX&amp; f);
+<span class="Comment">// g = min poly of (a mod f).  f must be monic, 0 &lt; deg(f), deg(a) &lt;</span>
+<span class="Comment">// deg(f).  May use a probabilistic strategy that errs with</span>
+<span class="Comment">// probability no more than 2^{-80}.</span>
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                  Incremental Chinese Remaindering</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> CRT(ZZX&amp; a, ZZ&amp; prod, <span class="Type">const</span> zz_pX&amp; A);
+<span class="Type">long</span> CRT(ZZX&amp; a, ZZ&amp; prod, <span class="Type">const</span> ZZ_pX&amp; A);
+<span class="Comment">// Incremental Chinese Remaindering: If p is the current zz_p/ZZ_p modulus with</span>
+<span class="Comment">// (p, prod) = 1; Computes a' such that a' = a mod prod and a' = A mod p,</span>
+<span class="Comment">// with coefficients in the interval (-p*prod/2, p*prod/2]; </span>
+<span class="Comment">// Sets a := a', prod := p*prod, and returns 1 if a's value changed.</span>
+
+
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                vectors of ZZX's</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">typedef</span> Vec&lt;ZZX&gt; vec_ZZX; <span class="Comment">// backward compatibility</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                Miscellany</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">void</span> clear(ZZX&amp; x); <span class="Comment">// x = 0</span>
+<span class="Type">void</span> set(ZZX&amp; x); <span class="Comment">// x = 1</span>
+
+<span class="Type">void</span> ZZX::kill();
+<span class="Comment">// f.kill() sets f to 0 and frees all memory held by f.  Equivalent to</span>
+<span class="Comment">// f.rep.kill().</span>
+
+ZZX::ZZX(INIT_SIZE_TYPE, <span class="Type">long</span> n);
+<span class="Comment">// ZZX(INIT_SIZE, n) initializes to zero, but space is pre-allocated</span>
+<span class="Comment">// for n coefficients</span>
+
+<span class="Type">static</span> <span class="Type">const</span> ZZX&amp; zero();
+<span class="Comment">// ZZX::zero() is a read-only reference to 0</span>
+
+<span class="Type">void</span> ZZX::swap(ZZX&amp; x);
+<span class="Type">void</span> swap(ZZX&amp; x, ZZX&amp; y);
+<span class="Comment">// swap (by swapping pointers)</span>
+
+
+ZZX::ZZX(<span class="Type">long</span> i, <span class="Type">const</span> ZZ&amp; c);
+ZZX::ZZX(<span class="Type">long</span> i, <span class="Type">long</span> c);
+<span class="Comment">// initial value c*X^i, provided for backward compatibility</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

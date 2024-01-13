@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--This is an ISE project configuration file.-->
+<!--It holds project specific layout data for the projectmgr plugin.-->
+<!--Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.-->
+<Project version="2" owner="projectmgr" name="Nexys4DdrUserDemoSrc" >
+   <!--This is an ISE project configuration file.-->
+   <ItemView engineview="SynthesisOnly" guiview="Source" compilemode="AutoCompile" >
+      <ClosedNodes>
+         <ClosedNodesVersion>2</ClosedNodesVersion>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral C:|sam_work|Xilinx_projects|14_7|Nexys4DDRUserDemo|source|Nexys4DdrUserDemo_Ise_project|Nexys4DdrUserDemo.vhd/Inst_Audio - AudioDemo - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral C:|sam_work|Xilinx_projects|14_7|Nexys4DDRUserDemo|source|Nexys4DdrUserDemo_Ise_project|Nexys4DdrUserDemo.vhd/Inst_SevenSeg - sSegDemo - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_AccelerometerCtl - AccelerometerCtl - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_AccelerometerCtl - AccelerometerCtl - Behavioral/Accel_Calculation - AccelArithmetics - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_Audio - AudioDemo - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_FPGAMonitor - FPGAMonitor - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_MouseCtl - MouseCtl - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_RGB - RgbLed - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_SevenSeg - sSegDemo - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_TempSensorCtl - TempSensorCtl - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_VGA - Vga - Behavioral/Inst_LogoDisplay - LogoDisplay - Behavioral</ClosedNode>
+         <ClosedNode>/Nexys4DdrUserDemo - Behavioral D:|Digilent|Projects|Nexys4_DDR|Nexys4DdrUserDemoSrc|Nexys4DdrUserDemo.vhd/Inst_VGA - Vga - Behavioral/Inst_OverlayCtrl - OverlayCtl - Behavioral</ClosedNode>
+         <ClosedNode>PROJECT</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>Inst_ClkGen - ClkGen (C:/sam_work/Xilinx_projects/14_7/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.xco)</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000003fa000000020000000000000000000000000200000064ffffffff000000810000000300000002000003fa0000000100000003000000000000000100000003</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
+      <CurrentItem>Inst_ClkGen - ClkGen (C:/sam_work/Xilinx_projects/14_7/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.xco)</CurrentItem>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Design Utilities/Compile HDL Simulation Libraries</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>Regenerate All Cores</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000000000000000000198000000010000000100000000000000000000000064ffffffff000000810000000000000001000001980000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>Regenerate All Cores</CurrentItem>
+   </ItemView>
+   <ItemView guiview="File" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000000000000000100000000000000000000000000000000000001c9000000040101000100000000000000000000000064ffffffff000000810000000000000004000000a400000001000000000000005b0000000100000000000000660000000100000000000000640000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>C:\sam_work\Xilinx_projects\14_7\Nexys4DDRUserDemo\source\Nexys4DdrUserDemo_Ise_project\AccelArithmetics.vhd</CurrentItem>
+   </ItemView>
+   <ItemView guiview="Library" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>work</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000109000000010001000100000000000000000000000064ffffffff000000810000000000000001000001090000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>work</CurrentItem>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Configure Target Device</ClosedNode>
+         <ClosedNode>Design Utilities</ClosedNode>
+         <ClosedNode>Implement Design</ClosedNode>
+         <ClosedNode>Synthesize - XST</ClosedNode>
+         <ClosedNode>User Constraints</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000001a4000000010000000100000000000000000000000064ffffffff000000810000000000000001000001a40000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+   <SourceProcessView>000000ff00000000000000020000011b0000011b01000000050100000002</SourceProcessView>
+   <CurrentView>Implementation</CurrentView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_UCF" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>User Constraints</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem/>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000019e000000010000000100000000000000000000000064ffffffff0000008100000000000000010000019e0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem/>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_XCO" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>CORE Generator</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000001a4000000010000000100000000000000000000000064ffffffff000000810000000000000001000001a40000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+</Project>

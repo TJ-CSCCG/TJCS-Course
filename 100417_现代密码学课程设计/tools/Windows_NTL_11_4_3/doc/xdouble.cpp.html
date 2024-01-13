@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/xdouble.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: xdouble </span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class xdouble is used to represent floating point numbers with the</span>
+<span class="Comment">same precision as a 'double', but with extended exponent range</span>
+<span class="Comment">(offering a few more bits than that of a 'long' for the exponent).</span>
+
+<span class="Comment">The programming interface for xdoubles is almost identical to that of</span>
+<span class="Comment">ordinary doubles.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+
+
+<span class="Type">class</span> xdouble {
+
+<span class="Statement">public</span>:
+
+xdouble(); <span class="Comment">// = 0</span>
+
+xdouble(<span class="Type">const</span> xdouble&amp; a);  <span class="Comment">// copy constructor</span>
+
+<span class="Type">explicit</span> xdouble(<span class="Type">double</span> a);  <span class="Comment">// promotion constructor</span>
+
+xdouble&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> xdouble&amp; a);  <span class="Comment">// assignment operator</span>
+xdouble&amp; <span class="Statement">operator</span>=(<span class="Type">double</span> a);
+
+~xdouble();
+
+
+<span class="Type">double</span> mantissa() <span class="Type">const</span>;  <span class="Comment">// read-only access to mantissa</span>
+<span class="Type">long</span> exponent() <span class="Type">const</span>;  <span class="Comment">// read-only access to exponenent</span>
+
+
+
+<span class="Type">static</span> <span class="Type">void</span> SetOutputPrecision(<span class="Type">long</span> p);
+<span class="Comment">// This sets the number of decimal digits to be output.  Default is</span>
+<span class="Comment">// 10.</span>
+
+<span class="Type">static</span> <span class="Type">long</span> OutputPrecision();
+<span class="Comment">// returns current output precision.</span>
+
+};
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Arithmetic Operations</span>
+
+<span class="Comment">The following are the standard arithmetic operators, whose meaning should </span>
+<span class="Comment">be clear.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+xdouble <span class="Statement">operator</span>+(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble <span class="Statement">operator</span>-(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble <span class="Statement">operator</span>*(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble <span class="Statement">operator</span>/(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+
+<span class="Comment">// PROMOTIONS: +, -, *, / promote double to xdouble on (a, b).</span>
+
+xdouble <span class="Statement">operator</span>-(<span class="Type">const</span> xdouble&amp; a);
+
+xdouble&amp; <span class="Statement">operator</span>+=(xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble&amp; <span class="Statement">operator</span>+=(xdouble&amp; a, <span class="Type">double</span> b);
+
+xdouble&amp; <span class="Statement">operator</span>-=(xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble&amp; <span class="Statement">operator</span>-=(xdouble&amp; a, <span class="Type">double</span> b);
+
+xdouble&amp; <span class="Statement">operator</span>*=(xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble&amp; <span class="Statement">operator</span>*=(xdouble&amp; a, <span class="Type">double</span> b);
+
+xdouble&amp; <span class="Statement">operator</span>/=(xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+xdouble&amp; <span class="Statement">operator</span>/=(xdouble&amp; a, xdouble b);
+
+xdouble&amp; <span class="Statement">operator</span>++(xdouble&amp; a); <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>++(xdouble&amp; a, <span class="Type">int</span>); <span class="Comment">// postfix</span>
+
+xdouble&amp; <span class="Statement">operator</span>--(xdouble&amp; a); <span class="Comment">// prefix</span>
+<span class="Type">void</span> <span class="Statement">operator</span>--(xdouble&amp; a, <span class="Type">int</span>); <span class="Comment">// postfix</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Comparison</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> sign(<span class="Type">const</span> xdouble&amp; a);
+<span class="Comment">// returns sign (+1, -1, 0) of a</span>
+
+<span class="Type">long</span> compare(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Comment">// returns sign of a - b</span>
+
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>&lt;=(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span>&gt;=(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span> &lt;(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+<span class="Type">long</span> <span class="Statement">operator</span> &gt;(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b);
+
+<span class="Comment">// PROMOTIONS: compare and operators ==, ..., &gt; promote double to xdouble</span>
+<span class="Comment">// on (a, b).</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                               Input/Output</span>
+<span class="Comment">Input Syntax:</span>
+
+<span class="Comment">&lt;number&gt;: [ &quot;-&quot; ] &lt;unsigned-number&gt;</span>
+<span class="Comment">&lt;unsigned-number&gt;: &lt;dotted-number&gt; [ &lt;e-part&gt; ] | &lt;e-part&gt;</span>
+<span class="Comment">&lt;dotted-number&gt;: &lt;digits&gt; | &lt;digits&gt; &quot;.&quot; &lt;digits&gt; | &quot;.&quot; &lt;digits&gt; | &lt;digits&gt; &quot;.&quot;</span>
+<span class="Comment">&lt;digits&gt;: &lt;digit&gt; &lt;digits&gt; | &lt;digit&gt;</span>
+<span class="Comment">&lt;digit&gt;: &quot;0&quot; | ... | &quot;9&quot;</span>
+<span class="Comment">&lt;e-part&gt;: ( &quot;E&quot; | &quot;e&quot; ) [ &quot;+&quot; | &quot;-&quot; ] &lt;digits&gt;</span>
+
+<span class="Comment">Examples of valid input:</span>
+
+<span class="Comment">17 1.5 0.5 .5  5.  -.5 e10 e-10 e+10 1.5e10 .5e10 .5E10</span>
+
+<span class="Comment">Note that the number of decimal digits of precision that are used</span>
+<span class="Comment">for output can be set to any number p &gt;= 1 by calling</span>
+<span class="Comment">the routine xdouble::SetOutputPrecision(p).  </span>
+<span class="Comment">The default value of p is 10.</span>
+<span class="Comment">The current value of p is returned by a call to xdouble::OutputPrecision().</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp; s, <span class="Type">const</span> xdouble&amp; a);
+
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp; s, xdouble&amp; x);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                                  Miscellaneous</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+
+xdouble trunc(<span class="Type">const</span> xdouble&amp; a);  <span class="Comment">// returns integer obtained by truncating</span>
+xdouble floor(<span class="Type">const</span> xdouble&amp; a);  <span class="Comment">// returns greatest integer &lt;= a</span>
+xdouble ceil(<span class="Type">const</span> xdouble&amp; a);   <span class="Comment">// returns smallest integer &gt;= a</span>
+xdouble fabs(<span class="Type">const</span> xdouble&amp; a);   <span class="Comment">// returns |a|</span>
+xdouble sqrt(<span class="Type">const</span> xdouble&amp; a);   <span class="Comment">// returns a^{1/2}; error is raised if a &lt; 0</span>
+
+<span class="Type">double</span> log(<span class="Type">const</span> xdouble&amp; a);  <span class="Comment">// returns log(a) (note return val is double!)</span>
+xdouble xexp(<span class="Type">double</span> a);        <span class="Comment">// returns exp(a) (note argument is double!)</span>
+xdouble exp(<span class="Type">const</span> <span class="Type">double</span>&amp; a);  <span class="Comment">// equivalent to xexp(to_double(a))</span>
+
+
+<span class="Type">void</span> power(xdouble&amp; z, <span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> ZZ&amp; e);
+xdouble power(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> ZZ&amp; e);
+
+<span class="Type">void</span> power(xdouble&amp; z, <span class="Type">const</span> xdouble&amp; a, <span class="Type">long</span> e);
+xdouble power(<span class="Type">const</span> xdouble&amp; a, <span class="Type">long</span> e);
+<span class="Comment">// z = a^e, e may be negative</span>
+
+<span class="Type">void</span> power2(xdouble&amp; z, <span class="Type">long</span> e);
+xdouble power2_xdouble(<span class="Type">long</span> e);
+<span class="Comment">// z = 2^e, e may be negative</span>
+
+<span class="Type">void</span> MulAdd(xdouble&amp; z, <span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b, <span class="Type">const</span> xdouble&amp; c);
+xdouble MulAdd(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b, <span class="Type">const</span> xdouble&amp; c);
+<span class="Comment">// z = a + b*c, but faster</span>
+
+<span class="Type">void</span> MulSub(xdouble&amp; z, <span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b, <span class="Type">const</span> xdouble&amp; c);
+xdouble MulSub(<span class="Type">const</span> xdouble&amp; a, <span class="Type">const</span> xdouble&amp; b, <span class="Type">const</span> xdouble&amp; c);
+<span class="Comment">// z = a - b*c, but faster</span>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">Implementation details:</span>
+
+<span class="Comment">An xdouble is represented as a mantissa/exponent pair (x, e), where x</span>
+<span class="Comment">is a double and e is a long.  The real number represented by (x, e) is</span>
+<span class="Comment">x * NTL_XD_BOUND^e, where</span>
+
+<span class="Comment">  NTL_XD_BOUND = NTL_XD_HBOUND^2, and</span>
+<span class="Comment">  NTL_XD_HBOUND = 2^{(max(NTL_DOUBLE_PRECISION,NTL_BITS_PER_LONG)+4)}.</span>
+
+<span class="Comment">Also, the mantissa x satisfies 1/NTL_XD_HBOUND &lt;= |x| &lt;= NTL_XD_HBOUND, except</span>
+<span class="Comment">that the number 0 is always represented as (0, 0).  </span>
+<span class="Comment">Both NTL_XD_BOUND and NTL_XD_HBOUND are macros defined in &lt;NTL/xdouble.h&gt;.</span>
+
+<span class="Comment">SIZE INVARIANT: |e| &lt; 2^(NTL_BITS_PER_LONG-4).</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

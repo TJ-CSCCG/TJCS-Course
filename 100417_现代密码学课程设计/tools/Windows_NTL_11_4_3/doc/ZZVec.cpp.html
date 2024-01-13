@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/ZZVec.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: ZZVec</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">The class ZZVec implements vectors of fixed-length ZZ's.  You can</span>
+<span class="Comment">allocate a vector of ZZ's of a specified length, where the maximum</span>
+<span class="Comment">size of each ZZ is also specified.  The size is measured in terms</span>
+<span class="Comment">of the number of limbs.</span>
+
+<span class="Comment">These parameters can be specified either with a constructor </span>
+<span class="Comment">or with SetSize.  It is an error to try to re-size a vector of non-zero length,</span>
+<span class="Comment">or store a ZZ that doesn't fit.  The space can be released with &quot;kill&quot;, </span>
+<span class="Comment">and then you are free to call SetSize again.  </span>
+
+<span class="Comment">If you want more flexible---but less efficient---vectors, use vec_ZZ.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&lt;NTL/ZZ.h&gt;</span>
+
+
+<span class="Type">class</span> ZZVec {
+<span class="Statement">public</span>:
+   ZZVec();
+
+   ZZVec&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> ZZVec&amp;);
+   <span class="Comment">// first kill()'s destination (unless source and destination are</span>
+   <span class="Comment">// identical)</span>
+
+   ZZVec(<span class="Type">const</span> ZZVec&amp;);
+
+   ~ZZVec();
+
+   ZZVec(ZZVec&amp;&amp; other) <span class="Statement">noexcept</span>;
+   ZZVec&amp; <span class="Statement">operator</span>=(ZZVec&amp;&amp; other) <span class="Statement">noexcept</span>;
+   <span class="Comment">// move semantics (C++11 only)</span>
+
+   ZZVec(<span class="Type">long</span> n, <span class="Type">long</span> d);
+   <span class="Comment">// sets length to n and max size of each element to d</span>
+
+   <span class="Type">void</span> SetSize(<span class="Type">long</span> n, <span class="Type">long</span> d);
+   <span class="Comment">// sets length to n and max size of each element to d</span>
+
+   <span class="Type">long</span> length() <span class="Type">const</span>;
+   <span class="Comment">// length of vector</span>
+
+   <span class="Type">long</span> BaseSize() <span class="Type">const</span>;
+   <span class="Comment">// max size of each element</span>
+
+   <span class="Type">void</span> kill();
+   <span class="Comment">// release space</span>
+
+
+   ZZ* elts();
+   <span class="Type">const</span> ZZ* elts() <span class="Type">const</span>;
+   <span class="Comment">// pointer to first element</span>
+
+   ZZ&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i);
+   <span class="Type">const</span> ZZ&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing operator; starts at 0; no range checking</span>
+
+   swap(ZZVec&amp; x);
+   <span class="Comment">// swap with x by swapping pointers</span>
+
+   <span class="Type">void</span> move(ZZVec&amp; other);
+   <span class="Comment">// quick move other to *this</span>
+};
+
+
+<span class="Type">void</span> swap(ZZVec&amp; x, ZZVec&amp; y);
+<span class="Comment">// swaps x and y by swapping pointers</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

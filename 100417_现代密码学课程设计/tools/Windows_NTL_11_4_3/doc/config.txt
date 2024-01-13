@@ -1,0 +1,733 @@
+
+usage: ./configure [ variable=value ]...
+
+This configure script generates the file 'makefile' and the file
+'../include/NTL/config.h', based upon the values assigned to the
+variables on the command line.
+
+
+########### Here are the most important variables, and their default values.
+
+CXX=g++              # The C++ compiler
+
+CXXFLAGS=-g -O2      # C++ complilation flags
+
+NATIVE=on            # compiles code targeted to current hardware
+
+TUNE=generic (or x86)# performance-tuning switch
+
+DEF_PREFIX=/usr/local# Default software directory
+
+PREFIX=$(DEF_PREFIX) # Directory in which to install NTL library components
+SHARED=off           # Generate a shared library (as well as static)
+
+NTL_THREADS=on       # compile in thread-safe mode
+NTL_THREAD_BOOST=on  # compile with thread boosting enabled
+NTL_EXCEPTIONS=off   # compile in exception-safe mode
+
+NTL_GMP_LIP=on       # Switch to enable the use of GMP as primary 
+                     #   long integer package
+
+GMP_PREFIX=$(DEF_PREFIX) # Directory in which GMP components are installed
+
+
+NTL_GF2X_LIB=off     # Switch to enable the use of the gf2x package
+                     #   for faster arithmetic over GF(2)[X]
+
+GF2X_PREFIX=$(DEF_PREFIX) # Directory in which gf2x components are installed
+
+NTL_STD_CXX11=on     # Build assuming C++11 features
+
+NTL_SAFE_VECTORS=on  # build in "safe vector" mode 
+
+NTL_ENABLE_AVX_FFT=off # implement the small-prime FFT using AVX
+                       # instructions...this is experimental at 
+                       # moment, and may lead to worse performance
+
+NTL_AVOID_AVX512=off # avoid using 512-bit AVX registers
+
+
+########## Here are more detailed description of these variables.
+
+########## Basic compilation variables:
+
+CXX=g++
+
+# A C++ compiler, e.g., g++, CC, xlC
+
+
+
+CXXFLAGS=-g -O2
+
+# Flags for the C++ compiler. 
+# It is highly recommend to avoid things like -O3 and -Ofast.
+# These may yield incorrect code.
+
+
+NATIVE=on
+
+# Flag to target code to current hardware.  Setting this flag  will pass
+# -march=native through to the compiler via CXXAUTOFLAGS (if possible).  This
+# is the easiest way to exploit the hardware capabilities of your machine to
+# their fullest potential.  Note that if CXXFLAGS contains an '-march=XXX'
+# option, then NATIVE will be turned off.
+
+TUNE=generic (or x86)
+
+# Switch to determine how various performance options get set
+#   auto        make runs a performance-tuning wizard 
+#   generic     should be OK for most platforms
+#   x86         should be well suited for most x86 platforms
+# More choices may be added in the future.
+# The default is 'x86' if the configuration script detects that it 
+# is running on an x86 machine; otherwise the default is 'generic'.
+
+
+########## Installation path:
+
+DEF_PREFIX=/usr/local
+
+# Default software directory
+
+PREFIX=$(DEF_PREFIX)
+
+# Set this to the directory in which you want NTL components to be installed.
+# When 'make install' is executed, the header files are copied into
+# $(PREFIX)/include/NTL, the library itself is copied to
+# $(PREFIX)/lib/libntl.a, and the documentation files are copied into
+# $(PREFIX)/share/doc/NTL.  Unless you have root permissions when running 'make
+# install', you will have to override the default PREFIX value with the name of
+# your own local directory.  If you want finer-grained control over where the
+# different library components are installed, set the variables INCLUDEDIR,
+# LIBDIR, and DOCDIR (see below).
+
+########## Shared library switch:
+
+SHARED=off
+
+# Set this to 'on' if you want to generate a shared library, in addition to a
+# static library.   Shared libraries have many advantages, but unfortunately,
+# their use is rather less portable than that of good, old-fashioned static
+# libraries.  If you set SHARED=on, then the makefile will use a libtool
+# script.  By default, the libtool script used is freshly built when you run
+# configure.  This libtool script is built using another configure sctipt.
+# Currently, you can't pass any arguments to this configure script (but you can
+# communicate with it via environment variables, as usual).  
+#
+# You can use a pre-built libtool command by setting the configuration variable
+# LIBTOOL.  You can also build a custom libtool script by running the configure
+# script in the subdirectory libtool-origin with specialized arguments.
+#
+# Note that if SHARED=on, then in addition to using the libtool
+# program, the makefile relies on features specific to GNU make.
+
+
+########## thread safety
+
+NTL_THREADS=on
+
+# Set to 'on' if you want to compile NTL in thread-safe mode.  This requires
+# several C++11 features, including atomic types, mutexes, and thread_local
+# storage.  Your compiler may not yet support these features.  Setting this
+# flag will automatically set the NTL_STD_CXX11 flag (if neither NTL_STD_CXX11
+# or NTL_STD_CXX14 is already set). It will also pass -pthread throught to the
+# compiler via CXXAUTOFLAGS (if possible).
+#
+# Turning this flag off will also turn off the NTL_THREAD_BOOST flag.
+
+########## thread boosting
+
+NTL_THREAD_BOOST=on
+
+# Set to 'on' if you want to compile NTL so that is does certain internal
+# computations using multiple threads.  
+#
+# This feature is a work in progress.  As time goes on, more NTL algorithms are
+# thread boosted.  See BasicThreadPool documentation file for more details.
+
+########## exceptions
+
+NTL_EXCEPTIONS=off
+
+# Set to 'on' if you want to compile NTL with exceptions enabled.  This
+# requires several C++11 features, including lambdas and the new rules for
+# exception specifications.  Your compiler may not yet support these feautures.
+# Setting this flag will automatically set the NTL_STD_CXX11 flag (if neither
+# NTL_STD_CXX11 or NTL_STD_CXX14 is already set).
+
+# With exceptions disabled, any error conditions detected by NTL (including
+# memory allocation errors) will result in an error message and a call to
+# abort.  Also, if compiling in C++11 mode (or later, see NTL_STD_CXX11), with
+# exceptions disabled, certain move constructors and move assignment operators
+# will be declared "noexcept".  This can lead to greater efficiency (for
+# example, std::vector's take advantage of this to avoid call to copy 
+# contructors).
+
+# With exceptions enabled, most error conditions detected by NTL will result in
+# an exception being thrown.  NTL will also be compiled in a "thread safe" mode
+# that prevents memory leaks (and other problems).  In addition, some move
+# constructors and move assignment operators may not be declared "noexcept".
+
+########## GMP variables:
+
+NTL_GMP_LIP=on
+
+# Set to 'off' if you don't want to use GMP, the GNU Multi-Precision package,
+# as the primary long integer package.  This will lead to significantly slower
+# code, and is not recommended.
+
+
+GMP_PREFIX=$(DEF_PREFIX)
+
+# If GMP was installed in a standard system directory, e.g., /usr/local, then
+# do not set this variable.  Otherwise, if you want to use GMP and GMP was
+# installed in a directory <gmp_prefix>, then set GMP_PREFIX=<gmp_prefix>.
+# This works if the directory <gmp_prefix>/include contains gmp.h and
+# <gmp_prefix>/lib contains libgmp.a.  For finer-grained control, set the
+# variables GMP_INCDIR and GMP_LIBDIR instead (see below).
+
+
+########## GF2X variables:
+
+NTL_GF2X_LIB=off
+
+# Set to 'on' if you want to use the gf2x library for faster arithmetic over
+# GF(2)[X] (the NTL class GF2X).
+
+# If you set this flag, please note the following.  If you have installed gf2x
+# in a standard "system" location, this is all you have to do.  Otherwise, if
+# gf2x is built, but not installed in a standard place, you have to set the
+# variable GF2X_PREFIX.
+
+
+GF2X_PREFIX=$(DEF_PREFIX)
+
+# If gf2x was installed in a standard system directory, e.g., /usr/local, then
+# do not set this variable.  Otherwise, if you want to use gf2x and gf2x was
+# installed in a directory <gf2x_prefix>, then set GF2X_PREFIX=<gf2x_prefix>.
+# This works if the directory <gf2x_prefix>/include contains gf2x.h and
+# <gf2x_prefix>/lib contains libgf2x.a.  For finer-grained control, set the
+# variables GF2X_INCDIR and GF2X_LIBDIR instead (see below).
+
+########### Language stadards
+
+NTL_STD_CXX11=on     # Build assuming C++11 features
+NTL_STD_CXX14=off    # Build assuming C++14 features
+
+# Setting one of these may also result in passing pass either -std=c++11 or
+# -std=c++14 through to the compiler via CXXAUTOFLAGS (if it is necessary and
+# possible).
+
+
+############ Safe vector mode
+
+NTL_SAFE_VECTORS=on  # Build in "safe vector mode"
+
+# Build NTL in "safe vector mode", which relaxes the "relocatability"
+# requirement for NTL vector types. I expect that at some point in the next
+# couple of years, this will be "on" by default.  Setting this flag will
+# automatically set the NTL_STD_CXX11 flag (if neither NTL_STD_CXX11 or
+# NTL_STD_CXX14 is already set).  See vector documentation file for more
+# details.
+
+
+############ AVX FFT
+
+NTL_ENABLE_AVX_FFT=off # implement the small-prime FFT using AVX
+                       # instructions...this is experimental at 
+                       # moment, and may lead to worse performance
+
+On machines with AVX2/FMA or AVX512, this will implement the small-prime FFT
+using AVX code.  This is still quite experimental, and may lead to worse
+performance.  While the FFT itself can run 2-3 times faster, this comes at the
+cost of (1) restriction to 50-bit primes (so NTL_SP_NBITS will be set to 50
+instead of 60), and (2) the CPU speed may be throttled, slowing down other
+operations.  So far, it seems that the only operations that are faster are
+arithmetic operations in zz_pX, and only for certain choices of modulus.
+Arithmetic operations in ZZ_pX, with large modulus, can run slower with AVX
+than without.
+
+
+########### Avoid 512-bit AVX registers
+
+NTL_AVOID_AVX512=off # avoid using 512-bit AVX registers
+
+Even if available, this will avoid the use of 512-bit AVX registers.  This
+affects both Mat<zz_p> operations, as well as the AVX-based FFT (see above).
+
+
+
+
+########### Examples:
+
+# If you are happy with all the default values:
+
+   ./configure
+
+# If your C++ compiler is called icpc:
+
+   ./configure CXX=icpc
+
+
+# If GMP was installed in a non-standard directory, say,  $HOME/sw:
+
+   ./configure GMP_PREFIX=$HOME/sw 
+
+
+# If you want to use the options -g and -O for compiling C++,
+# just execute
+
+   ./configure "CXXFLAGS=-g -O"
+
+# Note the use of quotes to keep the argument in one piece.
+
+
+# If you want to use the gf2x library:
+
+   ./configure NTL_GF2X_LIB=on
+
+
+
+########### 
+########### A little magic
+###########
+
+CXXAUTOFLAGS=
+
+# This is a variable that is automagically set by the configuration script.
+# These are C++ compiler flags that are selected depending on the choice of
+# other configuration options, as well as information gleaned by the
+# configuration script about the compiler.  To do this, the configuration
+# script attempts to figure out the type of compiler and the default language
+# standard supported.  The types of compiler currently recognized are gcc,
+# clang, and icc.  For these compilers, the automagic should definitely work.
+# For others, your mileage may vary.  The configuration script always prints
+# out the value it chooses.  Currently, the following flags may get passed
+# through CXXAUTOFLAGS:
+#
+#   -std=c++11 
+#   -std=c++14         if requested explicitly via NTL_STD_CXX11=on or 
+#                      NTL_STD_CXX14=on, or implicitly via a request
+#                      for a feature that requires C++11
+#
+#   -pthread           if thread-safety is requested via NTL_THREADS=on 
+#                      or NTL_THREAD_BOOST=on
+#
+#   -fp-model precise  only for the Intel icc compiler (to prevent
+#                      non-value-preserving floating point optimizations)
+#
+# If you explicitly set the value of CXXAUTOFLAGS when invoking the
+# configuration script, then it will not change that value.
+
+NOCONTRACT=
+
+# Like the CXXAUTOFLAGS variable, this is set automagically by the
+# configuration script, unless you explicitly provide a value.  It is only used
+# in compiling the source files that implement the quad_float class and the AVX
+# FFT.  For these files only, NTL requires not only that the compiler does not
+# perform any non-value-preserving floating point optimizations, but that is
+# also does not perform any "contractions" (i.e., emit FMA (fused multiply add)
+# instructions.  Currently, it may be set as follows:
+# 
+#   -ffp-contract=off   for gcc (and possibly clang) compilers 
+#
+#   -mno-fused-madd     for old gcc compilers that don't support 
+#                       -ffp-contract=off
+#   -DFP_CONTRACT_OFF   for the Intel icc compiler
+#
+# The configuation script will make every attempt to ensure that this really
+# does disable contractions.  If it doesn't work, a fallback strategy is used
+# that should still work (but with a performance penalty).
+
+
+MAKE_PROG=make
+
+# To set CXXAUTOFLAGS and NOCONTRACT, the configure script actually needs to
+# run make.  If you wish to use a non-standard make program for this purpose,
+# set this variable to point to that program.
+
+
+
+########### Here is a complete list of the remaining variables,
+########### with their default values.  These variables are pretty 
+########### esoteric, and you will probably never change their
+########### default values.
+
+AR=ar
+ARFLAGS=ruv
+RANLIB=ranlib
+LDFLAGS=
+LDLIBS=-lm
+CPPFLAGS=
+LIBTOOL=undefined
+LIBTOOL_LINK_FLAGS=
+LIBTOOL_LINK_LIBS=undefined
+
+LIBDIR=$(PREFIX)/lib
+INCLUDEDIR=$(PREFIX)/include
+DOCDIR=$(PREFIX)/share/doc
+
+NTL_TLS_HACK=on
+
+NTL_DISABLE_MOVE_ASSIGN=on
+NTL_DISABLE_MOVE=off
+
+NTL_LEGACY_NO_NAMESPACE=off
+NTL_LEGACY_INPUT_ERROR=off
+
+NTL_LEGACY_SP_MULMOD=off
+
+NTL_UNSIGNED_LONG_LONG_TYPE=undefined
+NTL_CLEAN_INT=off
+NTL_CLEAN_PTR=on
+NTL_RANGE_CHECK=off
+NTL_X86_FIX=off
+NTL_NO_X86_FIX=off
+NTL_NO_INIT_TRANS=on
+NTL_DISABLE_LONGDOUBLE=off
+NTL_DISABLE_LONGLONG=off
+NTL_DISABLE_LL_ASM=off
+NTL_MAXIMIZE_SP_NBITS=off
+
+NTL_SPMM_ULL=off
+NTL_FFT_BIGTAB=off
+NTL_FFT_LAZYMUL=off
+NTL_TBL_REM=off
+NTL_AVOID_BRANCHING=off
+NTL_GF2X_NOINLINE=off
+NTL_GF2X_ALTCODE=off
+NTL_GF2X_ALTCODE1=off
+
+GMP_INCDIR=$(GMP_PREFIX)/include
+GMP_LIBDIR=$(GMP_PREFIX)/lib
+
+GF2X_INCDIR=$(GF2X_PREFIX)/include
+GF2X_LIBDIR=$(GF2X_PREFIX)/lib
+
+
+
+
+########### Here is a more detailed description of these variables.
+
+########### Further compilation variables:
+
+
+AR=ar
+
+# command to make a library
+
+
+
+ARFLAGS=ruv
+
+# arguments for AR
+
+
+
+RANLIB=ranlib
+
+# set to echo if you want to disable it completely
+
+
+
+LDFLAGS=
+
+# arguments for linker for C++ programs
+
+
+
+
+LDLIBS=-lm
+
+# libraries for linking C++ programs
+
+
+
+CPPFLAGS=
+
+# arguments for the C preprocessor
+
+LIBTOOL=undefined
+
+# the libtool command -- only needed if SHARED=on
+# if left undefined, a fresh libtool script will be built
+
+LIBTOOL_LINK_FLAGS=
+
+# flags to add to command line when building a shared library
+# mainly used to pass the argument "-no-undefined" on cygwin
+
+LIBTOOL_LINK_LIBS=undefined
+
+# libraries to add to the command line when building a shared library.
+# mainly used to pass the argument "-lpthread", which NTL's
+# configure script will do automatically if SHARED=on and NTL_THREADS=on,
+# unless user explicitly provides a value for LIBTOOL_LINK_LIBS.
+# the purpose of this is to prevent so-called "underlinking".
+# specifically, it allows NTL clients to not pass "-pthread" to the
+# compiler when linking their own programs.
+
+
+########### Details of the compilation process (when SHARED=off)
+
+
+# When a C++ file foo.c is compiled:
+   $(CXX) -I../include $(CPPFLAGS) $(CXXFLAGS) -c foo.c
+
+# When a C++ file foo.c is compiled and linked:
+   $(CXX) -I../include $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) \ 
+      -o foo foo.c $(LDLIBS)
+
+# When the library ntl.a is built
+   $(AR) $(ARFLAGS) ntl.a [ object files ]...
+   $(RANLIB) ntl.a
+# If the ranlib command does not exist, everything will still function OK.
+
+
+
+########### Further installation variables:
+
+LIBDIR=$(PREFIX)/lib
+INCLUDEDIR=$(PREFIX)/include
+DOCDIR=$(PREFIX)/share/doc
+# Where to install NTL.
+#
+# Execution of 'make install' copies header files into $(INCLUDEDIR)/NTL,
+# copies the library itself to $(LIBDIR)/libntl.a, and copies the documentation
+# files into $(DOCDIR)/NTL.
+
+########## TLS hack
+
+NTL_TLS_HACK=on
+
+# when building NTL with NTL_THREADS=on, if the compiler is gcc-compatible, a
+# "TLS hack" may be used to workaround the fact that many compilers do not
+# (correctly) implement C++11's thread_local feature.  The workaround is to use
+# gcc's more limited __thread feature, and to emulate thread_local semantics
+# using pthread routines.
+# 
+# The configuration script will first check if threads and TLS work with the
+# hack, and if not, will try setting NTL_TLS_HACK=off.  You can also turn off
+# the hack by setting NTL_TLS_HACK=off.
+
+
+########## Disabling move semantics
+
+NTL_DISABLE_MOVE_ASSIGN=on
+NTL_DISABLE_MOVE=off
+
+# The first flag will disable the generation of move assignment operators for
+# Vec<T>, Mat<T>, vec_GF2, and GF2X.  By implication, move assignment operators
+# will be disabled as well for many other types (like polynomials).  The second
+# flag will disable move constuctors and move assignment operators for all NTL
+# types.
+
+# These flags are only relevant in C++11 mode.  They are meant to deal with
+# backward compatibility issues for legacy NTL clients that may not deal well
+# with automatically generated move operations.  It turns out that move
+# semantics can quietly break programs.  See
+# http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3153.htm 
+# However, the default now is just to disable move assignment operators for
+# those classes where it seems likeliest to cause a problem.  This default will
+# likely be changed in the future, so that no move operations are disabled.
+
+
+
+########## Legacy switches
+
+NTL_LEGACY_NO_NAMESPACE=off 
+
+# put NTL components in the global namespace
+
+
+
+NTL_LEGACY_INPUT_ERROR=off
+ 
+# abort on input errors, instead of just setting the
+# "fail bit" of the istream object
+
+NTL_LEGACY_SP_MULMOD=off
+
+# use pre-9.0 interfaces for single-precision MulMod routines.
+# See discussion in ZZ.txt for details.
+
+
+
+########### Basic Configuration Options:
+
+NTL_UNSIGNED_LONG_LONG_TYPE=undefined
+
+# Name of double-word unsigned integer type.  This is a non-standard type, and
+# is called 'long long' by many compilers.  MS C++ calls it 'unsigned __int64'.
+#
+# Note that the new C99 standard defines the type 'unsigned long long' to be at
+# least 64-bits wide.  On 32-bit machines, this is just right.  Although not
+# officially part of the C++ standard (which predates C99), it is widely
+# supported by C++ compilers, and is likely to be added to the C++ standard.
+#
+# Unfortunately, 64-bit machines usually define 'unsigned long long' to also be
+# 64-bits wide, which is kind of useless.  However, GCC provides a type
+# __uint128_t which does the job.
+#
+# If left undefined, NTL will use some "ifdef magic" to find the type most
+# suitable for your machine (based on compiler and word size).
+
+
+
+NTL_CLEAN_INT=off
+
+# Setting this to 'on' disables the use of some non-standard integer arithmetic
+# which would yield slightly better performance.
+
+
+NTL_CLEAN_PTR=on
+
+# Setting this to 'on' disables the use of some non-standard pointer arithmetic
+# which would yield slightly better performance.  The 'off' setting really just
+# invites undefined behavior without any measurable performance benefit. 
+
+
+NTL_RANGE_CHECK=off
+
+# Setting this to 'on' will generate vector subscript range-check code.  Useful
+# for debugging, but it slows things down of course.
+
+
+
+NTL_X86_FIX=off
+
+# Set to 'on' to force the "x86 floating point fix", overriding the default
+# behavior.  By default, NTL will apply the "fix" if it looks like it is
+# necessary, and if it knows how to fix it.  The problem addressed here is that
+# x86 processors sometimes run in a mode where FP registers have more precision
+# than doubles.  This will cause code in quad_float.c some trouble.  NTL can
+# normally automatically detect the problem, and fix it, so you shouldn't need
+# to worry about this or the next flag.
+
+
+
+NTL_NO_X86_FIX=off
+
+# Set to 'on' to forces no "x86 floating point fix", overriding the default
+# behavior.
+
+
+
+NTL_NO_INIT_TRANS=on
+
+# When 'off', NTL uses a special code sequence to avoid copying large objects
+# in return statements.  However, if your compiler optimizes away the return of
+# a *named* local object, this is not necessary, and setting this flag to 'on'
+# will result in *slightly* more compact and efficient code.  The C++ standard
+# explicitly allows compilers to perform this optimization, and with time, more
+# compilers actually do this.  Traditionally, however, most will only avoid
+# copying *temporary* objects in return statements, and NTL's default code
+# sequence exploits this fact.
+
+
+
+NTL_DISABLE_LONGDOUBLE=off
+
+# Explicitly disables use of long double arithmetic 
+
+NTL_DISABLE_LONGLONG=off
+
+# Explicitly disables use of long long arithmetic 
+
+NTL_DISABLE_LL_ASM=off
+
+# Explicitly disables use of inline asm as replacement for
+# long long arithmetic
+
+NTL_MAXIMIZE_SP_NBITS=on
+
+# Allows for 62-bit single-precision moduli on 64-bit platforms.  By default,
+# such moduli are restricted to 60 bits, which usually gives *slightly* better
+# performance across a range of of parameters.
+
+
+
+
+
+########## Performance Options:
+
+
+NTL_SPMM_ULL=off
+
+# Implement the MulModPrecon code using "unsigned long long" (or specify
+# NTL_UNSIGNED_LONG_LONG_TYPE to override the default).
+
+
+NTL_FFT_BIGTAB=off
+
+# Precomputed tables are used to store all the roots of unity used in FFT
+# computations. 
+
+
+NTL_FFT_LAZYMUL=off
+
+# When set, a "lazy multiplication" strategy due to David Harvey: see his paper
+# "FASTER ARITHMETIC FOR NUMBER-THEORETIC TRANSFORMS".
+
+
+
+NTL_TBL_REM=off
+
+# With this flag, some divisions are avoided in the ZZ_pX multiplication
+# routines.  
+
+
+
+NTL_AVOID_BRANCHING=off
+
+# With this option, branches are replaced at several key points with equivalent
+# code using shifts and masks.  Recommended for use with RISC architectures,
+# especially ones with deep pipelines and high branch penalities.  Newer x86
+# platforms that use conditional move intrictions are slightly faster without
+# this option.  When in doubt, turn this option on.
+
+
+
+
+NTL_GF2X_NOINLINE=off
+
+# By default, the low-level GF2X multiplication routine in inlined.  This can
+# potentially lead to some trouble on some platforms, and you can override the
+# default by setting this flag.
+
+
+
+
+NTL_GF2X_ALTCODE=off
+
+# With this option, the default strategy for implmenting low-level GF2X
+# multiplication is replaced with an alternative strategy.  This alternative
+# strategy seems to work better on RISC machines with deep pipelines and high
+# branch penalties (like a powerpc), but does no better (or even worse) on
+# x86s.
+
+
+NTL_GF2X_ALTCODE1=off
+
+# Yet another alternative implementation for GF2X multiplication.
+
+
+
+########## More GMP Options:
+
+
+GMP_INCDIR=$(GMP_PREFIX)/include
+# directory containing gmp.h
+
+GMP_LIBDIR=$(GMP_PREFIX)/lib
+# directory containing libgmp.a
+
+
+####### More gf2x options:
+
+GF2X_INCDIR=$(GF2X_PREFIX)/include
+# directory containing gf2x.h
+
+GF2X_LIBDIR=$(GF2X_PREFIX)/lib
+# directory containing libgf2x.a
+

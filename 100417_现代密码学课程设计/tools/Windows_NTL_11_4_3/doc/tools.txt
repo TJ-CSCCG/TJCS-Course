@@ -1,0 +1,209 @@
+
+/**************************************************************************\
+
+MODULE: tools
+
+SUMMARY:
+
+Some useful tools that are used throughout NTL.
+
+\**************************************************************************/
+
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
+
+#include <utility>
+#include <iostream>
+#include <new>
+#include <stdexcept>
+
+#include <NTL/config.h>
+#include <NTL/mach_desc.h>
+
+
+
+
+double GetTime();
+// returns number of seconds of CPU time used by this process.
+
+double GetWallTime();
+// returns the "wall clock" time, measured since the beginning
+// of some unspecified epoch.  This is useful for measuring the
+// performance of multi-threaded code, since in this case,
+// GetTime does not return very useful information in that case.
+
+void PrintTime(ostream& s, double t);
+// prints the time t (in seconds) to s in the format
+//     ss  or  mm:ss  or  hh:mm:ss,
+// where the value t is first rounded to the nearest integer.
+
+
+long IsWhiteSpace(long c);
+// returns 1 if c is "white space" (as defined by isspace is the
+// standard library...usually blanks, tabs, newlines), and 0 otherwise.
+
+long SkipWhiteSpace(istream& s);
+// skips white space (as defined by IsWhiteSpace).
+// Return value is 0 if end-of-file is reached; otherwise,
+// return value is 1.
+
+
+long IsEOFChar(long c);
+// test if c == EOF
+
+
+long CharToIntVal(long c);
+// returns the hexidecimal value of c if c is '0'..'9', 'A'..'F', or 'a'..'f';
+// otherwise, the return value is -1.
+
+char IntValToChar(long x);
+// returns the hexadecimal digit '0'..'9', 'a'..'f' representing x;
+// an error is raised if x < 0 or x > 15.
+
+long IsFinite(double *p);
+// Returns 1 if *p is a "finite" floating point number.
+// A pointer is used to ensure that the number is in memory,
+// which on some architectures (notably x86/Pentium) can make a difference.
+
+// some min/max and swap routines:
+
+int min(int a, int b);
+int max(int a, int b);
+
+long min(long a, long b);
+long max(long a, long b);
+
+long min(int a, long b);
+long max(int a, long b);
+
+long min(long a, int b);
+long max(long a, int b);
+
+unsigned int min(unsigned int a, unsigned int b);
+unsigned int max(unsigned int a, unsigned int b);
+
+unsigned long min(unsigned long a, unsigned long b);
+unsigned long max(unsigned long a, unsigned long b);
+
+unsigned long min(unsigned int a, unsigned long b);
+unsigned long max(unsigned int a, unsigned long b);
+
+unsigned long min(unsigned long a, unsigned int b);
+unsigned long max(unsigned long a, unsigned int b);
+
+
+void swap(long& a, long& b);
+void swap(int& a, int& b);
+
+
+// defined here are all the conversion routines among the types 
+// int, long, float, double.  See conversions.txt for complete details.
+
+
+
+// The following platform-dependent macros are defined:
+
+#define NTL_BITS_PER_LONG      (...)  /* bits in a long */
+#define NTL_MAX_LONG           (...)  /* max value of a long */
+#define NTL_MIN_LONG           (...)  /* min value of a long */
+
+#define NTL_BITS_PER_INT       (...)  /* bits in a int */
+#define NTL_MAX_INT            (...)  /* max value of a int */
+#define NTL_MIN_INT            (...)  /* min value of a int */
+
+#define NTL_DOUBLE_PRECISION   (...)  /* # of bits of precision in a double */
+#define NTL_FDOUBLE_PRECISION  (...)  /* the double value 
+                                        2^{NTL_DOUBLE_PRECISION-1} */
+
+#define NTL_ARITH_RIGHT_SHIFT  (...)  /* 1 if signed right-shift is
+                                        arithmetic; 0 otherwise */
+
+#define NTL_EXT_DOUBLE         (...)  /* 1 if platform has "extended" doubles;
+                                        0 otherwise */
+
+
+// ERROR HANDLING
+
+void TerminalError(const char *s);
+// print an error message and call abort
+
+extern thread_local void (*ErrorMsgCallback)(const char *);
+extern thread_local void (*ErrorCallback)();
+// Pointers (initially NULL) to callback functions.
+// Upon encountering an unrecoverable error with an error
+// message s, the following happens:
+//
+//    if (ErrorMsgCallback)
+//       (*ErrorMsgCallback)(s);
+//    else
+//       cerr << s << "\n";
+// 
+//    if (ErrorCallback) (*ErrorCallback)();
+//    abort();
+//
+// NOTE: if threads are enabled, these are actually thread_local variables.
+
+
+
+// The following classes are defined even if exceptions are not
+// enabled with NTL_EXCEPTIONS
+
+class ErrorObject : public runtime_error {
+public:
+   ErrorObject(const char *msg);
+};
+
+class LogicErrorObject : public ErrorObject {
+public: 
+   LogicErrorObject(const char *msg);
+};
+
+class ArithmeticErrorObject : public ErrorObject {
+public: 
+   ArithmeticErrorObject(const char *msg);
+};
+
+class ResourceErrorObject : public ErrorObject {
+public: 
+   ResourceErrorObject(const char *msg);
+};
+
+class FileErrorObject : public ErrorObject {
+public: 
+   FileErrorObject(const char *msg);
+};
+
+class InputErrorObject : public ErrorObject {
+public: 
+   InputErrorObject(const char *msg);
+};
+
+
+// The following functions throw the indicated exception if
+// exceptions are enabled with NTL_EXCEPTIONS; otherwise,
+// they simply invoke TerminalError.
+
+void MemoryError();
+// throws bad_alloc
+
+void Error(const char *msg);
+// throws ErrorObject
+
+void LogicError(const char *msg);
+// throws LogicErrorObject
+
+void ArithmeticError(const char *msg);
+// throws ArithmeticErrorObject
+
+void ResourceError(const char *msg);
+// throws ResourceErrorObject
+
+void FileError(const char *msg);
+// throws FileErrorObject
+
+void InputError(const char *msg);
+// throws InputErrorObject
+
+
+

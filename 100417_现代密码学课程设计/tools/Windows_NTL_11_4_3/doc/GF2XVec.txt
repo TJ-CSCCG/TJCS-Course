@@ -1,0 +1,74 @@
+
+/**************************************************************************\
+
+MODULE: GF2XVec
+
+SUMMARY:
+
+The class GF2XVec implements vectors of fixed-length GF2X's.  You can
+allocate a vector of GF2X's of a specified length, where the maximum
+size of each GF2X is also specified.  These parameters can be specified
+either with a constructor, or with SetSize.  It is an error to
+try to re-size a vector of non-xero , or store a GF2X that doesn't fit.  
+The space can be released with "kill", and then you are free to call SetSize
+again.  If you want more flexible---but less efficient---vectors, use
+vec_GF2X.
+
+\**************************************************************************/
+
+#include <NTL/GF2X.h>
+
+
+class GF2XVec {
+public:
+   GF2XVec();
+
+   GF2XVec& operator=(const GF2XVec&); 
+   // first kill()'s destination (unless source and destination are
+   // identical)
+
+   GF2XVec(const GF2XVec&); 
+
+   ~GF2XVec();
+
+   GF2XVec(GF2XVec&& other) noexcept; 
+   GF2XVec& operator=(GF2XVec&& other) noexcept; 
+   
+
+   GF2XVec(long n, long d);
+   // sets length to n and max size of each element to d,
+   // where the size d measures the number of words 
+
+   void SetSize(long n, long d);
+   // sets length to n and max size of each element to d,
+   // where the size d measures the number of words 
+
+   long length() const;
+   // length of vector
+
+   long BaseSize() const;
+   // max size of each element
+
+   void kill();
+   // release space
+
+
+   GF2X* elts();
+   const GF2X* elts() const;
+   // pointer to first element
+
+   GF2X& operator[](long i);
+   const GF2X& operator[](long i) const;
+   // indexing operator; starts at 0; no range checking
+
+   swap(GF2XVec& x);
+   // swap with x by swapping pointers
+
+   void move(GF2XVec& other);
+   // quick move other to *this
+};
+
+
+void swap(GF2XVec& x, GF2XVec& y);
+// swaps x and y by swapping pointers
+

@@ -1,0 +1,655 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/vector.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: vector</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Template class for dynamic-sized vectors.</span>
+
+<span class="Comment">The declaration</span>
+
+<span class="Comment">   Vec&lt;T&gt; v;</span>
+
+<span class="Comment">creates a zero-length vector.  To grow this vector to length n,</span>
+<span class="Comment">execute</span>
+
+<span class="Comment">   v.SetLength(n)</span>
+
+<span class="Comment">This causes space to be allocated for (at least) n elements, and also causes</span>
+<span class="Comment">the default constructor for T to be called to initialize these elements.</span>
+
+<span class="Comment">The current length of a vector is available as v.length().</span>
+
+<span class="Comment">Let n = v.length().  Calling v.SetLength(m) with m &lt;= n sets the current length</span>
+<span class="Comment">of v to m (but does not call any destructors or free any space).  Calling</span>
+<span class="Comment">v.SetLength(m) with m &gt; n will allocate space and initialize as necessary, but</span>
+<span class="Comment">will leave the values of the already allocated elements unchanged (although</span>
+<span class="Comment">their addresses may change).  If T has a user-defined default constructor, that</span>
+<span class="Comment">is invoked.  Otherwise, the new memory locations are &quot;default initialized&quot;.  In</span>
+<span class="Comment">particular, this means that POD types may be uninitialized.</span>
+
+<span class="Comment">v.MaxLength() is the largest value of n for which v.SetLength(n) was invoked,</span>
+<span class="Comment">and is equal to the number of entries that have been initialized.</span>
+<span class="Comment">v.SetMaxLength(n) will allocate space for and initialize up to n elements,</span>
+<span class="Comment">without changing v.length().</span>
+
+<span class="Comment">When v's destructor is called, all constructed elements will be destructed, and</span>
+<span class="Comment">all space will be relinquished.</span>
+
+<span class="Comment">v.allocated() is the number of elements which have been allocated,</span>
+<span class="Comment">which may be more than the number elements initialized.</span>
+<span class="Comment">Note that if n &lt;= v.allocated(), then v.SetLength(n) is guaranteed</span>
+<span class="Comment">not to cause any memory allocation or movement of objects.</span>
+
+<span class="Comment">Space is managed using malloc, realloc, and free.  When a vector is grown, a</span>
+<span class="Comment">bit more space may be allocated than was requested for efficiency reasons.</span>
+
+<span class="Comment">Note that when a vector is grown, the objects in the vector may have moved,</span>
+<span class="Comment">possibly creating dangling references to vector elements.  One has to be</span>
+<span class="Comment">especially careful of this when using vectors passed as reference parameters</span>
+<span class="Comment">that may alias one another.</span>
+
+
+<span class="Comment">----------------------</span>
+<span class="Comment">IMPLEMENTATION DETAILS</span>
+<span class="Comment">----------------------</span>
+
+<span class="Comment">A Vec&lt;T&gt; object is just a pointer to the first element of the array.  There is</span>
+<span class="Comment">a control block immediately before the first element that keeps track of</span>
+<span class="Comment">several parameters: </span>
+<span class="Comment">   len    -- the logical length of the array (returned by length())</span>
+<span class="Comment">   init   -- the number of elements constructed (returned ny MaxLength())</span>
+<span class="Comment">   alloc  -- the number of elements for which space has been allocated</span>
+<span class="Comment">             (returned by allocated())</span>
+<span class="Comment">   fixed  -- flag that indicates that the length is fixed </span>
+<span class="Comment">             (returned by fixed())</span>
+
+<span class="Comment">Note that 0 &lt;= len &lt;= init &lt;- alloc</span>
+
+
+
+<span class="Comment">---------------</span>
+<span class="Comment">SPECIALIZATIONS</span>
+<span class="Comment">---------------</span>
+
+<span class="Comment">NTL currently defines an optimized specialization Vec&lt;GF2&gt;.  There are a few</span>
+<span class="Comment">quirks to be aware of.  See the documentation file for vec_GF2 for more</span>
+<span class="Comment">details.</span>
+
+
+<span class="Comment">---------------------</span>
+<span class="Comment">RANGE-BASED FOR LOOPS</span>
+<span class="Comment">---------------------</span>
+
+<span class="Comment">NTL's vectors provide sufficient functionality to enable range-based for-loops</span>
+<span class="Comment">(in C++11).  The safest ways to use this functionality are to write:</span>
+
+<span class="Comment">   for (auto&amp;&amp; item : vec) { ... } // for read-only or read/write access</span>
+
+<span class="Comment">or</span>
+
+<span class="Comment">   for (T item : vec) { ... } // for access via a copy</span>
+
+<span class="Comment">This is especially true if vec may be of type Vec&lt;GF2&gt;.  Again, see the</span>
+<span class="Comment">documentation file for vec_GF2 for more details.</span>
+
+
+<span class="Comment">--------------</span>
+<span class="Comment">OTHER FEATURES</span>
+<span class="Comment">--------------</span>
+
+<span class="Comment">The i-th vector element (counting from 0) is accessed as v[i].  If the macro</span>
+<span class="Comment">NTL_RANGE_CHECK is defined, code is emitted to test if 0 &lt;= i &lt; v.length().</span>
+<span class="Comment">This check is not performed by default.</span>
+
+<span class="Comment">For old-time FORTRAN programmers, the i-th vector element (counting from 1) is</span>
+<span class="Comment">accessed as v(i).</span>
+
+<span class="Comment">--------------------</span>
+<span class="Comment">REALLOCATION DETAILS</span>
+<span class="Comment">--------------------</span>
+
+<span class="Comment">When a vector is resized and not enough space has been allocated, then a</span>
+<span class="Comment">reallocation process takes place.  There are several strategies which can be</span>
+<span class="Comment">used, which we list here from least to most efficient.</span>
+
+
+<span class="Comment">COPY AND DESTROY STRATEGY:</span>
+<span class="Comment">This is the same strategy used by the STL prior to C++11.  New memory is</span>
+<span class="Comment">allocated, and each element of the vector is copied (using a copy constructor)</span>
+<span class="Comment">to the new memory, and then all the elements in the old memory is destroyed</span>
+<span class="Comment">(using a destructor).  While much safer than the Realloc Strategy, it can be a</span>
+<span class="Comment">bit slower.</span>
+
+<span class="Comment">MOVE STRATEGY:</span>
+<span class="Comment">This is a strategy that is also used by the STL, assuming C++11.  New memory is</span>
+<span class="Comment">allocated, and each element of the vector is moved (using a move constructor)</span>
+<span class="Comment">to the new memory, and then all the elements in the old memory is destroyed</span>
+<span class="Comment">(using a destructor).  This strategy is only viable if the underlying type has</span>
+<span class="Comment">a &quot;nothrow&quot; move constructor.  Typically, it will be significantly faster than</span>
+<span class="Comment">the Copy and Destroy Strategy.</span>
+
+<span class="Comment">REALLOC STRATEGY:</span>
+<span class="Comment">This strategy simply calls the realloc function, which may result in objects</span>
+<span class="Comment">being copied bit-wise from one location in memory to another.  For most types</span>
+<span class="Comment">of objects, even those with non-trivial constructors and destructors, this is</span>
+<span class="Comment">perfectly safe, as most objects really don't care what address they are stored</span>
+<span class="Comment">at.  As an example of where this doesn't work, STL string implementations using</span>
+<span class="Comment">a &quot;short string&quot; optimization may consist of an object containing a pointer to</span>
+<span class="Comment">a sub-object, which would be invalidated if the object were bit-wise moved from</span>
+<span class="Comment">one location to another.  This strategy is the fastest of them all.</span>
+
+<span class="Comment">CHOOSING A STRATEGY:</span>
+<span class="Comment">In the implementation of Vec&lt;T&gt;, NTL will opt for the Realloc Strategy</span>
+<span class="Comment">if one of the two conditions hold:</span>
+<span class="Comment">   (i) T has a trivial copy constructor and a trivial destructor, or</span>
+<span class="Comment">   (iii) T is a class that has been explicit declared &quot;relocatable&quot;.</span>
+<span class="Comment">(See below for details on how to declare that a class is relocatable.)</span>
+<span class="Comment">Otherwise, NTL will use the Move Strategy if T has a nothrow move costructor.</span>
+<span class="Comment">Otherwise, NTL will use the Copy Strategy if T has a copy constructor that is</span>
+<span class="Comment">accessible (i.e., not private and not deleted).  Otherwise, no reallocation</span>
+<span class="Comment">implementation is provided, and a runtime error will be raised if a</span>
+<span class="Comment">reallocation is required (this provides maximum flexiblilty and also maximum</span>
+<span class="Comment">backward compatibility with previous versions of NTL, even though sometimes a</span>
+<span class="Comment">compile-time diagnostic would be preferable).</span>
+
+
+<span class="Comment">DECLARING A CLASS RELOCATABLE:</span>
+<span class="Comment">One can declare T to be relocatable by adding the following line of code</span>
+<span class="Comment">immediately after the definition of class T:</span>
+
+<span class="Comment">   NTL_DECLARE_RELOCATABLE((T*))</span>
+
+<span class="Comment">Notice the double parentheses and the &quot;*&quot; --- these are unfortunately </span>
+<span class="Comment">necessary.  This macro expands as </span>
+
+<span class="Comment">   constexpr bool DeclareRelocatableType(T*) { return true; }</span>
+
+<span class="Comment">Inside the class Vec&lt;T&gt;, this function is invoked with ((T*) 0) as the</span>
+<span class="Comment">argument.  By declaring relocatability via a function definition in this way,</span>
+<span class="Comment">the Vec&lt;T&gt; class will always find (via &quot;Koenig lookup&quot;, or ADL) the declaration</span>
+<span class="Comment">for T in the namespace in which T is defined (assuming you put the</span>
+<span class="Comment">relocatability declaration there as well).</span>
+
+<span class="Comment">You can also declare a template class to be relocatable, as in:</span>
+
+<span class="Comment">   template&lt;class X, class Y&gt;</span>
+<span class="Comment">   NTL_DECLARE_RELOCATABLE((T&lt;X,Y&gt;*))</span>
+
+<span class="Comment">There is also a macro NTL_DECLARE_RELOCATABLE_WHEN, which leaves off the</span>
+<span class="Comment">function body, if you want something other than { return true; }</span>
+
+<span class="Comment">NTL also defines template functions:</span>
+
+<span class="Comment">   template&lt;class T&gt;</span>
+<span class="Comment">   constexpr bool DeclareRelocatableType(T*) </span>
+<span class="Comment">   { return ... ;  }</span>
+
+<span class="Comment">where &quot;...&quot; is an expression that returns true if T is a simple type that is</span>
+<span class="Comment">safe to relocate, as determined by C++11 type traits.  Such simple types</span>
+<span class="Comment">include scalar types and simple classes with trivial copy constructor and</span>
+<span class="Comment">destructor.</span>
+
+<span class="Comment">NTL already declares as relocatable most if the fundamental types fot which it</span>
+<span class="Comment">makes sense to do so.</span>
+
+<span class="Comment">UNSAFE VECTOR MODE:</span>
+<span class="Comment">The above describes the default behavior of NTL as of version 11.0.  Prior to</span>
+<span class="Comment">version 11.0, the default behavior was to only use the Realloc Strategy, which</span>
+<span class="Comment">is potentially unsafe.  You can revert to this old behavior by configuring</span>
+<span class="Comment">NTL_SAFE_VECTORS=off.</span>
+
+
+<span class="Comment">-------------------------</span>
+<span class="Comment">COMPARISON TO STL VECTORS </span>
+<span class="Comment">-------------------------</span>
+
+<span class="Comment">When the length of an NTL vector is reduced, no objects are destroyed.</span>
+<span class="Comment">In contrast, when the length of an STL vector is reduced, objects are</span>
+<span class="Comment">destroyed (effectively, maintaining the invariant len == init).</span>
+
+<span class="Comment">Also, STL vectors never use anything like the Realloc Strategy.</span>
+
+
+<span class="Comment">----------------------</span>
+<span class="Comment">HISTORICAL PERSPECTIVE</span>
+<span class="Comment">----------------------</span>
+
+<span class="Comment">When I first started working on NTL around 1990, C++ was a much simpler</span>
+<span class="Comment">language.  Among other things, there were no templates and no STL, so the Vec</span>
+<span class="Comment">class started out (and remained, for many years) a set of macros (indeed, this</span>
+<span class="Comment">approach was advocated in the first edition of Stroustrup's book).</span>
+
+<span class="Comment">My thinking at that time was very much &quot;C oriented&quot;.  The idea of resizing a</span>
+<span class="Comment">vector without using realloc never occured to me, and all of the classes I</span>
+<span class="Comment">wanted to put in vectors were relocatable.  Why would you ever bother making</span>
+<span class="Comment">copies of vector elements and destroy the originals when you could just</span>
+<span class="Comment">realloc?  It wasn't until many years later that I even realized this was</span>
+<span class="Comment">somehow questionable practice.  Indeed, resizing via malloc is technically</span>
+<span class="Comment">undefined behavior, but it's been working for me for over 25 years without</span>
+<span class="Comment">problems.</span>
+
+<span class="Comment">Furthermore, because of the poor performance of malloc in those days (which is</span>
+<span class="Comment">much better now), I designed the Vec&lt;ZZ_p&gt; class (and a few others) to allocate</span>
+<span class="Comment">the underlying ZZ's in blocks.  This not only reduces the number of calls to</span>
+<span class="Comment">malloc, but it also gives better locality of reference.  Experiments in the</span>
+<span class="Comment">last couple of years show that this is still benefit to doing this.</span>
+
+<span class="Comment">With all of these design decisions baked into NTL's Vec class, transitioning to</span>
+<span class="Comment">STL vectors would be problematic, and is unlikely to ever happen.  But as</span>
+<span class="Comment">things have evolved, NTL Vec's offers many of the same convenience and safety</span>
+<span class="Comment">features as STL vector's.</span>
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Comment">// EXCEPTIONS: all functions below do not throw any exceptions,</span>
+<span class="Comment">//   except as noted</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">class</span> Vec {
+<span class="Statement">public</span>:
+
+   Vec();  <span class="Comment">// initially length 0</span>
+
+   Vec(<span class="Type">const</span> Vec&amp; a);
+   <span class="Comment">// copy constructor;  uses the assignment operator of T</span>
+   <span class="Comment">// for copying into locations that have already been initialized,</span>
+   <span class="Comment">// and uses the copy constructor for T for initializing new locations.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw</span>
+
+   Vec&amp; <span class="Statement">operator</span>=(<span class="Type">const</span> Vec&amp; a);
+   <span class="Comment">// assignment;  uses the assignment operator of T</span>
+   <span class="Comment">// for copying into locations that have already been initialized,</span>
+   <span class="Comment">// and uses the copy constructor for T for initializing new locations.</span>
+
+   <span class="Comment">// EXCEPTIONS: weak ES (but if it throws, neither length nor MaxLength</span>
+   <span class="Comment">//    will change, although some previously initialized elements</span>
+   <span class="Comment">//    may have been assigned new values).</span>
+
+
+   Vec(Vec&amp;&amp; a);
+   <span class="Comment">// move constructor (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+   <span class="Comment">// will revert to copy constructor if a is fixed</span>
+
+   Vec&amp; <span class="Statement">operator</span>=(Vec&amp;&amp; a);
+   <span class="Comment">// move assignment (C++11 only)</span>
+   <span class="Comment">// declared noexcept unless NTL_EXCEPTIONS flag is set</span>
+   <span class="Comment">// will revert to copy assignment if *this or a is fixed</span>
+
+   <span class="Comment">// NOTE: If neither source nor destination are fixed, these operations will</span>
+   <span class="Comment">// be fast pointer moves and no exceptions will be thrown.  If either are</span>
+   <span class="Comment">// fixed (say, the row in a Mat&lt;T&gt;), these operations revert to copy</span>
+   <span class="Comment">// operations, which may either throw an exception (if NTL_EXCEPTIONS is on)</span>
+   <span class="Comment">// or abort the program (if NTL_EXCEPTIONS is off).</span>
+
+   <span class="Comment">// NOTE: In a vector copy assignment x=a, all iterators, references,</span>
+   <span class="Comment">// and pointers related to x may be invalidated by the assignment.</span>
+   <span class="Comment">// In a vector move assignment, the same applies to a as well.</span>
+
+   <span class="Comment">// BACKWARD COMPATIBILITY: after introducing of &quot;move constructors&quot; in NTL</span>
+   <span class="Comment">// 10.4, there have been some reports of incompatibilties.  Some legacy NTL</span>
+   <span class="Comment">// clients have been known to assume that x=a does not invalidate pointers</span>
+   <span class="Comment">// into x, provided x.length() &gt;= a.length() before the assignment.  This</span>
+   <span class="Comment">// assumption is not valid, however, for a move assignment.  Because of this</span>
+   <span class="Comment">// problem, as of NTL 11.0, move assignments have been disabled by default</span>
+   <span class="Comment">// (this is controlled by the configuration flag NTL_DISABLE_MOVE_ASSIGN).</span>
+   <span class="Comment">// This affects vectors and matrices,  as well as many other types (such as</span>
+   <span class="Comment">// polynomials) that are implemented in terms of vectors.  Move assignment</span>
+   <span class="Comment">// is not disabled.</span>
+
+
+   ~Vec();
+   <span class="Comment">// destructor: calls T's destructor for all initialized</span>
+   <span class="Comment">// elements in the vector, and then frees the vector itself</span>
+
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n);
+   <span class="Comment">// set current length to n, growing vector if necessary</span>
+   <span class="Comment">// new objects are initialized using the default contructor for T</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES (but the vector may have been</span>
+   <span class="Comment">//    reallocated)</span>
+
+   <span class="Type">void</span> SetLength(<span class="Type">long</span> n, <span class="Type">const</span> T&amp; a);
+   <span class="Comment">// set current length to n, growing vector if necessary</span>
+   <span class="Comment">// new objects are initialized using the copy contructor for T</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES (but the vector may have been</span>
+   <span class="Comment">//    reallocated)</span>
+
+   <span class="Type">template</span>&lt;<span class="Type">class</span> F&gt;
+   <span class="Type">void</span> SetLengthAndApply(<span class="Type">long</span> n, F f);
+   <span class="Comment">// set current length to n, growing vector if necessary</span>
+   <span class="Comment">// any new objects are initialized using defauly constructor</span>
+   <span class="Comment">// for T, and after that, f is applied to each new object x</span>
+   <span class="Comment">// as f(x).</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES (but the vector may have been</span>
+   <span class="Comment">//    reallocated)</span>
+
+   <span class="Type">long</span> length() <span class="Type">const</span>;
+   <span class="Comment">// current length</span>
+
+   T&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i);
+   <span class="Type">const</span> T&amp; <span class="Statement">operator</span>[](<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing operation, starting from 0.</span>
+   <span class="Comment">// The first version is applied to non-const Vec&lt;T&gt;,</span>
+   <span class="Comment">// and returns a non-const reference to a T, while the second version</span>
+   <span class="Comment">// is applied to a const Vec&lt;T&gt; and returns a const reference to a T.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking turned on, strong ES</span>
+
+   T&amp; <span class="Statement">operator</span>()(<span class="Type">long</span> i);
+   <span class="Type">const</span> T&amp; <span class="Statement">operator</span>()(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing operation, starting from 1</span>
+   <span class="Comment">// The first version is applied to non-const Vec&lt;T&gt;,</span>
+   <span class="Comment">// and returns a non-const reference to a T, while the second version</span>
+   <span class="Comment">// is applied to a const Vec&lt;T&gt; and returns a const reference to a T.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw if range checking turned on, strong ES</span>
+
+   T* elts();
+   <span class="Type">const</span> T* elts() <span class="Type">const</span>;
+   <span class="Comment">// returns address of first vector element (or 0 if no space has been</span>
+   <span class="Comment">// allocated for this vector).  If a vector potentially has length 0, it is</span>
+   <span class="Comment">// safer to write v.elts() instead of &amp;v[0]: the latter is not well defined</span>
+   <span class="Comment">// by the C++ standard (although this is likely an academic concern).</span>
+   <span class="Comment">//</span>
+   <span class="Comment">// The first version is applied to non-const Vec&lt;T&gt;, and returns a non-const</span>
+   <span class="Comment">// pointer to a T, while the second version is applied to a const Vec&lt;T&gt; and</span>
+   <span class="Comment">// returns a const reference to a T.</span>
+
+
+   <span class="Type">void</span> swap(Vec&amp; y);
+   <span class="Comment">// swap with y (fast: just swaps pointers)</span>
+
+   <span class="Comment">// EXCEPTIONS: throws if vectors are fixed and lengths do not match, strong ES</span>
+
+   <span class="Type">void</span> move(Vec&amp; y);
+   <span class="Comment">// move y into *this, killing y (fast: just moves pointers)</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES, raises an error if </span>
+   <span class="Comment">// &amp;y != this and either y or *this are fixed</span>
+
+   <span class="Type">void</span> append(<span class="Type">const</span> T&amp; a);
+   <span class="Comment">// append a to end of vector; uses the assignment operator of T</span>
+   <span class="Comment">// for copying into locations that have already been initialized,</span>
+   <span class="Comment">// and uses the copy constructor for T for initializing new locations.</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES if initializing a new element (and in any </span>
+   <span class="Comment">//    case, if an exception throws, length and MaxLength remain </span>
+   <span class="Comment">//    unchanged).</span>
+
+   <span class="Type">void</span> append(<span class="Type">const</span> Vec&amp; w);
+   <span class="Comment">// append w to end of vector; uses the assignment operator of T</span>
+   <span class="Comment">// for copying into locations that have already been initialized,</span>
+   <span class="Comment">// and uses the copy constructor for T for initializing new locations.</span>
+
+   <span class="Comment">// EXCEPTIONS: strong ES if initializing new elements (and in any </span>
+   <span class="Comment">//    case, if an exception throws, length and MaxLength remain </span>
+   <span class="Comment">//    unchanged).</span>
+
+
+<span class="Comment">// Alternative access interface </span>
+
+   <span class="Type">const</span> T&amp; get(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// v.get(i) returns v[i]</span>
+
+   <span class="Type">void</span> put(<span class="Type">long</span> i, <span class="Type">const</span> T&amp; a);
+   <span class="Comment">// v.put(i, a) equivalent to v[i] = q</span>
+
+
+
+<span class="Comment">// Some STL compatibility</span>
+
+   <span class="Type">typedef</span> T value_type;
+   <span class="Type">typedef</span> value_type&amp; reference;
+   <span class="Type">typedef</span> <span class="Type">const</span> value_type&amp; const_reference;
+   <span class="Type">typedef</span> value_type *iterator;
+   <span class="Type">typedef</span> <span class="Type">const</span> value_type *const_iterator;
+
+   T* data();
+   <span class="Type">const</span> T* data() <span class="Type">const</span>;
+   <span class="Comment">// v.data() same as v.elts()</span>
+
+   T* begin();
+   <span class="Type">const</span> T* begin() <span class="Type">const</span>;
+   <span class="Comment">// v.begin() same as v.elts()</span>
+
+   T* end();
+   <span class="Type">const</span> T* end() <span class="Type">const</span>;
+   <span class="Comment">// pointer to (one past) last element (or NULL)</span>
+
+   T&amp; at(<span class="Type">long</span> i);
+   <span class="Type">const</span> T&amp; at(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing with range checking</span>
+
+
+<span class="Comment">// the remaining member functions are a bit esoteric (skip on first</span>
+<span class="Comment">// reading)</span>
+
+   Vec(INIT_SIZE_TYPE, <span class="Type">long</span> n);
+   <span class="Comment">// Vec(INIT_SIZE, n) initializes vector with an intial length of n.</span>
+   <span class="Comment">// new objects are initialized using the default contructor for T</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw</span>
+
+   Vec(INIT_SIZE_TYPE, <span class="Type">long</span> n, <span class="Type">const</span> T&amp; a);
+   <span class="Comment">// Vec(INIT_SIZE, n, a) initializes vector with an intial length of n.</span>
+   <span class="Comment">// new objects are initialized using the copy contructor for T</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw</span>
+
+   <span class="Type">void</span> kill();
+   <span class="Comment">// release space and set to length 0</span>
+
+   <span class="Type">void</span> SetMaxLength(<span class="Type">long</span> n);
+   <span class="Comment">// allocates space and initializes up to n elements. Does not change</span>
+   <span class="Comment">// current length</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw, strong ES</span>
+
+   <span class="Type">void</span> FixLength(<span class="Type">long</span> n);
+   <span class="Comment">// sets length to n and prohibits all future length changes.</span>
+   <span class="Comment">// FixLength may only be invoked immediately after the default</span>
+   <span class="Comment">// construction or kill.</span>
+
+   <span class="Comment">// The kill operation is also subsequently prohibited, and swap is</span>
+   <span class="Comment">// allowed on fixed length vectors of the same length.</span>
+
+   <span class="Comment">// FixLength is provided mainly to implement Mat&lt;T&gt;, to enforce</span>
+   <span class="Comment">// the restriction that all rows have the same length.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw, strong ES</span>
+
+   <span class="Type">void</span> FixAtCurrentLength();
+   <span class="Comment">// fixes the length at the cuurent length and prohibits</span>
+   <span class="Comment">// all future length changes.  </span>
+
+   <span class="Comment">// It is required that length() == MaxLength() when called.</span>
+
+   <span class="Comment">// EXCEPTIONS: if length() != MaxLength() and error is raised;</span>
+   <span class="Comment">// if length() == 0, a memory allocation error may be raised.</span>
+   <span class="Comment">// Strong ES.</span>
+
+   <span class="Type">long</span> fixed() <span class="Type">const</span>;
+   <span class="Comment">// test if length has been fixed by FixLength() or FixAtCurrentLength()</span>
+
+   <span class="Type">long</span> MaxLength() <span class="Type">const</span>;
+   <span class="Comment">// maximum length, i.e., number of allocated and initialized elements</span>
+
+   <span class="Type">long</span> allocated() <span class="Type">const</span>;
+   <span class="Comment">// the number of objects for which space has been allocated, but not</span>
+   <span class="Comment">// necessarily initialized;  this may be larger than MaxLength().</span>
+
+   T&amp; RawGet(<span class="Type">long</span> i);
+   <span class="Type">const</span> T&amp; RawGet(<span class="Type">long</span> i) <span class="Type">const</span>;
+   <span class="Comment">// indexing with no range checking</span>
+
+   <span class="Type">long</span> position(<span class="Type">const</span> T&amp; a) <span class="Type">const</span>;
+   <span class="Comment">// returns position of a in the vector, or -1 if it is not there.</span>
+   <span class="Comment">// The search is conducted from position 0 to allocated()-1 the vector, </span>
+   <span class="Comment">// and an error is raised if the object is found at position MaxLength()</span>
+   <span class="Comment">// or higher (in which case a references an uninitialized object).</span>
+   <span class="Comment">// Note that if NTL_CLEAN_PTR flag is set, this routine takes</span>
+   <span class="Comment">// linear time, and otherwise, it takes constant time.</span>
+
+   <span class="Comment">// EXCEPTIONS: may throw (as indicated above)</span>
+
+   <span class="Type">long</span> position1(<span class="Type">const</span> T&amp; a) <span class="Type">const</span>;
+   <span class="Comment">// returns position of a in the vector, or -1 if it is not there.</span>
+   <span class="Comment">// The search is conducted from position 0 to length()-1 of the vector.</span>
+   <span class="Comment">// Note that if NTL_CLEAN_PTR flag is set, this routine takes</span>
+   <span class="Comment">// linear time, and otherwise, it takes constant time.</span>
+
+};
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                       Some utility routines</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">void</span> swap(Vec&lt;T&gt;&amp; x, Vec&lt;T&gt;&amp; y);
+<span class="Comment">// swaps x &amp; y; same as x.swap(y)</span>
+
+<span class="Comment">// EXCEPTIONS: same as for swap member function</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">void</span> append(Vec&lt;T&gt;&amp; v, <span class="Type">const</span> T&amp; a);
+<span class="Comment">// appends a to the end of v; same as v.append(a)</span>
+
+<span class="Comment">// EXCEPTIONS: same as for append member function</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">void</span> append(Vec&lt;T&gt;&amp; v, <span class="Type">const</span> Vec&lt;T&gt;&amp; w);
+<span class="Comment">// appends w to the end of v; same as v.append(w)</span>
+
+<span class="Comment">// EXCEPTIONS: same as for append member function</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                             Input/Output</span>
+
+
+<span class="Comment">The I/O format for a vector v with n elements is:</span>
+
+<span class="Comment">   [v[0] v[1] ... v[n-1]]</span>
+
+<span class="Comment">Uses corresponding I/O operators for T</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+istream&amp; <span class="Statement">operator</span>&gt;&gt;(istream&amp;, Vec&lt;T&gt;&amp;);
+
+<span class="Comment">// EXCEPTIONS: may throw, weak ES</span>
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+ostream&amp; <span class="Statement">operator</span>&lt;&lt;(ostream&amp;, <span class="Type">const</span> Vec&lt;T&gt;&amp;);
+
+<span class="Comment">// EXCEPTIONS: may throw, weak ES</span>
+
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                              Equality Testing</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>==(<span class="Type">const</span> Vec&lt;T&gt;&amp; a, <span class="Type">const</span> Vec&lt;T&gt;&amp; b);
+
+<span class="Type">template</span>&lt;<span class="Type">class</span> T&gt;
+<span class="Type">long</span> <span class="Statement">operator</span>!=(<span class="Type">const</span> Vec&lt;T&gt;&amp; a, <span class="Type">const</span> Vec&lt;T&gt;&amp; b);
+
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                  Customized Constructors and Destructors</span>
+<span class="Comment"> </span>
+<span class="Comment">Esoteric: skip on first reading...also these interfaces are subject to change</span>
+
+<span class="Comment">When new elements in a vector need to be constructed, one of the</span>
+<span class="Comment">following routines is called:</span>
+
+<span class="Comment">   void BlockConstruct(T* p, long n); </span>
+<span class="Comment">   // invokes T() to initialize p[i] for i = 0..n-1</span>
+
+<span class="Comment">   void BlockConstructFromVec(T* p, long n, const T* q);</span>
+<span class="Comment">   // invokes T(q[i]) to initialize p[i] for i = 0..n-1;</span>
+<span class="Comment">   // q points to elements from a Vec&lt;T&gt;</span>
+
+<span class="Comment">   void BlockConstructFromObj(T* p, long n, const T&amp; q);</span>
+<span class="Comment">   // invokes T(q) to initialize p[i] for i = 0..n-1</span>
+
+
+<span class="Comment">When a vector is destroyed, the following routine is called:</span>
+
+<span class="Comment">   void BlockDestroy(T* p, long n);</span>
+<span class="Comment">   // invokes ~T() on p[i] for i = 0..n-1</span>
+
+<span class="Comment">The default behavior of these routines may be modified by </span>
+<span class="Comment">overloading these functions with a custom implementation.</span>
+
+<span class="Comment">EXCEPTIONS:</span>
+<span class="Comment">In order to provide exception safe code, the Construct routines</span>
+<span class="Comment">should provide strong ES; in particular, if any constructor</span>
+<span class="Comment">throws, all newly constructed objects should be destroyed.</span>
+<span class="Comment">Moreover, the BlockDestroy routine should not throw at all.</span>
+
+
+<span class="Comment">In NTL, these routines are overridden for the ZZ_p and GF2E classes,</span>
+<span class="Comment">so that many vector entries will be packed into contiguous storage</span>
+<span class="Comment">locations.  This reduces the number of invocations of malloc, and</span>
+<span class="Comment">increases locality of reference.</span>
+
+
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

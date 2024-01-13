@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>创建记录集</title>
+</head>
+<body>
+<center>
+<h5>通过记录集获取数据</h5>
+<xml id="students" src="02.xml" />
+<script language="javascript">
+var rs = students.recordset;
+document.write("<table border='1' width='300'>");
+document.write("<thead bgcolor='#00ff00'><td>姓名</td>");
+document.write("<td>性别</td><td>年龄</td></thead>")
+while(!rs.EOF){
+document.write("<tr><td>"+rs('name')+"</td>");
+document.write("<td>"+rs('sex')+"</td>");
+document.write("<td>"+rs('age')+"</td></tr>");
+rs.moveNext();
+}
+document.write("</table")
+</script>
+</body>
+</html>

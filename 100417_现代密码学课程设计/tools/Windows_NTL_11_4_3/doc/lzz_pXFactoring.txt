@@ -1,0 +1,180 @@
+
+/**************************************************************************\
+
+MODULE: zz_pXFactoring
+
+SUMMARY:
+
+Routines are provided for factorization of polynomials over zz_p, as
+well as routines for related problems such as testing irreducibility
+and constructing irreducible polynomials of given degree.
+
+\**************************************************************************/
+
+#include "zz_pX.h"
+#include "pair_zz_pX_long.h"
+
+
+void SquareFreeDecomp(vec_pair_zz_pX_long& u, const zz_pX& f);
+vec_pair_zz_pX_long SquareFreeDecomp(const zz_pX& f);
+
+// Performs square-free decomposition.  f must be monic.  If f =
+// prod_i g_i^i, then u is set to a lest of pairs (g_i, i).  The list
+// is is increasing order of i, with trivial terms (i.e., g_i = 1)
+// deleted.
+
+
+void FindRoots(vec_zz_p& x, const zz_pX& f);
+vec_zz_p FindRoots(const zz_pX& f);
+
+// f is monic, and has deg(f) distinct roots.  returns the list of
+// roots
+
+void FindRoot(zz_p& root, const zz_pX& f);
+zz_p FindRoot(const zz_pX& f);
+
+// finds a single root of f.  assumes that f is monic and splits into
+// distinct linear factors
+
+
+void SFBerlekamp(vec_zz_pX& factors, const zz_pX& f, long verbose=0);
+vec_zz_pX  SFBerlekamp(const zz_pX& f, long verbose=0);
+
+// Assumes f is square-free and monic.  returns list of factors of f.
+// Uses "Berlekamp" approach, as described in detail in [Shoup,
+// J. Symbolic Comp. 20:363-397, 1995].
+
+void berlekamp(vec_pair_zz_pX_long& factors, const zz_pX& f, 
+               long verbose=0);
+vec_pair_zz_pX_long berlekamp(const zz_pX& f, long verbose=0);
+
+// returns a list of factors, with multiplicities.  f must be monic.
+// Calls SFBerlekamp.
+
+
+
+void NewDDF(vec_pair_zz_pX_long& factors, const zz_pX& f, const zz_pX& h,
+         long verbose=0);
+
+vec_pair_zz_pX_long NewDDF(const zz_pX& f, const zz_pX& h,
+         long verbose=0);
+
+// This computes a distinct-degree factorization.  The input must be
+// monic and square-free.  factors is set to a list of pairs (g, d),
+// where g is the product of all irreducible factors of f of degree d.
+// Only nontrivial pairs (i.e., g != 1) are included.  The polynomial
+// h is assumed to be equal to X^p mod f.  This routine implements the
+// baby step/giant step algorithm of [Kaltofen and Shoup, STOC 1995],
+// further described in [Shoup, J. Symbolic Comp. 20:363-397, 1995].
+
+void EDF(vec_zz_pX& factors, const zz_pX& f, const zz_pX& h,
+         long d, long verbose=0);
+
+vec_zz_pX EDF(const zz_pX& f, const zz_pX& h,
+         long d, long verbose=0);
+
+// Performs equal-degree factorization.  f is monic, square-free, and
+// all irreducible factors have same degree.  h = X^p mod f.  d =
+// degree of irreducible factors of f.  This routine implements the
+// algorithm of [von zur Gathen and Shoup, Computational Complexity
+// 2:187-224, 1992]
+
+
+void RootEDF(vec_zz_pX& factors, const zz_pX& f, long verbose=0);
+vec_zz_pX RootEDF(const zz_pX& f, long verbose=0);
+
+// EDF for d==1
+
+void SFCanZass(vec_zz_pX& factors, const zz_pX& f, long verbose=0);
+vec_zz_pX SFCanZass(const zz_pX& f, long verbose=0);
+
+// Assumes f is monic and square-free.  returns list of factors of f.
+// Uses "Cantor/Zassenhaus" approach, using the routines NewDDF and
+// EDF above.
+
+
+void CanZass(vec_pair_zz_pX_long& factors, const zz_pX& f, 
+             long verbose=0);
+vec_pair_zz_pX_long CanZass(const zz_pX& f, long verbose=0);
+
+
+// returns a list of factors, with multiplicities.  f must be monic.
+// Calls SquareFreeDecomp and SFCanZass.
+
+// NOTE: In most situations, you should use the CanZass factoring
+// routine, rather than Berlekamp: it is faster and uses less space.
+
+
+void mul(zz_pX& f, const vec_pair_zz_pX_long& v);
+zz_pX mul(const vec_pair_zz_pX_long& v);
+
+
+// multiplies polynomials, with multiplicities
+
+/**************************************************************************\
+
+                            Irreducible Polynomials
+
+\**************************************************************************/
+
+long ProbIrredTest(const zz_pX& f, long iter=1);
+
+// performs a fast, probabilistic irreduciblity test.  The test can
+// err only if f is reducible, and the error probability is bounded by
+// p^{-iter}.  This implements an algorithm from [Shoup, J. Symbolic
+// Comp. 17:371-391, 1994].
+
+
+long DetIrredTest(const zz_pX& f);
+
+// performs a recursive deterministic irreducibility test.  Fast in
+// the worst-case (when input is irreducible).  This implements an
+// algorithm from [Shoup, J. Symbolic Comp. 17:371-391, 1994].
+
+long IterIrredTest(const zz_pX& f);
+
+// performs an iterative deterministic irreducibility test, based on
+// DDF.  Fast on average (when f has a small factor).
+
+void BuildIrred(zz_pX& f, long n);
+zz_pX BuildIrred_zz_pX(long n);
+
+// Build a monic irreducible poly of degree n.
+
+void BuildRandomIrred(zz_pX& f, const zz_pX& g);
+zz_pX BuildRandomIrred(const zz_pX& g);
+
+// g is a monic irreducible polynomial.  Constructs a random monic
+// irreducible polynomial f of the same degree.
+
+long ComputeDegree(const zz_pX& h, const zz_pXModulus& F);
+
+// f is assumed to be an "equal degree" polynomial.  h = X^p mod f.
+// The common degree of the irreducible factors of f is computed This
+// routine is useful in counting points on elliptic curves
+
+long ProbComputeDegree(const zz_pX& h, const zz_pXModulus& F);
+
+// same as above, but uses a slightly faster probabilistic algorithm.
+// The return value may be 0 or may be too big, but for large p
+// (relative to n), this happens with very low probability.
+
+void TraceMap(zz_pX& w, const zz_pX& a, long d, const zz_pXModulus& F,
+              const zz_pX& h);
+
+zz_pX TraceMap(const zz_pX& a, long d, const zz_pXModulus& F,
+              const zz_pX& h);
+
+// w = a+a^q+...+^{q^{d-1}} mod f; it is assumed that d >= 0, and h =
+// X^q mod f, q a power of p.  This routine implements an algorithm
+// from [von zur Gathen and Shoup, Computational Complexity 2:187-224,
+// 1992]
+
+void PowerCompose(zz_pX& w, const zz_pX& h, long d, const zz_pXModulus& F);
+zz_pX PowerCompose(const zz_pX& h, long d, const zz_pXModulus& F);
+
+
+// w = X^{q^d} mod f; it is assumed that d >= 0, and h = X^q mod f, q
+// a power of p.  This routine implements an algorithm from [von zur
+// Gathen and Shoup, Computational Complexity 2:187-224, 1992]
+

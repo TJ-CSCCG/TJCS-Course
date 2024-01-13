@@ -1,0 +1,8 @@
+前提：1.机子上必须安装vc++.
+      2.我的电脑--右击属性--高级--单击下面的“环境变量”--选中include--编辑--以分号开头添加c的头函数所在目录。
+1. test.sqc :这个是原始代码文件，含有嵌入式sql和c代码(esql/c)，在DOS命令窗口中执行:nsqlprep.exe test.sqc 得到test.c文件。nsqlprep.exe是sqlserver 提供的用来预编译嵌入式sql的编译工具；
+2. test .c ：该文件包含纯c代码（嵌入式sql已被编译成c语言函数调用的形式）。在DOS命令窗口中执行cl -o test.exe sqlakw32.lib caw32.lib test.c ，得到test.exe
+3. test.exe: 最终的可执行文件。
+
+-------整个编译过程已经做成了批处理文件编译.bat,直接双击运行该文件即可完成上述的编译过程，编译结果会生成test.c,test.exe,test.obj三个文件----------
+-------也可以在其他开发环境中如VC中直接写代码进行编译执行，但需进行配置，设置nsqlprep.exe，sqlakw32.lib caw32.lib等编译路径，以及其他环境变量。---------------------

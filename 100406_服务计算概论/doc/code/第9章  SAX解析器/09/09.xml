@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE 不可解析实体[
+<!ENTITY un_en PUBLIC "-//ISO123456/sunyang/Forxml/ch" "a.bmp" NDATA mspaint.exe>
+<!ELEMENT 不可解析实体 (ANY)>
+]>
+<不可解析实体>
+   不可解析实体.
+</不可解析实体>

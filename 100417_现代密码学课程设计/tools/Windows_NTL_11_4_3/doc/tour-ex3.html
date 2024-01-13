@@ -1,0 +1,361 @@
+<html>
+<head>
+<title>
+A Tour of NTL: Examples: Polynomials </title>
+</head>
+
+
+<center>
+<a href="tour-ex2.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex4.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+<h1> 
+<p align=center>
+A Tour of NTL: Examples: Polynomials
+</p>
+</h1>
+
+<p> <hr> <p>
+
+NTL provides extensive support for very fast polynomial arithmetic.
+In fact, this was the main motivation for creating NTL in the first place,
+because existing computer algebra systems and software
+libraries had very slow polynomial arithmetic.
+The class <tt>ZZX</tt> represents univariate polynomials
+with integer coefficients.
+
+The following program reads a polynomial,
+factors it, and prints the factorization.
+
+<!-- STARTPLAIN
+#include <NTL/ZZXFactoring.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   ZZX f;
+
+   cin >> f;
+
+   Vec< Pair< ZZX, long > > factors;
+   ZZ c;
+
+   factor(c, factors, f);
+
+   cout << c << "\n";
+   cout << factors << "\n";
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZXFactoring.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; ZZX f;<br>
+<br>
+&nbsp;&nbsp; cin &gt;&gt; f;<br>
+<br>
+&nbsp;&nbsp; Vec&lt; Pair&lt; ZZX, <font color="#008b00"><b>long</b></font>&nbsp;&gt; &gt; factors;<br>
+&nbsp;&nbsp; ZZ c;<br>
+<br>
+&nbsp;&nbsp; factor(c, factors, f);<br>
+<br>
+&nbsp;&nbsp; cout &lt;&lt; c &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+&nbsp;&nbsp; cout &lt;&lt; factors &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+When this program is compiled an run on input
+
+<pre>
+   [2 10 14 6]
+</pre>
+
+which represents the polynomial <tt>2 + 10*X + 14*x^2 +6*X^3</tt>,
+the output is
+
+<pre>
+   2
+   [[[1 3] 1] [[1 1] 2]]
+</pre>
+
+The first line of output is the content of the polynomial, which
+is 2 in this case as each coefficient of the input polynomial
+is divisible by 2.
+The second line is a vector of pairs, the first member of each 
+pair is an irreducible factor of the input, and the second 
+is the exponent to which is appears in the factorization.
+Thus, all of the above simply means that
+
+<pre>
+2 + 10*X + 14*x^2 +6*X^3 = 2 * (1 + 3*X) * (1 + X)^2 
+</pre>
+
+<p>
+Admittedly, I/O in NTL is not exactly user friendly,
+but then NTL has no pretensions about being an interactive
+computer algebra system: it is a library for programmers.
+
+<p>
+In this example, the type <tt>Vec&lt; Pair&lt; ZZX, long &gt; &gt;</tt>
+is an NTL vector whose base type is <tt>Pair&lt; ZZX, long &gt;</tt>.
+The type <tt>Pair&lt; ZZX, long &gt;</tt> is the instantiation
+of a template "pair" type defined by NTL.
+See <a href="pair.cpp.html"><tt>pair.txt</tt></a> for more details.
+
+
+
+<p> <hr> <p>
+
+Here is another example.
+The following program prints out the first 100 cyclotomic polynomials.
+
+<!-- STARTPLAIN
+
+#include <NTL/ZZX.h>
+
+using namespace std;
+using namespace NTL;
+
+int main()
+{
+   Vec<ZZX> phi(INIT_SIZE, 100);  
+
+   for (long i = 1; i <= 100; i++) {
+      ZZX t;
+      t = 1;
+
+      for (long j = 1; j <= i-1; j++)
+         if (i % j == 0)
+            t *= phi(j);
+
+      phi(i) = (ZZX(INIT_MONO, i) - 1)/t;  
+
+      cout << phi(i) << "\n";
+   }
+}
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000"><font face="monospace">
+<br>
+<font color="#1773cc">#include </font><font color="#4a6f8b">&lt;NTL/ZZX.h&gt;</font><br>
+<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;std;<br>
+<font color="#b02f60"><b>using</b></font>&nbsp;<font color="#008b00"><b>namespace</b></font>&nbsp;NTL;<br>
+<br>
+<font color="#008b00"><b>int</b></font>&nbsp;main()<br>
+{<br>
+&nbsp;&nbsp; Vec&lt;ZZX&gt; phi(INIT_SIZE, <font color="#ff8b00">100</font>);&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp; <font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;i = <font color="#ff8b00">1</font>; i &lt;= <font color="#ff8b00">100</font>; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZX t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t = <font color="#ff8b00">1</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#b02f60"><b>for</b></font>&nbsp;(<font color="#008b00"><b>long</b></font>&nbsp;j = <font color="#ff8b00">1</font>; j &lt;= i-<font color="#ff8b00">1</font>; j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#b02f60"><b>if</b></font>&nbsp;(i % j == <font color="#ff8b00">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t *= phi(j);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phi(i) = (ZZX(INIT_MONO, i) - <font color="#ff8b00">1</font>)/t;&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; phi(i) &lt;&lt; <font color="#4a6f8b">&quot;</font><font color="#8a2ae2">\n</font><font color="#4a6f8b">&quot;</font>;<br>
+&nbsp;&nbsp; }<br>
+}<br>
+</font></font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+To illustrate more of the NTL interface, let's look at alternative ways 
+this routine could have been written.
+
+<p>
+First, instead of
+<!-- STARTPLAIN
+   Vec<ZZX> phi(INIT_SIZE, 100);  
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; Vec&lt;ZZX&gt; phi(INIT_SIZE,&nbsp;<font color="#ff8c00">100</font>);&nbsp;&nbsp;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one can write
+<!-- STARTPLAIN
+   Vec<ZZX> phi;
+   phi.SetLength(100);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; Vec&lt;ZZX&gt; phi;<br>
+&nbsp;&nbsp; phi.SetLength(<font color="#ff8c00">100</font>);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+
+<p>
+Second,
+instead of
+<!-- STARTPLAIN
+            t *= phi(j);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t *= phi(j);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one can write this as
+<!-- STARTPLAIN
+            mul(t, t, phi(j));
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mul(t, t, phi(j));<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+or
+<!-- STARTPLAIN
+            t = t * phi(j);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t = t * phi(j);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Also, one can write <tt>phi[j-1]</tt> in place of <tt>phi(j)</tt>.
+
+<p>
+Third, instead of
+<!-- STARTPLAIN
+      phi(i) = (ZZX(INIT_MONO, i) - 1)/t;  
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phi(i) = (ZZX(INIT_MONO, i) -&nbsp;<font color="#ff8c00">1</font>)/t;&nbsp;&nbsp;<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+one can write
+<!-- STARTPLAIN
+      ZZX t1;
+      SetCoeff(t1, i);
+      SetCoeff(t1, 0, -1);
+      div(phi(i), t1, t);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZX t1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetCoeff(t1, i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetCoeff(t1,&nbsp;<font color="#ff8c00">0</font>, -<font color="#ff8c00">1</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div(phi(i), t1, t);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Alternatively, one could directly access the coefficient vector as follows:
+<!-- STARTPLAIN
+      ZZX t1;
+      t1.SetLength(i+1); // all vector elements are initialized to zero
+      t1[i] = 1;
+      t1[0] = -1;
+      t1.normalize();  // not necessary here, but good practice in general
+      div(phi(i), t1, t);
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZZX t1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t1.SetLength(i+<font color="#ff8c00">1</font>);&nbsp;<font color="#0000ee"><i>// all vector elements are initialized to zero</i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t1[i] =&nbsp;<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t1[<font color="#ff8c00">0</font>] = -<font color="#ff8c00">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t1.normalize();&nbsp;&nbsp;<font color="#0000ee"><i>// not necessary here, but good practice in general</i></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div(phi(i), t1, t);<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+Generally, you can freely access the coefficient vector
+of a polynomial, as above.
+However, after fiddling with this vector, you should "normalize"
+the polynomial, so that the leading coefficient is non-zero:
+this is an invariant which all routines that work with polynomials
+expect to hold.
+Of course, if you can avoid directly accessing the
+coefficient vector, you should do so.
+You can always use the <tt>SetCoeff</tt> routine above to set or
+change coefficients, and you can always read the value of a coefficient
+using the routine <tt>coeff</tt>, e.g., 
+<!-- STARTPLAIN
+   ... f[i] == 1 ...
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ... f[i] ==&nbsp;<font color="#ff8c00">1</font>&nbsp;...<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+is equivalent to
+<!-- STARTPLAIN
+   ... coeff(f, i) == 1 ...
+ENDPLAIN -->
+<!-- STARTPRETTY {{{ -->
+<p><p><table cellPadding=10px><tr><td><font color="#000000">
+<font face="monospace">
+&nbsp;&nbsp; ... coeff(f, i) ==&nbsp;<font color="#ff8c00">1</font>&nbsp;...<br>
+</font>
+</font></td></tr></table><p><p>
+<!-- }}} ENDPRETTY -->
+
+except that in the latter case, a read-only reference to zero is returned
+if the index <tt>i</tt> is out of range.
+There are also special-purpose read-only access routines <tt>LeadCoeff(f)</tt>
+and <tt>ConstTerm(f)</tt>.
+   
+      
+<p>
+NTL provides a full compliment of arithmetic operations for polynomials
+over the integers, in both operator and procedural form.
+All of the basic operations support a "promotion logic" similar
+to that for <tt>ZZ</tt>, except that inputs of <i>both</i> types 
+<tt>long</tt> and <tt>ZZ</tt> are promoted to <tt>ZZX</tt>.
+See <a href="ZZX.cpp.html"><tt>ZZX.txt</tt></a> for details,
+and see <a href="ZZXFactoring.cpp.html"><tt>ZZXFactoring.txt</tt></a> for details
+on the polynomial factoring routines.
+
+<p>
+
+<center>
+<a href="tour-ex2.html"><img src="arrow1.gif" alt="[Previous]" align=bottom></a>
+ <a href="tour-examples.html"><img src="arrow2.gif" alt="[Up]" align=bottom></a> 
+<a href="tour-ex4.html"> <img src="arrow3.gif" alt="[Next]" align=bottom></a>
+</center>
+
+</body>
+</html>

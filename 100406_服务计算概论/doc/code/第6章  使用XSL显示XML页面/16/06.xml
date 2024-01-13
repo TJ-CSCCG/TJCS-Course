@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<?xml-stylesheet type="text/xsl" href="16.xsl" ?>
+<books>
+  <book>
+    <name>三国演义</name>
+    <author>罗贯中</author>
+  </book>
+  <book>
+    <name>西游记</name>
+    <author>吴承恩</author>
+  </book>
+</books>

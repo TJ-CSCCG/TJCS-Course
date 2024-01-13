@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/vec_lzz_p.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Statement { color: #b03060; font-weight: bold; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: vec_zz_p</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Provides vectors over zz_p, along with some related operations.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&quot;zz_p.h&quot;</span>
+<span class="PreProc">#include </span><span class="String">&quot;vec_zz.h&quot;</span>
+<span class="PreProc">#include </span><span class="String">&lt;NTL/vector.h&gt;</span>
+
+<span class="Type">typedef</span> Vec&lt;zz_p&gt; vec_zz_p; <span class="Comment">// backward compatibility</span>
+
+<span class="Type">void</span> mul(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, zz_p b);
+<span class="Type">void</span> mul(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">long</span> b);
+
+<span class="Type">void</span> mul(vec_zz_p&amp; x, zz_p a, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Type">void</span> mul(vec_zz_p&amp; x, <span class="Type">long</span> a, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// x = a * b</span>
+
+<span class="Type">void</span> add(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// x = a + b</span>
+
+<span class="Type">void</span> sub(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// x = a - b</span>
+
+<span class="Type">void</span> clear(vec_zz_p&amp; x);
+<span class="Comment">// x = 0 (length unchanged)</span>
+
+<span class="Type">void</span> negate(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a);
+<span class="Comment">// x = -a</span>
+
+<span class="Type">long</span> IsZero(<span class="Type">const</span> vec_zz_p&amp; a);
+<span class="Comment">// test if a is the zero vector</span>
+
+<span class="Type">void</span> VectorCopy(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">long</span> n);
+vec_zz_p VectorCopy(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">long</span> n);
+<span class="Comment">// x = a copy of a of length exactly n.</span>
+<span class="Comment">// The input is truncated or padded with zeroes, as necessary.</span>
+
+<span class="Type">void</span> random(vec_zz_p&amp; x, <span class="Type">long</span> n);  <span class="Comment">// x = random vector of length n</span>
+vec_zz_p random_vec_zz_p(<span class="Type">long</span> n);
+
+
+<span class="Type">void</span> InnerProduct(zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+<span class="Comment">// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(),</span>
+<span class="Comment">// b.length())</span>
+
+<span class="Type">void</span> InnerProduct(zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b,
+                  <span class="Type">long</span> offset);
+<span class="Comment">// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),</span>
+<span class="Comment">// b.length()+offset)</span>
+
+<span class="Type">long</span> CRT(vec_ZZ&amp; a, ZZ&amp; prod, <span class="Type">const</span> vec_zz_p&amp; A);
+<span class="Comment">// Incremental Chinese Remaindering: If p is the current zz_p modulus with</span>
+<span class="Comment">// (p, prod) = 1; Computes a' such that a' = a mod prod and a' = A mod p,</span>
+<span class="Comment">// with coefficients in the interval (-p*prod/2, p*prod/2]; </span>
+<span class="Comment">// Sets a := a', prod := p*prod, and returns 1 if a's value changed.</span>
+
+
+<span class="Comment">// operator notation:</span>
+
+vec_zz_p <span class="Statement">operator</span>+(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+vec_zz_p <span class="Statement">operator</span>-(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+
+vec_zz_p <span class="Statement">operator</span>-(<span class="Type">const</span> vec_zz_p&amp; a);
+
+
+<span class="Comment">// vector/scalar multiplication:</span>
+
+vec_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> vec_zz_p&amp; a, zz_p b);
+vec_zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">long</span> b);
+
+vec_zz_p <span class="Statement">operator</span>*(zz_p a, <span class="Type">const</span> vec_zz_p&amp; b);
+vec_zz_p <span class="Statement">operator</span>*(<span class="Type">long</span> a, <span class="Type">const</span> vec_zz_p&amp; b);
+
+
+<span class="Comment">// inner product:</span>
+
+zz_p <span class="Statement">operator</span>*(<span class="Type">const</span> vec_zz_p&amp; a, <span class="Type">const</span> vec_zz_p&amp; b);
+
+
+
+<span class="Comment">// assignment operator notation:</span>
+
+vec_zz_p&amp; <span class="Statement">operator</span>+=(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a);
+vec_zz_p&amp; <span class="Statement">operator</span>-=(vec_zz_p&amp; x, <span class="Type">const</span> vec_zz_p&amp; a);
+
+vec_zz_p&amp; <span class="Statement">operator</span>*=(vec_zz_p&amp; x, zz_p a);
+vec_zz_p&amp; <span class="Statement">operator</span>*=(vec_zz_p&amp; x, <span class="Type">long</span> a);
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

@@ -1,0 +1,96 @@
+
+/***************************************************************************
+
+
+Lazy<T>: template class for lazy initialization of objects whose
+values do not change after initialization.
+In a multi-threaded environment, this makes use of "double checked locking"
+for an efficient, thread-safe solution.
+
+Usage:
+
+   Lazy<T> obj; // declaration of the lazy object
+
+    ...
+
+   do {
+      Lazy<T>::Builder builder(obj);
+      if (!builder()) break; // if we are not building, the break out
+
+      UniquePtr<T> p;  // create a pointer 
+
+         ...
+
+      builder.move(p); // move p into the object to complete the initialization
+                       // We can then complete the initialization process.
+   } while(0);  // When this scope closes, the object is fully initialized.
+                // subsequent attempts to build the object will yield
+                // !builder.built()
+
+
+   T objCopy = *obj;   // *obj returns a read-only reference
+                       // one can also use -> operator
+
+It is important to follow this recipe carefully.  In particular,
+the builder must be enclosed in a scope, as it's destructor
+plays a crucial role in finalizing the initialization.
+
+NOTE: if p is null in builder.move(p), the object is still considered
+built.
+
+****************************************************************************/
+
+template<class T, class P=DefaultDeleterPolicy>
+class Lazy {
+public:
+   Lazy();
+
+   Lazy(const Lazy&); 
+   Lazy& operator=(const Lazy&);
+   // deep copies using T's copy constructor
+   // EXCEPTIONS: may throw (but provides strong ES guarantee)
+
+   const T& operator*()  const;     // pointer access
+   const T* operator->() const;
+   const T* get() const;
+
+   operator fake_null_type() const; 
+   // allows test against 0
+   
+   ~Lazy();
+
+   kill();  // destroy and reset
+
+   bool built() const; // test if already built
+
+   class Builder {
+      Builder(const Lazy&); 
+     ~Builder()
+
+      bool operator()() const; // test if we are building
+
+      void move(UniquePtr<T,P>&);
+      // EXCEPTIONS: may throw an exception if the move is not allowed
+      // (i.e., not building or already moved).
+      // Provides strong ES guarantee. 
+   };
+};
+   
+
+// EXCEPTIONS: except where noted, no exceptions are thrown
+
+// NOTE: For more on double-checked locking, see
+// http://preshing.com/20130930/double-checked-locking-is-fixed-in-cpp11/
+
+// NOTE: when compiled with the NTL_THREADS option, the Lazy
+// class may contain data members from the standard library
+// that may not satisfy the requirements of the Vec class
+// (i.e., relocatability).  One can wrap it in a pointer 
+// class (e.g., CopiedPtr) to deal with this.
+
+// NOTE: The optional parameter P is used as in the specification
+// of the UniquePtr class.  The default should work fine in 
+// most cases.  It was introduced mainly to allow for the PIMPL
+// paradigm.
+
+

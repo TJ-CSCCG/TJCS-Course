@@ -1,0 +1,84 @@
+sll $0,$0,0
+#initialize
+addi $0,$0,0x0000
+addi $1,$0,0x0001
+addi $2,$0,0xffffffff
+lui  $3,0x8000
+lui  $4,0x5555
+addi $4,$1,0x5555
+lui  $5,0xaaaa
+addi $5,$1,0xffffaaaa
+
+
+addi $6,$0,0x0000
+
+addi $7,$0,0x1111
+addi $8,$0,0x1111
+addi $9,$0,0x1111
+addi $10,$0,0x1111
+addi $11,$0,0x1111
+
+addi $12,$0,0xffff8000
+addi $13,$0,0xffff8000
+addi $14,$0,0xffff8000
+addi $15,$0,0xffff8000
+addi $16,$0,0xffff8000
+
+addi $17,$0,0xffffffff
+addi $18,$0,0xffffffff
+addi $19,$0,0xffffffff
+addi $20,$0,0xffffffff
+addi $21,$0,0xffffffff
+
+lui  $22,0x8000
+lui  $23,0x8000
+lui  $24,0x8000
+lui  $25,0x8000
+lui  $26,0x8000
+
+lui  $27,0xaaaa
+lui  $28,0xaaaa
+lui  $29,0xaaaa
+lui  $30,0xaaaa
+lui  $31,0xaaaa
+
+slt $0,$0,$1
+
+slt $7,$1,$7
+slt $8,$2,$8
+slt $9,$3,$9
+slt $10,$4,$10
+slt $11,$5,$11
+
+slt $12,$1,$12
+slt $13,$2,$13
+slt $14,$3,$14
+slt $15,$4,$15
+slt $16,$5,$16
+
+slt $17,$1,$17
+slt $18,$2,$18
+slt $19,$3,$19
+slt $20,$4,$20
+slt $21,$5,$21
+
+slt $22,$1,$22
+slt $23,$2,$23
+slt $24,$3,$24
+slt $25,$4,$25
+slt $26,$5,$26
+
+slt $27,$1,$27
+slt $28,$2,$28
+slt $29,$3,$29
+slt $30,$4,$30
+slt $31,$5,$31
+
+slt $1,$6,$1
+slt $2,$6,$1
+slt $3,$6,$1
+slt $4,$6,$1
+slt $5,$6,$1
+
+
+

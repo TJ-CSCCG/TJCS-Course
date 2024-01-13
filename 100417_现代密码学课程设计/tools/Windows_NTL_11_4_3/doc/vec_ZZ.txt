@@ -1,0 +1,77 @@
+
+/**************************************************************************\
+
+MODULE: vec_ZZ
+
+SUMMARY:
+
+Defines the class vec_ZZ.
+
+\**************************************************************************/
+
+
+typedef Vec<ZZ> vec_ZZ; // backward compatibility
+
+void mul(vec_ZZ& x, const vec_ZZ& a, const ZZ& b);
+void mul(vec_ZZ& x, const vec_ZZ& a, long b);
+
+void mul(vec_ZZ& x, const ZZ& a, const vec_ZZ& b);
+void mul(vec_ZZ& x, long a, const vec_ZZ& b);
+// x = a * b
+
+void add(vec_ZZ& x, const vec_ZZ& a, const vec_ZZ& b);
+// x = a + b
+
+void sub(vec_ZZ& x, const vec_ZZ& a, const vec_ZZ& b);
+// x = a - b
+
+void clear(vec_ZZ& x);
+// x = 0 (length unchanged)
+
+void negate(vec_ZZ& x, const vec_ZZ& a);
+// x = -a
+
+long IsZero(const vec_ZZ& a);
+// test if a is the zero vector
+
+void InnerProduct(ZZ& x, const vec_ZZ& a, const vec_ZZ& b);
+// x = inner product of a and b, padded with zeros to make the lengths
+// even.
+
+void VectorCopy(vec_ZZ& x, const vec_ZZ& a, long n);
+vec_ZZ VectorCopy(const vec_ZZ& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+
+// operator notation:
+
+vec_ZZ operator+(const vec_ZZ& a, const vec_ZZ& b);
+vec_ZZ operator-(const vec_ZZ& a, const vec_ZZ& b);
+
+vec_ZZ operator-(const vec_ZZ& a);
+
+
+// vector/scalar multiplication:
+
+vec_ZZ operator*(const vec_ZZ& a, const ZZ& b);
+vec_ZZ operator*(const vec_ZZ& a, long b);
+
+vec_ZZ operator*(const ZZ& a, const vec_ZZ& b);
+vec_ZZ operator*(long a, const vec_ZZ& b);
+
+// inner product:
+
+ZZ operator*(const vec_ZZ& a, const vec_ZZ& b);
+
+
+
+// assignment operator notation:
+
+vec_ZZ& operator+=(vec_ZZ& x, const vec_ZZ& a);
+vec_ZZ& operator-=(vec_ZZ& x, const vec_ZZ& a);
+
+vec_ZZ& operator*=(vec_ZZ& x, const ZZ& a);
+vec_ZZ& operator*=(vec_ZZ& x, long a);
+
+

@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/ntl-11.4.2/doc/lzz_pXFactoring.cpp.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="macvim">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.String { color: #4a708b; }
+.PreProc { color: #1874cd; }
+.Constant { color: #ff8c00; }
+.Comment { color: #0000ee; font-style: italic; }
+.Type { color: #008b00; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">MODULE: zz_pXFactoring</span>
+
+<span class="Comment">SUMMARY:</span>
+
+<span class="Comment">Routines are provided for factorization of polynomials over zz_p, as</span>
+<span class="Comment">well as routines for related problems such as testing irreducibility</span>
+<span class="Comment">and constructing irreducible polynomials of given degree.</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="PreProc">#include </span><span class="String">&quot;zz_pX.h&quot;</span>
+<span class="PreProc">#include </span><span class="String">&quot;pair_zz_pX_long.h&quot;</span>
+
+
+<span class="Type">void</span> SquareFreeDecomp(vec_pair_zz_pX_long&amp; u, <span class="Type">const</span> zz_pX&amp; f);
+vec_pair_zz_pX_long SquareFreeDecomp(<span class="Type">const</span> zz_pX&amp; f);
+
+<span class="Comment">// Performs square-free decomposition.  f must be monic.  If f =</span>
+<span class="Comment">// prod_i g_i^i, then u is set to a lest of pairs (g_i, i).  The list</span>
+<span class="Comment">// is is increasing order of i, with trivial terms (i.e., g_i = 1)</span>
+<span class="Comment">// deleted.</span>
+
+
+<span class="Type">void</span> FindRoots(vec_zz_p&amp; x, <span class="Type">const</span> zz_pX&amp; f);
+vec_zz_p FindRoots(<span class="Type">const</span> zz_pX&amp; f);
+
+<span class="Comment">// f is monic, and has deg(f) distinct roots.  returns the list of</span>
+<span class="Comment">// roots</span>
+
+<span class="Type">void</span> FindRoot(zz_p&amp; root, <span class="Type">const</span> zz_pX&amp; f);
+zz_p FindRoot(<span class="Type">const</span> zz_pX&amp; f);
+
+<span class="Comment">// finds a single root of f.  assumes that f is monic and splits into</span>
+<span class="Comment">// distinct linear factors</span>
+
+
+<span class="Type">void</span> SFBerlekamp(vec_zz_pX&amp; factors, <span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_zz_pX  SFBerlekamp(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// Assumes f is square-free and monic.  returns list of factors of f.</span>
+<span class="Comment">// Uses &quot;Berlekamp&quot; approach, as described in detail in [Shoup,</span>
+<span class="Comment">// J. Symbolic Comp. 20:363-397, 1995].</span>
+
+<span class="Type">void</span> berlekamp(vec_pair_zz_pX_long&amp; factors, <span class="Type">const</span> zz_pX&amp; f,
+               <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_pair_zz_pX_long berlekamp(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// returns a list of factors, with multiplicities.  f must be monic.</span>
+<span class="Comment">// Calls SFBerlekamp.</span>
+
+
+
+<span class="Type">void</span> NewDDF(vec_pair_zz_pX_long&amp; factors, <span class="Type">const</span> zz_pX&amp; f, <span class="Type">const</span> zz_pX&amp; h,
+         <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+vec_pair_zz_pX_long NewDDF(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">const</span> zz_pX&amp; h,
+         <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// This computes a distinct-degree factorization.  The input must be</span>
+<span class="Comment">// monic and square-free.  factors is set to a list of pairs (g, d),</span>
+<span class="Comment">// where g is the product of all irreducible factors of f of degree d.</span>
+<span class="Comment">// Only nontrivial pairs (i.e., g != 1) are included.  The polynomial</span>
+<span class="Comment">// h is assumed to be equal to X^p mod f.  This routine implements the</span>
+<span class="Comment">// baby step/giant step algorithm of [Kaltofen and Shoup, STOC 1995],</span>
+<span class="Comment">// further described in [Shoup, J. Symbolic Comp. 20:363-397, 1995].</span>
+
+<span class="Type">void</span> EDF(vec_zz_pX&amp; factors, <span class="Type">const</span> zz_pX&amp; f, <span class="Type">const</span> zz_pX&amp; h,
+         <span class="Type">long</span> d, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+vec_zz_pX EDF(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">const</span> zz_pX&amp; h,
+         <span class="Type">long</span> d, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// Performs equal-degree factorization.  f is monic, square-free, and</span>
+<span class="Comment">// all irreducible factors have same degree.  h = X^p mod f.  d =</span>
+<span class="Comment">// degree of irreducible factors of f.  This routine implements the</span>
+<span class="Comment">// algorithm of [von zur Gathen and Shoup, Computational Complexity</span>
+<span class="Comment">// 2:187-224, 1992]</span>
+
+
+<span class="Type">void</span> RootEDF(vec_zz_pX&amp; factors, <span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_zz_pX RootEDF(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// EDF for d==1</span>
+
+<span class="Type">void</span> SFCanZass(vec_zz_pX&amp; factors, <span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_zz_pX SFCanZass(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+<span class="Comment">// Assumes f is monic and square-free.  returns list of factors of f.</span>
+<span class="Comment">// Uses &quot;Cantor/Zassenhaus&quot; approach, using the routines NewDDF and</span>
+<span class="Comment">// EDF above.</span>
+
+
+<span class="Type">void</span> CanZass(vec_pair_zz_pX_long&amp; factors, <span class="Type">const</span> zz_pX&amp; f,
+             <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+vec_pair_zz_pX_long CanZass(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> verbose=<span class="Constant">0</span>);
+
+
+<span class="Comment">// returns a list of factors, with multiplicities.  f must be monic.</span>
+<span class="Comment">// Calls SquareFreeDecomp and SFCanZass.</span>
+
+<span class="Comment">// NOTE: In most situations, you should use the CanZass factoring</span>
+<span class="Comment">// routine, rather than Berlekamp: it is faster and uses less space.</span>
+
+
+<span class="Type">void</span> mul(zz_pX&amp; f, <span class="Type">const</span> vec_pair_zz_pX_long&amp; v);
+zz_pX mul(<span class="Type">const</span> vec_pair_zz_pX_long&amp; v);
+
+
+<span class="Comment">// multiplies polynomials, with multiplicities</span>
+
+<span class="Comment">/*</span><span class="Comment">*************************************************************************\</span>
+
+<span class="Comment">                            Irreducible Polynomials</span>
+
+<span class="Comment">\*************************************************************************</span><span class="Comment">*/</span>
+
+<span class="Type">long</span> ProbIrredTest(<span class="Type">const</span> zz_pX&amp; f, <span class="Type">long</span> iter=<span class="Constant">1</span>);
+
+<span class="Comment">// performs a fast, probabilistic irreduciblity test.  The test can</span>
+<span class="Comment">// err only if f is reducible, and the error probability is bounded by</span>
+<span class="Comment">// p^{-iter}.  This implements an algorithm from [Shoup, J. Symbolic</span>
+<span class="Comment">// Comp. 17:371-391, 1994].</span>
+
+
+<span class="Type">long</span> DetIrredTest(<span class="Type">const</span> zz_pX&amp; f);
+
+<span class="Comment">// performs a recursive deterministic irreducibility test.  Fast in</span>
+<span class="Comment">// the worst-case (when input is irreducible).  This implements an</span>
+<span class="Comment">// algorithm from [Shoup, J. Symbolic Comp. 17:371-391, 1994].</span>
+
+<span class="Type">long</span> IterIrredTest(<span class="Type">const</span> zz_pX&amp; f);
+
+<span class="Comment">// performs an iterative deterministic irreducibility test, based on</span>
+<span class="Comment">// DDF.  Fast on average (when f has a small factor).</span>
+
+<span class="Type">void</span> BuildIrred(zz_pX&amp; f, <span class="Type">long</span> n);
+zz_pX BuildIrred_zz_pX(<span class="Type">long</span> n);
+
+<span class="Comment">// Build a monic irreducible poly of degree n.</span>
+
+<span class="Type">void</span> BuildRandomIrred(zz_pX&amp; f, <span class="Type">const</span> zz_pX&amp; g);
+zz_pX BuildRandomIrred(<span class="Type">const</span> zz_pX&amp; g);
+
+<span class="Comment">// g is a monic irreducible polynomial.  Constructs a random monic</span>
+<span class="Comment">// irreducible polynomial f of the same degree.</span>
+
+<span class="Type">long</span> ComputeDegree(<span class="Type">const</span> zz_pX&amp; h, <span class="Type">const</span> zz_pXModulus&amp; F);
+
+<span class="Comment">// f is assumed to be an &quot;equal degree&quot; polynomial.  h = X^p mod f.</span>
+<span class="Comment">// The common degree of the irreducible factors of f is computed This</span>
+<span class="Comment">// routine is useful in counting points on elliptic curves</span>
+
+<span class="Type">long</span> ProbComputeDegree(<span class="Type">const</span> zz_pX&amp; h, <span class="Type">const</span> zz_pXModulus&amp; F);
+
+<span class="Comment">// same as above, but uses a slightly faster probabilistic algorithm.</span>
+<span class="Comment">// The return value may be 0 or may be too big, but for large p</span>
+<span class="Comment">// (relative to n), this happens with very low probability.</span>
+
+<span class="Type">void</span> TraceMap(zz_pX&amp; w, <span class="Type">const</span> zz_pX&amp; a, <span class="Type">long</span> d, <span class="Type">const</span> zz_pXModulus&amp; F,
+              <span class="Type">const</span> zz_pX&amp; h);
+
+zz_pX TraceMap(<span class="Type">const</span> zz_pX&amp; a, <span class="Type">long</span> d, <span class="Type">const</span> zz_pXModulus&amp; F,
+              <span class="Type">const</span> zz_pX&amp; h);
+
+<span class="Comment">// w = a+a^q+...+^{q^{d-1}} mod f; it is assumed that d &gt;= 0, and h =</span>
+<span class="Comment">// X^q mod f, q a power of p.  This routine implements an algorithm</span>
+<span class="Comment">// from [von zur Gathen and Shoup, Computational Complexity 2:187-224,</span>
+<span class="Comment">// 1992]</span>
+
+<span class="Type">void</span> PowerCompose(zz_pX&amp; w, <span class="Type">const</span> zz_pX&amp; h, <span class="Type">long</span> d, <span class="Type">const</span> zz_pXModulus&amp; F);
+zz_pX PowerCompose(<span class="Type">const</span> zz_pX&amp; h, <span class="Type">long</span> d, <span class="Type">const</span> zz_pXModulus&amp; F);
+
+
+<span class="Comment">// w = X^{q^d} mod f; it is assumed that d &gt;= 0, and h = X^q mod f, q</span>
+<span class="Comment">// a power of p.  This routine implements an algorithm from [von zur</span>
+<span class="Comment">// Gathen and Shoup, Computational Complexity 2:187-224, 1992]</span>
+
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

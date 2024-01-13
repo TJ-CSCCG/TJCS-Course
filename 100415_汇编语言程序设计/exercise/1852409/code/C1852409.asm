@@ -1,0 +1,98 @@
+DATA 	SEGMENT
+N1 DW 0
+N2 DW 0
+N3 DW 0
+BUF DB 80, ?, 80 DUP(?)
+DATA ENDS
+
+CODE 	SEGMENT
+	ASSUME 	CS:CODE, DS:DATA
+MAIN:	
+	MOV	AX, DATA
+	MOV	DS, AX
+
+
+
+
+	MOV AH, 0AH
+	LEA DX, BUF			;取址，输入一个字符串
+	INT 21H
+
+	MOV N1, 0
+	MOV N2, 0
+	MOV N3, 0			;初始化变量
+
+	MOV BX, 0
+	JMP LOC2
+LOC1:
+	MOV AL, BUF[2 + BX]
+	INC BX              ;这里increment
+	CMP AL, "0"			;0~9
+	JB	OTHERS
+	CMP AL, "9"
+	JA 	ELSE1
+	INC N1
+	JMP LOC2
+
+
+ELSE1:					;A~Z
+	CMP AL, "A"
+	JB	OTHERS
+	CMP AL, "Z"
+	JA	ELSE2
+	INC N2
+	JMP LOC2
+ELSE2:
+	CMP AL,"a"
+	JB	OTHERS
+	CMP AL, "z"
+	JA	OTHERS
+	INC N2
+	JMP	LOC2
+OTHERS:
+	INC N3
+	JMP LOC2
+
+
+LOC2:
+	CMP BL, BUF[0]
+	JA	LAST
+	CMP AL, 13
+	JNE	LOC1
+
+
+
+
+LAST:
+	MOV	AX, [0000 + SI]
+	MOV	CX, 0
+	MOV	BX, 10
+R11:	
+    MOV	DX, 0
+	DIV	BX
+	ADD	DX, '0'
+	PUSH	DX
+	INC	CX
+R12:	
+    OR	AX, AX
+	JNZ	R11
+EndR1:
+R21:	
+    POP	DX
+	MOV	AH, 2
+	INT	21h
+R22:	LOOP	R21
+EndR2:
+    INC SI
+    INC SI
+    CMP SI, 4
+    JNG LAST
+
+
+
+
+	MOV	AX, 4C00H
+	INT	21H
+    
+CODE	ENDS
+END		MAIN

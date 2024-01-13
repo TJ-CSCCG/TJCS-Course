@@ -1,0 +1,73 @@
+
+
+CORE Generator Options:
+   Target Device                   : xc7a100t-csg324
+   Speed Grade                     : -1
+   HDL                             : vhdl
+   Synthesis Tool                  : Foundation_ISE
+
+MIG Output Options:
+   Module Name                     : ddr
+   No of Controllers               : 1
+   Selected Compatible Device(s)   : --
+
+FPGA Options:
+   System Clock Type               : No Buffer
+   Reference Clock Type            : Use System Clock
+   Debug Port                      : OFF
+   Internal Vref                   : enabled
+   IO Power Reduction              : ON
+   XADC instantiation in MIG       : Disabled
+
+Extended FPGA Options:
+   DCI for DQ,DQS/DQS#,DM          : enabled
+   Internal Termination (HR Banks) : 50 Ohms
+    
+/*******************************************************/
+/*                  Controller 0                       */
+/*******************************************************/
+Controller Options :
+   Memory                        : DDR2_SDRAM
+   Interface                     : NATIVE
+   Design Clock Frequency        : 3333 ps (300.03 MHz)
+   Phy to Controller Clock Ratio : 4:1
+   Input Clock Period            : 4999 ps
+   CLKFBOUT_MULT (PLL)           : 6
+   DIVCLK_DIVIDE (PLL)           : 1
+   VCC_AUX IO                    : 1.8V
+   Memory Type                   : Components
+   Memory Part                   : MT47H64M16HR-25E
+   Equivalent Part(s)            : --
+   Data Width                    : 16
+   ECC                           : Disabled
+   Data Mask                     : enabled
+   ORDERING                      : Strict
+
+AXI Parameters :
+   Data Width                    : 128
+   Arbitration Scheme            : RD_PRI_REG
+   Narrow Burst Support          : 1
+   ID Width                      : 4
+
+Memory Options:
+   Burst Length (MR0[1:0])          : 8
+   CAS Latency (MR0[6:4])           : 5
+   Output Drive Strength (MR1[5,1]) : Fullstrength
+   Controller CS option             : Enable
+   Rtt_NOM - ODT (MR1[9,6,2])       : 50ohms
+   Memory Address Mapping           : BANK_ROW_COLUMN
+
+
+Bank Selections:
+
+System_Control: 
+	SignalName: sys_rst
+		PadLocation: No connect  Bank: Select Bank
+	SignalName: init_calib_complete
+		PadLocation: No connect  Bank: Select Bank
+	SignalName: tg_compare_error
+		PadLocation: No connect  Bank: Select Bank
+
+
+
+    

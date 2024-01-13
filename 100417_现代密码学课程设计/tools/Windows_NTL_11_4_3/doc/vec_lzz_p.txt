@@ -1,0 +1,95 @@
+
+/**************************************************************************\
+
+MODULE: vec_zz_p
+
+SUMMARY:
+
+Provides vectors over zz_p, along with some related operations.
+
+\**************************************************************************/
+
+#include "zz_p.h"
+#include "vec_zz.h"
+#include <NTL/vector.h>
+
+typedef Vec<zz_p> vec_zz_p; // backward compatibility
+
+void mul(vec_zz_p& x, const vec_zz_p& a, zz_p b);
+void mul(vec_zz_p& x, const vec_zz_p& a, long b);
+
+void mul(vec_zz_p& x, zz_p a, const vec_zz_p& b);
+void mul(vec_zz_p& x, long a, const vec_zz_p& b);
+// x = a * b
+
+void add(vec_zz_p& x, const vec_zz_p& a, const vec_zz_p& b);
+// x = a + b
+
+void sub(vec_zz_p& x, const vec_zz_p& a, const vec_zz_p& b);
+// x = a - b
+
+void clear(vec_zz_p& x);
+// x = 0 (length unchanged)
+
+void negate(vec_zz_p& x, const vec_zz_p& a);
+// x = -a
+
+long IsZero(const vec_zz_p& a);
+// test if a is the zero vector
+
+void VectorCopy(vec_zz_p& x, const vec_zz_p& a, long n);
+vec_zz_p VectorCopy(const vec_zz_p& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+void random(vec_zz_p& x, long n);  // x = random vector of length n
+vec_zz_p random_vec_zz_p(long n);
+
+
+void InnerProduct(zz_p& x, const vec_zz_p& a, const vec_zz_p& b);
+// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(),
+// b.length())
+
+void InnerProduct(zz_p& x, const vec_zz_p& a, const vec_zz_p& b,
+                  long offset);
+// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),
+// b.length()+offset)
+
+long CRT(vec_ZZ& a, ZZ& prod, const vec_zz_p& A);
+// Incremental Chinese Remaindering: If p is the current zz_p modulus with
+// (p, prod) = 1; Computes a' such that a' = a mod prod and a' = A mod p,
+// with coefficients in the interval (-p*prod/2, p*prod/2]; 
+// Sets a := a', prod := p*prod, and returns 1 if a's value changed.
+
+
+// operator notation:
+
+vec_zz_p operator+(const vec_zz_p& a, const vec_zz_p& b);
+vec_zz_p operator-(const vec_zz_p& a, const vec_zz_p& b);
+
+vec_zz_p operator-(const vec_zz_p& a);
+
+
+// vector/scalar multiplication:
+
+vec_zz_p operator*(const vec_zz_p& a, zz_p b);
+vec_zz_p operator*(const vec_zz_p& a, long b);
+
+vec_zz_p operator*(zz_p a, const vec_zz_p& b);
+vec_zz_p operator*(long a, const vec_zz_p& b);
+
+
+// inner product:
+
+zz_p operator*(const vec_zz_p& a, const vec_zz_p& b);
+
+
+
+// assignment operator notation:
+
+vec_zz_p& operator+=(vec_zz_p& x, const vec_zz_p& a);
+vec_zz_p& operator-=(vec_zz_p& x, const vec_zz_p& a);
+
+vec_zz_p& operator*=(vec_zz_p& x, zz_p a);
+vec_zz_p& operator*=(vec_zz_p& x, long a);
+

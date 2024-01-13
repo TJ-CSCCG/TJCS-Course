@@ -1,0 +1,93 @@
+
+/**************************************************************************\
+
+MODULE: vec_ZZ_pE
+
+SUMMARY:
+
+Provides vectors over ZZ_pE, along with some related operations.
+
+\**************************************************************************/
+
+#include <NTL/ZZ_pE.h>
+#include <NTL/vec_ZZ.h>
+#include <NTL/vector.h>
+
+typedef Vec<ZZ_pE> vec_ZZ_pE; // backward compatibility
+
+void mul(vec_ZZ_pE& x, const vec_ZZ_pE& a, const ZZ_pE& b);
+void mul(vec_ZZ_pE& x, const vec_ZZ_pE& a, const ZZ_p& b);
+void mul(vec_ZZ_pE& x, const vec_ZZ_pE& a, long b);
+
+void mul(vec_ZZ_pE& x, const ZZ_pE& a, const vec_ZZ_pE& b);
+void mul(vec_ZZ_pE& x, const ZZ_p& a, const vec_ZZ_pE& b);
+void mul(vec_ZZ_pE& x, long a, const vec_ZZ_pE& b);
+// x = a * b
+
+void add(vec_ZZ_pE& x, const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+// x = a + b
+
+void sub(vec_ZZ_pE& x, const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+// x = a - b
+
+void clear(vec_ZZ_pE& x);
+// x = 0 (length unchanged)
+
+void negate(vec_ZZ_pE& x, const vec_ZZ_pE& a);
+// x = -a
+
+long IsZero(const vec_ZZ_pE& a);
+// test if a is the zero vector
+
+
+void InnerProduct(ZZ_pE& x, const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+// x = sum_{i=0}^{n-1} a[i]*b[i], where n = min(a.length(),
+// b.length())
+
+void InnerProduct(ZZ_pE& x, const vec_ZZ_pE& a, const vec_ZZ_pE& b,
+                  long offset);
+// x = sum_{i=offset}^{n-1} a[i]*b[i-offset], where n = min(a.length(),
+// b.length()+offset)
+
+void VectorCopy(vec_ZZ_pE& x, const vec_ZZ_pE& a, long n);
+vec_ZZ_pE VectorCopy(const vec_ZZ_pE& a, long n);
+// x = a copy of a of length exactly n.
+// The input is truncated or padded with zeroes, as necessary.
+
+void random(vec_ZZ_pE& x, long n);  // x = random vector of length n
+vec_ZZ_pE random_vec_ZZ_pE(long n);
+
+
+
+// operator notation:
+
+vec_ZZ_pE operator+(const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+vec_ZZ_pE operator-(const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+
+vec_ZZ_pE operator-(const vec_ZZ_pE& a);
+
+
+// vector/scalar multiplication:
+
+vec_ZZ_pE operator*(const vec_ZZ_pE& a, const ZZ_pE& b);
+vec_ZZ_pE operator*(const vec_ZZ_pE& a, const ZZ_p& b);
+vec_ZZ_pE operator*(const vec_ZZ_pE& a, long b);
+
+vec_ZZ_pE operator*(const ZZ_pE& a, const vec_ZZ_pE& b);
+vec_ZZ_pE operator*(const ZZ_p& a, const vec_ZZ_pE& b);
+vec_ZZ_pE operator*(long a, const vec_ZZ_pE& b);
+
+// inner product:
+
+ZZ_pE operator*(const vec_ZZ_pE& a, const vec_ZZ_pE& b);
+
+
+// assignment operator notation:
+
+vec_ZZ_pE& operator+=(vec_ZZ_pE& x, const vec_ZZ_pE& a);
+vec_ZZ_pE& operator-=(vec_ZZ_pE& x, const vec_ZZ_pE& a);
+
+vec_ZZ_pE& operator*=(vec_ZZ_pE& x, const ZZ_pE& a);
+vec_ZZ_pE& operator*=(vec_ZZ_pE& x, const ZZ_p& a);
+vec_ZZ_pE& operator*=(vec_ZZ_pE& x, long a);
+

@@ -1,0 +1,138 @@
+-------------------------------------------------------------------------------
+-- (c) Copyright 2012 Xilinx, Inc. All rights reserved.
+--
+-- This file contains confidential and proprietary information
+-- of Xilinx, Inc. and is protected under U.S. and
+-- international copyright and other intellectual property
+-- laws.
+--
+-- DISCLAIMER
+-- This disclaimer is not a license and does not grant any
+-- rights to the materials distributed herewith. Except as
+-- otherwise provided in a valid license issued to you by
+-- Xilinx, and to the maximum extent permitted by applicable
+-- law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+-- WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+-- AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+-- BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+-- INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+-- (2) Xilinx shall not be liable (whether in contract or tort,
+-- including negligence, or under any other theory of
+-- liability) for any loss or damage of any kind or nature
+-- related to, arising under or in connection with these
+-- materials, including for any direct, or any indirect,
+-- special, incidental, or consequential loss or damage
+-- (including loss of data, profits, goodwill, or any type of
+-- loss or damage suffered as a result of any action brought
+-- by a third party) even if such damage or loss was
+-- reasonably foreseeable or Xilinx had been advised of the
+-- possibility of the same.
+--
+-- CRITICAL APPLICATIONS
+-- Xilinx products are not designed or intended to be fail-
+-- safe, or for use in any application requiring fail-safe
+-- performance, such as life-support or safety devices or
+-- systems, Class III medical devices, nuclear facilities,
+-- applications related to the deployment of airbags, or any
+-- other applications that could lead to death, personal
+-- injury, or severe property or environmental damage
+-- (individually and collectively, "Critical
+-- Applications"). Customer assumes the sole risk and
+-- liability of any use of Xilinx products in Critical
+-- Applications, subject only to applicable laws and
+-- regulations governing limitations on product liability.
+--
+-- THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+-- PART OF THIS FILE AT ALL TIMES.
+--
+-------------------------------------------------------------------------------
+--   ____  ____
+--  /   /\/   /
+-- /___/  \  /    Vendor             : Xilinx
+-- \   \   \/     Version            : 1.9
+--  \   \         Application	     : MIG
+--  /   /         Filename           : xsim_files.prj
+-- /___/   /\     Date Last Modified : $Date: 2011/06/02 08:31:16 $
+-- \   \  /  \    Date Created       : Tue Jun 05 2012
+--  \___\/\___\
+--
+-- Device          : 7 Series
+-- Design Name     : DDR2 SDRAM
+-- Purpose         : Contains a list of all the files associated with a design
+-- Assumptions:
+--      - Simulation takes place in \sim folder of MIG output directory
+-- Reference       :
+-- Revision History:
+-------------------------------------------------------------------------------
+
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_afifo.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_cmd_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_cmd_prbs_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_data_prbs_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_init_mem_pattern_ctr.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_memc_flow_vcontrol.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_memc_traffic_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_rd_data_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_read_data_path.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_read_posted_fifo.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_s7ven_data_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_tg_prbs_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_tg_status.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_traffic_gen_top.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_vio_init_pattern_bram.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_wr_data_gen.v
+verilog  work  ../rtl/traffic_gen/mig_7series_v1_9_write_data_path.v
+vhdl  work  ../rtl/example_top.vhd
+verilog  work  ../../user_design/rtl/clocking/mig_7series_v1_9_clk_ibuf.v
+verilog  work  ../../user_design/rtl/clocking/mig_7series_v1_9_infrastructure.v
+verilog  work  ../../user_design/rtl/clocking/mig_7series_v1_9_iodelay_ctrl.v
+verilog  work  ../../user_design/rtl/clocking/mig_7series_v1_9_tempmon.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_arb_mux.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_arb_row_col.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_arb_select.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_cntrl.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_common.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_compare.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_mach.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_queue.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_bank_state.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_col_mach.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_mc.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_rank_cntrl.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_rank_common.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_rank_mach.v
+verilog  work  ../../user_design/rtl/controller/mig_7series_v1_9_round_robin_arb.v
+verilog  work  ../../user_design/rtl/ecc/mig_7series_v1_9_ecc_buf.v
+verilog  work  ../../user_design/rtl/ecc/mig_7series_v1_9_ecc_dec_fix.v
+verilog  work  ../../user_design/rtl/ecc/mig_7series_v1_9_ecc_gen.v
+verilog  work  ../../user_design/rtl/ecc/mig_7series_v1_9_ecc_merge_enc.v
+verilog  work  ../../user_design/rtl/ip_top/mig_7series_v1_9_mem_intfc.v
+verilog  work  ../../user_design/rtl/ip_top/mig_7series_v1_9_memc_ui_top_std.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_byte_group_io.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_byte_lane.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_calib_top.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_if_post_fifo.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_mc_phy.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_mc_phy_wrapper.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_of_pre_fifo.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_4lanes.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_dqs_found_cal.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_dqs_found_cal_hr.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_init.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_oclkdelay_cal.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_prbs_rdlvl.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_rdlvl.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_tempmon.v
+vhdl  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_top.vhd
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_wrcal.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_phy_wrlvl_off_delay.v
+verilog  work  ../../user_design/rtl/phy/mig_7series_v1_9_ddr_prbs_gen.v
+verilog  work  ../../user_design/rtl/ui/mig_7series_v1_9_ui_cmd.v
+verilog  work  ../../user_design/rtl/ui/mig_7series_v1_9_ui_rd_data.v
+verilog  work  ../../user_design/rtl/ui/mig_7series_v1_9_ui_top.v
+verilog  work  ../../user_design/rtl/ui/mig_7series_v1_9_ui_wr_data.v
+vhdl  work  ../../user_design/rtl/ddr.vhd
+verilog  work  $XILINX/verilog/src/glbl.v
+verilog  work  ./sim_tb_top.v
+verilog  work  ./wiredly.v
+verilog  work  ./ddr2_model.v -d x1Gb -d sg25E -d x16 -i ./
