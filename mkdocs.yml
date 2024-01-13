@@ -5,3 +5,5 @@ theme:
 
 markdown_extensions:
   - def_list
+
+repo_url: https://github.com/TJ-CSCCG/TJCS-Course
