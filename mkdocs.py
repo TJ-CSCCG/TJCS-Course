@@ -4,21 +4,42 @@
 
 import os
 import yaml
+from urllib.parse import quote
 
+TXT_EXTS = ['md', 'txt']
 EXCLUDE_DIRS = ['.git', 'docs', '.vscode', '.circleci', 'site', 'overrides', '.github']
 README_MD = ['README.md', 'readme.md', 'index.md']
 
+TXT_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/blob/main/'
+BIN_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/raw/main/'
+
 def list_files(course: str):
+    filelist_texts = ''
     readme_path = ''
+    file_cnt = 0
     for root, dirs, files in os.walk(course):
         files.sort()
+        level = root.replace(course, '').count(os.sep)
+        indent = ' ' * 4 * level
+        filelist_texts += '{}- {}\n'.format(indent, os.path.basename(root))
+        subindent = ' ' * 4 * (level + 1)
         for f in files:
-            if root == course and readme_path == '':
+            if f not in README_MD:
+                file_cnt += 1
+                if f.split('.')[-1] in TXT_EXTS:
+                    filelist_texts += '{}- [{}]({})\n'.format(subindent,
+                                                              f, TXT_URL_PREFIX + quote('{}/{}'.format(root, f)))
+                else:
+                    filelist_texts += '{}- [{}]({})\n'.format(subindent,
+                                                              f, BIN_URL_PREFIX + quote('{}/{}'.format(root, f)))
+            elif root == course and readme_path == '':
                 readme_path = '{}/{}'.format(root, f)
-    return readme_path
+    if file_cnt == 0:
+        return '', readme_path
+    return filelist_texts, readme_path
 
-def generate_md(term: str, course: str, readme_path: str):
-    final_texts = ['\n'.encode()]
+def generate_md(term: str, course: str, readme_path: str, filelist_texts: str):
+    final_texts = ['\n'.encode(), filelist_texts.encode()]
     if readme_path:
         with open(readme_path, 'rb') as file:
             final_texts = file.readlines() + final_texts
@@ -43,8 +64,8 @@ if __name__ == '__main__':
         courses = yaml_data[term]
 
         for course in courses:
-            readme_path = list_files(course)
-            generate_md(term, course, readme_path)
+            filelist_texts, readme_path = list_files(course)
+            generate_md(term, course, readme_path, filelist_texts)
 
     # use main README.md as index.md
     with open('README.md', 'rb') as file:
