@@ -10,8 +10,8 @@ TXT_EXTS = ['md', 'txt']
 EXCLUDE_DIRS = ['.git', 'docs', '.vscode', '.circleci', 'site', 'overrides', '.github']
 README_MD = ['README.md', 'readme.md', 'index.md']
 
-TXT_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/blob/main/'
-BIN_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/raw/main/'
+TXT_URL_PREFIX = 'https://github.com/TJ-CSCCG/TJCS-Course/blob/master/'
+BIN_URL_PREFIX = 'https://github.com/TJ-CSCCG/TJCS-Course/raw/master/'
 
 def list_files(course: str):
     filelist_texts = '\n## 文件列表\n'
