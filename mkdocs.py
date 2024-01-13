@@ -14,7 +14,7 @@ TXT_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/blob/main/'
 BIN_URL_PREFIX = 'https://github.com/TJCS-Course/TJCS-Course/raw/main/'
 
 def list_files(course: str):
-    filelist_texts = ''
+    filelist_texts = '\n## 文件列表\n'
     readme_path = ''
     file_cnt = 0
     for root, dirs, files in os.walk(course):
