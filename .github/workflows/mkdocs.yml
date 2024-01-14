@@ -1,0 +1,37 @@
+name: mkdocs
+on:
+  push:
+    branches:
+      - master 
+      # only for test
+      - mkdocs
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python Env
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      # It seems the actions by mhausenblas below can't properly install mkdocs
+      - name: Install Mkdocs
+        run: |
+            pip install pyyaml
+            echo 'mkdocs' > requirements.txt
+            echo 'mkdocs-material' >> requirements.txt
+
+      - name: Migrate Files for Mkdocs
+        run: |
+            python ./mkdocs.py
+
+      - name: Deploy Docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
