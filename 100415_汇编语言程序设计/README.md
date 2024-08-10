@@ -79,9 +79,9 @@
 
 * 需要配置的**环境文件**，为了教学研究目的，也已经一并上传到同济云盘，**提取码 1239**。
 
-  * [DOSBOX](https://yunpan.tongji.edu.cn/link/AA3A39BAF1B0B447CBB5869CCE11CC733E)
-  * [masmPLUS](https://yunpan.tongji.edu.cn/link/AA164CFD1FA9954A9488260727C43FF05E)
-  * [DEBUG32](https://yunpan.tongji.edu.cn/link/AADC83F3547AB84B819CC8C92005541C89)
+  * [DOSBOX](https://yunpan.tongji.edu.cn/link/AAA0EB62F3056043F4805A4D1EFE96E5DD)
+  * [masmPLUS](https://yunpan.tongji.edu.cn/link/AAFC25BFCB2F9C4C6BB75ABCAFE43066CA)
+  * [DEBUG32](https://yunpan.tongji.edu.cn/link/AA5E7580EA15694137990F3005ABCF28CF)
 
   **注：**
   
