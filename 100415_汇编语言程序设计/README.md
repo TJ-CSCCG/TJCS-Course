@@ -102,15 +102,15 @@
   每次使用之前需要 `mount` 并切换到 `mount` 的目录，似乎只需要强调这一点，见一个例子；
 
   ```cmd
-  mount c: c:/assembly/project  # 前面是DOS的目录，后面是操作系统（Win11..）的目录，相当于构建了一个映射
-  c:                            # 切换工作目录为C:（默认是Z:），这样DOS就可以访问到c:/assembly/project下的文件
+  mount c: c:/assembly/project  # 前面是 DOS 的目录，后面是操作系统（Win11..）的目录，相当于构建了一个映射
+  c:                            # 切换工作目录为 C:（默认是 Z:），这样 DOS 就可以访问到 c:/assembly/project 下的文件
   ```
 
   注意，要把 `DEBUG32`，`.asm` 文件放入到操作系统的目录，`DOS` 才能访问到对应文件。
 
 * `masmPLUS` 是一个汇编编译器，类似于VS之于C语言，可以编译、链接 `.asm` 文件，注意如果不愿意按照它给的模板为基础进行编译，想新建一个空白文件的话，一定要在首行加上 `;#Mode=DOS`，否则编译报错，这应该是编译器的约定；
 
-* `DEBUG32` 是查看程序运行过程中，内存与寄存器变化的程序，使用 `DEBUG32 foo.exe` 来运行`DEBUG32`。
+* `DEBUG32` 是查看程序运行过程中，内存与寄存器变化的程序，使用 `DEBUG32 foo.exe` 来运行 `DEBUG32`。
 
 `DOSBOX` 和 `masmPLUS` 双击安装即可，`DEBUG32` 要拖到对应文件夹。
 
