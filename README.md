@@ -1,6 +1,6 @@
 # :tada: TJCS-Course
 
-![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)  ![visitors](https://visitor-badge.lithub.cc/badge?page_id=TJ-CSCCG.TJCS-Course)  [![Generate-Power-With-Love](https://img.shields.io/badge/Generate--Power--With-Love-red)](https://github.com/TJ-CSCCG/TJCS-Assignment)
+![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)  ![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FTJ-CSCCG%2FTJCS-Course&countColor=%23263759)  [![Generate-Power-With-Love](https://img.shields.io/badge/Generate--Power--With-Love-red)](https://github.com/TJ-CSCCG/TJCS-Assignment)
 
 ## :bulb: 简介
 
