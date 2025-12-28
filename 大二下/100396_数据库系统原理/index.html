@@ -1,0 +1,2798 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../100393_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6/">
+      
+      
+        <link rel="next" href="../100417_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>100396 数据库系统原理 - TJCS-Courses</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="TJCS-Courses" class="md-header__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TJCS-Courses
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              100396 数据库系统原理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TJCS-Courses" class="md-nav__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TJCS-Courses
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大一下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大一下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%80%E4%B8%8B/100384_%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100384 高级语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100709_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100709 计算机科学导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100388_%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100388 离散数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/101019_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101019 数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102109 数字逻辑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100663_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100663 数据结构与算法设计1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100687_%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100687 组合数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100391_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100391 软件开发方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100393_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100393 现代密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100396 数据库系统原理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100396 数据库系统原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100396" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        100396 数据库系统原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="100396 数据库系统原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#i-2019-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        i. 2019-2020 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ii-2020-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ii. 2020-2021 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iii-2022-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iii. 2022-2023 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-03148-xiang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 03148 Xiang
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-19034-li" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 19034 Li
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-05222-guan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 05222 Guan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100417_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100417 现代密码学课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100579_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100579 人工智能课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100580_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100580 人工智能原理与技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100583_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100583 信息安全数学基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100656_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100656 计算机组成原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101016 计算机组成原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../101029_%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101029 算法分析与设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100390_%E5%BD%A2%E5%BC%8F%E8%AF%AD%E8%A8%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%9C%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100390 形式语言与自动机
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100433_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100433 计算机图形学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100437_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100437 数据库系统原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100640_%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100640 并行与分布式系统架构技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100775_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100775 机器学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101023_%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101023 软件工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101062_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101062 计算机网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/102147_%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102147 模式识别
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100022_Web%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100022 Web技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100222_%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100222 安全体系结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100395_%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100395 编译原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100398_%E7%BD%91%E7%BB%9C%E9%98%B2%E5%BE%A1%E4%B8%8E%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100398 网络防御与安全评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100399_%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100399 电子商务技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100407_%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100407 计算机视觉
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100410_%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100410 信号处理导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100411_Unix%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100411 Unix系统分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100418_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100418 信息安全综合实验设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100582_%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0%E4%B8%8E%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100582 系统安全评估与应用安全实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100658_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100658 信息安全原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101030_%E5%A4%9A%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101030 多媒体技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101031_%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101031 程序设计方法学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101105_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101105 信息安全工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100164_IT%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100164 IT项目管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100230_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100230 计算机取证
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100400_%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100400 数据挖掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100402_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B3%95%E5%BE%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100402 信息安全管理和法律基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100406_%E6%9C%8D%E5%8A%A1%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100406 服务计算概论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100577_%E6%AF%95%E4%B8%9A%E5%AE%9E%E8%AE%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100577 毕业实训
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/101020_%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101020 信息隐藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8B/100290_%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100290 毕业设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    小学期
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    小学期
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100165_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100165 数据结构课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100415_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100415 汇编语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100584_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100584 信息安全原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100657_%E4%B8%93%E4%B8%9A%E5%AE%9E%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100657 专业实习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100659_%E7%BB%BC%E5%90%88%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B8%97%E9%80%8F%E6%80%A7%E6%B5%8B%E8%AF%95%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100659 综合安全管理和渗透性测试设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100396" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        100396 数据库系统原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="100396 数据库系统原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#i-2019-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        i. 2019-2020 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ii-2020-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ii. 2020-2021 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iii-2022-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iii. 2022-2023 秋季学期
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-03148-xiang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 03148 Xiang
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-19034-li" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 19034 Li
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-05222-guan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 05222 Guan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">数据库系统原理</h1>
+<h2 id="100396">100396 数据库系统原理</h2>
+<h3 id="_2">一、总述</h3>
+<p>课程内容包括如下几个方面：关系模型、SQL 语句、E-R 图设计、关系型数据库设计、数据存储、索引、查询处理与优化、事务管理、恢复系统等。</p>
+<p>更加偏向于理论层面的讲解，并不过多包含数据库的底层实现。</p>
+<h4 id="1">1. 教材</h4>
+<ul>
+<li>数据库系统概念 ( 原书第 7 版 ) Abraham Silberschatz / Henry F. Korth / S. Sudarshan 著 机械工业出版社 ISBN 9787111681816</li>
+<li>Database System Concepts ( SEVENTH EDITION ) Abraham Silberschatz / Henry F. Korth / S. Sudarshan McGraw-Hill Education ISBN 9780078022159</li>
+</ul>
+<h4 id="2">2. 作业</h4>
+<h5 id="i-2019-2020">i. 2019-2020 秋季学期</h5>
+<p>课程可大致分为两部分，一为 SQL 语句，二为数据库系统理论。</p>
+<p>上半学期基本用来学习 SQL 语句和数据库的一些基础概念。</p>
+<p>下半学期学习数据库较为深入的理论知识。</p>
+<h5 id="ii-2020-2021">ii. 2020-2021 秋季学期</h5>
+<p>作业总占整体评分的 70%，具体比例如下：</p>
+<ul>
+<li>签到、课堂提问：10%；</li>
+<li>课程大作业——数据库系统设计文档撰写：40%；</li>
+<li>杂项：20%</li>
+<li>小组展示 / 个人汇报；( 内容必须来源于 OceanBase 以及 OpenGauss 两种国产数据库 )</li>
+<li>实验报告；</li>
+<li>课后习题；</li>
+<li>调研：10%（属于附加分）</li>
+</ul>
+<h5 id="iii-2022-2023">iii. 2022-2023 秋季学期</h5>
+<p>分数组成如下：</p>
+<ul>
+<li>考勤：10%</li>
+<li>课程大作业：40%</li>
+<li>杂项：20%</li>
+<li>前沿报告：10%（小组完成，内容来源于 OceanBase ）</li>
+<li>实验报告：5%</li>
+<li>课后作业：5%</li>
+<li>期末考试：30%</li>
+</ul>
+<p><strong>（注：课程大作业设计的文档是大三下学期数据库系统原理课程设计的系统设计文档，二者一脉相承。如若在大三下换题，需要再写一次系统设计文档）</strong></p>
+<p>尽管本科目名为 <strong>数据库系统原理</strong>，但助教表示，<strong>“数据库” 却不在课设可选范围内</strong>。</p>
+<p>有关 2020-2021 秋季学期更多信息，可参考 <a href="https://github.com/kssamwang/Review-of-Database-System">19 同济大学数据库复习资料</a></p>
+<h4 id="3">3. 考试</h4>
+<p>据说之前考的太简单了，之后会一年比一年难。</p>
+<p>如：18 级题量据说是 17 级考试题量的 1.5 倍。</p>
+<p>~~再如：20 级考试开卷，可上网，大题 6 选 4 每题 25 分，且其中一题可选画本学期课程内容思维导图（注：特殊时期，难度并无任何参考价值）。~~</p>
+<p>每个章节都会有关键考点，比如关系代数；范式的判断；闭包、最小依赖的求法；多线程查询写入；备份恢复都会是考试的重点。</p>
+<h4 id="4">4. 实验</h4>
+<p>20 级原定有 7 次实验，实际上由于某种兼容性原因取消一次，采用的数据库软件是 MySQL。</p>
+<p>实验安排在周二下午 5-6 节课，只需腾讯会议线上挂着。实验分数占比不多，对于数据库 SQL 不熟悉的同学，每个实验预计用时为 3h</p>
+<p>各次实验内容分别为：</p>
+<ol>
+<li>SQL DDL</li>
+<li>SQL DML</li>
+<li>数据库安全性</li>
+<li>（实验取消）</li>
+<li>SQL 综合练习</li>
+<li>miniob 实验</li>
+<li>miniob 实验二</li>
+</ol>
+<h3 id="_3">二、任课教师</h3>
+<h4 id="1-03148-xiang">1. 03148 Xiang</h4>
+<p><strong>（注：2019-2020 秋季学期后不再担任 数据库系统原理 以及 数据库系统原理课程设计 任课教师）</strong></p>
+<p>基本不可能解决提出的问题，对于课程内容把握不够。</p>
+<p>不签到。上课时不管在干什么。</p>
+<p>期末前会放往届考题的照片。</p>
+<h4 id="2-19034-li">2. 19034 Li</h4>
+<h4 id="3-05222-guan">3. 05222 Guan</h4>
+<h2 id="_4">文件列表</h2>
+<ul>
+<li>100396_数据库系统原理<ul>
+<li>doc<ul>
+<li>课件扩展<ul>
+<li>第6章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC6%E7%AB%A0/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%B8%8E%E5%A4%9A%E5%80%BC%E4%BE%9D%E8%B5%96%E7%9A%84%E7%90%86%E8%A7%A3.doc">函数依赖与多值依赖的理解.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC6%E7%AB%A0/%E6%97%A0%E6%8D%9F%E8%BF%9E%E6%8E%A5%E4%BE%9D%E8%B5%96%E8%BF%9E%E6%8E%A5%E7%AE%97%E6%B3%956.36.4%E8%A7%A3%E9%87%8A.doc">无损连接依赖连接算法6.36.4解释.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC6%E7%AB%A0/%E6%B1%82%E6%9C%80%E5%B0%8F%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E9%9B%86%E4%BE%8B%E9%A2%98.doc">求最小函数依赖集例题.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC6%E7%AB%A0/%E7%AC%AC6%E7%AB%A0%E6%B1%82%E9%97%AD%E5%8C%85%E3%80%81%E6%9C%80%E5%B0%8F%E4%BE%9D%E8%B5%96%E9%9B%86%E3%80%81%E6%97%A0%E6%8D%9F%E8%BF%9E%E6%8E%A5%E5%92%8C%E4%BE%9D%E8%B5%96%E8%BF%9E%E6%8E%A5%E4%BD%9C%E4%B8%9A.doc">第6章求闭包、最小依赖集、无损连接和依赖连接作业.doc</a></li>
+</ul>
+</li>
+<li>第1章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC1%E7%AB%A0/%E5%86%85%E6%A8%A1%E5%BC%8F%E5%9B%BE2.jpg">内模式图2.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC1%E7%AB%A0/%E5%A4%96%E6%A8%A1%E5%BC%8F%E5%9B%BE0.jpg">外模式图0.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC1%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84.jpg">数据库结构.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC1%E7%AB%A0/%E6%A8%A1%E5%BC%8F%E5%9B%BE1.jpg">模式图1.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC1%E7%AB%A0/%E6%A8%A1%E5%BC%8F%E5%A4%96%E6%A8%A1%E5%BC%8F%E6%98%A0%E5%83%8F%E5%9B%BE.jpg">模式外模式映像图.jpg</a></li>
+</ul>
+</li>
+<li>第3章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC3%E7%AB%A0/SQL%E8%AF%AD%E5%8F%A5%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3.doc">SQL语句多表连接执行过程的理解.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC3%E7%AB%A0/mysql%E5%91%BD%E4%BB%A4%E4%B8%BE%E4%BE%8B.txt">mysql命令举例.txt</a></li>
+</ul>
+</li>
+<li>第7章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC7%E7%AB%A0/%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99.doc">转换规则.doc</a></li>
+</ul>
+</li>
+<li>第5章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC5%E7%AB%A0/%E5%85%B3%E4%BA%8Eafter%E8%A7%A6%E5%8F%91%E5%99%A8%E8%A7%A6%E5%8F%91%E4%B9%8B%E5%90%8E%E6%93%8D%E4%BD%9C%E5%A4%B1%E8%B4%A5%EF%BC%8C%E6%95%B4%E4%B8%AA%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E5%8F%8A%E7%BB%93%E6%9E%9C%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%88%E5%BA%9E%E7%9B%9B%E4%B8%9A%EF%BC%89.doc">关于after触发器触发之后操作失败，整个触发器的执行过程及结果的问题（庞盛业）.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC5%E7%AB%A0/%E5%85%B3%E4%BA%8E%E9%AA%8C%E8%AF%81%E6%93%8D%E4%BD%9C%E4%B8%8Eafter%E8%A7%A6%E5%8F%91%E5%99%A8%E5%85%88%E5%90%8E%E9%97%AE%E9%A2%98%EF%BC%88%E7%BD%97%E7%87%95%E6%96%8C%EF%BC%89.doc">关于验证操作与after触发器先后问题（罗燕斌）.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC5%E7%AB%A0/%E8%A7%A6%E5%8F%91%E5%99%A8%E7%A4%BA%E4%BE%8B%EF%BC%88MySQL%EF%BC%89.txt">触发器示例（MySQL）.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC5%E7%AB%A0/%E8%A7%A6%E5%8F%91%E5%99%A8%E7%A4%BA%E4%BE%8B%EF%BC%88MySQL%EF%BC%89_20191024_203311.txt">触发器示例（MySQL）_20191024_203311.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC5%E7%AB%A0/%E9%AA%8C%E8%AF%81before%2Cafter%E8%A7%A6%E5%8F%91%E5%99%A8%E5%92%8C%E6%89%A7%E8%A1%8C%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%EF%BC%88%E8%91%A3%E6%B5%A9%EF%BC%89.docx">验证before,after触发器和执行语句的执行顺序（董浩）.docx</a></li>
+</ul>
+</li>
+<li>第8章<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/C%2B%2B%E8%BF%9E%E6%8E%A5Mysql%E6%95%B0%E6%8D%AE%E5%BA%93.docx">C++连接Mysql数据库.docx</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/mian.cpp">mian.cpp</a></li>
+<li>python连接mysql<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/python%E8%BF%9E%E6%8E%A5mysql/Python%E8%BF%9E%E6%8E%A5Mysql%E6%95%B0%E6%8D%AE%E5%BA%93.docx">Python连接Mysql数据库.docx</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/python%E8%BF%9E%E6%8E%A5mysql/main.py">main.py</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/python%E8%BF%9E%E6%8E%A5mysql/%E7%94%A8%20Python%20%E8%BF%9E%E6%8E%A5%20MySQL%20%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A3.docx">用 Python 连接 MySQL 的几种方式详解.docx</a></li>
+<li>__MACOSX<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/python%E8%BF%9E%E6%8E%A5mysql/__MACOSX/._Python%E8%BF%9E%E6%8E%A5Mysql%E6%95%B0%E6%8D%AE%E5%BA%93.docx">._Python连接Mysql数据库.docx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>esql for c演示程序<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/CAW32.LIB">CAW32.LIB</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/ESQL%E8%BD%AC%E5%8F%98%E4%B8%BAC%E5%87%BD%E6%95%B0.doc">ESQL转变为C函数.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/NSQLPREP.EXE">NSQLPREP.EXE</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/SQLAKW32.LIB">SQLAKW32.LIB</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/SQLCA.H">SQLCA.H</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/SQLDA.H">SQLDA.H</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/STRING.H">STRING.H</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/ntwdblib.DLL">ntwdblib.DLL</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/sql%20server%E7%9A%84esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F.rar">sql server的esql for c演示程序.rar</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/sqlaiw32.dll">sqlaiw32.dll</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/sqlakw32.dll">sqlakw32.dll</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/test.c">test.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/test.exe">test.exe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/test.obj">test.obj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/test.sqc">test.sqc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E8%AF%B4%E6%98%8E.txt">源码编译说明.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/%E7%A8%8B%E5%BA%8F%E6%BC%94%E7%A4%BA%E8%AF%B4%E6%98%8E.txt">程序演示说明.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/%E7%BC%96%E8%AF%91.bat">编译.bat</a></li>
+<li>mysql for c++的案例<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/mysql%20for%20c%2B%2B%E7%9A%84%E6%A1%88%E4%BE%8B/mian.cpp">mian.cpp</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/esql%20for%20c%E6%BC%94%E7%A4%BA%E7%A8%8B%E5%BA%8F/mysql%20for%20c%2B%2B%E7%9A%84%E6%A1%88%E4%BE%8B/mysql_C%281%29.docx">mysql_C(1).docx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>__MACOSX<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/__MACOSX/._C%2B%2B%E8%BF%9E%E6%8E%A5Mysql%E6%95%B0%E6%8D%AE%E5%BA%93.docx">._C++连接Mysql数据库.docx</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/__MACOSX/._mian.cpp">._mian.cpp</a></li>
+</ul>
+</li>
+<li>数据库编程大作业<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/doc/%E8%AF%BE%E4%BB%B6%E6%89%A9%E5%B1%95/%E7%AC%AC8%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B%E5%A4%A7%E4%BD%9C%E4%B8%9A/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E5%A4%A7%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82.docx">数据库系统原理大作业要求.docx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

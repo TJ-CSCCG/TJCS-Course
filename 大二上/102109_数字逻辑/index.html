@@ -1,0 +1,3277 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../101019_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+      
+      
+        <link rel="next" href="../100663_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A11/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>102109 数字逻辑 - TJCS-Courses</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="TJCS-Courses" class="md-header__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TJCS-Courses
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              102109 数字逻辑
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TJCS-Courses" class="md-nav__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TJCS-Courses
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大一下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大一下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%80%E4%B8%8B/100384_%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100384 高级语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100709_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100709 计算机科学导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100388_%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100388 离散数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../101019_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101019 数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102109 数字逻辑
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102109 数字逻辑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#102109" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        102109 数字逻辑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="102109 数字逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-04171-qin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 04171 Qin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-09049-zhang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 09049 Zhang
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-99783-guo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 99783 Guo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100663_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100663 数据结构与算法设计1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100687_%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100687 组合数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100391_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100391 软件开发方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100393_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100393 现代密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100396 数据库系统原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100417_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100417 现代密码学课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100579_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100579 人工智能课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100580_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100580 人工智能原理与技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100583_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100583 信息安全数学基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/100656_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100656 计算机组成原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101016 计算机组成原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8B/101029_%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101029 算法分析与设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100390_%E5%BD%A2%E5%BC%8F%E8%AF%AD%E8%A8%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%9C%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100390 形式语言与自动机
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100433_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100433 计算机图形学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100437_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100437 数据库系统原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100640_%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100640 并行与分布式系统架构技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100775_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100775 机器学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101023_%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101023 软件工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101062_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101062 计算机网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/102147_%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102147 模式识别
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100022_Web%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100022 Web技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100222_%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100222 安全体系结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100395_%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100395 编译原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100398_%E7%BD%91%E7%BB%9C%E9%98%B2%E5%BE%A1%E4%B8%8E%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100398 网络防御与安全评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100399_%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100399 电子商务技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100407_%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100407 计算机视觉
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100410_%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100410 信号处理导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100411_Unix%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100411 Unix系统分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100418_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100418 信息安全综合实验设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100582_%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0%E4%B8%8E%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100582 系统安全评估与应用安全实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100658_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100658 信息安全原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101030_%E5%A4%9A%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101030 多媒体技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101031_%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101031 程序设计方法学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101105_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101105 信息安全工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100164_IT%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100164 IT项目管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100230_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100230 计算机取证
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100400_%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100400 数据挖掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100402_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B3%95%E5%BE%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100402 信息安全管理和法律基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100406_%E6%9C%8D%E5%8A%A1%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100406 服务计算概论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100577_%E6%AF%95%E4%B8%9A%E5%AE%9E%E8%AE%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100577 毕业实训
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/101020_%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101020 信息隐藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8B/100290_%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100290 毕业设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    小学期
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    小学期
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100165_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100165 数据结构课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100415_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100415 汇编语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100584_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100584 信息安全原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100657_%E4%B8%93%E4%B8%9A%E5%AE%9E%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100657 专业实习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100659_%E7%BB%BC%E5%90%88%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B8%97%E9%80%8F%E6%80%A7%E6%B5%8B%E8%AF%95%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100659 综合安全管理和渗透性测试设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#102109" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        102109 数字逻辑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="102109 数字逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-04171-qin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 04171 Qin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-09049-zhang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 09049 Zhang
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-99783-guo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 99783 Guo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">数字逻辑</h1>
+<h2 id="102109">102109 数字逻辑</h2>
+<p>（<strong>注：由于数字逻辑和数字逻辑实验实则一体，因此暂无 100623 一说</strong>）</p>
+<h3 id="_2">一、总述</h3>
+<ul>
+<li><strong>分数构成</strong></li>
+<li><strong>理论课</strong><ul>
+<li>平时考勤：10%</li>
+<li>平时作业：30%</li>
+<li>期末考试：60%</li>
+</ul>
+</li>
+<li><strong>实验课</strong><ul>
+<li>平时考勤：10%</li>
+<li>平时实验（作业）：50%</li>
+<li>大作业：40%</li>
+</ul>
+</li>
+</ul>
+<h4 id="1">1. 教材</h4>
+<ol>
+<li>数字逻辑（第七版）白中英 科学出版社 ISBN: 9787030641083</li>
+<li>数字逻辑与组成原理实践教程 张冬冬 王力生 郭玉臣 清华大学出版社 ISBN: 9787302488347</li>
+</ol>
+<h4 id="2">2. 作业</h4>
+<p>作业共分为三种类型：</p>
+<ol>
+<li>纸面作业</li>
+<li>编程作业</li>
+<li>大作业</li>
+</ol>
+<p>纸面作业一般是教材当中的课后习题，有时是 PPT 中的例题。不一定每次上课都会布置纸面作业。</p>
+<p>一次纸面作业题目不多，给的时间很足，一般是下一周晚上上实验课的时候交。</p>
+<p>除了课后的纸面作业，课上还可能用时间做一些随堂测评。随堂测评基本只有签到作用，答案正误无伤大雅。</p>
+<p>编程作业使用 verilog 语言，会给实验课的时间做，但或许还需要自己投入时间。作业一共有 30 个。</p>
+<p><img alt="0" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/102109_数字逻辑/img/0.png" /></p>
+<p>（数量虽然多，但是不少作业间可共用）</p>
+<p>提交与迟交，效果如下所示：</p>
+<p><img alt="1" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/102109_数字逻辑/img/1.png" /></p>
+<p>大作业需要使用外设。外设将在 11 月初到 11 月末间开放领取。</p>
+<p>大作业在实验课和理论课均有占比，且占比较重。</p>
+<p>大作业有申优选项。但申优与 <strong>理论课</strong>、<strong>实践课</strong> 拿优关系并不大。申优意味着，只是在 “大作业” 这个条目中，可以获得 90 以上的分数。</p>
+<p>但理论课还有考试、作业、签到占比，实践课也还有平时作业和实验课签到占比。因此不申优也有可能拿优，尤其是实践课。</p>
+<h4 id="3">3. 考试</h4>
+<p>考试题目大多数出自教材配套习题册（数字逻辑习题解析与实验教程（第 7 版）ISBN: 9787030641090）中的习题。熟背所有习题（尤其是填空题）后，没有任何问题。</p>
+<p>考试尽管占比较轻，但不可忽视。</p>
+<h3 id="_3">二、任课教师</h3>
+<h4 id="1-04171-qin">1. 04171 Qin</h4>
+<p>曾为数强数字逻辑。也是系统结构的老师之一。</p>
+<blockquote>
+<p>cd ..
+ls
+make</p>
+</blockquote>
+<h4 id="2-09049-zhang">2. 09049 Zhang</h4>
+<p>要求较严。
+对数字逻辑这门课感兴趣的同学，可在 Zhang 老师这里报名两年一次的 <strong>全国大学生电子设计大赛嵌入式系统专题邀请赛</strong>（获奖可于 4m3 上加分）。</p>
+<h4 id="3-99783-guo">3. 99783 Guo</h4>
+<p>正常。</p>
+<h2 id="_4">文件列表</h2>
+<ul>
+<li>102109_数字逻辑<ul>
+<li>doc<ul>
+<li>网站使用<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/%E5%AE%9E%E9%AA%8C%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B.pdf">实验提交流程.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E5%AE%9E%E9%AA%8C%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B.pdf">数字逻辑实验提交流程.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/%E6%97%B6%E5%BA%8F%E6%8A%A5%E5%91%8A%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E.doc">时序报告提交说明.doc</a></li>
+</ul>
+</li>
+<li>部件模块使用<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/%E5%A4%96%E5%9B%B4%E6%A8%A1%E5%9D%971.jpg">外围模块1.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/%E5%A4%96%E5%9B%B4%E6%A8%A1%E5%9D%972.jpg">外围模块2.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/%E5%A4%96%E5%9B%B4%E9%83%A8%E4%BB%B6%E5%9E%8B%E5%8F%B7.jpg">外围部件型号.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/%E9%94%AE%E7%9B%98%E9%BC%A0%E6%A0%87.jpg">键盘鼠标.jpg</a></li>
+<li>Sound Sensor<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Sound%20Sensor/OV2640.pdf">OV2640.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Sound%20Sensor/Sound-Sensor-UserManual.pdf">Sound-Sensor-UserManual.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Sound%20Sensor/Sound_Sensor_V2.pdf">Sound_Sensor_V2.pdf</a></li>
+</ul>
+</li>
+<li>VGA PS2 Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/VGA%20PS2%20Board/VGA-PS2-Board-Schematic.pdf">VGA-PS2-Board-Schematic.pdf</a></li>
+</ul>
+</li>
+<li>SN65HVD230 CAN Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/SN65HVD230%20CAN%20Board/SN65HVD230-CAN-Board-Schematic.pdf">SN65HVD230-CAN-Board-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/SN65HVD230%20CAN%20Board/SN65HVD230-CAN-Board_Datasheets.pdf">SN65HVD230-CAN-Board_Datasheets.pdf</a></li>
+</ul>
+</li>
+<li>Rotation Sensor<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Rotation%20Sensor/Rotation-Sensor-Schematic.pdf">Rotation-Sensor-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Rotation%20Sensor/Rotation-Sensor-UserManual.pdf">Rotation-Sensor-UserManual.pdf</a></li>
+</ul>
+</li>
+<li>OV2640 Camera Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/OV2640%20Camera%20Board/OV2640-module-size.dwg">OV2640-module-size.dwg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/OV2640%20Camera%20Board/OV9655-2640-Camera-Board-Schematic.pdf">OV9655-2640-Camera-Board-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/OV2640%20Camera%20Board/OV9655-2640-Camera-Board-size.jpg">OV9655-2640-Camera-Board-size.jpg</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/OV2640%20Camera%20Board/ov2640%E5%AF%84%E5%AD%98%E5%99%A8%E8%A1%A8.docx">ov2640寄存器表.docx</a></li>
+</ul>
+</li>
+<li>Color Sensor<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Color%20Sensor/Color-Sensor-Schematic.pdf">Color-Sensor-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Color%20Sensor/Color-Sensor-UserManual.pdf">Color-Sensor-UserManual.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Color%20Sensor/TCS3200-Document.pdf">TCS3200-Document.pdf</a></li>
+</ul>
+</li>
+<li>L3G4200D Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/L3G4200D%20Board/L3G4200D-Board-schematic.pdf">L3G4200D-Board-schematic.pdf</a></li>
+</ul>
+</li>
+<li>0.95inch RGB OLED (A)<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/0.95inch%20RGB%20OLED%20%28A%29/0.95inch-RGB-OLED-Schematic.pdf">0.95inch-RGB-OLED-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/0.95inch%20RGB%20OLED%20%28A%29/0.95inch-RGB-OLED-UserManual.pdf">0.95inch-RGB-OLED-UserManual.pdf</a></li>
+</ul>
+</li>
+<li>DHT22 Temperature-Humidity Sensor<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/DHT22%20Temperature-Humidity%20Sensor/DHT22-Temperature-Humidity-Sensor-Schematic.pdf">DHT22-Temperature-Humidity-Sensor-Schematic.pdf</a></li>
+</ul>
+</li>
+<li>Bluetooth Slave UART Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/Bluetooth%20Slave%20UART%20Board/Bluetooth-UART-Board-User-Guide.pdf">Bluetooth-UART-Board-User-Guide.pdf</a></li>
+</ul>
+</li>
+<li>N4_DDR<ul>
+<li>05.Demos<ul>
+<li>Nexys4DDRUserDemo<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/Readme.txt">Readme.txt</a></li>
+<li>source<ul>
+<li>Nexys4DdrUserDemo_Ise_project<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ADXL362Ctrl.vhd">ADXL362Ctrl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/AccelArithmetics.vhd">AccelArithmetics.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/AccelDisplay.vhd">AccelDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/AccelerometerCtl.vhd">AccelerometerCtl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/AudioDemo.vhd">AudioDemo.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Dbncr.vhd">Dbncr.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/FPGAMonitor.vhd">FPGAMonitor.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/LedBar.vhd">LedBar.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/LocalRst.vhd">LocalRst.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/LogoDisplay.vhd">LogoDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/MicDisplay.vhd">MicDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/MouseCtl.vhd">MouseCtl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/MouseDisplay.vhd">MouseDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemo.ucf">Nexys4DdrUserDemo.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemo.vhd">Nexys4DdrUserDemo.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemoSrc.gise">Nexys4DdrUserDemoSrc.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemoSrc.xise">Nexys4DdrUserDemoSrc.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemo_bitgen.xwbt">Nexys4DdrUserDemo_bitgen.xwbt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4DdrUserDemo_summary.html">Nexys4DdrUserDemo_summary.html</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4_Overlay.bmp">Nexys4_Overlay.bmp</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4_all.bmp">Nexys4_all.bmp</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Nexys4_all.coe">Nexys4_all.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/OverlayCtl.vhd">OverlayCtl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/PdmDes.vhd">PdmDes.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/PdmSer.vhd">PdmSer.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Ps2Interface.vhd">Ps2Interface.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Pwm.vhd">Pwm.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Ram2Ddr.vhd">Ram2Ddr.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/RamCntrl.vhd">RamCntrl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/RgbLed.vhd">RgbLed.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/RgbLedDisplay.vhd">RgbLedDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/SPI_If.vhd">SPI_If.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/TWICtl.vhd">TWICtl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/TempDisplay.vhd">TempDisplay.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/TempSensorCtl.vhd">TempSensorCtl.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/Vga.vhd">Vga.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/overlay_bram.ngc">overlay_bram.ngc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/par_usage_statistics.html">par_usage_statistics.html</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/sSegDemo.vhd">sSegDemo.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/sSegDisplay.vhd">sSegDisplay.vhd</a></li>
+<li>ipcore_dir<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.asy">ClkGen.asy</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.gise">ClkGen.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.ncf">ClkGen.ncf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.sym">ClkGen.sym</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.ucf">ClkGen.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.vhd">ClkGen.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.vho">ClkGen.vho</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.xco">ClkGen.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.xdc">ClkGen.xdc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen.xise">ClkGen.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen_flist.txt">ClkGen_flist.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen_xmdf.tcl">ClkGen_xmdf.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.asy">PxlClkGen.asy</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.gise">PxlClkGen.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.ncf">PxlClkGen.ncf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.sym">PxlClkGen.sym</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.ucf">PxlClkGen.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.vhd">PxlClkGen.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.vho">PxlClkGen.vho</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.xco">PxlClkGen.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.xdc">PxlClkGen.xdc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen.xise">PxlClkGen.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen_flist.txt">PxlClkGen_flist.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen_xmdf.tcl">PxlClkGen_xmdf.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.asy">Square_Root.asy</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.gise">Square_Root.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.ncf">Square_Root.ncf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.ngc">Square_Root.ngc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.sym">Square_Root.sym</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.vhd">Square_Root.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.vho">Square_Root.vho</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.xco">Square_Root.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root.xise">Square_Root.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root_flist.txt">Square_Root_flist.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root_readme.txt">Square_Root_readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root_xmdf.tcl">Square_Root_xmdf.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/coregen.cgp">coregen.cgp</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr.gise">ddr.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr.ncf">ddr.ncf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr.veo">ddr.veo</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr.xco">ddr.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr.xise">ddr.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr_flist.txt">ddr_flist.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr_readme.txt">ddr_readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr_xmdf.tcl">ddr_xmdf.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/gen_ClkGen.tcl">gen_ClkGen.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/gen_PxlClkGen.tcl">gen_PxlClkGen.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/gen_Square_Root.tcl">gen_Square_Root.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/gen_ddr.tcl">gen_ddr.tcl</a></li>
+<li>tmp<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/tmp/Square_Root.lso">Square_Root.lso</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/tmp/customization_gui.0.0520658637639.out">customization_gui.0.0520658637639.out</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/tmp/customization_gui.0.76129664749.out">customization_gui.0.76129664749.out</a></li>
+<li>_xmsgs<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/tmp/_xmsgs/pn_parser.xmsgs">pn_parser.xmsgs</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/tmp/_xmsgs/xst.xmsgs">xst.xmsgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>_xmsgs<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/_xmsgs/cg.xmsgs">cg.xmsgs</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/_xmsgs/pn_parser.xmsgs">pn_parser.xmsgs</a></li>
+</ul>
+</li>
+<li>Square_Root<ul>
+<li>doc<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/Square_Root/doc/cordic_v4_0_vinfo.html">cordic_v4_0_vinfo.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PxlClkGen<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/clk_wiz_v3_6_readme.txt">clk_wiz_v3_6_readme.txt</a></li>
+<li>doc<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/doc/clk_wiz_v3_6_readme.txt">clk_wiz_v3_6_readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/doc/clk_wiz_v3_6_vinfo.html">clk_wiz_v3_6_vinfo.html</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/doc/pg065_clk_wiz.pdf">pg065_clk_wiz.pdf</a></li>
+</ul>
+</li>
+<li>simulation<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/PxlClkGen_tb.vhd">PxlClkGen_tb.vhd</a></li>
+<li>functional<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simcmds.tcl">simcmds.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_isim.bat">simulate_isim.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_isim.sh">simulate_isim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_mti.bat">simulate_mti.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_mti.do">simulate_mti.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_mti.sh">simulate_mti.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_ncsim.sh">simulate_ncsim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/simulate_vcs.sh">simulate_vcs.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/wave.do">wave.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/functional/wave.sv">wave.sv</a></li>
+</ul>
+</li>
+<li>timing<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/PxlClkGen_tb.vhd">PxlClkGen_tb.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/sdf_cmd_file">sdf_cmd_file</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simcmds.tcl">simcmds.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_isim.sh">simulate_isim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_mti.bat">simulate_mti.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_mti.do">simulate_mti.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_mti.sh">simulate_mti.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_ncsim.sh">simulate_ncsim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/simulate_vcs.sh">simulate_vcs.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/ucli_commands.key">ucli_commands.key</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/vcs_session.tcl">vcs_session.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/simulation/timing/wave.do">wave.do</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>example_design<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/example_design/PxlClkGen_exdes.ucf">PxlClkGen_exdes.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/example_design/PxlClkGen_exdes.vhd">PxlClkGen_exdes.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/example_design/PxlClkGen_exdes.xdc">PxlClkGen_exdes.xdc</a></li>
+</ul>
+</li>
+<li>implement<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/implement.bat">implement.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/implement.sh">implement.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_ise.bat">planAhead_ise.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_ise.sh">planAhead_ise.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_ise.tcl">planAhead_ise.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_rdn.bat">planAhead_rdn.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_rdn.sh">planAhead_rdn.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/planAhead_rdn.tcl">planAhead_rdn.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/xst.prj">xst.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/PxlClkGen/implement/xst.scr">xst.scr</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ddr<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/datasheet.txt">datasheet.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/ddr.csv">ddr.csv</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/mig.prj">mig.prj</a></li>
+<li>docs<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/docs/phy_only_support_readme.txt">phy_only_support_readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/docs/ug586_7Series_MIS.pdf">ug586_7Series_MIS.pdf</a></li>
+</ul>
+</li>
+<li>example_design<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/log.txt">log.txt</a></li>
+<li>rtl<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/example_top.vhd">example_top.vhd</a></li>
+<li>traffic_gen<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_afifo.v">mig_7series_v1_9_afifo.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_cmd_gen.v">mig_7series_v1_9_cmd_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_cmd_prbs_gen.v">mig_7series_v1_9_cmd_prbs_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_data_prbs_gen.v">mig_7series_v1_9_data_prbs_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_init_mem_pattern_ctr.v">mig_7series_v1_9_init_mem_pattern_ctr.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_memc_flow_vcontrol.v">mig_7series_v1_9_memc_flow_vcontrol.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_memc_traffic_gen.v">mig_7series_v1_9_memc_traffic_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_rd_data_gen.v">mig_7series_v1_9_rd_data_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_read_data_path.v">mig_7series_v1_9_read_data_path.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_read_posted_fifo.v">mig_7series_v1_9_read_posted_fifo.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_s7ven_data_gen.v">mig_7series_v1_9_s7ven_data_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_tg_prbs_gen.v">mig_7series_v1_9_tg_prbs_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_tg_status.v">mig_7series_v1_9_tg_status.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_traffic_gen_top.v">mig_7series_v1_9_traffic_gen_top.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_vio_init_pattern_bram.v">mig_7series_v1_9_vio_init_pattern_bram.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_wr_data_gen.v">mig_7series_v1_9_wr_data_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/rtl/traffic_gen/mig_7series_v1_9_write_data_path.v">mig_7series_v1_9_write_data_path.v</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>synth<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/synth/example_top.lso">example_top.lso</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/synth/example_top.prj">example_top.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/synth/synplify_pro.tcl">synplify_pro.tcl</a></li>
+</ul>
+</li>
+<li>par<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/create_ise.bat">create_ise.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_icon_cg.xco">ddr_icon_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_ila_basic_cg.xco">ddr_ila_basic_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_ila_rdpath_cg.xco">ddr_ila_rdpath_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_ila_wrpath_cg.xco">ddr_ila_wrpath_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_vio_async_in_sync_out_cg.xco">ddr_vio_async_in_sync_out_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ddr_vio_sync_async_out72_cg.xco">ddr_vio_sync_async_out72_cg.xco</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/example_top.ucf">example_top.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/example_top.xdc">example_top.xdc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/ise_flow.bat">ise_flow.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/makeproj.bat">makeproj.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/readme.txt">readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/rem_files.bat">rem_files.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/rem_files.tcl">rem_files.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/set_ise_prop.tcl">set_ise_prop.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/par/xst_options.txt">xst_options.txt</a></li>
+</ul>
+</li>
+<li>sim<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/readme.txt">readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/sim.do">sim.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/sim_tb_top.v">sim_tb_top.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/wiredly.v">wiredly.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/xsim_files.prj">xsim_files.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/xsim_options.tcl">xsim_options.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/example_design/sim/xsim_run.bat">xsim_run.bat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>user_design<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/log.txt">log.txt</a></li>
+<li>rtl<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ddr.vhd">ddr.vhd</a></li>
+<li>clocking<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/clocking/mig_7series_v1_9_clk_ibuf.v">mig_7series_v1_9_clk_ibuf.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/clocking/mig_7series_v1_9_infrastructure.v">mig_7series_v1_9_infrastructure.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/clocking/mig_7series_v1_9_iodelay_ctrl.v">mig_7series_v1_9_iodelay_ctrl.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/clocking/mig_7series_v1_9_tempmon.v">mig_7series_v1_9_tempmon.v</a></li>
+</ul>
+</li>
+<li>ui<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ui/mig_7series_v1_9_ui_cmd.v">mig_7series_v1_9_ui_cmd.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ui/mig_7series_v1_9_ui_rd_data.v">mig_7series_v1_9_ui_rd_data.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ui/mig_7series_v1_9_ui_top.v">mig_7series_v1_9_ui_top.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ui/mig_7series_v1_9_ui_wr_data.v">mig_7series_v1_9_ui_wr_data.v</a></li>
+</ul>
+</li>
+<li>phy<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_byte_group_io.v">mig_7series_v1_9_ddr_byte_group_io.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_byte_lane.v">mig_7series_v1_9_ddr_byte_lane.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_calib_top.v">mig_7series_v1_9_ddr_calib_top.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_if_post_fifo.v">mig_7series_v1_9_ddr_if_post_fifo.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_mc_phy.v">mig_7series_v1_9_ddr_mc_phy.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_mc_phy_wrapper.v">mig_7series_v1_9_ddr_mc_phy_wrapper.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_of_pre_fifo.v">mig_7series_v1_9_ddr_of_pre_fifo.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_4lanes.v">mig_7series_v1_9_ddr_phy_4lanes.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_dqs_found_cal.v">mig_7series_v1_9_ddr_phy_dqs_found_cal.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_dqs_found_cal_hr.v">mig_7series_v1_9_ddr_phy_dqs_found_cal_hr.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_init.v">mig_7series_v1_9_ddr_phy_init.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_oclkdelay_cal.v">mig_7series_v1_9_ddr_phy_oclkdelay_cal.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_prbs_rdlvl.v">mig_7series_v1_9_ddr_phy_prbs_rdlvl.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_rdlvl.v">mig_7series_v1_9_ddr_phy_rdlvl.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_tempmon.v">mig_7series_v1_9_ddr_phy_tempmon.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_top.vhd">mig_7series_v1_9_ddr_phy_top.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_wrcal.v">mig_7series_v1_9_ddr_phy_wrcal.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_phy_wrlvl_off_delay.v">mig_7series_v1_9_ddr_phy_wrlvl_off_delay.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/phy/mig_7series_v1_9_ddr_prbs_gen.v">mig_7series_v1_9_ddr_prbs_gen.v</a></li>
+</ul>
+</li>
+<li>ip_top<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ip_top/mig_7series_v1_9_mem_intfc.v">mig_7series_v1_9_mem_intfc.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ip_top/mig_7series_v1_9_memc_ui_top_std.v">mig_7series_v1_9_memc_ui_top_std.v</a></li>
+</ul>
+</li>
+<li>ecc<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ecc/mig_7series_v1_9_ecc_buf.v">mig_7series_v1_9_ecc_buf.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ecc/mig_7series_v1_9_ecc_dec_fix.v">mig_7series_v1_9_ecc_dec_fix.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ecc/mig_7series_v1_9_ecc_gen.v">mig_7series_v1_9_ecc_gen.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/ecc/mig_7series_v1_9_ecc_merge_enc.v">mig_7series_v1_9_ecc_merge_enc.v</a></li>
+</ul>
+</li>
+<li>controller<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_arb_mux.v">mig_7series_v1_9_arb_mux.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_arb_row_col.v">mig_7series_v1_9_arb_row_col.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_arb_select.v">mig_7series_v1_9_arb_select.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_cntrl.v">mig_7series_v1_9_bank_cntrl.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_common.v">mig_7series_v1_9_bank_common.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_compare.v">mig_7series_v1_9_bank_compare.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_mach.v">mig_7series_v1_9_bank_mach.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_queue.v">mig_7series_v1_9_bank_queue.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_bank_state.v">mig_7series_v1_9_bank_state.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_col_mach.v">mig_7series_v1_9_col_mach.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_mc.v">mig_7series_v1_9_mc.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_rank_cntrl.v">mig_7series_v1_9_rank_cntrl.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_rank_common.v">mig_7series_v1_9_rank_common.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_rank_mach.v">mig_7series_v1_9_rank_mach.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/rtl/controller/mig_7series_v1_9_round_robin_arb.v">mig_7series_v1_9_round_robin_arb.v</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>constraints<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/constraints/ddr.ucf">ddr.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ddr/user_design/constraints/ddr.xdc">ddr.xdc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ClkGen<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/clk_wiz_v3_6_readme.txt">clk_wiz_v3_6_readme.txt</a></li>
+<li>doc<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/doc/clk_wiz_v3_6_readme.txt">clk_wiz_v3_6_readme.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/doc/clk_wiz_v3_6_vinfo.html">clk_wiz_v3_6_vinfo.html</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/doc/pg065_clk_wiz.pdf">pg065_clk_wiz.pdf</a></li>
+</ul>
+</li>
+<li>simulation<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/ClkGen_tb.vhd">ClkGen_tb.vhd</a></li>
+<li>functional<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simcmds.tcl">simcmds.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_isim.bat">simulate_isim.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_isim.sh">simulate_isim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_mti.bat">simulate_mti.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_mti.do">simulate_mti.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_mti.sh">simulate_mti.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_ncsim.sh">simulate_ncsim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/simulate_vcs.sh">simulate_vcs.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/wave.do">wave.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/functional/wave.sv">wave.sv</a></li>
+</ul>
+</li>
+<li>timing<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/ClkGen_tb.vhd">ClkGen_tb.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/sdf_cmd_file">sdf_cmd_file</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simcmds.tcl">simcmds.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_isim.sh">simulate_isim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_mti.bat">simulate_mti.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_mti.do">simulate_mti.do</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_mti.sh">simulate_mti.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_ncsim.sh">simulate_ncsim.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/simulate_vcs.sh">simulate_vcs.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/ucli_commands.key">ucli_commands.key</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/vcs_session.tcl">vcs_session.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/simulation/timing/wave.do">wave.do</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>example_design<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/example_design/ClkGen_exdes.ucf">ClkGen_exdes.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/example_design/ClkGen_exdes.vhd">ClkGen_exdes.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/example_design/ClkGen_exdes.xdc">ClkGen_exdes.xdc</a></li>
+</ul>
+</li>
+<li>implement<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/implement.bat">implement.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/implement.sh">implement.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_ise.bat">planAhead_ise.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_ise.sh">planAhead_ise.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_ise.tcl">planAhead_ise.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_rdn.bat">planAhead_rdn.bat</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_rdn.sh">planAhead_rdn.sh</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/planAhead_rdn.tcl">planAhead_rdn.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/xst.prj">xst.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/ipcore_dir/ClkGen/implement/xst.scr">xst.scr</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>iseconfig<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/iseconfig/Nexys4DdrUserDemo.xreport">Nexys4DdrUserDemo.xreport</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDRUserDemo/source/Nexys4DdrUserDemo_Ise_project/iseconfig/Nexys4DdrUserDemoSrc.projectmgr">Nexys4DdrUserDemoSrc.projectmgr</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Nexys4DDR_ISE_Basic<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/Readme.txt">Readme.txt</a></li>
+<li>source<ul>
+<li>Nexys4DDR_ISE_Basic<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/GPIO_Demo.vhd">GPIO_Demo.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/GPIO_demo_summary.html">GPIO_demo_summary.html</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/Nexys4DDR_ISE_Basic.gise">Nexys4DDR_ISE_Basic.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/Nexys4DDR_ISE_Basic.xise">Nexys4DDR_ISE_Basic.xise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/Nexys4DDR_Master.ucf">Nexys4DDR_Master.ucf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/RGB_controller.vhd">RGB_controller.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/UART_TX_CTRL.vhd">UART_TX_CTRL.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/debouncer.vhd">debouncer.vhd</a></li>
+<li>iseconfig<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/iseconfig/GPIO_demo.xreport">GPIO_demo.xreport</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/iseconfig/Nexys4DDR_ISE_Basic.projectmgr">Nexys4DDR_ISE_Basic.projectmgr</a></li>
+</ul>
+</li>
+<li>_xmsgs<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/05.Demos/Nexys4DDR_ISE_Basic/source/Nexys4DDR_ISE_Basic/_xmsgs/pn_parser.xmsgs">pn_parser.xmsgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>06.Materials<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/readme.txt">readme.txt</a></li>
+<li>Nexys4_EDK_lab<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/Nexys4%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C%E5%A4%A7%E7%BA%B2.pdf">Nexys4嵌入式接口实验大纲.pdf</a></li>
+<li>lab_source<ul>
+<li>lab6<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab6/AD1RefComp.vhd">AD1RefComp.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab6/DA2RefComp.vhd">DA2RefComp.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab6/test.c">test.c</a></li>
+</ul>
+</li>
+<li>lab9<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab9/ADXL362.c">ADXL362.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab9/ADXL362.h">ADXL362.h</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab9/spi.c">spi.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab9/spi.h">spi.h</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab9/testperiph.c">testperiph.c</a></li>
+</ul>
+</li>
+<li>lab13<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab13/axi_ethernetlite_v2_1_0.tcl">axi_ethernetlite_v2_1_0.tcl</a></li>
+</ul>
+</li>
+<li>lab5<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab5/seg.c">seg.c</a></li>
+</ul>
+</li>
+<li>lab11<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab11/usb.c">usb.c</a></li>
+</ul>
+</li>
+<li>lab4<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab4/liushuideng.c">liushuideng.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab4/test.c">test.c</a></li>
+</ul>
+</li>
+<li>lab2<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab2/helloworld.c">helloworld.c</a></li>
+</ul>
+</li>
+<li>lab8<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab8/ADT7420.c">ADT7420.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab8/ADT7420.h">ADT7420.h</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab8/helloworld.c">helloworld.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab8/i2c.c">i2c.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab8/i2c.h">i2c.h</a></li>
+</ul>
+</li>
+<li>lab10<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/helloworld.c">helloworld.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/user_menu.h">user_menu.h</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/user_tool_vga.h">user_tool_vga.h</a></li>
+<li>ip_vga_v1_00_a<ul>
+<li>hdl<ul>
+<li>vhdl<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/vhdl/ip_vga.vhd">ip_vga.vhd</a></li>
+</ul>
+</li>
+<li>verilog<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/verilog/clk_div.v">clk_div.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/verilog/counter.v">counter.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/verilog/sram.v">sram.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/verilog/user_logic.v">user_logic.v</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/hdl/verilog/vga.v">vga.v</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>data<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/data/_ip_vga_xst.prj">_ip_vga_xst.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/data/ip_vga_v2_1_0.mpd">ip_vga_v2_1_0.mpd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/data/ip_vga_v2_1_0.pao">ip_vga_v2_1_0.pao</a></li>
+</ul>
+</li>
+<li>devl<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/README.txt">README.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/create.cip">create.cip</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/ipwiz.log">ipwiz.log</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/ipwiz.opt">ipwiz.opt</a></li>
+<li>synthesis<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/synthesis/ip_vga_xst.prj">ip_vga_xst.prj</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/synthesis/ip_vga_xst.scr">ip_vga_xst.scr</a></li>
+</ul>
+</li>
+<li>projnav<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/projnav/ip_vga.gise">ip_vga.gise</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/projnav/ip_vga.tcl">ip_vga.tcl</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/projnav/ip_vga.xise">ip_vga.xise</a></li>
+<li>_xmsgs<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/ip_vga_v1_00_a/devl/projnav/_xmsgs/pn_parser.xmsgs">pn_parser.xmsgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>drivers<ul>
+<li>ip_vga_v1_00_a<ul>
+<li>data<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/data/ip_vga_v2_1_0.mdd">ip_vga_v2_1_0.mdd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/data/ip_vga_v2_1_0.tcl">ip_vga_v2_1_0.tcl</a></li>
+</ul>
+</li>
+<li>src<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/src/Makefile">Makefile</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/src/ip_vga.c">ip_vga.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/src/ip_vga.h">ip_vga.h</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab10/drivers/ip_vga_v1_00_a/src/ip_vga_selftest.c">ip_vga_selftest.c</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>lab12<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab12/PWM.vhd">PWM.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab12/SimpleSynth.vhd">SimpleSynth.vhd</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab12/helloworld.c">helloworld.c</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/06.Materials/Nexys4_EDK_lab/lab_source/lab12/top.vhd">top.vhd</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>04.Tools<ul>
+<li>01.UCF<ul>
+<li>Nexys4DDR_Master_ucf<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/N4_DDR/04.Tools/01.UCF/Nexys4DDR_Master_ucf/Nexys4DDR_Master.ucf">Nexys4DDR_Master.ucf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PCF8591 AD DA Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/PCF8591%20AD%20DA%20Board/PCF8591-Schematic.pdf">PCF8591-Schematic.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/PCF8591%20AD%20DA%20Board/PCF8591.pdf">PCF8591.pdf</a></li>
+</ul>
+</li>
+<li>VS1003B MP3 Board<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E9%83%A8%E4%BB%B6%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/VS1003B%20MP3%20Board/VS1003B-MP3-Board-Schematic.pdf">VS1003B-MP3-Board-Schematic.pdf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>软件安装使用<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/ModelSim%20%E6%95%B0%E6%8D%AE%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6.pdf">ModelSim 数据连接配置客户端-同济大学.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/ModelSim%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4%E8%AF%B4%E6%98%8E.pdf">ModelSim安装步骤说明.pdf</a></li>
+<li>约束文件编写示例<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/%E7%BA%A6%E6%9D%9F%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E7%A4%BA%E4%BE%8B/Nexys4DDR_Master.xdc">Nexys4DDR_Master.xdc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>课程相关<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/testbench%E6%8F%8F%E8%BF%B0.pdf">testbench描述.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/doc/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/%E5%A4%A7%E4%BD%9C%E4%B8%9A%E7%AD%94%E8%BE%A9%E5%87%86%E5%A4%87%E8%A6%81%E6%B1%82.pdf">大作业答辩准备要求.pdf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>template<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/template/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E5%B9%B3%E6%97%B6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A-%E5%AD%A6%E5%8F%B7-%E5%A7%93%E5%90%8D.doc">数字逻辑平时实验报告-学号-姓名.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/template/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E7%BB%BC%E5%90%88%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E6%A8%A1%E7%89%88-%E5%AD%A6%E5%8F%B7-%E5%A7%93%E5%90%8D.doc">数字逻辑综合实验报告模版-学号-姓名.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/template/%E6%97%B6%E5%BA%8F%E6%8A%A5%E5%91%8A%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E.doc">时序报告提交说明.doc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3194 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../100656_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">
+      
+      
+        <link rel="next" href="../101029_%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%BE%E8%AE%A1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>101016 计算机组成原理 - TJCS-Courses</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="TJCS-Courses" class="md-header__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TJCS-Courses
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              101016 计算机组成原理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TJCS-Courses" class="md-nav__button md-logo" aria-label="TJCS-Courses" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TJCS-Courses
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TJ-CSCCG/TJCS-Course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大一下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大一下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%80%E4%B8%8B/100384_%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100384 高级语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100709_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100709 计算机科学导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100388_%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100388 离散数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/101019_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101019 数据结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/102109_%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102109 数字逻辑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100663_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100663 数据结构与算法设计1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%BA%8C%E4%B8%8A/100687_%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100687 组合数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大二下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大二下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100391_%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100391 软件开发方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100393_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100393 现代密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100396_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100396 数据库系统原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100417_%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100417 现代密码学课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100579_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100579 人工智能课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100580_%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100580 人工智能原理与技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100583_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100583 信息安全数学基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../100656_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100656 计算机组成原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101016 计算机组成原理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101016 计算机组成原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101016" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        101016 计算机组成原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="101016 计算机组成原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2018" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2018 级（疫情）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020级（半疫情）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 课堂
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 课堂">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        a. 签到
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        b. 上课提问与回答
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        c. 作业布置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        d. 日常
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 自学推荐
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 自学推荐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        a. 网课
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        b. 书籍
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-00009-hao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 00009 Hao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-93736-chen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 93736 Chen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-09049-zhang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 09049 Zhang
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../101029_%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101029 算法分析与设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100390_%E5%BD%A2%E5%BC%8F%E8%AF%AD%E8%A8%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%9C%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100390 形式语言与自动机
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100433_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100433 计算机图形学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100437_%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100437 数据库系统原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100640_%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100640 并行与分布式系统架构技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/100775_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100775 机器学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101023_%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101023 软件工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/101062_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101062 计算机网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8A/102147_%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    102147 模式识别
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大三下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大三下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100022_Web%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100022 Web技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100222_%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100222 安全体系结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100395_%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100395 编译原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100398_%E7%BD%91%E7%BB%9C%E9%98%B2%E5%BE%A1%E4%B8%8E%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100398 网络防御与安全评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100399_%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100399 电子商务技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100407_%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100407 计算机视觉
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100410_%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%AF%BC%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100410 信号处理导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100411_Unix%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100411 Unix系统分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100418_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100418 信息安全综合实验设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100582_%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AF%84%E4%BC%B0%E4%B8%8E%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100582 系统安全评估与应用安全实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/100658_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100658 信息安全原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101030_%E5%A4%9A%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101030 多媒体技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101031_%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101031 程序设计方法学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E4%B8%89%E4%B8%8B/101105_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101105 信息安全工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四上
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四上
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100164_IT%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100164 IT项目管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100230_%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100230 计算机取证
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100400_%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100400 数据挖掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100402_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B3%95%E5%BE%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100402 信息安全管理和法律基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100406_%E6%9C%8D%E5%8A%A1%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100406 服务计算概论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/100577_%E6%AF%95%E4%B8%9A%E5%AE%9E%E8%AE%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100577 毕业实训
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8A/101020_%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    101020 信息隐藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大四下
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大四下
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E5%9B%9B%E4%B8%8B/100290_%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100290 毕业设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    小学期
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    小学期
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100165_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100165 数据结构课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100415_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100415 汇编语言程序设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100584_%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100584 信息安全原理课程设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100657_%E4%B8%93%E4%B8%9A%E5%AE%9E%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100657 专业实习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B0%8F%E5%AD%A6%E6%9C%9F/100659_%E7%BB%BC%E5%90%88%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%92%8C%E6%B8%97%E9%80%8F%E6%80%A7%E6%B5%8B%E8%AF%95%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    100659 综合安全管理和渗透性测试设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101016" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        101016 计算机组成原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="101016 计算机组成原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、总述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、总述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 教材
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 作业
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2018" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2018 级（疫情）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020级（半疫情）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 课堂
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 课堂">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        a. 签到
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        b. 上课提问与回答
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        c. 作业布置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        d. 日常
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 自学推荐
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 自学推荐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        a. 网课
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        b. 书籍
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 考试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、任课教师
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、任课教师">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-00009-hao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 00009 Hao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-93736-chen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 93736 Chen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-09049-zhang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 09049 Zhang
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">计算机组成原理</h1>
+<h2 id="101016">101016 计算机组成原理</h2>
+<h3 id="_2">一、总述</h3>
+<h4 id="1">1. 教材</h4>
+<p>课程教材：</p>
+<ul>
+<li>计算机组成与结构 第 5 版 王爱英 清华大学出版社</li>
+<li>数字逻辑与组成原理实践教程 张冬冬 王力生 郭玉臣 清华大学出版社</li>
+</ul>
+<p>（Tips: 主教材第 5 版于 2013 年出版，知识体系混乱，存在事实性错误，内容年代久远。书中“最新科技”停留在  DDR 3 256MB，USB 2.0，磁带、光盘存储器，固态盘 SSD 16GB，甚至认为“大容量磁带机具有极大的优势”，可见本书的知识水平停留在 2010 年左右 。已然不适用于当前计算机日新月异的技术迭代。故不建议进行除应付考试为目的之外的阅读）</p>
+<p>自学用参考书目：</p>
+<ul>
+<li>计算机组成与设计：硬件/软件接口  原书第 5 版 机械工业出版社 ISBN: 9787111504825</li>
+<li>深入理解计算机系统 原书第 3 版 机械工业出版社 ISBN: 9787111544937</li>
+</ul>
+<h4 id="2">2. 作业</h4>
+<h5 id="2018"><strong>2018 级（疫情）</strong></h5>
+<p>作业主要分为两个方面：平时作业与大作业。</p>
+<ul>
+<li>平时作业主要根据上课内容或是 Mooc 内容选择，出自《计算机组成原理》</li>
+<li>大作业为 Verilog HDL 编程</li>
+</ul>
+<p>2018 级期末大作业为 <strong>单周期 31 条指令哈弗结构 CPU</strong>。</p>
+<p>2018 级之前平时作业还由 mips246 上的内容有关。</p>
+<p><img alt="1" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/1.png" /></p>
+<p>可见对于 2018 级之前的年级，<strong>CPU31</strong> 只是期中的小实验。</p>
+<p>申优需要使用编写的 CPU，运行 <strong>数字逻辑大作业</strong>。</p>
+<p>但在 2018 级（无法下板），MULTU / MUL / DIVU / DIV / CPU54 均成为<strong>课设</strong>内容。</p>
+<h5 id="2020"><strong>2020级（半疫情）</strong></h5>
+<ul>
+<li>平时作业，出自课后习题（课本后面有答案，但 <strong>答案不一定正确</strong> ）</li>
+<li>期中考试</li>
+<li>期末考试</li>
+</ul>
+<p>编程作业为课设内容，不占理论课成绩。在此省略不表，请移步隔壁课设查看。</p>
+<h4 id="3">3. 课堂</h4>
+<h5 id="a">a. 签到</h5>
+<p>会通过微信或者 QQ "接龙"签到。</p>
+<p><img alt="2" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/2.png" /></p>
+<h5 id="b">b. 上课提问与回答</h5>
+<p>上 Mooc 的时候，部分老师会根据所学内容，于课后提问。</p>
+<p>回答采用“接龙”形式回答。</p>
+<p><img alt="3" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/3.png" /></p>
+<h5 id="c">c. 作业布置</h5>
+<p>有些班级作业布置于微信群中，比较难翻。</p>
+<p>有些班级布置作业仅仅是口头提醒，也有展示课件的。</p>
+<p><img alt="4" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/4.png" /></p>
+<h5 id="d">d. 日常</h5>
+<p><img alt="5" src="https://github.com/TJ-CSCCG/TJCS-Images/raw/TJCS-Course/101016_计算机组成原理/img/5.png" /></p>
+<h4 id="4">4. 自学推荐</h4>
+<h5 id="a_1">a. 网课</h5>
+<p>北京大学 计算机组成 陆俊林（节奏连贯明快，清晰易懂，适合初学。未涵盖本课程所有内容）</p>
+<p>西安电子科技大学 计算机组成原理 车向泉（深入浅出，强推！！）</p>
+<h5 id="b_1">b. 书籍</h5>
+<p>本课程使用的教材质量一般，可参考《王道《计算机组成原理》考研复习指导》，《深入理解计算机系统》，《计算机组成与设计：软件/硬件接口》。</p>
+<p>国内其他教材，如唐朔飞主编的《计算机组成原理》、袁春风主编的《计算机组成与系统结构》也可以参考。</p>
+<h4 id="5">5. 考试</h4>
+<p>（<strong>注：2018 级计组没有考试</strong>）</p>
+<p>据 17 级学长学姐描述，计组考试试题大多出自于课程教材中。</p>
+<ul>
+<li>对于期末时间比较多的同学，只要<strong>完全掌握课后习题精神</strong>，或者<strong>熟练背诵课后习题答案</strong>，考试不成问题；</li>
+<li>对于期末考试比较紧，时间不够充足的同学，建议买到往年的 <strong>计组期末试卷</strong>，因为题目 80% 都差不多。这不是因为没有出卷子，而是因为从老师的角度来看，考卷上的就已经是重点内容了，怎么出也不会差太远。（）</li>
+<li>会出现很多<strong>考研原题</strong></li>
+</ul>
+<p>2020 级计组，期末考试分为选择题（25分）、填空题（15分）、简答题（30分）、综合题（30分），试卷可以见 doc 文件夹。</p>
+<p>其中近一半为 2021 考研 408 的题目。</p>
+<h3 id="_3">二、任课教师</h3>
+<p>（<strong>注：一定要把所有计组老师的课都听一遍，这样才会对计组这门课有自己的看法</strong>）</p>
+<h4 id="1-00009-hao">1. 00009 Hao</h4>
+<blockquote>
+<p>很喜欢 Hao 老师的一句话，“加油啊，同学们！同学们继续写好大作业，为真知识和好成绩而努力。”</p>
+</blockquote>
+<p>上课态度散漫，连PPT上的内容都不完全能理解并讲授。</p>
+<p>经常喜欢聊与课堂无关的话题，然后跳过重点部分，并且经常忘记开共享屏幕。<strong>上课进度是三个班之内最慢的</strong> ，原因是他在第一章计算机发展历史上面花了两个星期的时间。然而就在这种情况下， <strong>率先提出组织期中考试</strong>  ，并且强调还会有多次”集中练习“。对于学生完全放养，无论是实验、作业、期中考试（包括讲评）还是答疑，无一例外均由助教负责。<strong>在临近期末的课堂上创造了用 30 分钟讲完 3 个大章节，300 多页 PPT 的讲课记录。</strong></p>
+<p>另外， <strong>只有这一个班的实验课是需要上课的，但是课上不会讲任何有用的信息</strong> （虽然说2022年因疫情都是在网上挂着）。该班的 <strong>每一次实验，提交的截止日期都是在上课讲到这部分内容之前</strong> ，这意味着 <strong>实验课内容完全是需要自学的</strong>。无论是实验还是理论内容，课后均需要花费大量时间进行自学，然而这个课本质量嘛，可以说，一言难尽……</p>
+<h4 id="2-93736-chen">2. 93736 Chen</h4>
+<p>Chen 老师除了上课，不会出现在任何地方。课设期间，09049 Zhang 老师班上使用 <code>mips</code> 网站检查代码，由于多周期 CPU testbench 出错，推迟了提交时间。</p>
+<p>有同学试图联系课设期间 <strong>没有提供任何技术支持</strong> 的 Chen 老师，可惜即使过了原定提交时间，无论是私聊，还是群聊，都没有任何回复。</p>
+<h4 id="3-09049-zhang">3. 09049 Zhang</h4>
+<p>没错，就是 <strong>数字逻辑</strong> 的 <strong>09049 Zhang</strong>。作为 <code>同济大学电子与信息工程学院计算机与科学技术专业硬件组</code> 的学科带头人，Zhang 老师的确在教学方面对自己有些要求，讲的东西也要多一些，要更贴合作业一些，但是不可避免地，Zhang 老师对作业的要求会更高一些（ <strong>仅有这一个班是OJ判题，其它都是手工批改</strong> ）。</p>
+<p>比如 2020 年小学期的课程设计，<strong>委婉地说</strong>，唯有 Zhang 老师进一步教授了多周期 CPU 的知识，并且认为手下的学生需要进一步的指导。</p>
+<h2 id="_4">文件列表</h2>
+<ul>
+<li>101016_计算机组成原理<ul>
+<li>doc<ul>
+<li>作业相关<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C1_MIPS%E6%B1%87%E7%BC%96%E5%AE%9E%E9%AA%8C.pdf">实验1_MIPS汇编实验.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C3_%E6%95%B0%E6%8D%AE%E9%80%89%E6%8B%A9%E5%99%A8.pdf">实验3_数据选择器.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C4_%E6%A1%B6%E5%BD%A2%E7%A7%BB%E4%BD%8D%E5%99%A8.pdf">实验4_桶形移位器.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C5_%E5%AF%84%E5%AD%98%E5%99%A8%E5%A0%86%E5%AE%9E%E9%AA%8C.pdf">实验5_寄存器堆实验.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C6_%E8%A1%8C%E4%B8%BA%E7%BA%A7ALU.pdf">实验6_行为级ALU.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C7_cpu%E5%BF%85%E8%A6%81%E9%83%A8%E4%BB%B6%E5%AE%9E%E9%AA%8C.pdf">实验7_cpu必要部件实验.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C8_%E4%B9%98%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C.pdf">实验8_乘法器实验.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/%E5%AE%9E%E9%AA%8C9_%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C.pdf">实验9_除法器实验.pdf</a></li>
+<li>CPU31<ul>
+<li>31条指令CPU实验指导书和网站提交说明<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4CPU%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC%E4%B9%A6%E5%92%8C%E7%BD%91%E7%AB%99%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E9%9B%86.pdf">31条指令集.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4CPU%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC%E4%B9%A6%E5%92%8C%E7%BD%91%E7%AB%99%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E/CPU31%E7%BD%91%E7%AB%99%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E.pdf">CPU31网站提交说明.pdf</a></li>
+</ul>
+</li>
+<li>31条指令测试TXT<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_1_addi.txt">_1_addi.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_1_addiu.txt">_1_addiu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_1_lui.txt">_1_lui.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_add.txt">_2_add.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_addu.txt">_2_addu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_and.txt">_2_and.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_andi.txt">_2_andi.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_lwsw.txt">_2_lwsw.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_lwsw2.txt">_2_lwsw2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_nor.txt">_2_nor.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_or.txt">_2_or.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_ori.txt">_2_ori.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sll.txt">_2_sll.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sllv.txt">_2_sllv.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_slt.txt">_2_slt.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_slti.txt">_2_slti.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sltiu.txt">_2_sltiu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sltu.txt">_2_sltu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sra.txt">_2_sra.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_srav.txt">_2_srav.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_srl.txt">_2_srl.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_srlv.txt">_2_srlv.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_sub.txt">_2_sub.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_subu.txt">_2_subu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_xor.txt">_2_xor.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_2_xori.txt">_2_xori.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_3.5_beq.txt">_3.5_beq.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_3.5_bne.txt">_3.5_bne.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_3_j.txt">_3_j.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_3_jal.txt">_3_jal.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/_4_jr.txt">_4_jr.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/cpu%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95%E6%8C%87%E5%8D%97.pdf">cpu指令测试指南.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95TXT/%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9.txt">使用帮助.txt</a></li>
+</ul>
+</li>
+<li>31条CPU后仿真和下板说明<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1CPU%E5%90%8E%E4%BB%BF%E7%9C%9F%E5%92%8C%E4%B8%8B%E6%9D%BF%E8%AF%B4%E6%98%8E/31%E6%9D%A1CPU%E5%90%8E%E4%BB%BF%E7%9C%9F%E5%92%8C%E4%B8%8B%E6%9D%BF%E8%AF%B4%E6%98%8E.pdf">31条CPU后仿真和下板说明.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1CPU%E5%90%8E%E4%BB%BF%E7%9C%9F%E5%92%8C%E4%B8%8B%E6%9D%BF%E8%AF%B4%E6%98%8E/icf.xdc">icf.xdc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1CPU%E5%90%8E%E4%BB%BF%E7%9C%9F%E5%92%8C%E4%B8%8B%E6%9D%BF%E8%AF%B4%E6%98%8E/seg7x16.v">seg7x16.v</a></li>
+</ul>
+</li>
+<li>CPU31验收说明-2019-5-9<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/CPU31%E9%AA%8C%E6%94%B6%E8%AF%B4%E6%98%8E-2019-5-9/CPU31%E9%AA%8C%E6%94%B6%E8%AF%B4%E6%98%8E.pdf">CPU31验收说明.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/CPU31%E9%AA%8C%E6%94%B6%E8%AF%B4%E6%98%8E-2019-5-9/test2019_for_cpu31.coe">test2019_for_cpu31.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/CPU31%E9%AA%8C%E6%94%B6%E8%AF%B4%E6%98%8E-2019-5-9/xdc.txt">xdc.txt</a></li>
+</ul>
+</li>
+<li>31条指令测试COE<ul>
+<li>31条指令单元测试coe<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/1_addi.coe">1_addi.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/1_addiu.coe">1_addiu.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/1_lui.coe">1_lui.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_add.coe">2_add.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_addu.coe">2_addu.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_andi.coe">2_andi.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_beq.coe">2_beq.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_lwsw.coe">2_lwsw.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_lwsw2.coe">2_lwsw2.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_or.coe">2_or.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_ori.coe">2_ori.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sll.coe">2_sll.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sllv.coe">2_sllv.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_slt.coe">2_slt.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_slti.coe">2_slti.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sltiu.coe">2_sltiu.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sltu.coe">2_sltu.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sra.coe">2_sra.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_srav.coe">2_srav.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_srl.coe">2_srl.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_srlv.coe">2_srlv.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_sub.coe">2_sub.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_subu.coe">2_subu.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/2_xori.coe">2_xori.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/3_5_bne.coe">3_5_bne.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/3_j.coe">3_j.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/3_jal.coe">3_jal.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95coe/4_jr.coe">4_jr.coe</a></li>
+</ul>
+</li>
+<li>网上提交测试所用coe<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/%E7%BD%91%E4%B8%8A%E6%8F%90%E4%BA%A4%E6%B5%8B%E8%AF%95%E6%89%80%E7%94%A8coe/mips_31_mars_simulate.coe">mips_31_mars_simulate.coe</a></li>
+</ul>
+</li>
+<li>自选集成测试coe<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU31/31%E6%9D%A1%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95COE/%E8%87%AA%E9%80%89%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95coe/mips_31_mars_board_switch.coe">mips_31_mars_board_switch.coe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CPU54<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPU%E6%8C%87%E4%BB%A4%E9%9B%86.pdf">54条CPU指令集.pdf</a></li>
+<li>54条测试COE<ul>
+<li>自选测试coe<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1%E6%B5%8B%E8%AF%95COE/%E8%87%AA%E9%80%89%E6%B5%8B%E8%AF%95coe/mips_54_mars_board_switch_student.coe">mips_54_mars_board_switch_student.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1%E6%B5%8B%E8%AF%95COE/%E8%87%AA%E9%80%89%E6%B5%8B%E8%AF%95coe/mips_54_mars_simulate_student.coe">mips_54_mars_simulate_student.coe</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1%E6%B5%8B%E8%AF%95COE/%E8%87%AA%E9%80%89%E6%B5%8B%E8%AF%95coe/mips_54_mars_simulate_student_ForWeb.coe">mips_54_mars_simulate_student_ForWeb.coe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>54条CPUtest_txt<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/10_and.hex.txt">10_and.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/10_and.result.txt">10_and.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/10_and.txt">10_and.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/11_beq.hex.txt">11_beq.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/11_beq.result.txt">11_beq.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/11_beq.txt">11_beq.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/12_bne.hex.txt">12_bne.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/12_bne.result.txt">12_bne.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/12_bne.txt">12_bne.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/13_j.hex.txt">13_j.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/13_j.result.txt">13_j.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/13_j.txt">13_j.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/14_jal.hex.txt">14_jal.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/14_jal.result.txt">14_jal.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/14_jal.txt">14_jal.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/15_jr.hex.txt">15_jr.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/15_jr.result.txt">15_jr.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/15_jr.txt">15_jr.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw.hex.txt">16.26_lwsw.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw.result.txt">16.26_lwsw.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw.txt">16.26_lwsw.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw2.hex.txt">16.26_lwsw2.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw2.result.txt">16.26_lwsw2.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/16.26_lwsw2.txt">16.26_lwsw2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/17_xor.hex.txt">17_xor.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/17_xor.result.txt">17_xor.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/17_xor.txt">17_xor.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/18_nor.hex.txt">18_nor.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/18_nor.result.txt">18_nor.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/18_nor.txt">18_nor.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/19_or.hex.txt">19_or.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/19_or.result.txt">19_or.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/19_or.txt">19_or.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/1_addi.hex.txt">1_addi.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/1_addi.result.txt">1_addi.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/1_addi.txt">1_addi.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/20_sll.hex.txt">20_sll.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/20_sll.result.txt">20_sll.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/20_sll.txt">20_sll.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/21_sllv.hex.txt">21_sllv.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/21_sllv.result.txt">21_sllv.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/21_sllv.txt">21_sllv.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/22_sltu.hex.txt">22_sltu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/22_sltu.result.txt">22_sltu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/22_sltu.txt">22_sltu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/23_sra.hex.txt">23_sra.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/23_sra.result.txt">23_sra.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/23_sra.txt">23_sra.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/24_srl.hex.txt">24_srl.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/24_srl.result.txt">24_srl.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/24_srl.txt">24_srl.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/25_subu.hex.txt">25_subu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/25_subu.result.txt">25_subu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/25_subu.txt">25_subu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/27_add.hex.txt">27_add.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/27_add.result.txt">27_add.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/27_add.txt">27_add.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/28_sub.hex.txt">28_sub.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/28_sub.result.txt">28_sub.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/28_sub.txt">28_sub.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/29_slt.hex.txt">29_slt.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/29_slt.result.txt">29_slt.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/29_slt.txt">29_slt.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/2_addiu.hex.txt">2_addiu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/2_addiu.result.txt">2_addiu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/2_addiu.txt">2_addiu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/30_srlv.hex.txt">30_srlv.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/30_srlv.result.txt">30_srlv.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/30_srlv.txt">30_srlv.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/31_srav.hex.txt">31_srav.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/31_srav.result.txt">31_srav.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/31_srav.txt">31_srav.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/32_clz.hex.txt">32_clz.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/32_clz.result.txt">32_clz.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/32_clz.txt">32_clz.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/33_divu.hex.txt">33_divu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/33_divu.result.txt">33_divu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/33_divu.txt">33_divu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/35_jalr.hex.txt">35_jalr.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/35_jalr.result.txt">35_jalr.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/35_jalr.txt">35_jalr.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb.hex.txt">36.39_lbsb.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb.result.txt">36.39_lbsb.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb.txt">36.39_lbsb.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb2.hex.txt">36.39_lbsb2.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb2.result.txt">36.39_lbsb2.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/36.39_lbsb2.txt">36.39_lbsb2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu.hex.txt">37_lbu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu.result.txt">37_lbu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu.txt">37_lbu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu2.hex.txt">37_lbu2.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu2.result.txt">37_lbu2.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/37_lbu2.txt">37_lbu2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu.hex.txt">38_lhu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu.result.txt">38_lhu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu.txt">38_lhu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu2.hex.txt">38_lhu2.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu2.result.txt">38_lhu2.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/38_lhu2.txt">38_lhu2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/3_andi.hex.txt">3_andi.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/3_andi.result.txt">3_andi.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/3_andi.txt">3_andi.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh.hex.txt">40.41_lhsh.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh.result.txt">40.41_lhsh.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh.txt">40.41_lhsh.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh2.hex.txt">40.41_lhsh2.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh2.result.txt">40.41_lhsh2.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/40.41_lhsh2.txt">40.41_lhsh2.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/42.45_mfc0mtc0.hex.txt">42.45_mfc0mtc0.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/42.45_mfc0mtc0.result.txt">42.45_mfc0mtc0.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/42.45_mfc0mtc0.txt">42.45_mfc0mtc0.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/43.46_mfhi.mthi.hex.txt">43.46_mfhi.mthi.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/43.46_mfhi.mthi.result.txt">43.46_mfhi.mthi.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/43.46_mfhi.mthi.txt">43.46_mfhi.mthi.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/44.47_mflo.mtlo.hex.txt">44.47_mflo.mtlo.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/44.47_mflo.mtlo.result.txt">44.47_mflo.mtlo.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/44.47_mflo.mtlo.txt">44.47_mflo.mtlo.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/48_mult.hex.txt">48_mult.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/48_mult.result.txt">48_mult.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/48_mult.txt">48_mult.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/49_multu.hex.txt">49_multu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/49_multu.result.txt">49_multu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/49_multu.txt">49_multu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/4_ori.hex.txt">4_ori.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/4_ori.result.txt">4_ori.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/4_ori.txt">4_ori.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/52_bgez.hex.txt">52_bgez.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/52_bgez.result.txt">52_bgez.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/52_bgez.txt">52_bgez.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/54_div.hex.txt">54_div.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/54_div.result.txt">54_div.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/54_div.txt">54_div.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/5_sltiu.hex.txt">5_sltiu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/5_sltiu.result.txt">5_sltiu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/5_sltiu.txt">5_sltiu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/6_lui.hex.txt">6_lui.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/6_lui.result.txt">6_lui.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/6_lui.txt">6_lui.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/7_xori.hex.txt">7_xori.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/7_xori.result.txt">7_xori.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/7_xori.txt">7_xori.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/8_slti.hex.txt">8_slti.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/8_slti.result.txt">8_slti.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/8_slti.txt">8_slti.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/9_addu.hex.txt">9_addu.hex.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/9_addu.result.txt">9_addu.result.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/9_addu.txt">9_addu.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/blob/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/CP0test.txt">CP0test.txt</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/CP0%E6%B5%8B%E8%AF%95%E8%AF%B4%E6%98%8E.docx">CP0测试说明.docx</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E4%BD%9C%E4%B8%9A%E7%9B%B8%E5%85%B3/CPU54/54%E6%9D%A1CPUtest_txt/cpu%E6%8C%87%E4%BB%A4%E6%B5%8B%E8%AF%95%E6%8C%87%E5%8D%97.pdf">cpu指令测试指南.pdf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>网站使用<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/%E5%AE%9E%E9%AA%8C%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B.pdf">实验提交流程.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/%E6%97%B6%E5%BA%8F%E6%8A%A5%E5%91%8A%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E.doc">时序报告提交说明.doc</a></li>
+</ul>
+</li>
+<li>学习考试<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E5%AD%A6%E4%B9%A0%E8%80%83%E8%AF%95/2022%E8%AE%A1%E7%BB%84%E6%9C%9F%E6%9C%AB%E8%AF%95%E9%A2%98%28%E7%BC%93%E8%80%83%29.pdf">2022计组期末试题(缓考).pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E5%AD%A6%E4%B9%A0%E8%80%83%E8%AF%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%95%E9%A2%98%E4%BA%8C.pdf">计算机组成原理试题二.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E5%AD%A6%E4%B9%A0%E8%80%83%E8%AF%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B2020.pdf">计算机组成原理课程简介2020.pdf</a></li>
+</ul>
+</li>
+<li>软件安装使用<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/ModelSim%20%E6%95%B0%E6%8D%AE%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6.pdf">ModelSim 数据连接配置客户端-同济大学.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/ModelSim%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4%E8%AF%B4%E6%98%8E.pdf">ModelSim安装步骤说明.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/modelsim%E6%BF%80%E6%B4%BB%E8%AF%B4%E6%98%8E.pdf">modelsim激活说明.pdf</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/doc/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/%E7%BB%93%E6%9E%9C%E6%AF%94%E5%AF%B9%E8%AF%B4%E6%98%8E.docx">结果比对说明.docx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>template<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/template/31%E6%9D%A1CPU%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.doc">31条CPU实验报告模板.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/template/54%E6%9D%A1CPU%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.doc">54条CPU实验报告模板.doc</a></li>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/template/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%B9%B3%E6%97%B6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A-%E5%AD%A6%E5%8F%B7-%E5%A7%93%E5%90%8D.doc">计算机组成原理平时实验报告-学号-姓名.doc</a></li>
+</ul>
+</li>
+<li>tools<ul>
+<li>autotest<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/tools/autotest/autotest.py">autotest.py</a></li>
+</ul>
+</li>
+<li>Mars<ul>
+<li><a href="https://github.com/TJ-CSCCG/TJCS-Course/raw/master/101016_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/tools/Mars/%E7%BB%93%E6%9E%9C%E6%AF%94%E5%AF%B9%E8%AF%B4%E6%98%8E.docx">结果比对说明.docx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
