@@ -2,6 +2,20 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/TJ-CSCCG/TJCS-Course)  ![GitHub stars](https://img.shields.io/github/stars/TJ-CSCCG/TJCS-Course?color=yellow)  ![GitHub forks](https://img.shields.io/github/forks/TJ-CSCCG/TJCS-Course?color=green&label=Fork)  ![visitors](https://visitor-badge.lithub.cc/badge?page_id=TJ-CSCCG.TJCS-Course)  [![Generate-Power-With-Love](https://img.shields.io/badge/Generate--Power--With-Love-red)](https://github.com/TJ-CSCCG/TJCS-Assignment)
 
+## :bulb: 简介
+
+本仓库为**同济大学计算机科学与技术专业、信息安全专业**的课程资源共享仓库，旨在为同学们提供一个便捷的平台，分享和获取课程相关的学习资料。
+
+**我们为什么在这里？**
+
+在课程资源来之不易的时代，我们希望通过共享的方式，让每一位同学都能获得优质的学习资料，减轻学习负担，提高学习效率。本仓库收集整理了各课程的教材信息、作业资料、考试经验、任课教师评价等内容，帮助同学们更好地规划学习。
+
+## :bookmark_tabs: 目录
+
+* [:ship: 精神](#ship-精神) - 仓库的精神内涵
+* [:gift: 使用](#gift-使用) - 如何使用本仓库
+* [:church: 免责声明](#church-免责声明) - 重要的法律声明
+* [:pencil2: 贡献指南](./CONTRIBUTING.md) - 如何为本仓库做贡献
 
 ## :ship: 精神
 
@@ -31,10 +45,16 @@
 2. [GitZip for github](https://chrome.google.com/webstore/detail/gitzip-for-github/ffabmkklhbepgcgfonabamgnfafbdlkn?hl=zh-CN)
 3. [git-scm: git clone --depth=...](https://git-scm.com/docs/git-clone)
 
-## :church: 免责（保护
+## :church: 免责声明
 
-仓库中的资料怎么想都不应该商用吧，**商用是禁止的**。
+### 使用限制
 
-仓库中所有资料均为 **同济大学计算机与科学技术专业、信息安全专业** 课程资料，上传课程资料仅为二专业同学（应属小范围内）提供 **个人学习、研究或者欣赏** 方面的便利。
+仓库中的资料**禁止商用**。
 
-仓库中所有文件，若侵，联系确认后立删；著作权只属于文件作者；拒绝未经允许的使用、分发、传播；仅用于项目所有人的存储。
+### 使用目的
+
+仓库中所有资料均为**同济大学计算机科学与技术专业、信息安全专业**课程资料，上传课程资料仅为二专业同学（应属小范围内）提供**个人学习、研究或者欣赏**方面的便利。
+
+### 版权声明
+
+仓库中所有文件的著作权仅属于文件原作者。若涉及侵权，请联系确认后我们将立即删除相关内容。拒绝未经允许的使用、分发、传播。本仓库仅用于项目所有人的存储。
