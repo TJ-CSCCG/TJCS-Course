@@ -1,4 +1,4 @@
-name: mkdocs
+name: Pages
 on:
   push:
     branches:
